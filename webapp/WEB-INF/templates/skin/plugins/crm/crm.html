@@ -1,0 +1,109 @@
+<#function getDemandTypeLabel demand_types_list id_demand_type>
+	<#list demand_types_list as demand_type>
+		<#if demand_type.idDemandType = id_demand_type>
+			<#return demand_type.label>
+		</#if>
+	</#list>
+	<#return "">
+</#function>
+
+<#function getDemandTypeUrlResource demand_types_list id_demand_type>
+		<#list demand_types_list as demand_type>
+		<#if demand_type.idDemandType = id_demand_type>
+			<#return demand_type.urlResource>
+		</#if>
+	</#list>
+	<#return "">
+</#function>
+
+<div class="span-11 prepend-1 append-1">
+	<div class="portlet-background append-bottom">
+		<div class="portlet-background-header -lutece-border-radius-top">
+			#i18n{crm.crm.labelDemandsList}
+		</div>
+		<div class="portlet-background-content -lutece-border-radius-bottom">
+			<table>
+				<#list demands_list as demand>
+					<tr>
+						<td>
+							<a href="${getDemandTypeUrlResource( demand_types_list, demand.idDemandType)}">
+								${getDemandTypeLabel( demand_types_list, demand.idDemandType)}
+							</a>
+						</td>
+						<td>
+							${demand.statusText}
+						</td>
+						<td>
+							<#if ( demand.getNumberNotifications(  ) > 0 )>
+								<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
+									<img src="images/local/skin/plugins/crm/mail.png" alt="#i18n{crm.crm.labelMail}" title="#i18n{crm.crm.labelMail}" />
+								</a>
+								<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
+									<span class="alert">
+										${demand.numberUnreadNotifications}
+									</span>
+								</#if>
+							</#if> 
+						</td>
+					</tr>
+				</#list>
+			</table>
+		</div>
+	</div>
+</div>
+
+<#if categories_list?has_content>
+	<div class="span-10 append-1 last">
+		<div class="portlet-background append-bottom">
+			<div class="portlet-background-header -lutece-border-radius-top">
+				#i18n{crm.crm.labelDemandTypesList}
+			</div>
+			<div class="portlet-background-content -lutece-border-radius">
+				<#list categories_list as category>
+					<#assign demand_types = map_demand_types_list[category.code]>
+					<#if demand_types?has_content>
+						<fieldset>
+							<#-- No category -->
+							<#if category.code != "0">
+								<legend>${category.name}</legend>
+							</#if>
+							<ul>
+								<#list demand_types as demand_type>
+									<li>
+										<a href="${demand_type.urlResource}">
+											${demand_type.label}
+										</a>
+										<#if demand_type.urlInfo?has_content>
+											<br />
+											<em>
+												<a href="${demand_type.urlInfo}">
+													#i18n{crm.crm.labelInfo}
+												</a>
+											</em>
+										</#if>
+										<#if demand_type.urlContact?has_content>
+											<br />
+											<em>
+												<a href="${demand_type.urlContact}">
+													#i18n{crm.crm.labelContact}
+												</a>
+											</em>
+										</#if>
+										<#if demand_type.dateBegin??>
+											<br />
+											#i18n{crm.crm.labelDateBegin} : ${demand_type.dateBegin?date}
+										</#if>
+										<#if demand_type.dateEnd??>
+											<br />
+											#i18n{crm.crm.labelDateEnd} : ${demand_type.dateEnd?date}
+										</#if>
+									</li>
+								</#list>
+							</ul>
+						</fieldset>
+					</#if>
+				</#list>
+			</div>
+		</div>
+	</div>
+</#if>

@@ -1,0 +1,19 @@
+<div class="content-box">
+	<h2>#i18n{crm.modify_category.pageTitle}</h2>
+    <form method="post"  name="modify_category" action="jsp/admin/plugins/crm/DoModifyCategory.jsp">
+		<input type="hidden" id="category_id_category" name="category_id_category" value="${category.idCategory}"/>
+        <p>
+            <label for="category_name" >#i18n{crm.modify_category.labelName} * :</label>
+            <input type="text" id="category_name" name="category_name" size="60" maxlength="50" value="${category.name}" tabindex="1" />
+        </p>
+
+        <p>
+            <label for="category_description" >#i18n{crm.modify_category.labelDescription} * :</label>
+            <input type="text" id="category_description" name="category_description" size="60" maxlength="50" value="${category.description}" tabindex="1" />
+        </p>
+        <p>   
+            <input type="submit" value="#i18n{crm.modify_category.buttonModify}" class="button" tabindex="3" />
+            <input class="button" type="button" onclick="javascript:history.go(-1)" value="#i18n{crm.modify_category.buttonCancel}" />	
+        </p>
+    </form>
+</div>

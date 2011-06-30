@@ -1,0 +1,21 @@
+<div class="span-22 prepend-1 append-1">
+	<div class="portlet-background append-bottom">
+		<div class="portlet-background-content -lutece-border-radius">
+			<p>
+				<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
+					<img src="images/local/skin/buttons/b_back.png" alt="#i18n{crm.manage_notifications.buttonBack}" title="#i18n{crm.view_demand_type.buttonBack}" />
+				</a>
+			</p>
+			<h2>${notification.object}</h2>
+			<p>
+				<b>#i18n{crm.view_notification.labelDateSent} : </b>${notification.dateCreation?date}
+			</p>
+			<p>
+				<b>#i18n{crm.view_notification.labelTargetResource} : </b><a href="${demand_type.urlResource}">${demand_type.label}</a>
+			</p>
+			<p>
+				${notification.message}
+			</p>
+		</div>
+	</div>
+</div>

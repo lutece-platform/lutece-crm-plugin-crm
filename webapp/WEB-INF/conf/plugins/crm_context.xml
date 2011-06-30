@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- DAO -->
+	<bean id="crm.notificationDAO" class="fr.paris.lutece.plugins.crm.business.notification.NotificationDAO" />
+	<bean id="crm.demandDAO" class="fr.paris.lutece.plugins.crm.business.demand.DemandDAO" />
+	<bean id="crm.demandTypeDAO" class="fr.paris.lutece.plugins.crm.business.demand.DemandTypeDAO" />
+	<bean id="crm.categoryDAO" class="fr.paris.lutece.plugins.crm.business.demand.category.CategoryDAO" />
+	
+	<!-- Removal Service -->
+    <bean id="crm.categoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
+    
+    <!-- CRM Service -->
+    <bean id="crm.categoryService" class="fr.paris.lutece.plugins.crm.service.category.CategoryService" />
+    <bean id="crm.notificationService" class="fr.paris.lutece.plugins.crm.service.notification.NotificationService" />
+    <bean id="crm.demandService" class="fr.paris.lutece.plugins.crm.service.demand.DemandService" />
+    <bean id="crm.demandTypeService" class="fr.paris.lutece.plugins.crm.service.demand.DemandTypeService" />
+    <bean id="crm.crmService" class="fr.paris.lutece.plugins.crm.service.CRMService">
+    	<property name="notificationService" ref="crm.notificationService" />
+    	<property name="demandService" ref="crm.demandService" />
+    </bean>
+    <bean id="crm.demandStatusCRMService" class="fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService" />
+</beans>

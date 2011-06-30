@@ -1,0 +1,42 @@
+<div class="span-22 prepend-1 append-1">
+	<div class="portlet-background append-bottom">
+		<div class="portlet-background-content -lutece-border-radius">
+			<p>
+				<a href="jsp/site/Portal.jsp?page=crm">
+					<img src="images/local/skin/buttons/b_back.png" alt="#i18n{crm.manage_notifications.buttonBack}" title="#i18n{crm.view_demand_type.buttonBack}" />
+				</a>
+			</p>
+			<h2>${demand_type.label}</h2>
+			<#if notifications_list?has_content>
+				<table>
+					<tr>
+						<th>#i18n{crm.manage_notifications.labelObject}</th>
+						<th>#i18n{crm.manage_notifications.labelReceived}</th>
+					</tr>
+					<#list notifications_list as notification>
+						<tr>
+							<td>
+								<#if notification.status = 0>
+									<b>
+										<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
+											${notification.object}
+										</a>
+									</b>
+								<#else>
+									<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
+										${notification.object}
+									</a>
+								</#if>
+							</td>
+							<td>
+								${notification.dateCreation?date}
+							</td>
+						</tr>
+					</#list>
+				</table>
+			<#else>
+				<b>#i18n{crm.manage_notifications.messageNoNotifications}</b>
+			</#if>
+		</div>
+	</div>
+</div>
