@@ -71,37 +71,46 @@ public final class CRMService
 
     /**
      * Register the demand
-     * @param nIdDemand the id demand
      * @param nIdDemandType the id demand type
      * @param strUserGuid the user guid
-     * @param strUrlResource the url resource
-     * @param strStatus the status of the demand
+     * @param strData the data
+     * @param strStatusText the status of the demand
+     * @param nIdStatusCRM the id status crm
+     * @return the newly created id demand
      */
-    public void registerDemand( int nIdDemand, int nIdDemandType, String strUserGuid, String strUrlResource,
-        String strStatus )
+    public int registerDemand( int nIdDemandType, String strUserGuid, String strData, String strStatusText,
+        int nIdStatusCRM )
     {
         Demand demand = new Demand(  );
-        demand.setIdDemand( nIdDemand );
         demand.setIdDemandType( nIdDemandType );
         demand.setUserGuid( strUserGuid );
-        demand.setConfigData( StringUtils.isNotEmpty( strUrlResource ) ? strUrlResource : StringUtils.EMPTY );
-        demand.setStatusText( StringUtils.isNotEmpty( strStatus ) ? strStatus : StringUtils.EMPTY );
+        demand.setData( StringUtils.isNotEmpty( strData ) ? strData : StringUtils.EMPTY );
+        demand.setStatusText( StringUtils.isNotEmpty( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+        demand.setIdStatusCRM( nIdStatusCRM );
 
-        _demandService.create( demand );
+        return _demandService.create( demand );
     }
 
     /**
      * Set the status of the demand
      * @param nIdDemand the id demand
-     * @param strStatus the status of the demand
+     * @param strData the data
+     * @param strStatusText the status of the demand
+     * @param nIdStatusCRM the id status crm
      */
-    public void setStatus( int nIdDemand, String strStatus )
+    public void setStatus( int nIdDemand, String strData, String strStatusText, int nIdStatusCRM )
     {
         Demand demand = _demandService.findByPrimaryKey( nIdDemand );
 
         if ( demand != null )
         {
-            demand.setStatusText( strStatus );
+            if ( StringUtils.isNotBlank( strData ) )
+            {
+                demand.setData( strData );
+            }
+
+            demand.setStatusText( strStatusText );
+            demand.setIdStatusCRM( nIdStatusCRM );
             _demandService.update( demand );
         }
     }

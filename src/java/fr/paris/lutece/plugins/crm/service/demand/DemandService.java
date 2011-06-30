@@ -83,14 +83,19 @@ public final class DemandService
     /**
      * Create a new demand
      * @param demand the demand
+     * @return the newly created demand id
      */
-    public void create( Demand demand )
+    public int create( Demand demand )
     {
+        int nIdDemand = -1;
+
         if ( demand != null )
         {
             demand.setDateModification( new Timestamp( new Date(  ).getTime(  ) ) );
             DemandHome.create( demand );
         }
+
+        return nIdDemand;
     }
 
     /**

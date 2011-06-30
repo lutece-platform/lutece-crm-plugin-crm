@@ -63,10 +63,11 @@ public final class DemandHome
     /**
      * Insert a new record in the table.
      * @param demand instance of the Demand object to insert
+     * @return the newly created demand id
      */
-    public static void create( Demand demand )
+    public static int create( Demand demand )
     {
-        _dao.insert( demand, _plugin );
+        return _dao.insert( demand, _plugin );
     }
 
     /**

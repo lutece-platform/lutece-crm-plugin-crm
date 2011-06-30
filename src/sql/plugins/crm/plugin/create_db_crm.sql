@@ -27,7 +27,7 @@ CREATE TABLE crm_demand (
 	user_guid VARCHAR(255) DEFAULT '' NOT NULL,
 	status_text VARCHAR(255) DEFAULT '' NOT NULL,
 	id_status_crm INT(11) DEFAULT 0 NOT NULL,
-	config_data VARCHAR(255) DEFAULT '' NOT NULL,
+	data VARCHAR(255) DEFAULT '' NOT NULL,
 	date_modification TIMESTAMP DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	PRIMARY KEY (id_demand)
 );

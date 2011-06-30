@@ -46,11 +46,19 @@ import java.util.List;
 public interface IDemandDAO
 {
     /**
+     * Generate a new primary key
+     * @param plugin the {@link Plugin}
+     * @return a new primary key
+     */
+    int newPrimaryKey( Plugin plugin );
+
+    /**
      * Insert a new record in the table.
      * @param demand instance
      * @param plugin the Plugin
+     * @return the newly created demand id
      */
-    void insert( Demand demand, Plugin plugin );
+    int insert( Demand demand, Plugin plugin );
 
     /**
     * Update the record in the table

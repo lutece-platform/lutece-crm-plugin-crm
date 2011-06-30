@@ -50,7 +50,7 @@ public class Demand
     private String _strUserGuid;
     private String _strStatusText;
     private int _nIdStatusCRM;
-    private String _strConfigData;
+    private String _strData;
     private Timestamp _dateModification;
 
     /**
@@ -162,21 +162,21 @@ public class Demand
     }
 
     /**
-     * Set the config data
-     * @param strConfigData the config data
+     * Set the data
+     * @param strData the data
      */
-    public void setConfigData( String strConfigData )
+    public void setData( String strData )
     {
-        _strConfigData = strConfigData;
+        _strData = strData;
     }
 
     /**
-     * Get the config data
-     * @return the config data
+     * Get the data
+     * @return the data
      */
-    public String getConfigData(  )
+    public String getData(  )
     {
-        return _strConfigData;
+        return _strData;
     }
 
     /**

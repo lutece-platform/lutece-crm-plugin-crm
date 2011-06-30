@@ -48,13 +48,13 @@ import java.util.List;
 public class DemandDAO implements IDemandDAO
 {
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_demand ) FROM crm_demand ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand (id_demand, id_demand_type, user_guid, status_text, id_status_crm, config_data, date_modification ) VALUES (?,?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, config_data, date_modification FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, user_guid = ?, status_text = ?, id_status_crm = ?, config_data = ?, date_modification = ? WHERE id_demand = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand (id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification ) VALUES (?,?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE id_demand = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, user_guid = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, config_data, date_modification FROM crm_demand ORDER BY id_demand ASC ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand ORDER BY id_demand ASC ";
     private static final String SQL_QUERY_DELETE_FROM_ID_DEMAND_TYPE = " DELETE FROM crm_demand WHERE id_demand_type = ? ";
-    private static final String SQL_QUERY_SELECT_BY_USER_GUID = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, config_data, date_modification FROM crm_demand WHERE user_guid = ? ORDER BY id_status_crm DESC, date_modification DESC ";
+    private static final String SQL_QUERY_SELECT_BY_USER_GUID = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE user_guid = ? ORDER BY id_status_crm DESC, date_modification DESC ";
 
     /**
      * {@inheritDoc}
@@ -79,25 +79,31 @@ public class DemandDAO implements IDemandDAO
     /**
      * {@inheritDoc}
      */
-    public void insert( Demand demand, Plugin plugin )
+    public int insert( Demand demand, Plugin plugin )
     {
+        int nIdDemand = -1;
+
         if ( demand != null )
         {
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
             int nIndex = 1;
-
+            demand.setIdDemand( newPrimaryKey( plugin ) );
             daoUtil.setInt( nIndex++, demand.getIdDemand(  ) );
             daoUtil.setInt( nIndex++, demand.getIdDemandType(  ) );
             daoUtil.setString( nIndex++, demand.getUserGuid(  ) );
             daoUtil.setString( nIndex++, demand.getStatusText(  ) );
             daoUtil.setInt( nIndex++, demand.getIdStatusCRM(  ) );
-            daoUtil.setString( nIndex++, demand.getConfigData(  ) );
+            daoUtil.setString( nIndex++, demand.getData(  ) );
             daoUtil.setTimestamp( nIndex++, demand.getDateModification(  ) );
 
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
+
+            nIdDemand = demand.getIdDemand(  );
         }
+
+        return nIdDemand;
     }
 
     /**
@@ -120,7 +126,7 @@ public class DemandDAO implements IDemandDAO
             demand.setUserGuid( daoUtil.getString( nIndex++ ) );
             demand.setStatusText( daoUtil.getString( nIndex++ ) );
             demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
-            demand.setConfigData( daoUtil.getString( nIndex++ ) );
+            demand.setData( daoUtil.getString( nIndex++ ) );
             demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
         }
 
@@ -144,7 +150,7 @@ public class DemandDAO implements IDemandDAO
             daoUtil.setString( nIndex++, demand.getUserGuid(  ) );
             daoUtil.setString( nIndex++, demand.getStatusText(  ) );
             daoUtil.setInt( nIndex++, demand.getIdStatusCRM(  ) );
-            daoUtil.setString( nIndex++, demand.getConfigData(  ) );
+            daoUtil.setString( nIndex++, demand.getData(  ) );
             daoUtil.setTimestamp( nIndex++, demand.getDateModification(  ) );
 
             daoUtil.setInt( nIndex++, demand.getIdDemand(  ) );
@@ -183,7 +189,7 @@ public class DemandDAO implements IDemandDAO
             demand.setUserGuid( daoUtil.getString( nIndex++ ) );
             demand.setStatusText( daoUtil.getString( nIndex++ ) );
             demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
-            demand.setConfigData( daoUtil.getString( nIndex++ ) );
+            demand.setData( daoUtil.getString( nIndex++ ) );
             demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
 
             listDemands.add( demand );
@@ -224,7 +230,7 @@ public class DemandDAO implements IDemandDAO
             demand.setUserGuid( daoUtil.getString( nIndex++ ) );
             demand.setStatusText( daoUtil.getString( nIndex++ ) );
             demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
-            demand.setConfigData( daoUtil.getString( nIndex++ ) );
+            demand.setData( daoUtil.getString( nIndex++ ) );
             demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
 
             listDemands.add( demand );
