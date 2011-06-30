@@ -1,3 +1,16 @@
+<#-- Build the url resource from a given demand_type -->
+<#function buildDemandTypeUrlResource demand_type user>
+	<#if demand_type??>
+		<#if ( demand_type.urlResource?index_of("?") >= 0 )>
+			<#return demand_type.urlResource + "&amp;id_demand_type=" + demand_type.idDemandType + "&amp;user_guid=" + user.name>
+		<#else>
+			<#return demand_type.urlResource + "?id_demand_type=" + demand_type.idDemandType + "&amp;user_guid=" + user.name>
+		</#if>
+	</#if>
+	<#return "">
+</#function>
+
+<#-- Get the label of the demand type from a given id demand type -->
 <#function getDemandTypeLabel demand_types_list id_demand_type>
 	<#list demand_types_list as demand_type>
 		<#if demand_type.idDemandType = id_demand_type>
@@ -7,10 +20,11 @@
 	<#return "">
 </#function>
 
-<#function getDemandTypeUrlResource demand_types_list id_demand_type>
-		<#list demand_types_list as demand_type>
+<#-- Get the url resource from a given id demand type -->
+<#function getDemandTypeUrlResource demand_types_list id_demand_type user>
+	<#list demand_types_list as demand_type>
 		<#if demand_type.idDemandType = id_demand_type>
-			<#return demand_type.urlResource>
+			<#return buildDemandTypeUrlResource( demand_type, user )>
 		</#if>
 	</#list>
 	<#return "">
@@ -22,32 +36,47 @@
 			#i18n{crm.crm.labelDemandsList}
 		</div>
 		<div class="portlet-background-content -lutece-border-radius-bottom">
-			<table>
-				<#list demands_list as demand>
-					<tr>
-						<td>
-							<a href="${getDemandTypeUrlResource( demand_types_list, demand.idDemandType)}">
-								${getDemandTypeLabel( demand_types_list, demand.idDemandType)}
-							</a>
-						</td>
-						<td>
-							${demand.statusText}
-						</td>
-						<td>
-							<#if ( demand.getNumberNotifications(  ) > 0 )>
-								<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
-									<img src="images/local/skin/plugins/crm/mail.png" alt="#i18n{crm.crm.labelMail}" title="#i18n{crm.crm.labelMail}" />
-								</a>
-								<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
-									<span class="alert">
-										${demand.numberUnreadNotifications}
-									</span>
-								</#if>
-							</#if> 
-						</td>
-					</tr>
-				</#list>
-			</table>
+			<#list status_crm_list as status_crm>
+				<#assign demands_list = map_demands_list[""+status_crm.idStatusCRM]>
+				<#if demands_list?has_content>
+					<fieldset>
+						<legend>${status_crm.label}</legend>
+						<table>
+							<#list demands_list as demand>
+								<tr>
+									<td>
+										<a href="${getDemandTypeUrlResource( demand_types_list, demand.idDemandType, mylutece_user)}">
+											${getDemandTypeLabel( demand_types_list, demand.idDemandType)}
+										</a>
+									</td>
+									<td>
+										${demand.statusText}
+									</td>
+									<td>
+										<#if ( demand.getNumberNotifications(  ) > 0 )>
+											<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
+												<img src="images/local/skin/plugins/crm/mail.png" alt="#i18n{crm.crm.labelMail}" title="#i18n{crm.crm.labelMail}" />
+											</a>
+											<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
+												<span class="alert">
+													${demand.numberUnreadNotifications}
+												</span>
+											</#if>
+										</#if> 
+									</td>
+									<#if demand.idStatusCRM = 0>
+										<td>
+											<a href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}">
+												<img src="images/local/skin/plugins/crm/actions/delete.png" alt="#i18n{crm.crm.buttonDelete}" title="#i18n{crm.crm.buttonDelete}" />
+											</a>
+										</td>
+									</#if>
+								</tr>
+							</#list>
+						</table>
+					</fieldset>
+				</#if>
+			</#list>
 		</div>
 	</div>
 </div>
@@ -70,7 +99,7 @@
 							<ul>
 								<#list demand_types as demand_type>
 									<li>
-										<a href="${demand_type.urlResource}">
+										<a href="${buildDemandTypeUrlResource( demand_type, mylutece_user )}">
 											${demand_type.label}
 										</a>
 										<#if demand_type.urlInfo?has_content>

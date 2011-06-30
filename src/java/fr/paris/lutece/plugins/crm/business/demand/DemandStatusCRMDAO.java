@@ -88,7 +88,7 @@ public class DemandStatusCRMDAO implements IDemandStatusCRMDAO
         {
             int nIndex = 1;
             DemandStatusCRM statusCRM = new DemandStatusCRM(  );
-            statusCRM.setIdStatusCRM( nIndex++ );
+            statusCRM.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
             statusCRM.setLabelKey( daoUtil.getString( nIndex++ ) );
             listStatusCRM.add( statusCRM );
         }

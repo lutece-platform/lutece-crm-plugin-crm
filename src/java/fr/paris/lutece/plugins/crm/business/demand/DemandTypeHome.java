@@ -128,14 +128,14 @@ public final class DemandTypeHome
     }
 
     /**
-     * Find the list of demandTypes for the LuteceUser
+     * Find the list of demandTypes by id category and date
      * @param nIdCategory the ID category
      * @param dateToday the date of today
      * @return a list of {@link DemandType}
      */
-    public static List<DemandType> findForLuteceUser( int nIdCategory, java.util.Date dateToday )
+    public static List<DemandType> findByIdCategoryAndDate( int nIdCategory, java.util.Date dateToday )
     {
-        return _dao.selectForLuteceUser( nIdCategory, dateToday, _plugin );
+        return _dao.selectByIdCategoryAndDate( nIdCategory, dateToday, _plugin );
     }
 
     /**

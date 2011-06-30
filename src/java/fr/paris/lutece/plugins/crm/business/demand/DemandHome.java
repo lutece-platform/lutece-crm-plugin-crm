@@ -108,21 +108,12 @@ public final class DemandHome
     }
 
     /**
-     * Remove the demand given an id demand type
-     * @param nIdDemandType the id demand type
-     */
-    public static void removeByIdDemandType( int nIdDemandType )
-    {
-        _dao.deleteByIdDemandType( nIdDemandType, _plugin );
-    }
-
-    /**
-     * Find deamnds by user guid
-     * @param strUserGuid the user guid
+     * Find by filter
+     * @param dFilter the filter
      * @return a list of {@link Demand}
      */
-    public static List<Demand> findByUserGuid( String strUserGuid )
+    public static List<Demand> findByFilter( DemandFilter dFilter )
     {
-        return _dao.selectByUserGuid( strUserGuid, _plugin );
+        return _dao.selectByFilter( dFilter, _plugin );
     }
 }

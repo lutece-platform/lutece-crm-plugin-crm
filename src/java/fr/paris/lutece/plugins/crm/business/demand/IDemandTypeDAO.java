@@ -96,7 +96,7 @@ public interface IDemandTypeDAO
      * @param plugin {@link Plugin}
      * @return a list of {@link DemandType}
      */
-    List<DemandType> selectForLuteceUser( int nIdCategory, java.util.Date dateToday, Plugin plugin );
+    List<DemandType> selectByIdCategoryAndDate( int nIdCategory, java.util.Date dateToday, Plugin plugin );
 
     /**
      * Find the max order

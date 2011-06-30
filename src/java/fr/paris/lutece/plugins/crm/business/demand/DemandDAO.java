@@ -36,6 +36,8 @@ package fr.paris.lutece.plugins.crm.business.demand;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,9 +54,20 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE id_demand = ? ";
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, user_guid = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand ORDER BY id_demand ASC ";
-    private static final String SQL_QUERY_DELETE_FROM_ID_DEMAND_TYPE = " DELETE FROM crm_demand WHERE id_demand_type = ? ";
-    private static final String SQL_QUERY_SELECT_BY_USER_GUID = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE user_guid = ? ORDER BY id_status_crm DESC, date_modification DESC ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand ";
+
+    // FILTERS
+    private static final String SQL_ORDER_BY = " ORDER BY ";
+    private static final String SQL_DESC = " DESC ";
+    private static final String SQL_OR = " OR ";
+    private static final String SQL_AND = " AND ";
+    private static final String SQL_WHERE = " WHERE ";
+    private static final String SQL_DATE_MODIFICATION = " date_modification ";
+    private static final String SQL_FILTER_USER_GUID = " user_guid = ? ";
+    private static final String SQL_FILTER_ID_DEMAND_TYPE = " id_demand_type = ? ";
+    private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification ";
+    private static final String SQL_FILTER_ID_STATUS_CRM = " id_status_crm = ? ";
+    private static final String QUESTION_MARK = " ? ";
 
     /**
      * {@inheritDoc}
@@ -203,22 +216,16 @@ public class DemandDAO implements IDemandDAO
     /**
      * {@inheritDoc}
      */
-    public void deleteByIdDemandType( int nIdDemandType, Plugin plugin )
-    {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_FROM_ID_DEMAND_TYPE, plugin );
-        daoUtil.setInt( 1, nIdDemandType );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Demand> selectByUserGuid( String strUserGuid, Plugin plugin )
+    public List<Demand> selectByFilter( DemandFilter dFilter, Plugin plugin )
     {
         List<Demand> listDemands = new ArrayList<Demand>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_USER_GUID, plugin );
-        daoUtil.setString( 1, strUserGuid );
+        StringBuilder sbSQL = new StringBuilder( buildSQLQuery( dFilter ) );
+        sbSQL.append( SQL_ORDER_BY );
+        sbSQL.append( SQL_DATE_MODIFICATION );
+        sbSQL.append( SQL_DESC );
+
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        setFilterValues( dFilter, daoUtil );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
@@ -239,5 +246,100 @@ public class DemandDAO implements IDemandDAO
         daoUtil.free(  );
 
         return listDemands;
+    }
+
+    /**
+     * Build the SQL query with filter
+     * @param dFilter the filter
+     * @return a SQL query
+     */
+    private String buildSQLQuery( DemandFilter dFilter )
+    {
+        StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
+        int nIndex = 1;
+
+        if ( dFilter.containsUserGuid(  ) )
+        {
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            sbSQL.append( SQL_FILTER_USER_GUID );
+        }
+
+        if ( dFilter.containsIdDemandType(  ) )
+        {
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            sbSQL.append( SQL_FILTER_ID_DEMAND_TYPE );
+        }
+
+        if ( dFilter.containsDateModification(  ) )
+        {
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            sbSQL.append( SQL_FILTER_DATE_MODIFICATION );
+            sbSQL.append( dFilter.getOperatorDateModification(  ) );
+            sbSQL.append( QUESTION_MARK );
+        }
+
+        if ( dFilter.containsIdStatusCRM(  ) )
+        {
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            sbSQL.append( SQL_FILTER_ID_STATUS_CRM );
+        }
+
+        return sbSQL.toString(  );
+    }
+
+    /**
+     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index.
+     * <br/>
+     * <ul>
+     * <li>if <code>nIndex</code> == 1, then we add a <b>WHERE</b></li>
+     * <li>if <code>nIndex</code> != 1, then we add a <b>OR</b> or a <b>AND</b> depending of the wide search characteristic</li>
+     * </ul>
+     * @param bIsWideSearch true if it is a wide search, false otherwise
+     * @param sbSQL the SQL query
+     * @param nIndex the index
+     * @return the new index
+     */
+    private int addSQLWhereOr( boolean bIsWideSearch, StringBuilder sbSQL, int nIndex )
+    {
+        if ( nIndex == 1 )
+        {
+            sbSQL.append( SQL_WHERE );
+        }
+        else
+        {
+            sbSQL.append( bIsWideSearch ? SQL_OR : SQL_AND );
+        }
+
+        return nIndex + 1;
+    }
+
+    /**
+     * Set the filter values on the DAOUtil
+     * @param dFilter the filter
+     * @param daoUtil the DAOUtil
+     */
+    private void setFilterValues( DemandFilter dFilter, DAOUtil daoUtil )
+    {
+        int nIndex = 1;
+
+        if ( dFilter.containsUserGuid(  ) )
+        {
+            daoUtil.setString( nIndex++, dFilter.getUserGuid(  ) );
+        }
+
+        if ( dFilter.containsIdDemandType(  ) )
+        {
+            daoUtil.setInt( nIndex++, dFilter.getIdDemandType(  ) );
+        }
+
+        if ( dFilter.containsDateModification(  ) )
+        {
+            daoUtil.setDate( nIndex++, new Date( dFilter.getDateModification(  ).getTime(  ) ) );
+        }
+
+        if ( dFilter.containsIdStatusCRM(  ) )
+        {
+            daoUtil.setInt( nIndex++, dFilter.getIdStatusCRM(  ) );
+        }
     }
 }

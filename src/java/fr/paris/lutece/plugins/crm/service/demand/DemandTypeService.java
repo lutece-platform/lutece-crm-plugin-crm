@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.crm.service.demand;
 
+import fr.paris.lutece.plugins.crm.business.demand.Demand;
+import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeHome;
@@ -168,7 +170,15 @@ public final class DemandTypeService
      */
     public void remove( int nIdDemandType )
     {
-        DemandService.getService(  ).removeByIdDemandType( nIdDemandType );
+        // Remove all demands associated to the demand type
+        DemandFilter dFilter = new DemandFilter(  );
+        dFilter.setIdDemandType( nIdDemandType );
+
+        for ( Demand demand : DemandService.getService(  ).findByFilter( dFilter ) )
+        {
+            DemandService.getService(  ).remove( demand.getIdDemand(  ) );
+        }
+
         DemandTypeHome.remove( nIdDemandType );
     }
 
@@ -294,7 +304,7 @@ public final class DemandTypeService
             List<DemandType> listAuthorizedDemandTypes = new ArrayList<DemandType>(  );
             Date dateToday = new Date(  );
 
-            for ( DemandType demandType : DemandTypeHome.findForLuteceUser( nIdCategory, dateToday ) )
+            for ( DemandType demandType : DemandTypeHome.findByIdCategoryAndDate( nIdCategory, dateToday ) )
             {
                 if ( checkRoleForDemandType( demandType, request ) )
                 {

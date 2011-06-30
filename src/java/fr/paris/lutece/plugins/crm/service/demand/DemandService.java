@@ -34,7 +34,9 @@
 package fr.paris.lutece.plugins.crm.service.demand;
 
 import fr.paris.lutece.plugins.crm.business.demand.Demand;
+import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandHome;
+import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -42,7 +44,10 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.sql.Timestamp;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -92,7 +97,7 @@ public final class DemandService
         if ( demand != null )
         {
             demand.setDateModification( new Timestamp( new Date(  ).getTime(  ) ) );
-            DemandHome.create( demand );
+            nIdDemand = DemandHome.create( demand );
         }
 
         return nIdDemand;
@@ -120,6 +125,8 @@ public final class DemandService
         // Remove all notifications associated to the demand
         NotificationService.getService(  ).removeByIdDemand( nIdDemand );
         DemandHome.remove( nIdDemand );
+
+        // TODO : Remove the data of the resource stored in the plugin-blobstore
     }
 
     /**
@@ -132,21 +139,35 @@ public final class DemandService
     }
 
     /**
-     * Remove demands given a id demand type
-     * @param nIdDemandType the id demand type
+     * Find by filter
+     * @param dFilter the filter
+     * @return a list of {@link Demand}
      */
-    public void removeByIdDemandType( int nIdDemandType )
+    public List<Demand> findByFilter( DemandFilter dFilter )
     {
-        DemandHome.removeByIdDemandType( nIdDemandType );
+        return DemandHome.findByFilter( dFilter );
     }
 
     /**
      * Find the demands given an user guid
      * @param strUserGuid the user guid
-     * @return a list of {@link Demand}
+     * @param locale {@link Locale}
+     * @return a map of (id_status_crm, List&lt;Demand&gt;)
      */
-    public List<Demand> findByUserGuid( String strUserGuid )
+    public Map<String, List<Demand>> findByUserGuid( String strUserGuid, Locale locale )
     {
-        return DemandHome.findByUserGuid( strUserGuid );
+        Map<String, List<Demand>> map = new HashMap<String, List<Demand>>(  );
+
+        for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  ).getAllStatusCRM( locale ) )
+        {
+            DemandFilter dFilter = new DemandFilter(  );
+            dFilter.setUserGuid( strUserGuid );
+            dFilter.setIdStatusCRM( statusCRM.getIdStatusCRM(  ) );
+
+            List<Demand> listDemands = findByFilter( dFilter );
+            map.put( Integer.toString( statusCRM.getIdStatusCRM(  ) ), listDemands );
+        }
+
+        return map;
     }
 }

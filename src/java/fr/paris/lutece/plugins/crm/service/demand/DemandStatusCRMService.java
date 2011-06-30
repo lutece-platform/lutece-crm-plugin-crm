@@ -65,8 +65,8 @@ public final class DemandStatusCRMService
      */
     public static DemandStatusCRMService getService(  )
     {
-        return (DemandStatusCRMService) SpringContextService.getPluginBean( BEAN_CRM_DEMANDSTATUSCRMSERVICE,
-            CRMPlugin.PLUGIN_NAME );
+        return (DemandStatusCRMService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
+            BEAN_CRM_DEMANDSTATUSCRMSERVICE );
     }
 
     /**

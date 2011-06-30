@@ -38,12 +38,16 @@ import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationStatusEnum;
+import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
+import fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
+import fr.paris.lutece.portal.service.message.SiteMessageService;
 import fr.paris.lutece.portal.service.page.PageNotFoundException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.security.LuteceUser;
@@ -53,6 +57,7 @@ import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.web.xpages.XPageApplication;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.url.UrlItem;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -73,10 +78,11 @@ public class CRMApp implements XPageApplication
     private static final String PARAMETER_ACTION = "action";
     private static final String PARAMETER_ID_DEMAND = "id_demand";
     private static final String PARAMETER_ID_NOTIFICATION = "id_notification";
+    private static final String PARAMETER_PAGE = "page";
 
     // MARKS
     private static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
-    private static final String MARK_DEMANDS_LIST = "demands_list";
+    private static final String MARK_MAP_DEMANDS_LIST = "map_demands_list";
     private static final String MARK_MYLUTECE_USER = "mylutece_user";
     private static final String MARK_CATEGORIES_LIST = "categories_list";
     private static final String MARK_DEMAND_TYPES_LIST = "demand_types_list";
@@ -84,6 +90,7 @@ public class CRMApp implements XPageApplication
     private static final String MARK_NOTIFICATION = "notification";
     private static final String MARK_DEMAND = "demand";
     private static final String MARK_DEMAND_TYPE = "demand_type";
+    private static final String MARK_STATUS_CRM_LIST = "status_crm_list";
 
     // PROPERTIES
     private static final String PROPERTY_PAGE_PATH = "crm.crm.pagePathLabel";
@@ -94,6 +101,14 @@ public class CRMApp implements XPageApplication
     // ACTIONS
     private static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
     private static final String ACTION_VIEW_NOTIFICATION = "view_notification";
+    private static final String ACTION_REMOVE_DEMAND = "remove_demand";
+    private static final String ACTION_DO_REMOVE_DEMAND = "do_remove_demand";
+
+    // MESSAGES
+    private static final String MESSAGE_CONFIRM_REMOVE_DEMAND = "crm.message.confirmRemoveDemand";
+
+    // JSP
+    private static final String JSP_PORTAL = "jsp/site/Portal.jsp";
 
     // TEMPLATES
     private static final String TEMPLATE_CRM_HOME_PAGE = "skin/plugins/crm/crm.html";
@@ -103,6 +118,7 @@ public class CRMApp implements XPageApplication
     private DemandService _demandService = DemandService.getService(  );
     private CategoryService _categoryService = CategoryService.getService(  );
     private NotificationService _notificationService = NotificationService.getService(  );
+    private DemandStatusCRMService _statusCRMService = DemandStatusCRMService.getService(  );
 
     /**
      * Get the XPage of the plugin CRM
@@ -126,10 +142,17 @@ public class CRMApp implements XPageApplication
             {
                 page = getManageNotificationsPage( request, user );
             }
-
-            if ( ACTION_VIEW_NOTIFICATION.equals( strAction ) )
+            else if ( ACTION_VIEW_NOTIFICATION.equals( strAction ) )
             {
                 page = getViewNotificationPage( request, user );
+            }
+            else if ( ACTION_REMOVE_DEMAND.equals( strAction ) )
+            {
+                getMessageConfirmation( request );
+            }
+            else if ( ACTION_DO_REMOVE_DEMAND.equals( strAction ) )
+            {
+                doRemoveDemand( request );
             }
         }
 
@@ -154,9 +177,10 @@ public class CRMApp implements XPageApplication
         Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
         model.put( MARK_CATEGORIES_LIST, _categoryService.getCategories( request.getLocale(  ), false, true ) );
-        model.put( MARK_DEMANDS_LIST, _demandService.findByUserGuid( user.getName(  ) ) );
+        model.put( MARK_MAP_DEMANDS_LIST, _demandService.findByUserGuid( user.getName(  ), request.getLocale(  ) ) );
         model.put( MARK_MYLUTECE_USER, user );
         model.put( MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
+        model.put( MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
 
@@ -263,6 +287,52 @@ public class CRMApp implements XPageApplication
         }
 
         return page;
+    }
+
+    /**
+     * Get the confirmation message for removing the demand
+     * @param request {@link HttpServletRequest}
+     * @throws SiteMessageException the confirmation message
+     */
+    private void getMessageConfirmation( HttpServletRequest request )
+        throws SiteMessageException
+    {
+        String strIdDemand = request.getParameter( PARAMETER_ID_DEMAND );
+
+        if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
+        {
+            int nIdDemand = Integer.parseInt( strIdDemand );
+
+            // Not safe because the webmaster can change the portal url set in the property file
+            // UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );
+            UrlItem url = new UrlItem( JSP_PORTAL );
+            url.addParameter( PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
+            url.addParameter( PARAMETER_ACTION, ACTION_DO_REMOVE_DEMAND );
+            url.addParameter( PARAMETER_ID_DEMAND, nIdDemand );
+            SiteMessageService.setMessage( request, MESSAGE_CONFIRM_REMOVE_DEMAND, SiteMessage.TYPE_CONFIRMATION,
+                url.getUrl(  ) );
+        }
+    }
+
+    /**
+     * Do remove a demand
+     * @param request {@link HttpServletRequest}
+     */
+    private void doRemoveDemand( HttpServletRequest request )
+    {
+        String strIdDemand = request.getParameter( PARAMETER_ID_DEMAND );
+
+        if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
+        {
+            int nIdDemand = Integer.parseInt( strIdDemand );
+            Demand demand = _demandService.findByPrimaryKey( nIdDemand );
+
+            if ( ( demand != null ) && ( demand.getIdStatusCRM(  ) == 0 ) )
+            {
+                // Check if the demand is in draft state
+                _demandService.remove( nIdDemand );
+            }
+        }
     }
 
     /**

@@ -90,17 +90,10 @@ public interface IDemandDAO
     List<Demand> selectAll( Plugin plugin );
 
     /**
-     * Delete all records from a given id demand type
-     * @param nIdDemandType the id demand type
-     * @param plugin {@link Plugin}
-     */
-    void deleteByIdDemandType( int nIdDemandType, Plugin plugin );
-
-    /**
-     * Select demand by user guid
-     * @param strUserGuid the User guid
+     * Find by filter
+     * @param dFilter the filter
      * @param plugin {@link Plugin}
      * @return a list of {@link Demand}
      */
-    List<Demand> selectByUserGuid( String strUserGuid, Plugin plugin );
+    List<Demand> selectByFilter( DemandFilter dFilter, Plugin plugin );
 }
