@@ -30,7 +30,7 @@
             <feature-id>CRM_DEMAND_TYPES_MANAGEMENT</feature-id>
             <feature-title>crm.adminFeature.demand_type_management.name</feature-title>
             <feature-description>crm.adminFeature.demand_type_management.description</feature-description>
-            <feature-level>1</feature-level>
+            <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/crm/ManageDemandTypes.jsp</feature-url>
             <feature-icon-url>images/admin/skin/plugins/crm/crm.png</feature-icon-url>
         </admin-feature>
