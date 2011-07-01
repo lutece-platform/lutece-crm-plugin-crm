@@ -41,7 +41,7 @@ CREATE TABLE crm_notification (
 	id_demand INT(11) DEFAULT 0 NOT NULL,
 	status INT(11) DEFAULT 0 NOT NULL,
 	object VARCHAR(100) DEFAULT '' NOT NULL,
-	message MEDIUMTEXT,
+	message LONG VARCHAR,
 	date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	PRIMARY KEY (id_notification)
 );
