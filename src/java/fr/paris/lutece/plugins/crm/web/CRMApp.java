@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
-import fr.paris.lutece.plugins.crm.business.notification.NotificationStatusEnum;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
@@ -257,10 +256,10 @@ public class CRMApp implements XPageApplication
 
                 if ( ( demand != null ) && user.getName(  ).equals( demand.getUserGuid(  ) ) )
                 {
-                    if ( notification.getStatus(  ) == NotificationStatusEnum.NEW.getId(  ) )
+                    if ( !notification.isRead(  ) )
                     {
                         // Set the status of the notification to READ
-                        notification.setStatus( NotificationStatusEnum.READ.getId(  ) );
+                        notification.setIsRead( true );
                         _notificationService.update( notification );
                     }
 

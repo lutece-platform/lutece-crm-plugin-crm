@@ -45,13 +45,13 @@ public class Notification
 {
     private int _nIdNotification;
     private int _nIdDemand;
-    private int _nStatus;
+    private boolean _bIsRead;
     private String _strObject;
     private String _strMessage;
     private Timestamp _dateCreation;
 
     /**
-     * Set the id notifiaction
+     * Set the id notification
      * @param nIdNotification the id notification
      */
     public void setIdNotification( int nIdNotification )
@@ -124,20 +124,20 @@ public class Notification
 
     /**
      * Set the status of the notification
-     * @param nStatus the status
+     * @param bIsRead true if the notification is read, false otherwise
      */
-    public void setStatus( int nStatus )
+    public void setIsRead( boolean bIsRead )
     {
-        _nStatus = nStatus;
+        _bIsRead = bIsRead;
     }
 
     /**
-     * Get the status of the notification
-     * @return the status
+     * Check if the notification is read or not
+     * @return true if it is read, false otherwise
      */
-    public int getStatus(  )
+    public boolean isRead(  )
     {
-        return _nStatus;
+        return _bIsRead;
     }
 
     /**

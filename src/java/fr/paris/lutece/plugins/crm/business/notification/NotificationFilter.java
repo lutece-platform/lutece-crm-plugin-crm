@@ -42,9 +42,11 @@ package fr.paris.lutece.plugins.crm.business.notification;
 public class NotificationFilter
 {
     private static final int ALL_INT = -1;
+    private static final int TRUE = 1;
+    private static final int FALSE = 0;
     private boolean _bIsWideSearch;
     private int _nIdDemand;
-    private int _nStatus;
+    private int _nIsRead;
 
     /**
      * Constructor
@@ -53,7 +55,7 @@ public class NotificationFilter
     {
         _bIsWideSearch = false;
         _nIdDemand = ALL_INT;
-        _nStatus = ALL_INT;
+        _nIsRead = ALL_INT;
     }
 
     /**
@@ -114,29 +116,29 @@ public class NotificationFilter
     }
 
     /**
-     * Set the status
-     * @param nStatus the status
+     * Set the status is_read of the notification
+     * @param bIsRead true if the notification is read, false otherwise
      */
-    public void setStatus( int nStatus )
+    public void setIsRead( boolean bIsRead )
     {
-        _nStatus = nStatus;
+        _nIsRead = bIsRead ? TRUE : FALSE;
     }
 
     /**
-     * Get the status
-     * @return the status
+     * Check if the notification is read
+     * @return true if it is read, false otherwise
      */
-    public int getStatus(  )
+    public boolean getIsRead(  )
     {
-        return _nStatus;
+        return _nIsRead == TRUE;
     }
 
     /**
-     * Check if the filter contains the attribute order
+     * Check if the filter contains the attribute is_read
      * @return true if it contains, false otherwise
      */
-    public boolean containsStatus(  )
+    public boolean containsisRead(  )
     {
-        return _nStatus != ALL_INT;
+        return _nIsRead != ALL_INT;
     }
 }

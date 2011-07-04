@@ -49,25 +49,22 @@ public class NotificationDAO implements INotificationDAO
 {
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_notification ) FROM crm_notification ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_notification (id_notification, id_demand, status, object, message, date_creation) VALUES (?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_notification, id_demand, status, object, message, date_creation FROM crm_notification WHERE id_notification = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_notification SET status = ?, object = ?, message = ? WHERE id_notification = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_notification (id_notification, id_demand, is_read, object, message, date_creation) VALUES (?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_notification, id_demand, is_read, object, message, date_creation FROM crm_notification WHERE id_notification = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_notification SET is_read = ?, object = ?, message = ? WHERE id_notification = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_notification WHERE id_notification = ? ";
     private static final String SQL_QUERY_DELETE_BY_ID_DEMAND = " DELETE FROM crm_notification WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_notification, id_demand, status, object, message, date_creation FROM crm_notification ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_notification, id_demand, is_read, object, message, date_creation FROM crm_notification ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
     private static final String SQL_DESC = " DESC ";
-    private static final String SQL_ASC = " ASC ";
     private static final String SQL_OR = " OR ";
     private static final String SQL_AND = " AND ";
     private static final String SQL_WHERE = " WHERE ";
     private static final String SQL_DATE_CREATION = " date_creation ";
-    private static final String SQL_STATUS = " status ";
     private static final String SQL_FILTER_ID_DEMAND = " id_demand = ? ";
-    private static final String SQL_FILTER_STATUS = " status = ? ";
-    private static final String COMMA = ",";
+    private static final String SQL_FILTER_IS_READ = " is_read = ? ";
 
     /**
      * {@inheritDoc}
@@ -105,7 +102,7 @@ public class NotificationDAO implements INotificationDAO
 
             daoUtil.setInt( nIndex++, notification.getIdNotification(  ) );
             daoUtil.setInt( nIndex++, notification.getIdDemand(  ) );
-            daoUtil.setInt( nIndex++, notification.getStatus(  ) );
+            daoUtil.setBoolean( nIndex++, notification.isRead(  ) );
             daoUtil.setString( nIndex++, notification.getObject(  ) );
             daoUtil.setString( nIndex++, notification.getMessage(  ) );
             daoUtil.setTimestamp( nIndex++, notification.getDateCreation(  ) );
@@ -136,7 +133,7 @@ public class NotificationDAO implements INotificationDAO
             notification = new Notification(  );
             notification.setIdNotification( daoUtil.getInt( nIndex++ ) );
             notification.setIdDemand( daoUtil.getInt( nIndex++ ) );
-            notification.setStatus( daoUtil.getInt( nIndex++ ) );
+            notification.setIsRead( daoUtil.getBoolean( nIndex++ ) );
             notification.setObject( daoUtil.getString( nIndex++ ) );
             notification.setMessage( daoUtil.getString( nIndex++ ) );
             notification.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
@@ -158,7 +155,7 @@ public class NotificationDAO implements INotificationDAO
 
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-            daoUtil.setInt( nIndex++, notification.getStatus(  ) );
+            daoUtil.setBoolean( nIndex++, notification.isRead(  ) );
             daoUtil.setString( nIndex++, notification.getObject(  ) );
             daoUtil.setString( nIndex++, notification.getMessage(  ) );
 
@@ -197,9 +194,6 @@ public class NotificationDAO implements INotificationDAO
     {
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
         sbSQL.append( SQL_ORDER_BY );
-        sbSQL.append( SQL_STATUS );
-        sbSQL.append( SQL_ASC );
-        sbSQL.append( COMMA );
         sbSQL.append( SQL_DATE_CREATION );
         sbSQL.append( SQL_DESC );
 
@@ -213,7 +207,7 @@ public class NotificationDAO implements INotificationDAO
             Notification notification = new Notification(  );
             notification.setIdNotification( daoUtil.getInt( nIndex++ ) );
             notification.setIdDemand( daoUtil.getInt( nIndex++ ) );
-            notification.setStatus( daoUtil.getInt( nIndex++ ) );
+            notification.setIsRead( daoUtil.getBoolean( nIndex++ ) );
             notification.setObject( daoUtil.getString( nIndex++ ) );
             notification.setMessage( daoUtil.getString( nIndex++ ) );
             notification.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
@@ -233,9 +227,6 @@ public class NotificationDAO implements INotificationDAO
         List<Notification> listNotifications = new ArrayList<Notification>(  );
         StringBuilder sbSQL = new StringBuilder( buildSQLQuery( nFilter ) );
         sbSQL.append( SQL_ORDER_BY );
-        sbSQL.append( SQL_STATUS );
-        sbSQL.append( SQL_ASC );
-        sbSQL.append( COMMA );
         sbSQL.append( SQL_DATE_CREATION );
         sbSQL.append( SQL_DESC );
 
@@ -249,7 +240,7 @@ public class NotificationDAO implements INotificationDAO
             Notification notification = new Notification(  );
             notification.setIdNotification( daoUtil.getInt( nIndex++ ) );
             notification.setIdDemand( daoUtil.getInt( nIndex++ ) );
-            notification.setStatus( daoUtil.getInt( nIndex++ ) );
+            notification.setIsRead( daoUtil.getBoolean( nIndex++ ) );
             notification.setObject( daoUtil.getString( nIndex++ ) );
             notification.setMessage( daoUtil.getString( nIndex++ ) );
             notification.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
@@ -277,10 +268,10 @@ public class NotificationDAO implements INotificationDAO
             sbSQL.append( SQL_FILTER_ID_DEMAND );
         }
 
-        if ( nFilter.containsStatus(  ) )
+        if ( nFilter.containsisRead(  ) )
         {
             addSQLWhereOr( nFilter.getIsWideSearch(  ), sbSQL, nIndex );
-            sbSQL.append( SQL_FILTER_STATUS );
+            sbSQL.append( SQL_FILTER_IS_READ );
         }
 
         return sbSQL.toString(  );
@@ -326,9 +317,9 @@ public class NotificationDAO implements INotificationDAO
             daoUtil.setInt( nIndex++, nFilter.getIdDemand(  ) );
         }
 
-        if ( nFilter.containsStatus(  ) )
+        if ( nFilter.containsisRead(  ) )
         {
-            daoUtil.setInt( nIndex++, nFilter.getStatus(  ) );
+            daoUtil.setBoolean( nIndex++, nFilter.getIsRead(  ) );
         }
     }
 }

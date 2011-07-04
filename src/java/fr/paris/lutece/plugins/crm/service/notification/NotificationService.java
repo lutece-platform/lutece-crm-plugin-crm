@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crm.service.notification;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationHome;
-import fr.paris.lutece.plugins.crm.business.notification.NotificationStatusEnum;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
@@ -93,6 +92,7 @@ public final class NotificationService
 
         if ( notification != null )
         {
+        	notification.setIsRead( false );
             notification.setDateCreation( new Timestamp( new Date(  ).getTime(  ) ) );
             nNewPrimaryKey = NotificationHome.create( notification );
         }
@@ -158,7 +158,7 @@ public final class NotificationService
     {
         NotificationFilter nFilter = new NotificationFilter(  );
         nFilter.setIdDemand( nIdDemand );
-        nFilter.setStatus( NotificationStatusEnum.NEW.getId(  ) );
+        nFilter.setIsRead( false );
 
         List<Notification> listNotifications = NotificationHome.findByFilter( nFilter );
 

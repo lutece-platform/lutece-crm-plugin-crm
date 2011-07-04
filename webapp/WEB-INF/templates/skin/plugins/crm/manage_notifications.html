@@ -16,17 +16,15 @@
 					<#list notifications_list as notification>
 						<tr>
 							<td>
-								<#if notification.status = 0>
-									<b>
-										<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
-											${notification.object}
-										</a>
-									</b>
-								<#else>
-									<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
+								<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
+									<#if notification.isRead(  )>
 										${notification.object}
-									</a>
-								</#if>
+									<#else>
+										<b>
+											${notification.object}
+										</b>
+									</#if>
+								</a>
 							</td>
 							<td>
 								${notification.dateCreation?date}
