@@ -268,7 +268,7 @@ public class NotificationDAO implements INotificationDAO
             sbSQL.append( SQL_FILTER_ID_DEMAND );
         }
 
-        if ( nFilter.containsisRead(  ) )
+        if ( nFilter.containsIsRead(  ) )
         {
             addSQLWhereOr( nFilter.getIsWideSearch(  ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_IS_READ );
@@ -317,9 +317,9 @@ public class NotificationDAO implements INotificationDAO
             daoUtil.setInt( nIndex++, nFilter.getIdDemand(  ) );
         }
 
-        if ( nFilter.containsisRead(  ) )
+        if ( nFilter.containsIsRead(  ) )
         {
-            daoUtil.setBoolean( nIndex++, nFilter.getIsRead(  ) );
+            daoUtil.setBoolean( nIndex++, nFilter.isRead(  ) );
         }
     }
 }

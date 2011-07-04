@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.crm.web.category;
 
 import fr.paris.lutece.plugins.crm.business.demand.category.Category;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -63,40 +64,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CategoryJspBean extends PluginAdminPageJspBean
 {
-    // PARAMETERS
-    private static final String PARAMETER_CATEGORY_ID_CATEGORY = "category_id_category";
-    private static final String PARAMETER_CATEGORY_NAME = "category_name";
-    private static final String PARAMETER_CATEGORY_DESCRIPTION = "category_description";
-    private static final String PARAMETER_PAGE_INDEX = "page_index";
-
     // TEMPLATES
     private static final String TEMPLATE_MANAGE_CATEGORIES = "/admin/plugins/crm/category/manage_categories.html";
     private static final String TEMPLATE_CREATE_CATEGORY = "/admin/plugins/crm/category/create_category.html";
     private static final String TEMPLATE_MODIFY_CATEGORY = "/admin/plugins/crm/category/modify_category.html";
-
-    // PROPERTIES
-    private static final String PROPERTY_PAGE_TITLE_MANAGE_CATEGORIES = "crm.manage_categories.pageTitle";
-    private static final String PROPERTY_PAGE_TITLE_MODIFY_CATEGORY = "crm.modify_category.pageTitle";
-    private static final String PROPERTY_PAGE_TITLE_CREATE_CATEGORY = "crm.create_category.pageTitle";
-
-    // MARKS
-    private static final String MARK_CATEGORIES_LIST = "categories_list";
-    private static final String MARK_CATEGORY = "category";
-    private static final String MARK_PAGINATOR = "paginator";
-    private static final String MARK_NB_ITEMS_PER_PAGE = "nb_items_per_page";
 
     // JSP
     private static final String JSP_DO_REMOVE_CATEGORY = "jsp/admin/plugins/crm/DoRemoveCategory.jsp";
     private static final String JSP_MANAGE_CATEGORIES = "jsp/admin/plugins/crm/ManageCategories.jsp";
     private static final String JSP_REDIRECT_TO_MANAGE_CATEGORIES = "ManageCategories.jsp";
 
-    // PROPERTIES
-    private static final String PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE = "crm.listCategories.itemsPerPage";
-
-    // MESSAGES
-    private static final String MESSAGE_CONFIRM_REMOVE_CATEGORY = "crm.message.confirmRemoveCategory";
-    private static final String MESSAGE_ERROR = "crm.message.error";
-    private static final String MESSAGE_CANNOT_REMOVE_CATEGORY = "crm.message.cannotRemoveCategory";
+    // VARIABLES
     private CategoryService _categoryService = CategoryService.getService(  );
     private int _nDefaultItemsPerPage;
     private String _strCurrentPageIndex;
@@ -109,10 +87,11 @@ public class CategoryJspBean extends PluginAdminPageJspBean
      */
     public String getManageCategories( HttpServletRequest request )
     {
-        setPageTitleProperty( PROPERTY_PAGE_TITLE_MANAGE_CATEGORIES );
+        setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_MANAGE_CATEGORIES );
 
         _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
-        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE, 50 );
+        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE,
+                50 );
         _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
                 _nDefaultItemsPerPage );
 
@@ -120,13 +99,13 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         String strUrl = url.getUrl(  );
         Collection<Category> listCategories = _categoryService.getCategoriesList(  );
         LocalizedPaginator paginator = new LocalizedPaginator( (List<Category>) listCategories, _nItemsPerPage, strUrl,
-                PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
+                CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
-        model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( _nItemsPerPage ) );
-        model.put( MARK_PAGINATOR, paginator );
-        model.put( MARK_CATEGORIES_LIST, paginator.getPageItems(  ) );
+        model.put( CRMConstants.MARK_NB_ITEMS_PER_PAGE, Integer.toString( _nItemsPerPage ) );
+        model.put( CRMConstants.MARK_PAGINATOR, paginator );
+        model.put( CRMConstants.MARK_CATEGORIES_LIST, paginator.getPageItems(  ) );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_CATEGORIES, getLocale(  ), model );
 
@@ -140,7 +119,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
      */
     public String getCreateCategory( HttpServletRequest request )
     {
-        setPageTitleProperty( PROPERTY_PAGE_TITLE_CREATE_CATEGORY );
+        setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_CREATE_CATEGORY );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
@@ -157,8 +136,8 @@ public class CategoryJspBean extends PluginAdminPageJspBean
     public String doCreateCategory( HttpServletRequest request )
     {
         String strUrl = StringUtils.EMPTY;
-        String strName = request.getParameter( PARAMETER_CATEGORY_NAME );
-        String strDescription = request.getParameter( PARAMETER_CATEGORY_DESCRIPTION );
+        String strName = request.getParameter( CRMConstants.PARAMETER_CATEGORY_NAME );
+        String strDescription = request.getParameter( CRMConstants.PARAMETER_CATEGORY_DESCRIPTION );
 
         if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) )
         {
@@ -186,20 +165,20 @@ public class CategoryJspBean extends PluginAdminPageJspBean
     public String getConfirmRemoveCategory( HttpServletRequest request )
     {
         String strUrl = StringUtils.EMPTY;
-        String strCategoryId = request.getParameter( PARAMETER_CATEGORY_ID_CATEGORY );
+        String strCategoryId = request.getParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY );
 
         if ( StringUtils.isNotBlank( strCategoryId ) && StringUtils.isNumeric( strCategoryId ) )
         {
             int nId = Integer.parseInt( strCategoryId );
             UrlItem url = new UrlItem( JSP_DO_REMOVE_CATEGORY );
-            url.addParameter( PARAMETER_CATEGORY_ID_CATEGORY, nId );
+            url.addParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY, nId );
 
-            strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_CATEGORY, url.getUrl(  ),
-                    AdminMessage.TYPE_CONFIRMATION );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_CATEGORY,
+                    url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
         }
         else
         {
-            strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
         }
 
         return strUrl;
@@ -213,7 +192,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
     public String doRemoveCategory( HttpServletRequest request )
     {
         String strUrl = StringUtils.EMPTY;
-        String strCategoryId = request.getParameter( PARAMETER_CATEGORY_ID_CATEGORY );
+        String strCategoryId = request.getParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY );
 
         if ( StringUtils.isNotBlank( strCategoryId ) && StringUtils.isNumeric( strCategoryId ) )
         {
@@ -228,13 +207,13 @@ public class CategoryJspBean extends PluginAdminPageJspBean
             else
             {
                 Object[] args = { strError };
-                strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CANNOT_REMOVE_CATEGORY, args,
+                strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CANNOT_REMOVE_CATEGORY, args,
                         AdminMessage.TYPE_STOP );
             }
         }
         else
         {
-            strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
         }
 
         return strUrl;
@@ -247,10 +226,10 @@ public class CategoryJspBean extends PluginAdminPageJspBean
      */
     public String getModifyCategory( HttpServletRequest request )
     {
-        setPageTitleProperty( PROPERTY_PAGE_TITLE_MODIFY_CATEGORY );
+        setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_MODIFY_CATEGORY );
 
         String strUrl = StringUtils.EMPTY;
-        String strCategoryId = request.getParameter( PARAMETER_CATEGORY_ID_CATEGORY );
+        String strCategoryId = request.getParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY );
 
         if ( StringUtils.isNotBlank( strCategoryId ) && StringUtils.isNumeric( strCategoryId ) )
         {
@@ -258,7 +237,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
             Category category = _categoryService.findByPrimaryKey( nId );
 
             Map<String, Object> model = new HashMap<String, Object>(  );
-            model.put( MARK_CATEGORY, category );
+            model.put( CRMConstants.MARK_CATEGORY, category );
 
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_CATEGORY, getLocale(  ), model );
 
@@ -266,7 +245,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         }
         else
         {
-            strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
         }
 
         return strUrl;
@@ -280,12 +259,12 @@ public class CategoryJspBean extends PluginAdminPageJspBean
     public String doModifyCategory( HttpServletRequest request )
     {
         String strUrl = StringUtils.EMPTY;
-        String strCategoryId = request.getParameter( PARAMETER_CATEGORY_ID_CATEGORY );
+        String strCategoryId = request.getParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY );
 
         if ( StringUtils.isNotBlank( strCategoryId ) && StringUtils.isNumeric( strCategoryId ) )
         {
-            String strName = request.getParameter( PARAMETER_CATEGORY_NAME );
-            String strDescription = request.getParameter( PARAMETER_CATEGORY_DESCRIPTION );
+            String strName = request.getParameter( CRMConstants.PARAMETER_CATEGORY_NAME );
+            String strDescription = request.getParameter( CRMConstants.PARAMETER_CATEGORY_DESCRIPTION );
 
             if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) )
             {
@@ -302,7 +281,8 @@ public class CategoryJspBean extends PluginAdminPageJspBean
                 }
                 else
                 {
-                    strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR,
+                            AdminMessage.TYPE_STOP );
                 }
             }
             else
@@ -312,7 +292,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         }
         else
         {
-            strUrl = AdminMessageService.getMessageUrl( request, MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
         }
 
         return strUrl;

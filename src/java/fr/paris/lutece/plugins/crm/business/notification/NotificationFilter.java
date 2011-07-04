@@ -128,7 +128,7 @@ public class NotificationFilter
      * Check if the notification is read
      * @return true if it is read, false otherwise
      */
-    public boolean getIsRead(  )
+    public boolean isRead(  )
     {
         return _nIsRead == TRUE;
     }
@@ -137,7 +137,7 @@ public class NotificationFilter
      * Check if the filter contains the attribute is_read
      * @return true if it contains, false otherwise
      */
-    public boolean containsisRead(  )
+    public boolean containsIsRead(  )
     {
         return _nIsRead != ALL_INT;
     }

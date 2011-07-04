@@ -43,6 +43,7 @@ import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
@@ -73,39 +74,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CRMApp implements XPageApplication
 {
-    // PARAMETERS
-    private static final String PARAMETER_ACTION = "action";
-    private static final String PARAMETER_ID_DEMAND = "id_demand";
-    private static final String PARAMETER_ID_NOTIFICATION = "id_notification";
-    private static final String PARAMETER_PAGE = "page";
-
-    // MARKS
-    private static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
-    private static final String MARK_MAP_DEMANDS_LIST = "map_demands_list";
-    private static final String MARK_MYLUTECE_USER = "mylutece_user";
-    private static final String MARK_CATEGORIES_LIST = "categories_list";
-    private static final String MARK_DEMAND_TYPES_LIST = "demand_types_list";
-    private static final String MARK_NOTIFICATIONS_LIST = "notifications_list";
-    private static final String MARK_NOTIFICATION = "notification";
-    private static final String MARK_DEMAND = "demand";
-    private static final String MARK_DEMAND_TYPE = "demand_type";
-    private static final String MARK_STATUS_CRM_LIST = "status_crm_list";
-
-    // PROPERTIES
-    private static final String PROPERTY_PAGE_PATH = "crm.crm.pagePathLabel";
-    private static final String PROPERTY_PAGE_TITLE = "crm.crm.pageTitle";
-    private static final String PROPERTY_MANAGE_NOTIFICATIONS_PAGE_TITLE = "crm.manage_notifications.pageTitle";
-    private static final String PROPERTY_VIEW_NOTIFICATION_PAGE_TITLE = "crm.view_notification.pageTitle";
-
-    // ACTIONS
-    private static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
-    private static final String ACTION_VIEW_NOTIFICATION = "view_notification";
-    private static final String ACTION_REMOVE_DEMAND = "remove_demand";
-    private static final String ACTION_DO_REMOVE_DEMAND = "do_remove_demand";
-
-    // MESSAGES
-    private static final String MESSAGE_CONFIRM_REMOVE_DEMAND = "crm.message.confirmRemoveDemand";
-
     // JSP
     private static final String JSP_PORTAL = "jsp/site/Portal.jsp";
 
@@ -113,6 +81,8 @@ public class CRMApp implements XPageApplication
     private static final String TEMPLATE_CRM_HOME_PAGE = "skin/plugins/crm/crm.html";
     private static final String TEMPLATE_MANAGE_NOTIFICATIONS = "skin/plugins/crm/manage_notifications.html";
     private static final String TEMPLATE_VIEW_NOTIFICATION = "skin/plugins/crm/view_notification.html";
+
+    // VARIABLES
     private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
     private DemandService _demandService = DemandService.getService(  );
     private CategoryService _categoryService = CategoryService.getService(  );
@@ -133,23 +103,23 @@ public class CRMApp implements XPageApplication
     {
         XPage page = null;
         LuteceUser user = getUser( request );
-        String strAction = request.getParameter( PARAMETER_ACTION );
+        String strAction = request.getParameter( CRMConstants.PARAMETER_ACTION );
 
         if ( StringUtils.isNotBlank( strAction ) )
         {
-            if ( ACTION_MANAGE_NOTIFICATIONS.equals( strAction ) )
+            if ( CRMConstants.ACTION_MANAGE_NOTIFICATIONS.equals( strAction ) )
             {
                 page = getManageNotificationsPage( request, user );
             }
-            else if ( ACTION_VIEW_NOTIFICATION.equals( strAction ) )
+            else if ( CRMConstants.ACTION_VIEW_NOTIFICATION.equals( strAction ) )
             {
                 page = getViewNotificationPage( request, user );
             }
-            else if ( ACTION_REMOVE_DEMAND.equals( strAction ) )
+            else if ( CRMConstants.ACTION_REMOVE_DEMAND.equals( strAction ) )
             {
                 getMessageConfirmation( request );
             }
-            else if ( ACTION_DO_REMOVE_DEMAND.equals( strAction ) )
+            else if ( CRMConstants.ACTION_DO_REMOVE_DEMAND.equals( strAction ) )
             {
                 doRemoveDemand( request );
             }
@@ -174,17 +144,19 @@ public class CRMApp implements XPageApplication
         XPage page = new XPage(  );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
-        model.put( MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
-        model.put( MARK_CATEGORIES_LIST, _categoryService.getCategories( request.getLocale(  ), false, true ) );
-        model.put( MARK_MAP_DEMANDS_LIST, _demandService.findByUserGuid( user.getName(  ), request.getLocale(  ) ) );
-        model.put( MARK_MYLUTECE_USER, user );
-        model.put( MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
-        model.put( MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
+        model.put( CRMConstants.MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
+        model.put( CRMConstants.MARK_CATEGORIES_LIST,
+            _categoryService.getCategories( request.getLocale(  ), false, true ) );
+        model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
+            _demandService.findByUserGuid( user.getName(  ), request.getLocale(  ) ) );
+        model.put( CRMConstants.MARK_MYLUTECE_USER, user );
+        model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
+        model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
 
-        page.setTitle( I18nService.getLocalizedString( PROPERTY_PAGE_TITLE, request.getLocale(  ) ) );
-        page.setPathLabel( I18nService.getLocalizedString( PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
+        page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_TITLE, request.getLocale(  ) ) );
+        page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
         page.setContent( template.getHtml(  ) );
 
         return page;
@@ -199,7 +171,7 @@ public class CRMApp implements XPageApplication
     private XPage getManageNotificationsPage( HttpServletRequest request, LuteceUser user )
     {
         XPage page = null;
-        String strIdDemand = request.getParameter( PARAMETER_ID_DEMAND );
+        String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
 
         if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
         {
@@ -217,16 +189,17 @@ public class CRMApp implements XPageApplication
                 DemandType demandType = _demandTypeService.findByPrimaryKey( demand.getIdDemandType(  ) );
 
                 Map<String, Object> model = new HashMap<String, Object>(  );
-                model.put( MARK_NOTIFICATIONS_LIST, _notificationService.findByFilter( nFilter ) );
-                model.put( MARK_DEMAND_TYPE, demandType );
-                model.put( MARK_MYLUTECE_USER, user );
+                model.put( CRMConstants.MARK_NOTIFICATIONS_LIST, _notificationService.findByFilter( nFilter ) );
+                model.put( CRMConstants.MARK_DEMAND_TYPE, demandType );
+                model.put( CRMConstants.MARK_MYLUTECE_USER, user );
 
                 HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_NOTIFICATIONS,
                         request.getLocale(  ), model );
 
-                page.setTitle( I18nService.getLocalizedString( PROPERTY_MANAGE_NOTIFICATIONS_PAGE_TITLE,
+                page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_MANAGE_NOTIFICATIONS_PAGE_TITLE,
                         request.getLocale(  ) ) );
-                page.setPathLabel( I18nService.getLocalizedString( PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
+                page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH,
+                        request.getLocale(  ) ) );
                 page.setContent( template.getHtml(  ) );
             }
         }
@@ -243,7 +216,7 @@ public class CRMApp implements XPageApplication
     private XPage getViewNotificationPage( HttpServletRequest request, LuteceUser user )
     {
         XPage page = null;
-        String strIdNotification = request.getParameter( PARAMETER_ID_NOTIFICATION );
+        String strIdNotification = request.getParameter( CRMConstants.PARAMETER_ID_NOTIFICATION );
 
         if ( StringUtils.isNotBlank( strIdNotification ) && StringUtils.isNumeric( strIdNotification ) )
         {
@@ -269,17 +242,18 @@ public class CRMApp implements XPageApplication
                     page = new XPage(  );
 
                     Map<String, Object> model = new HashMap<String, Object>(  );
-                    model.put( MARK_NOTIFICATION, notification );
-                    model.put( MARK_DEMAND, demand );
-                    model.put( MARK_MYLUTECE_USER, user );
-                    model.put( MARK_DEMAND_TYPE, demandType );
+                    model.put( CRMConstants.MARK_NOTIFICATION, notification );
+                    model.put( CRMConstants.MARK_DEMAND, demand );
+                    model.put( CRMConstants.MARK_MYLUTECE_USER, user );
+                    model.put( CRMConstants.MARK_DEMAND_TYPE, demandType );
 
                     HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_VIEW_NOTIFICATION,
                             request.getLocale(  ), model );
 
-                    page.setTitle( I18nService.getLocalizedString( PROPERTY_VIEW_NOTIFICATION_PAGE_TITLE,
+                    page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_VIEW_NOTIFICATION_PAGE_TITLE,
                             request.getLocale(  ) ) );
-                    page.setPathLabel( I18nService.getLocalizedString( PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
+                    page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH,
+                            request.getLocale(  ) ) );
                     page.setContent( template.getHtml(  ) );
                 }
             }
@@ -296,7 +270,7 @@ public class CRMApp implements XPageApplication
     private void getMessageConfirmation( HttpServletRequest request )
         throws SiteMessageException
     {
-        String strIdDemand = request.getParameter( PARAMETER_ID_DEMAND );
+        String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
 
         if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
         {
@@ -305,11 +279,11 @@ public class CRMApp implements XPageApplication
             // Not safe because the webmaster can change the portal url set in the property file
             // UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );
             UrlItem url = new UrlItem( JSP_PORTAL );
-            url.addParameter( PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
-            url.addParameter( PARAMETER_ACTION, ACTION_DO_REMOVE_DEMAND );
-            url.addParameter( PARAMETER_ID_DEMAND, nIdDemand );
-            SiteMessageService.setMessage( request, MESSAGE_CONFIRM_REMOVE_DEMAND, SiteMessage.TYPE_CONFIRMATION,
-                url.getUrl(  ) );
+            url.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
+            url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DEMAND );
+            url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
+            SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
+                SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
         }
     }
 
@@ -319,7 +293,7 @@ public class CRMApp implements XPageApplication
      */
     private void doRemoveDemand( HttpServletRequest request )
     {
-        String strIdDemand = request.getParameter( PARAMETER_ID_DEMAND );
+        String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
 
         if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
         {
