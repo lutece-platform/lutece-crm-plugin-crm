@@ -31,26 +31,31 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.service.category;
+package fr.paris.lutece.plugins.crm.service.demand;
 
+import fr.paris.lutece.plugins.crm.business.demand.Demand;
+import fr.paris.lutece.plugins.crm.business.demand.DemandListener;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.portal.service.util.RemovalListenerService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  *
- * CategoryRemovalListenerService
+ * DemandListenerService
  *
  */
-public final class CategoryRemovalListenerService
+public final class DemandListenerService
 {
-    private static final String BEAN_CRM_CATEGORY_REMOVAL_SERVICE = "crm.categoryRemovalService";
+    private static final String BEAN_CRM_DEMAND_LISTENER_SERVICE = "crm.demandListenerService";
+    private List<DemandListener> _listRegisteredListeners = new ArrayList<DemandListener>(  );
 
     /**
      * Private constructor
      */
-    private CategoryRemovalListenerService(  )
+    private DemandListenerService(  )
     {
     }
 
@@ -58,9 +63,30 @@ public final class CategoryRemovalListenerService
      * Returns the removal service
      * @return The removal service
      */
-    public static RemovalListenerService getService(  )
+    public static DemandListenerService getService(  )
     {
-        return (RemovalListenerService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CATEGORY_REMOVAL_SERVICE );
+        return (DemandListenerService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
+            BEAN_CRM_DEMAND_LISTENER_SERVICE );
+    }
+
+    /**
+     * Register a listener
+     * @param listener the listener
+     */
+    public void register( DemandListener listener )
+    {
+        _listRegisteredListeners.add( listener );
+    }
+
+    /**
+     * Do remove the demand
+     * @param demand the demand
+     */
+    public void doRemoveDemand( Demand demand )
+    {
+        for ( DemandListener listener : _listRegisteredListeners )
+        {
+            listener.doRemoveDemand( demand );
+        }
     }
 }

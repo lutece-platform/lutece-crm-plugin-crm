@@ -22,5 +22,6 @@
     	<property name="notificationService" ref="crm.notificationService" />
     	<property name="demandService" ref="crm.demandService" />
     </bean>
+    <bean id="crm.demandListenerService" class="fr.paris.lutece.plugins.crm.service.demand.DemandListenerService" />
     
 </beans>

@@ -31,36 +31,19 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.service.category;
-
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.portal.service.util.RemovalListenerService;
+package fr.paris.lutece.plugins.crm.business.demand;
 
 
 /**
  *
- * CategoryRemovalListenerService
+ * DemandListener
  *
  */
-public final class CategoryRemovalListenerService
+public interface DemandListener
 {
-    private static final String BEAN_CRM_CATEGORY_REMOVAL_SERVICE = "crm.categoryRemovalService";
-
     /**
-     * Private constructor
+     * Do remove a demand
+     * @param demand the demand
      */
-    private CategoryRemovalListenerService(  )
-    {
-    }
-
-    /**
-     * Returns the removal service
-     * @return The removal service
-     */
-    public static RemovalListenerService getService(  )
-    {
-        return (RemovalListenerService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CATEGORY_REMOVAL_SERVICE );
-    }
+    void doRemoveDemand( Demand demand );
 }

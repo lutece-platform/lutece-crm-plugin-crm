@@ -122,11 +122,14 @@ public final class DemandService
      */
     public void remove( int nIdDemand )
     {
+        Demand demand = findByPrimaryKey( nIdDemand );
+
         // Remove all notifications associated to the demand
         NotificationService.getService(  ).removeByIdDemand( nIdDemand );
         DemandHome.remove( nIdDemand );
 
-        // TODO : Remove the data of the resource stored in the plugin-blobstore
+        // Remove all data associated to the demand
+        DemandListenerService.getService(  ).doRemoveDemand( demand );
     }
 
     /**
