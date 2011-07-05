@@ -18,6 +18,7 @@
     </core-version-dependency>
     <db-pool-required>1</db-pool-required>
 
+	<!-- XPage -->
     <applications>
         <application>
             <application-id>crm</application-id>
@@ -25,6 +26,7 @@
         </application>
     </applications>
  
+	<!-- Admin features -->
     <admin-features>
         <admin-feature>
             <feature-id>CRM_DEMAND_TYPES_MANAGEMENT</feature-id>
@@ -36,4 +38,19 @@
         </admin-feature>
     </admin-features>
 
+	<!-- Daemons -->
+	<daemons>
+		<daemon>
+			<daemon-id>crmDemandCleaner</daemon-id>
+			<daemon-name>
+				crm.daemon.crmDemandCleaner.name
+			</daemon-name>
+			<daemon-description>
+				crm.daemon.crmDemandCleaner.description
+			</daemon-description>
+			<daemon-class>
+				fr.paris.lutece.plugins.crm.service.daemon.DemandCleanerDaemon
+			</daemon-class>
+		</daemon>
+	</daemons>
 </plug-in>

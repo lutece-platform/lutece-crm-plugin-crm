@@ -56,6 +56,7 @@ public final class CRMConstants
     public static final String PROPERTY_PAGE_TITLE_MODIFY_CATEGORY = "crm.modify_category.pageTitle";
     public static final String PROPERTY_PAGE_TITLE_CREATE_CATEGORY = "crm.create_category.pageTitle";
     public static final String PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE = "crm.listCategories.itemsPerPage";
+    public static final String PROPERTY_DAEMON_NB_EXPIRATION_DAYS = "daemon.crmDemandCleaner.nbExpirationDays";
 
     // MARKS 
     public static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
