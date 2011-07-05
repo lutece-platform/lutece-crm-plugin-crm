@@ -1,7 +1,7 @@
 <#-- Build the url resource from a given demand_type -->
 <#function buildDemandTypeUrlResource demand_type user>
 	<#if demand_type??>
-		<#if ( demand_type.urlResource?index_of("?") >= 0 )>
+		<#if ( demand_type.urlResource?index_of( "?" ) >= 0 )>
 			<#return demand_type.urlResource + "&amp;id_demand_type=" + demand_type.idDemandType + "&amp;user_guid=" + user.name>
 		<#else>
 			<#return demand_type.urlResource + "?id_demand_type=" + demand_type.idDemandType + "&amp;user_guid=" + user.name>
@@ -21,12 +21,14 @@
 </#function>
 
 <#-- Get the url resource from a given id demand type -->
-<#function getDemandTypeUrlResource demand_types_list id_demand_type user>
-	<#list demand_types_list as demand_type>
-		<#if demand_type.idDemandType = id_demand_type>
-			<#return buildDemandTypeUrlResource( demand_type, user )>
-		</#if>
-	</#list>
+<#function getDemandTypeUrlResource demand_types_list demand>
+	<#if demand?? && demand_types_list??>
+		<#list demand_types_list as demand_type>
+			<#if demand_type.idDemandType = demand.idDemandType>
+				<#return demand_type.urlResource>
+			</#if>
+		</#list>
+	</#if>
 	<#return "">
 </#function>
 
@@ -45,9 +47,11 @@
 							<#list demands_list as demand>
 								<tr>
 									<td>
-										<a href="${getDemandTypeUrlResource( demand_types_list, demand.idDemandType, mylutece_user)}">
-											${getDemandTypeLabel( demand_types_list, demand.idDemandType)}
-										</a>
+										<form method="post" action="${getDemandTypeUrlResource( demand_types_list, demand )}">
+											<input type="hidden" name="id_demand" value="${demand.idDemand}" />
+											<input type="hidden" name="demand_data" value="${demand.data}" />
+											<input type="submit" value="${getDemandTypeLabel( demand_types_list, demand.idDemandType)}" />
+										</form>
 									</td>
 									<td>
 										${demand.statusText}
