@@ -111,7 +111,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         UrlItem url = getUrlManageDemandTypes( request );
         List<DemandType> listDemandTypes = getDemandTypesList( request );
 
-        LocalizedPaginator paginator = new LocalizedPaginator( listDemandTypes, _nItemsPerPage, url.getUrl(  ),
+        LocalizedPaginator<DemandType> paginator = new LocalizedPaginator<DemandType>( listDemandTypes, _nItemsPerPage, url.getUrl(  ),
                 CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
