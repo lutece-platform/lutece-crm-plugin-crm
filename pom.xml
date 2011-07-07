@@ -9,7 +9,7 @@
 	<artifactId>plugin-crm</artifactId>
 	<packaging>lutece-plugin</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>Lutece citizen relation management plugin</name>
+	<name>Lutece crm plugin</name>
 	<repositories>
 		<repository>
 			<id>lutece</id>
