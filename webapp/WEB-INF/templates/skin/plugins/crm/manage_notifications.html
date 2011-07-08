@@ -10,11 +10,15 @@
 			<#if notifications_list?has_content>
 				<table>
 					<tr>
+						<th>#i18n{crm.manage_notifications.labelSender}</th>
 						<th>#i18n{crm.manage_notifications.labelObject}</th>
 						<th>#i18n{crm.manage_notifications.labelReceived}</th>
 					</tr>
 					<#list notifications_list as notification>
 						<tr>
+							<td>
+								${notification.sender}
+							</td>
 							<td>
 								<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
 									<#if notification.isRead(  )>

@@ -108,6 +108,7 @@ public final class NotificationService
     {
         if ( notification != null )
         {
+            notification.setDateCreation( new Timestamp( new Date(  ).getTime(  ) ) );
             NotificationHome.update( notification );
         }
     }

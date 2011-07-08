@@ -37,7 +37,9 @@ import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -120,13 +122,27 @@ public final class CRMService
      * @param nIdDemand the id demand
      * @param strObject the object of the notification
      * @param strMessage the message of the notification
+     * @param strSender the sender
      */
-    public void notify( int nIdDemand, String strObject, String strMessage )
+    public void notify( int nIdDemand, String strObject, String strMessage, String strSender )
     {
+        String strNotificationSender = StringUtils.EMPTY;
+
+        if ( StringUtils.isBlank( strSender ) )
+        {
+            // If the sender is not filled, the email from webmaster.properties is filled instead
+            strNotificationSender = AppPropertiesService.getProperty( CRMConstants.PROPERTY_WEBMASTER_EMAIL );
+        }
+        else
+        {
+            strNotificationSender = strSender;
+        }
+
         Notification notification = new Notification(  );
         notification.setIdDemand( nIdDemand );
         notification.setObject( strObject );
         notification.setMessage( strMessage );
+        notification.setSender( strNotificationSender );
         _notificationService.create( notification );
     }
 

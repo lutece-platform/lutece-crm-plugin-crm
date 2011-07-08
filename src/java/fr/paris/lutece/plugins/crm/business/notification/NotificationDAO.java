@@ -49,12 +49,12 @@ public class NotificationDAO implements INotificationDAO
 {
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_notification ) FROM crm_notification ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_notification (id_notification, id_demand, is_read, object, message, date_creation) VALUES (?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_notification, id_demand, is_read, object, message, date_creation FROM crm_notification WHERE id_notification = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_notification SET is_read = ?, object = ?, message = ? WHERE id_notification = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_notification (id_notification, id_demand, is_read, object, message, date_creation, sender) VALUES (?,?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_notification, id_demand, is_read, object, message, date_creation, sender FROM crm_notification WHERE id_notification = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_notification SET is_read = ?, object = ?, message = ?, date_creation = ?, sender = ? WHERE id_notification = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_notification WHERE id_notification = ? ";
     private static final String SQL_QUERY_DELETE_BY_ID_DEMAND = " DELETE FROM crm_notification WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_notification, id_demand, is_read, object, message, date_creation FROM crm_notification ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_notification, id_demand, is_read, object, message, date_creation, sender FROM crm_notification ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -106,6 +106,7 @@ public class NotificationDAO implements INotificationDAO
             daoUtil.setString( nIndex++, notification.getObject(  ) );
             daoUtil.setString( nIndex++, notification.getMessage(  ) );
             daoUtil.setTimestamp( nIndex++, notification.getDateCreation(  ) );
+            daoUtil.setString( nIndex++, notification.getSender(  ) );
 
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
@@ -137,6 +138,7 @@ public class NotificationDAO implements INotificationDAO
             notification.setObject( daoUtil.getString( nIndex++ ) );
             notification.setMessage( daoUtil.getString( nIndex++ ) );
             notification.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
+            notification.setSender( daoUtil.getString( nIndex++ ) );
         }
 
         daoUtil.free(  );
@@ -158,6 +160,8 @@ public class NotificationDAO implements INotificationDAO
             daoUtil.setBoolean( nIndex++, notification.isRead(  ) );
             daoUtil.setString( nIndex++, notification.getObject(  ) );
             daoUtil.setString( nIndex++, notification.getMessage(  ) );
+            daoUtil.setTimestamp( nIndex++, notification.getDateCreation(  ) );
+            daoUtil.setString( nIndex++, notification.getSender(  ) );
 
             daoUtil.setInt( nIndex++, notification.getIdNotification(  ) );
             daoUtil.executeUpdate(  );
@@ -211,6 +215,7 @@ public class NotificationDAO implements INotificationDAO
             notification.setObject( daoUtil.getString( nIndex++ ) );
             notification.setMessage( daoUtil.getString( nIndex++ ) );
             notification.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
+            notification.setSender( daoUtil.getString( nIndex++ ) );
             listNotifications.add( notification );
         }
 
@@ -244,6 +249,7 @@ public class NotificationDAO implements INotificationDAO
             notification.setObject( daoUtil.getString( nIndex++ ) );
             notification.setMessage( daoUtil.getString( nIndex++ ) );
             notification.setDateCreation( daoUtil.getTimestamp( nIndex++ ) );
+            notification.setSender( daoUtil.getString( nIndex++ ) );
             listNotifications.add( notification );
         }
 

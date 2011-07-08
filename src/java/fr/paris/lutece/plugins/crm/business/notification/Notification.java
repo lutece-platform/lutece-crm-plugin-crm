@@ -49,6 +49,7 @@ public class Notification
     private String _strObject;
     private String _strMessage;
     private Timestamp _dateCreation;
+    private String _strSender;
 
     /**
      * Set the id notification
@@ -156,5 +157,23 @@ public class Notification
     public Timestamp getDateCreation(  )
     {
         return _dateCreation;
+    }
+
+    /**
+     * Set the sender
+     * @param strSender the sender
+     */
+    public void setSender( String strSender )
+    {
+        _strSender = strSender;
+    }
+
+    /**
+     * Get the sender
+     * @return the senders
+     */
+    public String getSender(  )
+    {
+        return _strSender;
     }
 }
