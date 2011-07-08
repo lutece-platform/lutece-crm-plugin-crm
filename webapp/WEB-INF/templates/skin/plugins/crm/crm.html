@@ -10,26 +10,15 @@
 	<#return "">
 </#function>
 
-<#-- Get the label of the demand type from a given id demand type -->
-<#function getDemandTypeLabel demand_types_list id_demand_type>
-	<#list demand_types_list as demand_type>
-		<#if demand_type.idDemandType = id_demand_type>
-			<#return demand_type.label>
-		</#if>
-	</#list>
-	<#return "">
-</#function>
-
-<#-- Get the url resource from a given id demand type -->
-<#function getDemandTypeUrlResource demand_types_list demand>
-	<#if demand?? && demand_types_list??>
+<#-- Get the demand_type from a given id demand type -->
+<#function getDemandType demand_types_list id_demand_type>
+	<#if demand_types_list?? && demand_types_list?has_content>
 		<#list demand_types_list as demand_type>
-			<#if demand_type.idDemandType = demand.idDemandType>
-				<#return demand_type.urlResource>
+			<#if demand_type.idDemandType = id_demand_type>
+				<#return demand_type>
 			</#if>
 		</#list>
 	</#if>
-	<#return "">
 </#function>
 
 <div class="span-11 prepend-1 append-1">
@@ -45,37 +34,43 @@
 						<legend>${status_crm.label}</legend>
 						<table>
 							<#list demands_list as demand>
-								<tr>
-									<td>
-										<form method="post" action="${getDemandTypeUrlResource( demand_types_list, demand )}">
-											<input type="hidden" name="id_demand" value="${demand.idDemand}" />
-											<input type="hidden" name="demand_data" value="${demand.data}" />
-											<input type="submit" value="${getDemandTypeLabel( demand_types_list, demand.idDemandType)}" />
-										</form>
-									</td>
-									<td>
-										${demand.statusText}
-									</td>
-									<td>
-										<#if ( demand.getNumberNotifications(  ) > 0 )>
-											<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
-												<img src="images/local/skin/plugins/crm/mail.png" alt="#i18n{crm.crm.labelMail}" title="#i18n{crm.crm.labelMail}" />
-											</a>
-											<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
-												<span class="alert">
-													${demand.numberUnreadNotifications}
-												</span>
-											</#if>
-										</#if> 
-									</td>
-									<#if demand.idStatusCRM = 0>
+								<#assign demand_type = getDemandType( demand_types_list, demand.idDemand )>
+								<#if demand_type??>
+									<tr>
 										<td>
-											<a href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}">
-												<img src="images/local/skin/plugins/crm/actions/delete.png" alt="#i18n{crm.crm.buttonDelete}" title="#i18n{crm.crm.buttonDelete}" />
-											</a>
+											${demand_type.label}
 										</td>
-									</#if>
-								</tr>
+										<td>
+											${demand.statusText}
+										</td>
+										<td>
+											<#if demand_type.isOpen(  )>
+												<form method="post" action="${demand_type.urlResource}">
+													<input type="hidden" name="id_demand" value="${demand.idDemand}" />
+													<input type="hidden" name="demand_data" value="${demand.data}" />
+													<input type="image" src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
+												</form>
+											</#if>
+											<#if demand.idStatusCRM = 0>
+												<a href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}">
+													<img src="images/admin/skin/actions/delete.png" alt="#i18n{crm.crm.buttonDelete}" title="#i18n{crm.crm.buttonDelete}" />
+												</a>
+											</#if>
+										</td>
+										<td>
+											<#if ( demand.getNumberNotifications(  ) > 0 )>
+												<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
+													<img src="images/local/skin/plugins/crm/mail.png" alt="#i18n{crm.crm.labelMail}" title="#i18n{crm.crm.labelMail}" />
+												</a>
+												<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
+													<span class="alert">
+														${demand.numberUnreadNotifications}
+													</span>
+												</#if>
+											</#if> 
+										</td>
+									</tr>
+								</#if>
 							</#list>
 						</table>
 					</fieldset>

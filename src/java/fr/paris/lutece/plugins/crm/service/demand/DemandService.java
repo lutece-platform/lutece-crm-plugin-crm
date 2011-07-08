@@ -133,6 +133,21 @@ public final class DemandService
     }
 
     /**
+     * Remove the demands given an id demand type
+     * @param nIdDemandType the id demand type
+     */
+    public void removeByIdDemandType( int nIdDemandType )
+    {
+        DemandFilter dFilter = new DemandFilter(  );
+        dFilter.setIdDemandType( nIdDemandType );
+
+        for ( Demand demand : findByFilter( dFilter ) )
+        {
+            remove( demand.getIdDemand(  ) );
+        }
+    }
+
+    /**
      * Find all demands
      * @return a list of {@link Demand}
      */

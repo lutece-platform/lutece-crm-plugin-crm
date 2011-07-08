@@ -132,8 +132,20 @@
 			        	<a href="jsp/admin/plugins/crm/ModifyDemandType.jsp?id_demand_type=${demand_type.idDemandType}">
 			        		<img src="images/admin/skin/actions/modify.png" alt="#i18n{portal.util.labelModify}" title="#i18n{portal.util.labelModify}" />
 			        	</a>
+			            <#if demand_type.isOpen(  )>
+			            	<a href="jsp/admin/plugins/crm/DoDisableDemandType.jsp?id_demand_type=${demand_type.idDemandType}">
+				        		<img src="images/admin/skin/actions/disable.png" alt="#i18n{crm.manage_demand_types.buttonDisable}" title="#i18n{crm.manage_demand_types.buttonDisable}" />
+				        	</a>
+				        <#else>
+				        	<a href="jsp/admin/plugins/crm/DoEnableDemandType.jsp?id_demand_type=${demand_type.idDemandType}">
+				        		<img src="images/admin/skin/actions/enable.png" alt="#i18n{crm.manage_demand_types.buttonEnable}" title="#i18n{crm.manage_demand_types.buttonEnable}" />
+				        	</a>
+			            </#if>
 			            <a href="jsp/admin/plugins/crm/RemoveDemandType.jsp?id_demand_type=${demand_type.idDemandType}" >
 			                <img src="images/admin/skin/actions/delete.png" alt="#i18n{portal.util.labelDelete}" title="#i18n{portal.util.labelDelete}" />
+			            </a>
+			            <a href="jsp/admin/plugins/crm/PurgeDemandType.jsp?id_demand_type=${demand_type.idDemandType}" >
+			                <img src="images/admin/skin/plugins/crm/action/empty.png" alt="#i18n{crm.manage_demand_types.buttonDraftPurge}" title="#i18n{crm.manage_demand_types.buttonDraftPurge}" />
 			            </a>
 			        </td>
 		        </tr>

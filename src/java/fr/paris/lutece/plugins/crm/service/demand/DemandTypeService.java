@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.service.demand;
 
-import fr.paris.lutece.plugins.crm.business.demand.Demand;
-import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeHome;
@@ -171,14 +169,7 @@ public final class DemandTypeService
     public void remove( int nIdDemandType )
     {
         // Remove all demands associated to the demand type
-        DemandFilter dFilter = new DemandFilter(  );
-        dFilter.setIdDemandType( nIdDemandType );
-
-        for ( Demand demand : DemandService.getService(  ).findByFilter( dFilter ) )
-        {
-            DemandService.getService(  ).remove( demand.getIdDemand(  ) );
-        }
-
+        DemandService.getService(  ).removeByIdDemandType( nIdDemandType );
         DemandTypeHome.remove( nIdDemandType );
     }
 

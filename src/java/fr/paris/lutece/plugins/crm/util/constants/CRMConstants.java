@@ -117,6 +117,7 @@ public final class CRMConstants
     public static final String MESSAGE_INVALID_DATEBEGIN = "crm.message.invalidDateBegin";
     public static final String MESSAGE_INVALID_DATE_BEFORE_70 = "crm.message.invalidDate.before1970";
     public static final String MESSAGE_CONFIRM_REMOVE_DEMAND_TYPE = "crm.message.confirmRemoveDemandType";
+    public static final String MESSAGE_CONFIRM_PURGE_DEMAND_TYPE = "crm.message.confirmPurgeDemandType";
     public static final String MESSAGE_ERROR = "crm.message.error";
     public static final String MESSAGE_CONFIRM_REMOVE_CATEGORY = "crm.message.confirmRemoveCategory";
     public static final String MESSAGE_CANNOT_REMOVE_CATEGORY = "crm.message.cannotRemoveCategory";

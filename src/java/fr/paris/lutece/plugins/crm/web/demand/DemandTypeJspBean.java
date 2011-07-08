@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.crm.web.demand;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
+import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
@@ -84,9 +85,11 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     // JSP
     private static final String JSP_MANAGE_DEMAND_TYPES = "jsp/admin/plugins/crm/ManageDemandTypes.jsp";
     private static final String JSP_DO_REMOVE_DEMAND_TYPE = "jsp/admin/plugins/crm/DoRemoveDemandType.jsp";
+    private static final String JSP_DO_PURGE_DEMAND_TYPE = "jsp/admin/plugins/crm/DoPurgeDemandType.jsp";
 
     // VARIABLES
     private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
+    private DemandService _demandService = DemandService.getService(  );
     private CategoryService _categoryService = CategoryService.getService(  );
     private DemandTypeFilter _dtFilter;
     private int _nDefaultItemsPerPage;
@@ -111,8 +114,8 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         UrlItem url = getUrlManageDemandTypes( request );
         List<DemandType> listDemandTypes = getDemandTypesList( request );
 
-        LocalizedPaginator<DemandType> paginator = new LocalizedPaginator<DemandType>( listDemandTypes, _nItemsPerPage, url.getUrl(  ),
-                CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
+        LocalizedPaginator<DemandType> paginator = new LocalizedPaginator<DemandType>( listDemandTypes, _nItemsPerPage,
+                url.getUrl(  ), CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
@@ -316,6 +319,119 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         _demandTypeService.doReorderDemandTypes(  );
 
         return getUrlManageDemandTypes( request ).getUrl(  );
+    }
+
+    /**
+     * Manages the purge form of a demand type whose identifier is in the http request
+     * @param request The Http request
+     * @return the html code to confirm
+     */
+    public String getConfirmPurgeDemandType( HttpServletRequest request )
+    {
+        String strUrl = StringUtils.EMPTY;
+        String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
+
+        if ( StringUtils.isNotBlank( strIdDemandType ) && StringUtils.isNumeric( strIdDemandType ) )
+        {
+            int nIdDemandType = Integer.parseInt( strIdDemandType );
+            UrlItem url = new UrlItem( JSP_DO_PURGE_DEMAND_TYPE );
+            url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, nIdDemandType );
+
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_PURGE_DEMAND_TYPE,
+                    url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        }
+        else
+        {
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+        }
+
+        return strUrl;
+    }
+
+    /**
+     * Handles the purge form of a demand type
+     * @param request The Http request
+     * @return the jsp URL to display the form to manage demand types
+     */
+    public String doPurgeDemandType( HttpServletRequest request )
+    {
+        String strUrl = StringUtils.EMPTY;
+        String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
+
+        if ( StringUtils.isNotBlank( strIdDemandType ) && StringUtils.isNumeric( strIdDemandType ) )
+        {
+            int nIdDemandType = Integer.parseInt( strIdDemandType );
+            _demandService.removeByIdDemandType( nIdDemandType );
+            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+        }
+        else
+        {
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+        }
+
+        return strUrl;
+    }
+
+    /**
+     * Enable a demand type
+     * @param request The Http request
+     * @return the jsp URL to display the form to manage demand types
+     */
+    public String doEnableDemandType( HttpServletRequest request )
+    {
+        String strUrl = StringUtils.EMPTY;
+        String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
+
+        if ( StringUtils.isNotBlank( strIdDemandType ) && StringUtils.isNumeric( strIdDemandType ) )
+        {
+            int nIdDemandType = Integer.parseInt( strIdDemandType );
+            DemandType demandType = _demandTypeService.findByPrimaryKey( nIdDemandType );
+
+            if ( demandType != null )
+            {
+                demandType.setDateEnd( null );
+                _demandTypeService.update( demandType );
+            }
+
+            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+        }
+        else
+        {
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+        }
+
+        return strUrl;
+    }
+
+    /**
+     * Disable a demand type
+     * @param request The Http request
+     * @return the jsp URL to display the form to manage demand types
+     */
+    public String doDisableDemandType( HttpServletRequest request )
+    {
+        String strUrl = StringUtils.EMPTY;
+        String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
+
+        if ( StringUtils.isNotBlank( strIdDemandType ) && StringUtils.isNumeric( strIdDemandType ) )
+        {
+            int nIdDemandType = Integer.parseInt( strIdDemandType );
+            DemandType demandType = _demandTypeService.findByPrimaryKey( nIdDemandType );
+
+            if ( demandType != null )
+            {
+                demandType.setDateEnd( new Date(  ) );
+                _demandTypeService.update( demandType );
+            }
+
+            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+        }
+        else
+        {
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+        }
+
+        return strUrl;
     }
 
     /**

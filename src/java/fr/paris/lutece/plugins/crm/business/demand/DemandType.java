@@ -273,4 +273,53 @@ public class DemandType implements AdminWorkgroupResource
     {
         return _strRoleKey;
     }
+
+    /**
+     * Check if the demand type is open or not
+     * @return true if it is open, false otherwise
+     */
+    public boolean isOpen(  )
+    {
+        boolean bIsDateBeginCorrect = false;
+        boolean bIsDateEndCorrect = false;
+
+        if ( _dateBegin != null )
+        {
+            Date dateToday = new Date(  );
+
+            if ( _dateBegin.before( dateToday ) )
+            {
+                bIsDateBeginCorrect = true;
+            }
+        }
+        else
+        {
+            bIsDateBeginCorrect = true;
+        }
+
+        if ( _dateEnd != null )
+        {
+            Date dateToday = new Date(  );
+
+            if ( _dateEnd.after( dateToday ) || _dateEnd.equals( dateToday ) )
+            {
+                bIsDateEndCorrect = true;
+            }
+        }
+        else
+        {
+            bIsDateEndCorrect = true;
+        }
+
+        return bIsDateBeginCorrect && bIsDateEndCorrect;
+    }
+
+    /**
+     * Check if the demand type is closed
+     * @return true if it is closed, false otherwise
+     */
+    public boolean isClosed(  )
+    {
+        return !isOpen(  );
+    }
 }

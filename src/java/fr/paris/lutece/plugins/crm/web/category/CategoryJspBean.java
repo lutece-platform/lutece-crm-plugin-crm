@@ -98,8 +98,8 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_MANAGE_CATEGORIES );
         String strUrl = url.getUrl(  );
         Collection<Category> listCategories = _categoryService.getCategoriesList(  );
-        LocalizedPaginator<Category> paginator = new LocalizedPaginator<Category>( (List<Category>) listCategories, _nItemsPerPage, strUrl,
-                CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
+        LocalizedPaginator<Category> paginator = new LocalizedPaginator<Category>( (List<Category>) listCategories,
+                _nItemsPerPage, strUrl, CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
 
