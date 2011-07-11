@@ -42,6 +42,7 @@ package fr.paris.lutece.plugins.crm.util.constants;
 public final class CRMConstants
 {
     // CONSTANTS
+    public static final String SLASH = "/";
 
     // PROPERTIES
     public static final String PROPERTY_PAGE_PATH = "crm.crm.pagePathLabel";
@@ -104,12 +105,14 @@ public final class CRMConstants
     public static final String PARAMETER_OPERATOR_DATE_END = "operator_date_end";
     public static final String PARAMETER_CATEGORY_NAME = "category_name";
     public static final String PARAMETER_CATEGORY_DESCRIPTION = "category_description";
+    public static final String PARAMETER_PLUGIN_NAME = "plugin_name";
+    public static final String PARAMETER_URL_RETURN = "url_return";
+    public static final String PARAMETER_DEMAND_DATA = "demand_data";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
     public static final String ACTION_VIEW_NOTIFICATION = "view_notification";
     public static final String ACTION_REMOVE_DEMAND = "remove_demand";
-    public static final String ACTION_DO_REMOVE_DEMAND = "do_remove_demand";
 
     // MESSAGES
     public static final String MESSAGE_CONFIRM_REMOVE_DEMAND = "crm.message.confirmRemoveDemand";

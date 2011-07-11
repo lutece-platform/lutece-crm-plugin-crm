@@ -54,6 +54,7 @@ import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.web.xpages.XPageApplication;
 import fr.paris.lutece.util.html.HtmlTemplate;
@@ -118,10 +119,6 @@ public class CRMApp implements XPageApplication
             else if ( CRMConstants.ACTION_REMOVE_DEMAND.equals( strAction ) )
             {
                 getMessageConfirmation( request );
-            }
-            else if ( CRMConstants.ACTION_DO_REMOVE_DEMAND.equals( strAction ) )
-            {
-                doRemoveDemand( request );
             }
         }
 
@@ -275,35 +272,34 @@ public class CRMApp implements XPageApplication
         if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
         {
             int nIdDemand = Integer.parseInt( strIdDemand );
-
-            // Not safe because the webmaster can change the portal url set in the property file
-            // UrlItem url = new UrlItem( AppPathService.getPortalUrl(  ) );
-            UrlItem url = new UrlItem( JSP_PORTAL );
-            url.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
-            url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DEMAND );
-            url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
-            SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
-                SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
-        }
-    }
-
-    /**
-     * Do remove a demand
-     * @param request {@link HttpServletRequest}
-     */
-    private void doRemoveDemand( HttpServletRequest request )
-    {
-        String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
-
-        if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
-        {
-            int nIdDemand = Integer.parseInt( strIdDemand );
             Demand demand = _demandService.findByPrimaryKey( nIdDemand );
 
-            if ( ( demand != null ) && ( demand.getIdStatusCRM(  ) == 0 ) )
+            if ( demand != null )
             {
-                // Check if the demand is in draft state
-                _demandService.remove( nIdDemand );
+                DemandType demandType = _demandTypeService.findByPrimaryKey( demand.getIdDemandType(  ) );
+
+                if ( demandType != null )
+                {
+                    StringBuilder sbUrlReturn = new StringBuilder( AppPathService.getBaseUrl( request ) );
+
+                    if ( !sbUrlReturn.toString(  ).endsWith( CRMConstants.SLASH ) )
+                    {
+                        sbUrlReturn.append( CRMConstants.SLASH );
+                    }
+
+                    sbUrlReturn.append( JSP_PORTAL );
+
+                    UrlItem urlReturn = new UrlItem( sbUrlReturn.toString(  ) );
+                    urlReturn.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
+
+                    UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
+                    url.addParameter( CRMConstants.PARAMETER_PLUGIN_NAME, CRMPlugin.PLUGIN_NAME );
+                    url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
+                    url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ) );
+                    url.addParameter( CRMConstants.PARAMETER_URL_RETURN, urlReturn.getUrl(  ) );
+                    SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
+                        SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
+                }
             }
         }
     }
