@@ -118,6 +118,15 @@ public final class CRMService
     }
 
     /**
+     * Delete a demand
+     * @param nIdDemand the id demand
+     */
+    public void deleteDemand( int nIdDemand )
+    {
+        _demandService.remove( nIdDemand );
+    }
+
+    /**
      * Create a notification for a demand
      * @param nIdDemand the id demand
      * @param strObject the object of the notification

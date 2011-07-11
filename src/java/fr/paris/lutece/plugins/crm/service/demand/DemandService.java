@@ -125,8 +125,6 @@ public final class DemandService
         // Remove all notifications associated to the demand
         NotificationService.getService(  ).removeByIdDemand( nIdDemand );
         DemandHome.remove( nIdDemand );
-
-        // Remove all data associated to the demand
     }
 
     /**
