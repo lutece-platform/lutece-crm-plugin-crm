@@ -31,10 +31,9 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.service.demand;
+package fr.paris.lutece.plugins.crm.business.demand;
 
-import fr.paris.lutece.plugins.crm.business.demand.DemandType;
-import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
+import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.util.RemovalListener;
 

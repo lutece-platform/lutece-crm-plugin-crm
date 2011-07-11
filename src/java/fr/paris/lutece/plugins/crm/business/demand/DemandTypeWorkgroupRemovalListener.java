@@ -31,62 +31,59 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.service.demand;
+package fr.paris.lutece.plugins.crm.business.demand;
 
-import fr.paris.lutece.plugins.crm.business.demand.Demand;
-import fr.paris.lutece.plugins.crm.business.demand.DemandListener;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
+import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.util.RemovalListener;
 
-import java.util.ArrayList;
+import org.apache.commons.lang.StringUtils;
+
 import java.util.List;
+import java.util.Locale;
 
 
 /**
- *
- * DemandListenerService
- *
+ * DemandTypeWorkgroupRemovalListener
  */
-public final class DemandListenerService
+public class DemandTypeWorkgroupRemovalListener implements RemovalListener
 {
-    private static final String BEAN_CRM_DEMAND_LISTENER_SERVICE = "crm.demandListenerService";
-    private List<DemandListener> _listRegisteredListeners = new ArrayList<DemandListener>(  );
+    private static final String PROPERTY_WORKGROUP_CANNOT_BE_REMOVED = "crm.message.workgroupCannotBeRemoved";
 
     /**
-     * Private constructor
+     * Check if the object can be safely removed
+     * @param strId The object id
+     * @return true if the object can be removed otherwise false
      */
-    private DemandListenerService(  )
+    public boolean canBeRemoved( String strId )
     {
-    }
+        boolean bCanBeRemoved = true;
 
-    /**
-     * Returns the removal service
-     * @return The removal service
-     */
-    public static DemandListenerService getService(  )
-    {
-        return (DemandListenerService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_DEMAND_LISTENER_SERVICE );
-    }
-
-    /**
-     * Register a listener
-     * @param listener the listener
-     */
-    public void register( DemandListener listener )
-    {
-        _listRegisteredListeners.add( listener );
-    }
-
-    /**
-     * Do remove the demand
-     * @param demand the demand
-     */
-    public void doRemoveDemand( Demand demand )
-    {
-        for ( DemandListener listener : _listRegisteredListeners )
+        if ( StringUtils.isNotBlank( strId ) )
         {
-            listener.doRemoveDemand( demand );
+            DemandTypeFilter dtFilter = new DemandTypeFilter(  );
+            dtFilter.setWorkgroup( strId );
+
+            List<DemandType> listDemandTypes = DemandTypeService.getService(  ).findByFilter( dtFilter );
+
+            if ( ( listDemandTypes != null ) && ( listDemandTypes.size(  ) > 0 ) )
+            {
+                bCanBeRemoved = false;
+            }
         }
+
+        return bCanBeRemoved;
+    }
+
+    /**
+     * Gives a message explaining why the object can't be removed
+     * @param strId The object id
+     * @param locale The current locale
+     * @return The message
+     */
+    public String getRemovalRefusedMessage( String strId, Locale locale )
+    {
+        // Build a message mailing list for using this workgroup 
+        return I18nService.getLocalizedString( PROPERTY_WORKGROUP_CANNOT_BE_REMOVED, locale );
     }
 }

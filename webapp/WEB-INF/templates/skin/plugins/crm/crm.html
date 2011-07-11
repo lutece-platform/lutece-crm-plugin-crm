@@ -34,7 +34,7 @@
 						<legend>${status_crm.label}</legend>
 						<table>
 							<#list demands_list as demand>
-								<#assign demand_type = getDemandType( demand_types_list, demand.idDemand )>
+								<#assign demand_type = getDemandType( demand_types_list, demand.idDemandType )>
 								<#if demand_type??>
 									<tr>
 										<td>

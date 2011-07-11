@@ -33,17 +33,58 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
+import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
+import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.util.RemovalListener;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.List;
+import java.util.Locale;
+
 
 /**
  *
- * DemandListener
+ * DemandTypeRoleRemovalListener
  *
  */
-public interface DemandListener
+public class DemandTypeRoleRemovalListener implements RemovalListener
 {
+    private static final String PROPERTY_DEMAND_TYPE_CANNOT_BE_REMOVED = "crm.message.roleCannotBeRemoved";
+
     /**
-     * Do remove a demand
-     * @param demand the demand
+     * Check if the object can be safely removed
+     * @param strId The object id
+     * @return true if the object can be removed otherwise false
      */
-    void doRemoveDemand( Demand demand );
+    public boolean canBeRemoved( String strId )
+    {
+        boolean bCanBeRemoved = true;
+
+        if ( StringUtils.isNotBlank( strId ) )
+        {
+            DemandTypeFilter rtFilter = new DemandTypeFilter(  );
+            rtFilter.setRole( strId );
+
+            List<DemandType> listDemandTypes = DemandTypeService.getService(  ).findByFilter( rtFilter );
+
+            if ( ( listDemandTypes != null ) && ( listDemandTypes.size(  ) > 0 ) )
+            {
+                bCanBeRemoved = false;
+            }
+        }
+
+        return bCanBeRemoved;
+    }
+
+    /**
+     * Gives a message explaining why the object cannot be removed
+     * @param strId The object id
+     * @param locale The current locale
+     * @return The message
+     */
+    public String getRemovalRefusedMessage( String strId, Locale locale )
+    {
+        return I18nService.getLocalizedString( PROPERTY_DEMAND_TYPE_CANNOT_BE_REMOVED, locale );
+    }
 }
