@@ -43,20 +43,20 @@
 										<td>
 											${demand.statusText}
 										</td>
-										<td>
-											<#if demand_type.isOpen(  )>
-												<form method="post" action="${demand_type.urlResource}">
-													<input type="hidden" name="id_demand" value="${demand.idDemand}" />
-													<input type="hidden" name="demand_data" value="${demand.data}" />
-													<input type="image" src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
-												</form>
-											</#if>
-											<#if demand.idStatusCRM = 0>
+										<#if status_crm.idStatusCRM = 0>
+											<td>
+												<#if demand_type.isOpen(  )>
+													<form method="post" action="${demand_type.urlResource}">
+														<input type="hidden" name="id_demand" value="${demand.idDemand}" />
+														<input type="hidden" name="demand_data" value="${demand.data}" />
+														<input type="image" src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
+													</form>
+												</#if>
 												<a href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}">
 													<img src="images/admin/skin/actions/delete.png" alt="#i18n{crm.crm.buttonDelete}" title="#i18n{crm.crm.buttonDelete}" />
 												</a>
-											</#if>
-										</td>
+											</td>
+										</#if>
 										<td>
 											<#if ( demand.getNumberNotifications(  ) > 0 )>
 												<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
