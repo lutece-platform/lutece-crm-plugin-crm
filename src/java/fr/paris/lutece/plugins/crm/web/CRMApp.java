@@ -293,7 +293,7 @@ public class CRMApp implements XPageApplication
                     urlReturn.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
 
                     UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
-                    url.addParameter( CRMConstants.PARAMETER_PLUGIN_NAME, CRMPlugin.PLUGIN_NAME );
+                    url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DRAFT );
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
                     url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ) );
                     url.addParameter( CRMConstants.PARAMETER_URL_RETURN, urlReturn.getUrl(  ) );
