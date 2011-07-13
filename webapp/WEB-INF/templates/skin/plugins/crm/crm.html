@@ -46,7 +46,7 @@
 										<#if status_crm.idStatusCRM = 0>
 											<td>
 												<#if demand_type.isOpen(  )>
-													<form method="post" action="${demand_type.urlResource}">
+													<form method="post" action="${demand_type.urlResource}" target="_blank">
 														<input type="hidden" name="id_demand" value="${demand.idDemand}" />
 														<input type="hidden" name="demand_data" value="${demand.data}" />
 														<input type="image" src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
@@ -98,7 +98,7 @@
 							<ul>
 								<#list demand_types as demand_type>
 									<li>
-										<a href="${buildDemandTypeUrlResource( demand_type, mylutece_user )}">
+										<a href="${buildDemandTypeUrlResource( demand_type, mylutece_user )}" target="_blank">
 											${demand_type.label}
 										</a>
 										<#if demand_type.urlInfo?has_content>
