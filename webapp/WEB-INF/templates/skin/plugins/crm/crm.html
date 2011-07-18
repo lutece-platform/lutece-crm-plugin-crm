@@ -48,7 +48,7 @@
 												<#if demand_type.isOpen(  )>
 													<form method="post" action="${demand_type.urlResource}" target="_blank">
 														<input type="hidden" name="id_demand" value="${demand.idDemand}" />
-														<input type="hidden" name="demand_data" value="${demand.data}" />
+														<input type="hidden" name="demand_data" value='${demand.data}' />
 														<input type="image" src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
 													</form>
 												</#if>
