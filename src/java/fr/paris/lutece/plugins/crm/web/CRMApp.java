@@ -295,7 +295,7 @@ public class CRMApp implements XPageApplication
                     UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
                     url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DRAFT );
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
-                    url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ) );
+                    url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ).replace( "\"", "'" ) );
                     url.addParameter( CRMConstants.PARAMETER_URL_RETURN, urlReturn.getUrl(  ) );
                     SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
                         SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
