@@ -126,7 +126,7 @@ public class CRMApp implements XPageApplication
             }
             else if ( CRMConstants.ACTION_REMOVE_DEMAND.equals( strAction ) )
             {
-                getDemandRemovingConfirmationMessage( request );
+                getDemandRemovingConfirmationMessage( request, user );
             }
             else if ( CRMConstants.ACTION_MODIFY_CRM_USER.equals( strAction ) )
             {
@@ -357,9 +357,10 @@ public class CRMApp implements XPageApplication
     /**
      * Get the confirmation message for removing the demand
      * @param request {@link HttpServletRequest}
+     * @param user the {@link LuteceUser}
      * @throws SiteMessageException the confirmation message
      */
-    private void getDemandRemovingConfirmationMessage( HttpServletRequest request )
+    private void getDemandRemovingConfirmationMessage( HttpServletRequest request, LuteceUser user )
         throws SiteMessageException
     {
         String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
@@ -369,8 +370,10 @@ public class CRMApp implements XPageApplication
             int nIdDemand = Integer.parseInt( strIdDemand );
             Demand demand = _demandService.findByPrimaryKey( nIdDemand );
 
-            if ( demand != null )
+            if ( ( demand != null ) && ( demand.getIdStatusCRM(  ) != 1 ) &&
+                    user.getName(  ).equals( demand.getUserGuid(  ) ) )
             {
+                // Check the existence of the demand and the owner of the demand is indeed the current user and the demand is not validated
                 DemandType demandType = _demandTypeService.findByPrimaryKey( demand.getIdDemandType(  ) );
 
                 if ( demandType != null )

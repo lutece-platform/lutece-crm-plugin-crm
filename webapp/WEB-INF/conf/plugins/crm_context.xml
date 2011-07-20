@@ -20,6 +20,9 @@
     <bean id="crm.demandService" class="fr.paris.lutece.plugins.crm.service.demand.DemandService"/>
     <bean id="crm.demandTypeService" class="fr.paris.lutece.plugins.crm.service.demand.DemandTypeService" />
     <bean id="crm.crmUserService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserService" />
+    <bean id="crm.crmUserAttributesService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserAttributesService">
+    	<property name="cRMUserService" ref="crm.crmUserService" />
+    </bean>
     <bean id="crm.crmService" class="fr.paris.lutece.plugins.crm.service.CRMService">
     	<property name="notificationService" ref="crm.notificationService" />
     	<property name="demandService" ref="crm.demandService" />
