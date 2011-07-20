@@ -37,12 +37,14 @@ import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
+import fr.paris.lutece.plugins.crm.business.user.CRMUser;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.service.user.CRMUserService;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.SiteMessage;
@@ -55,9 +57,11 @@ import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.web.xpages.XPageApplication;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
 import org.apache.commons.lang.StringUtils;
@@ -82,6 +86,7 @@ public class CRMApp implements XPageApplication
     private static final String TEMPLATE_CRM_HOME_PAGE = "skin/plugins/crm/crm.html";
     private static final String TEMPLATE_MANAGE_NOTIFICATIONS = "skin/plugins/crm/manage_notifications.html";
     private static final String TEMPLATE_VIEW_NOTIFICATION = "skin/plugins/crm/view_notification.html";
+    private static final String TEMPLATE_MODIFY_CRM_USER = "skin/plugins/crm/modify_crm_user.html";
 
     // VARIABLES
     private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
@@ -89,6 +94,7 @@ public class CRMApp implements XPageApplication
     private CategoryService _categoryService = CategoryService.getService(  );
     private NotificationService _notificationService = NotificationService.getService(  );
     private DemandStatusCRMService _statusCRMService = DemandStatusCRMService.getService(  );
+    private CRMUserService _crmUserService = CRMUserService.getService(  );
 
     /**
      * Get the XPage of the plugin CRM
@@ -104,6 +110,8 @@ public class CRMApp implements XPageApplication
     {
         XPage page = null;
         LuteceUser user = getUser( request );
+        createCRMAccount( user );
+
         String strAction = request.getParameter( CRMConstants.PARAMETER_ACTION );
 
         if ( StringUtils.isNotBlank( strAction ) )
@@ -118,7 +126,16 @@ public class CRMApp implements XPageApplication
             }
             else if ( CRMConstants.ACTION_REMOVE_DEMAND.equals( strAction ) )
             {
-                getMessageConfirmation( request );
+                getDemandRemovingConfirmationMessage( request );
+            }
+            else if ( CRMConstants.ACTION_MODIFY_CRM_USER.equals( strAction ) )
+            {
+                page = getModifyCRMUserPage( request, user );
+            }
+            else if ( CRMConstants.ACTION_DO_MODIFY_CRM_USER.equals( strAction ) )
+            {
+                doModifyCRMUser( request, user );
+                page = getModifyCRMUserPage( request, user );
             }
         }
 
@@ -226,6 +243,7 @@ public class CRMApp implements XPageApplication
 
                 if ( ( demand != null ) && user.getName(  ).equals( demand.getUserGuid(  ) ) )
                 {
+                    // Check the existence of the demand and the owner of the demand is indeed the current user
                     if ( !notification.isRead(  ) )
                     {
                         // Set the status of the notification to READ
@@ -235,7 +253,6 @@ public class CRMApp implements XPageApplication
 
                     DemandType demandType = _demandTypeService.findByPrimaryKey( demand.getIdDemandType(  ) );
 
-                    // Check the existence of the demand and the owner of the demand is indeed the current user
                     page = new XPage(  );
 
                     Map<String, Object> model = new HashMap<String, Object>(  );
@@ -260,11 +277,89 @@ public class CRMApp implements XPageApplication
     }
 
     /**
+     * Get the modify crm account page
+     * @param request {@link HttpServletRequest}
+     * @param user the {@link LuteceUser}
+     * @return a {@link XPage}
+     */
+    private XPage getModifyCRMUserPage( HttpServletRequest request, LuteceUser user )
+    {
+        XPage page = null;
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+
+        if ( crmUser != null )
+        {
+            page = new XPage(  );
+
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( CRMConstants.MARK_CRM_USER, crmUser );
+
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_CRM_USER, request.getLocale(  ),
+                    model );
+
+            page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_VIEW_NOTIFICATION_PAGE_TITLE,
+                    request.getLocale(  ) ) );
+            page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
+            page.setContent( template.getHtml(  ) );
+        }
+
+        return page;
+    }
+
+    /**
+     * Do modify a crm user
+     * @param request the {@link HttpServletRequest}
+     * @param user the {@link LuteceUser}
+     * @throws SiteMessageException message if some info are not well filled
+     */
+    private void doModifyCRMUser( HttpServletRequest request, LuteceUser user )
+        throws SiteMessageException
+    {
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+
+        if ( crmUser != null )
+        {
+            String strFirstName = request.getParameter( CRMConstants.PARAMETER_FIRST_NAME );
+            String strLastName = request.getParameter( CRMConstants.PARAMETER_LAST_NAME );
+            String strEmail = request.getParameter( CRMConstants.PARAMETER_EMAIL );
+            String strPhoneNumber = request.getParameter( CRMConstants.PARAMETER_PHONE_NUMBER );
+
+            UrlItem url = new UrlItem( JSP_PORTAL );
+            url.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
+            url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_MODIFY_CRM_USER );
+
+            int nMaxSize = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_CRM_USER_MAX_SIZE, 255 );
+
+            if ( ( StringUtils.isNotBlank( strFirstName ) && ( strFirstName.length(  ) > nMaxSize ) ) ||
+                    ( StringUtils.isNotBlank( strLastName ) && ( strLastName.length(  ) > nMaxSize ) ) ||
+                    ( StringUtils.isNotBlank( strEmail ) && ( strEmail.length(  ) > nMaxSize ) ) ||
+                    ( StringUtils.isNotBlank( strPhoneNumber ) && ( strPhoneNumber.length(  ) > nMaxSize ) ) )
+            {
+                Object[] params = { nMaxSize };
+                SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL, params,
+                    SiteMessage.TYPE_STOP );
+            }
+
+            if ( !StringUtil.checkEmail( strEmail ) )
+            {
+                SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL, SiteMessage.TYPE_STOP,
+                    url.getUrl(  ) );
+            }
+
+            crmUser.setFirstName( StringUtils.isNotBlank( strFirstName ) ? strFirstName : StringUtils.EMPTY );
+            crmUser.setLastName( StringUtils.isNotBlank( strLastName ) ? strLastName : StringUtils.EMPTY );
+            crmUser.setEmail( StringUtils.isNotBlank( strEmail ) ? strEmail : StringUtils.EMPTY );
+            crmUser.setPhoneNumber( StringUtils.isNotBlank( strPhoneNumber ) ? strPhoneNumber : StringUtils.EMPTY );
+            _crmUserService.update( crmUser );
+        }
+    }
+
+    /**
      * Get the confirmation message for removing the demand
      * @param request {@link HttpServletRequest}
      * @throws SiteMessageException the confirmation message
      */
-    private void getMessageConfirmation( HttpServletRequest request )
+    private void getDemandRemovingConfirmationMessage( HttpServletRequest request )
         throws SiteMessageException
     {
         String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
@@ -301,6 +396,30 @@ public class CRMApp implements XPageApplication
                         SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
                 }
             }
+        }
+    }
+
+    /**
+     * Create a CRM account if the current user does not have one
+     * @param user the LuteceUser
+     */
+    private void createCRMAccount( LuteceUser user )
+    {
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+
+        if ( crmUser == null )
+        {
+            String strFirstName = user.getUserInfo( LuteceUser.NAME_GIVEN );
+            String strLastName = user.getUserInfo( LuteceUser.NAME_FAMILY );
+            String strEmail = user.getUserInfo( LuteceUser.BUSINESS_INFO_ONLINE_EMAIL );
+            String strPhoneNumber = user.getUserInfo( LuteceUser.BUSINESS_INFO_TELECOM_TELEPHONE_NUMBER );
+            crmUser = new CRMUser(  );
+            crmUser.setUserGuid( user.getName(  ) );
+            crmUser.setFirstName( StringUtils.isNotBlank( strFirstName ) ? strFirstName : StringUtils.EMPTY );
+            crmUser.setLastName( StringUtils.isNotBlank( strLastName ) ? strLastName : StringUtils.EMPTY );
+            crmUser.setEmail( StringUtils.isNotBlank( strEmail ) ? strEmail : StringUtils.EMPTY );
+            crmUser.setPhoneNumber( StringUtils.isNotBlank( strPhoneNumber ) ? strPhoneNumber : StringUtils.EMPTY );
+            _crmUserService.create( crmUser );
         }
     }
 

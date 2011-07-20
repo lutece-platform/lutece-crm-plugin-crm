@@ -49,9 +49,10 @@ public final class CRMConstants
     public static final String PROPERTY_PAGE_TITLE = "crm.crm.pageTitle";
     public static final String PROPERTY_MANAGE_NOTIFICATIONS_PAGE_TITLE = "crm.manage_notifications.pageTitle";
     public static final String PROPERTY_VIEW_NOTIFICATION_PAGE_TITLE = "crm.view_notification.pageTitle";
-    public static final String PROPERTY_PAGE_TITLE_MANAGE_DEMAND_TYPES = "crm.manage_demand_types.pageTitle";
-    public static final String PROPERTY_PAGE_TITLE_CREATE_DEMAND_TYPE = "crm.create_demand_type.pageTitle";
-    public static final String PROPERTY_PAGE_TITLE_MODIFY_DEMAND_TYPE = "crm.modify_demand_type.pageTitle";
+    public static final String PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE = "crm.manage_demand_types.pageTitle";
+    public static final String PROPERTY_CREATE_DEMAND_TYPE_PAGE_TITLE = "crm.create_demand_type.pageTitle";
+    public static final String PROPERTY_MODIFY_DEMAND_TYPE_PAGE_TITLE = "crm.modify_demand_type.pageTitle";
+    public static final String PROPERTY_MODIFY_CRM_USER_PAGE_TITLE = "crm.modify_crm_user.pageTitle";
     public static final String PROPERTY_DEFAULT_LIST_DEMAND_TYPES_PER_PAGE = "crm.listDemandTypes.itemsPerPage";
     public static final String PROPERTY_PAGE_TITLE_MANAGE_CATEGORIES = "crm.manage_categories.pageTitle";
     public static final String PROPERTY_PAGE_TITLE_MODIFY_CATEGORY = "crm.modify_category.pageTitle";
@@ -59,6 +60,7 @@ public final class CRMConstants
     public static final String PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE = "crm.listCategories.itemsPerPage";
     public static final String PROPERTY_DAEMON_NB_EXPIRATION_DAYS = "daemon.crmDemandCleaner.nbExpirationDays";
     public static final String PROPERTY_WEBMASTER_EMAIL = "email.webmaster";
+    public static final String PROPERTY_CRM_USER_MAX_SIZE = "crm.crmUser.maxSize";
 
     // MARKS 
     public static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
@@ -80,6 +82,7 @@ public final class CRMConstants
     public static final String MARK_IS_WELL_ORDERED = "is_well_ordered";
     public static final String MARK_OPERATORS_LIST = "operators_list";
     public static final String MARK_CATEGORY = "category";
+    public static final String MARK_CRM_USER = "crm_user";
 
     // PARAMETERS
     public static final String PARAMETER_ACTION = "action";
@@ -107,12 +110,18 @@ public final class CRMConstants
     public static final String PARAMETER_CATEGORY_DESCRIPTION = "category_description";
     public static final String PARAMETER_URL_RETURN = "url_return";
     public static final String PARAMETER_DEMAND_DATA = "demand_data";
+    public static final String PARAMETER_FIRST_NAME = "first_name";
+    public static final String PARAMETER_LAST_NAME = "last_name";
+    public static final String PARAMETER_EMAIL = "email";
+    public static final String PARAMETER_PHONE_NUMBER = "phone_number";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
     public static final String ACTION_VIEW_NOTIFICATION = "view_notification";
     public static final String ACTION_REMOVE_DEMAND = "remove_demand";
     public static final String ACTION_DO_REMOVE_DRAFT = "do_remove_draft";
+    public static final String ACTION_MODIFY_CRM_USER = "modify_crm_user";
+    public static final String ACTION_DO_MODIFY_CRM_USER = "do_modify_crm_user";
 
     // MESSAGES
     public static final String MESSAGE_CONFIRM_REMOVE_DEMAND = "crm.message.confirmRemoveDemand";
@@ -125,6 +134,8 @@ public final class CRMConstants
     public static final String MESSAGE_ERROR = "crm.message.error";
     public static final String MESSAGE_CONFIRM_REMOVE_CATEGORY = "crm.message.confirmRemoveCategory";
     public static final String MESSAGE_CANNOT_REMOVE_CATEGORY = "crm.message.cannotRemoveCategory";
+    public static final String MESSAGE_SIZE_TO_BIG = "crm.message.sizeTooBig";
+    public static final String MESSAGE_INVALID_EMAIL = "crm.message.invalidEmail";
 
     /**
      * Private constructor

@@ -31,76 +31,87 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.business.notification;
+package fr.paris.lutece.plugins.crm.business.user;
 
+import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.plugin.Plugin;
-
-import java.util.List;
+import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 
 /**
  *
- * INotificationDAO
+ * CRMUserHome
  *
  */
-public interface INotificationDAO
+public final class CRMUserHome
 {
+    private static final String BEAN_CRM_CRMUSERDAO = "crm.crmUserDAO";
+    private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
+    private static ICRMUserDAO _dao = (ICRMUserDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
+            BEAN_CRM_CRMUSERDAO );
+
+    /**
+     * Private constructor - this class need not be instantiated
+     */
+    private CRMUserHome(  )
+    {
+    }
+
     /**
      * Generates a new primary key
-     * @param plugin The Plugin
      * @return The new primary key
      */
-    int newPrimaryKey( Plugin plugin );
+    public static int newPrimaryKey(  )
+    {
+        return _dao.newPrimaryKey( _plugin );
+    }
 
     /**
      * Insert a new record in the table.
-     * @param notification instance of the Notification object to insert
-     * @param plugin the Plugin
+     * @param user instance of the CRMUser object to insert
      * @return the key of the newly created notification
      */
-    int insert( Notification notification, Plugin plugin );
+    public static int create( CRMUser user )
+    {
+        return _dao.insert( user, _plugin );
+    }
 
     /**
      * Update the record in the table
-     * @param notification the reference of the Notification
-     * @param plugin the Plugin
+     * @param user the reference of the CRMUser
      */
-    void store( Notification notification, Plugin plugin );
+    public static void update( CRMUser user )
+    {
+        _dao.store( user, _plugin );
+    }
 
     /**
      * Delete a record from the table
-     * @param nIdNotification int identifier of the notification to delete
-     * @param plugin the Plugin
+     * @param nIdCRMUser int identifier of the CRMUser to delete
      */
-    void delete( int nIdNotification, Plugin plugin );
-
-    /**
-     * Delete all record from a given id demand
-     * @param nIdDemand the id demand
-     * @param plugin the Plugin
-     */
-    void deleteByIdDemand( int nIdDemand, Plugin plugin );
+    public static void remove( int nIdCRMUser )
+    {
+        _dao.delete( nIdCRMUser, _plugin );
+    }
 
     /**
      * Load the data from the table
-     * @param nIdNotification The identifier of the notification
-     * @param plugin the Plugin
-     * @return The instance of the Notification
+     * @param nIdCRMUser The identifier of the CRMUser
+     * @return The instance of the CRMUser
      */
-    Notification load( int nIdNotification, Plugin plugin );
+    public static CRMUser findByPrimaryKey( int nIdCRMUser )
+    {
+        return _dao.load( nIdCRMUser, _plugin );
+    }
 
     /**
-     * Find all notification
-     * @param plugin {@link Plugin}
-     * @return a list of {@link Notification}
+     * Load the data from a given user guid
+     * @param strUserGuid The user guid
+     * @return The instance of the CRMUser
      */
-    List<Notification> selectAll( Plugin plugin );
-
-    /**
-     * Find by filter
-     * @param nFilter the filter
-     * @param plugin {@link Plugin}
-     * @return a list of {@link Notification}
-     */
-    List<Notification> selectNotificationsByFilter( NotificationFilter nFilter, Plugin plugin );
+    public static CRMUser findByUserGuid( String strUserGuid )
+    {
+        return _dao.loadByUserGuid( strUserGuid, _plugin );
+    }
 }

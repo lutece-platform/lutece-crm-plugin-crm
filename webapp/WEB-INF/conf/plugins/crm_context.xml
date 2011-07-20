@@ -8,6 +8,7 @@
 	<bean id="crm.demandTypeDAO" class="fr.paris.lutece.plugins.crm.business.demand.DemandTypeDAO" />
 	<bean id="crm.categoryDAO" class="fr.paris.lutece.plugins.crm.business.demand.category.CategoryDAO" />
 	<bean id="crm.demandStatusCRMDAO" class="fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRMDAO" />
+	<bean id="crm.crmUserDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserDAO" />
 	
 	<!-- Removal Service -->
     <bean id="crm.categoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
@@ -18,6 +19,7 @@
     <bean id="crm.notificationService" class="fr.paris.lutece.plugins.crm.service.notification.NotificationService" />
     <bean id="crm.demandService" class="fr.paris.lutece.plugins.crm.service.demand.DemandService"/>
     <bean id="crm.demandTypeService" class="fr.paris.lutece.plugins.crm.service.demand.DemandTypeService" />
+    <bean id="crm.crmUserService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserService" />
     <bean id="crm.crmService" class="fr.paris.lutece.plugins.crm.service.CRMService">
     	<property name="notificationService" ref="crm.notificationService" />
     	<property name="demandService" ref="crm.demandService" />

@@ -31,76 +31,60 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.business.notification;
+package fr.paris.lutece.plugins.crm.business.user;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
-
-import java.util.List;
 
 
 /**
  *
- * INotificationDAO
+ * ICRMUserDAO
  *
  */
-public interface INotificationDAO
+public interface ICRMUserDAO
 {
     /**
-     * Generates a new primary key
-     * @param plugin The Plugin
-     * @return The new primary key
-     */
+    * Generates a new primary key
+    * @param plugin The Plugin
+    * @return The new primary key
+    */
     int newPrimaryKey( Plugin plugin );
 
     /**
      * Insert a new record in the table.
-     * @param notification instance of the Notification object to insert
+     * @param user instance of the CRMUser object to insert
      * @param plugin the Plugin
      * @return the key of the newly created notification
      */
-    int insert( Notification notification, Plugin plugin );
+    int insert( CRMUser user, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param notification the reference of the Notification
+     * @param user the reference of the CRMUser
      * @param plugin the Plugin
      */
-    void store( Notification notification, Plugin plugin );
+    void store( CRMUser user, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nIdNotification int identifier of the notification to delete
+     * @param nIdCRMUser int identifier of the CRMUser to delete
      * @param plugin the Plugin
      */
-    void delete( int nIdNotification, Plugin plugin );
-
-    /**
-     * Delete all record from a given id demand
-     * @param nIdDemand the id demand
-     * @param plugin the Plugin
-     */
-    void deleteByIdDemand( int nIdDemand, Plugin plugin );
+    void delete( int nIdCRMUser, Plugin plugin );
 
     /**
      * Load the data from the table
-     * @param nIdNotification The identifier of the notification
+     * @param nIdCRMUser The identifier of the CRMUser
      * @param plugin the Plugin
-     * @return The instance of the Notification
+     * @return The instance of the CRMUser
      */
-    Notification load( int nIdNotification, Plugin plugin );
+    CRMUser load( int nIdCRMUser, Plugin plugin );
 
     /**
-     * Find all notification
-     * @param plugin {@link Plugin}
-     * @return a list of {@link Notification}
+     * Load the data from a given user guid
+     * @param strUserGuid the user guid
+     * @param plugin the Plugin
+     * @return The instance of the CRMUser
      */
-    List<Notification> selectAll( Plugin plugin );
-
-    /**
-     * Find by filter
-     * @param nFilter the filter
-     * @param plugin {@link Plugin}
-     * @return a list of {@link Notification}
-     */
-    List<Notification> selectNotificationsByFilter( NotificationFilter nFilter, Plugin plugin );
+    CRMUser loadByUserGuid( String strUserGuid, Plugin plugin );
 }

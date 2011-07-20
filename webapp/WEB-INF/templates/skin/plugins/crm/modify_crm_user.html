@@ -1,0 +1,34 @@
+<div class="span-22 prepend-1 append-1">
+	<div class="portlet-background append-bottom">
+		<div class="portlet-background-content -lutece-border-radius">
+			<p>
+				<a href="jsp/site/Portal.jsp?page=crm">
+					<img src="images/local/skin/buttons/b_back.png" alt="#i18n{crm.modify_crm_user.buttonBack}" title="#i18n{crm.modify_crm_user.buttonBack}" />
+				</a>
+			</p>
+			<form action="jsp/site/Portal.jsp" method="post">
+				<input type="hidden" name="page" value="crm" />
+				<input type="hidden" name="action" value="do_modify_crm_user" />
+				<p>
+					<label for="first_name">#i18n{crm.modify_crm_user.labelFirstName} : </label>
+					<input type="text" name="first_name" size="50" maxlength="255" value="${crm_user.firstName}" />
+				</p>
+				<p>
+					<label for="last_name">#i18n{crm.modify_crm_user.labelLastName} : </label>
+					<input type="text" name="last_name" size="50" maxlength="255" value="${crm_user.lastName}" />
+				</p>
+				<p>
+					<label for="email">#i18n{crm.modify_crm_user.labelEmail} : </label>
+					<input type="text" name="email" size="50" maxlength="255" value="${crm_user.email}" />
+				</p>
+				<p>
+					<label for="phone_number">#i18n{crm.modify_crm_user.labelPhoneNumber} : </label>
+					<input type="text" name="phone_number" size="10" maxlength="100" value="${crm_user.phoneNumber}" />
+				</p>
+				<p>
+					<input type="submit" class="-lutece-input -lutece-border-radius-mini" value="#i18n{portal.util.labelModify}" />
+				</p>
+			</form>
+		</div>
+	</div>
+</div>

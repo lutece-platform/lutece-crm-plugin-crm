@@ -103,7 +103,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
      */
     public String getManageDemandTypes( HttpServletRequest request )
     {
-        setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_MANAGE_DEMAND_TYPES );
+        setPageTitleProperty( CRMConstants.PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE );
 
         _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
         _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEFAULT_LIST_DEMAND_TYPES_PER_PAGE,
@@ -139,7 +139,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     */
     public String getCreateDemandType( HttpServletRequest request )
     {
-        setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_CREATE_DEMAND_TYPE );
+        setPageTitleProperty( CRMConstants.PROPERTY_CREATE_DEMAND_TYPE_PAGE_TITLE );
 
         Map<String, Object> model = new HashMap<String, Object>(  );
         model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale(  ), false, false ) );
@@ -235,7 +235,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
      */
     public String getModifyDemandType( HttpServletRequest request )
     {
-        setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_MODIFY_DEMAND_TYPE );
+        setPageTitleProperty( CRMConstants.PROPERTY_MODIFY_DEMAND_TYPE_PAGE_TITLE );
 
         String strUrl = StringUtils.EMPTY;
         String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );

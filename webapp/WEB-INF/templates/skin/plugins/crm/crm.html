@@ -79,59 +79,72 @@
 		</div>
 	</div>
 </div>
-
-<#if categories_list?has_content>
+<div class="span-10 append-1 last">
 	<div class="span-10 append-1 last">
 		<div class="portlet-background append-bottom">
 			<div class="portlet-background-header -lutece-border-radius-top">
-				#i18n{crm.crm.labelDemandTypesList}
+				${mylutece_user.getUserInfo( 'user.name.given' )} ${mylutece_user.getUserInfo( 'user.name.family' )}
 			</div>
 			<div class="portlet-background-content -lutece-border-radius">
-				<#list categories_list as category>
-					<#assign demand_types = map_demand_types_list[category.code]>
-					<#if demand_types?has_content>
-						<fieldset>
-							<#-- No category -->
-							<#if category.code != "0">
-								<legend>${category.name}</legend>
-							</#if>
-							<ul>
-								<#list demand_types as demand_type>
-									<li>
-										<a href="${buildDemandTypeUrlResource( demand_type, mylutece_user )}" target="_blank">
-											${demand_type.label}
-										</a>
-										<#if demand_type.urlInfo?has_content>
-											<br />
-											<em>
-												<a href="${demand_type.urlInfo}">
-													#i18n{crm.crm.labelInfo}
-												</a>
-											</em>
-										</#if>
-										<#if demand_type.urlContact?has_content>
-											<br />
-											<em>
-												<a href="${demand_type.urlContact}">
-													#i18n{crm.crm.labelContact}
-												</a>
-											</em>
-										</#if>
-										<#if demand_type.dateBegin??>
-											<br />
-											#i18n{crm.crm.labelDateBegin} : ${demand_type.dateBegin?date}
-										</#if>
-										<#if demand_type.dateEnd??>
-											<br />
-											#i18n{crm.crm.labelDateEnd} : ${demand_type.dateEnd?date}
-										</#if>
-									</li>
-								</#list>
-							</ul>
-						</fieldset>
-					</#if>
-				</#list>
+				<a href="jsp/site/Portal.jsp?page=crm&amp;action=modify_crm_user">
+					#i18n{crm.crm.labelMyAccount}
+				</a>
 			</div>
 		</div>
 	</div>
-</#if>
+	<#if categories_list?has_content>
+		<div class="span-10 append-1 last">
+			<div class="portlet-background append-bottom">
+				<div class="portlet-background-header -lutece-border-radius-top">
+					#i18n{crm.crm.labelDemandTypesList}
+				</div>
+				<div class="portlet-background-content -lutece-border-radius">
+					<#list categories_list as category>
+						<#assign demand_types = map_demand_types_list[category.code]>
+						<#if demand_types?has_content>
+							<fieldset>
+								<#-- No category -->
+								<#if category.code != "0">
+									<legend>${category.name}</legend>
+								</#if>
+								<ul>
+									<#list demand_types as demand_type>
+										<li>
+											<a href="${buildDemandTypeUrlResource( demand_type, mylutece_user )}" target="_blank">
+												${demand_type.label}
+											</a>
+											<#if demand_type.urlInfo?has_content>
+												<br />
+												<em>
+													<a href="${demand_type.urlInfo}">
+														#i18n{crm.crm.labelInfo}
+													</a>
+												</em>
+											</#if>
+											<#if demand_type.urlContact?has_content>
+												<br />
+												<em>
+													<a href="${demand_type.urlContact}">
+														#i18n{crm.crm.labelContact}
+													</a>
+												</em>
+											</#if>
+											<#if demand_type.dateBegin??>
+												<br />
+												#i18n{crm.crm.labelDateBegin} : ${demand_type.dateBegin?date}
+											</#if>
+											<#if demand_type.dateEnd??>
+												<br />
+												#i18n{crm.crm.labelDateEnd} : ${demand_type.dateEnd?date}
+											</#if>
+										</li>
+									</#list>
+								</ul>
+							</fieldset>
+						</#if>
+					</#list>
+				</div>
+			</div>
+		</div>
+	</#if>
+</div>
