@@ -35,8 +35,6 @@ package fr.paris.lutece.plugins.crm.business.demand;
 
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Date;
 
 
@@ -49,7 +47,7 @@ public class DemandFilter
 {
     private static final int ALL_INT = -1;
     private boolean _bIsWideSearch;
-    private String _strUserGuid;
+    private int _nIdCRMUser;
     private int _nIdDemandType;
     private Date _dateModification;
     private int _nIdStatusCRM;
@@ -61,7 +59,7 @@ public class DemandFilter
     public DemandFilter(  )
     {
         _bIsWideSearch = false;
-        _strUserGuid = StringUtils.EMPTY;
+        _nIdCRMUser = ALL_INT;
         _nIdDemandType = ALL_INT;
         _nIdStatusCRM = ALL_INT;
         _operatorDateModification = OperatorEnum.EQUAL;
@@ -98,30 +96,30 @@ public class DemandFilter
     }
 
     /**
-     * Returns the UserGuid
-     * @return The UserGuid
+     * Returns the User crm id
+     * @return The User crm id
      */
-    public String getUserGuid(  )
+    public int getIdCRMUser(  )
     {
-        return _strUserGuid;
+        return _nIdCRMUser;
     }
 
     /**
-     * Sets the UserGuid
-     * @param strUserGuid The UserGuid
+     * Sets the User crm id
+     * @param nIdCRMUser The user crm id
      */
-    public void setUserGuid( String strUserGuid )
+    public void setIdCRMUser( int nIdCRMUser )
     {
-        _strUserGuid = strUserGuid;
+        _nIdCRMUser = nIdCRMUser;
     }
 
     /**
      * Check if the filter contains the attribute UserGuid
      * @return true if it contains, false otherwise
      */
-    public boolean containsUserGuid(  )
+    public boolean containsIdCRMUser(  )
     {
-        return StringUtils.isNotBlank( _strUserGuid );
+        return _nIdCRMUser != ALL_INT;
     }
 
     /**

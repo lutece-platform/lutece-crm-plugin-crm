@@ -50,11 +50,11 @@ import java.util.List;
 public class DemandDAO implements IDemandDAO
 {
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_demand ) FROM crm_demand ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand (id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification ) VALUES (?,?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, user_guid = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand (id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification ) VALUES (?,?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE id_demand = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, user_guid, status_text, id_status_crm, data, date_modification FROM crm_demand ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -63,7 +63,7 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_AND = " AND ";
     private static final String SQL_WHERE = " WHERE ";
     private static final String SQL_DATE_MODIFICATION = " date_modification ";
-    private static final String SQL_FILTER_USER_GUID = " user_guid = ? ";
+    private static final String SQL_FILTER_ID_CRM_USER = " id_crm_user = ? ";
     private static final String SQL_FILTER_ID_DEMAND_TYPE = " id_demand_type = ? ";
     private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification ";
     private static final String SQL_FILTER_ID_STATUS_CRM = " id_status_crm = ? ";
@@ -104,7 +104,7 @@ public class DemandDAO implements IDemandDAO
             demand.setIdDemand( newPrimaryKey( plugin ) );
             daoUtil.setInt( nIndex++, demand.getIdDemand(  ) );
             daoUtil.setInt( nIndex++, demand.getIdDemandType(  ) );
-            daoUtil.setString( nIndex++, demand.getUserGuid(  ) );
+            daoUtil.setInt( nIndex++, demand.getIdCRMUser(  ) );
             daoUtil.setString( nIndex++, demand.getStatusText(  ) );
             daoUtil.setInt( nIndex++, demand.getIdStatusCRM(  ) );
             daoUtil.setString( nIndex++, demand.getData(  ) );
@@ -136,7 +136,7 @@ public class DemandDAO implements IDemandDAO
             demand = new Demand(  );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
-            demand.setUserGuid( daoUtil.getString( nIndex++ ) );
+            demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             demand.setStatusText( daoUtil.getString( nIndex++ ) );
             demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
             demand.setData( daoUtil.getString( nIndex++ ) );
@@ -160,7 +160,7 @@ public class DemandDAO implements IDemandDAO
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
             daoUtil.setInt( nIndex++, demand.getIdDemandType(  ) );
-            daoUtil.setString( nIndex++, demand.getUserGuid(  ) );
+            daoUtil.setInt( nIndex++, demand.getIdCRMUser(  ) );
             daoUtil.setString( nIndex++, demand.getStatusText(  ) );
             daoUtil.setInt( nIndex++, demand.getIdStatusCRM(  ) );
             daoUtil.setString( nIndex++, demand.getData(  ) );
@@ -199,7 +199,7 @@ public class DemandDAO implements IDemandDAO
             Demand demand = new Demand(  );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
-            demand.setUserGuid( daoUtil.getString( nIndex++ ) );
+            demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             demand.setStatusText( daoUtil.getString( nIndex++ ) );
             demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
             demand.setData( daoUtil.getString( nIndex++ ) );
@@ -234,7 +234,7 @@ public class DemandDAO implements IDemandDAO
             Demand demand = new Demand(  );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
-            demand.setUserGuid( daoUtil.getString( nIndex++ ) );
+            demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             demand.setStatusText( daoUtil.getString( nIndex++ ) );
             demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
             demand.setData( daoUtil.getString( nIndex++ ) );
@@ -258,10 +258,10 @@ public class DemandDAO implements IDemandDAO
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
         int nIndex = 1;
 
-        if ( dFilter.containsUserGuid(  ) )
+        if ( dFilter.containsIdCRMUser(  ) )
         {
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
-            sbSQL.append( SQL_FILTER_USER_GUID );
+            sbSQL.append( SQL_FILTER_ID_CRM_USER );
         }
 
         if ( dFilter.containsIdDemandType(  ) )
@@ -322,9 +322,9 @@ public class DemandDAO implements IDemandDAO
     {
         int nIndex = 1;
 
-        if ( dFilter.containsUserGuid(  ) )
+        if ( dFilter.containsIdCRMUser(  ) )
         {
-            daoUtil.setString( nIndex++, dFilter.getUserGuid(  ) );
+            daoUtil.setInt( nIndex++, dFilter.getIdCRMUser(  ) );
         }
 
         if ( dFilter.containsIdDemandType(  ) )

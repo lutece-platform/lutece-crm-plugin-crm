@@ -162,19 +162,19 @@ public final class DemandService
     }
 
     /**
-     * Find the demands given an user guid
-     * @param strUserGuid the user guid
+     * Find the demands given an user crm id
+     * @param nIdCRMUser the user crm id
      * @param locale {@link Locale}
      * @return a map of (id_status_crm, List&lt;Demand&gt;)
      */
-    public Map<String, List<Demand>> findByUserGuid( String strUserGuid, Locale locale )
+    public Map<String, List<Demand>> findByIdCRMUser( int nIdCRMUser, Locale locale )
     {
         Map<String, List<Demand>> map = new HashMap<String, List<Demand>>(  );
 
         for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  ).getAllStatusCRM( locale ) )
         {
             DemandFilter dFilter = new DemandFilter(  );
-            dFilter.setUserGuid( strUserGuid );
+            dFilter.setIdCRMUser( nIdCRMUser );
             dFilter.setIdStatusCRM( statusCRM.getIdStatusCRM(  ) );
 
             List<Demand> listDemands = findByFilter( dFilter );

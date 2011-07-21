@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS crm_demand;
 CREATE TABLE crm_demand (
 	id_demand INT(11) DEFAULT 0 NOT NULL,
 	id_demand_type INT(11) DEFAULT 0 NOT NULL,
-	user_guid VARCHAR(255) DEFAULT '' NOT NULL,
+	id_crm_user INT(11) DEFAULT 0 NOT NULL,
 	status_text VARCHAR(255) DEFAULT '' NOT NULL,
 	id_status_crm INT(11) DEFAULT 0 NOT NULL,
 	data VARCHAR(255) DEFAULT '' NOT NULL,

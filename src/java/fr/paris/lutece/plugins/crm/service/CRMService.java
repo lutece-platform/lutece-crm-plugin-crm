@@ -35,8 +35,10 @@ package fr.paris.lutece.plugins.crm.service;
 
 import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
+import fr.paris.lutece.plugins.crm.business.user.CRMUser;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.service.user.CRMUserService;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -54,6 +56,7 @@ public final class CRMService
     private static final String BEAN_CRM_CRMSERVICE = "crm.crmService";
     private NotificationService _notificationService;
     private DemandService _demandService;
+    private CRMUserService _crmUserService;
 
     /**
      * Private constructor
@@ -83,14 +86,44 @@ public final class CRMService
     public int registerDemand( int nIdDemandType, String strUserGuid, String strData, String strStatusText,
         int nIdStatusCRM )
     {
-        Demand demand = new Demand(  );
-        demand.setIdDemandType( nIdDemandType );
-        demand.setUserGuid( strUserGuid );
-        demand.setData( StringUtils.isNotEmpty( strData ) ? strData : StringUtils.EMPTY );
-        demand.setStatusText( StringUtils.isNotEmpty( strStatusText ) ? strStatusText : StringUtils.EMPTY );
-        demand.setIdStatusCRM( nIdStatusCRM );
+        int nIdDemand = -1;
+        CRMUser crmUser = _crmUserService.findByUserGuid( strUserGuid );
 
-        return _demandService.create( demand );
+        if ( crmUser != null )
+        {
+            nIdDemand = registerDemand( nIdDemandType, crmUser.getIdCRMUser(  ), strData, strStatusText, nIdStatusCRM );
+        }
+
+        return nIdDemand;
+    }
+
+    /**
+     * Register the demand
+     * @param nIdDemandType the id demand type
+     * @param nIdCRMUser the ID CRM user
+     * @param strData the data
+     * @param strStatusText the status of the demand
+     * @param nIdStatusCRM the id status crm
+     * @return the newly created id demand
+     */
+    public int registerDemand( int nIdDemandType, int nIdCRMUser, String strData, String strStatusText, int nIdStatusCRM )
+    {
+        int nIdDemand = -1;
+        CRMUser crmUser = _crmUserService.findByPrimaryKey( nIdCRMUser );
+
+        if ( crmUser != null )
+        {
+            Demand demand = new Demand(  );
+            demand.setIdDemandType( nIdDemandType );
+            demand.setIdCRMUser( nIdCRMUser );
+            demand.setData( StringUtils.isNotEmpty( strData ) ? strData : StringUtils.EMPTY );
+            demand.setStatusText( StringUtils.isNotEmpty( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+            demand.setIdStatusCRM( nIdStatusCRM );
+
+            nIdDemand = _demandService.create( demand );
+        }
+
+        return nIdDemand;
     }
 
     /**
@@ -171,5 +204,14 @@ public final class CRMService
     public void setDemandService( DemandService demandService )
     {
         _demandService = demandService;
+    }
+
+    /**
+     * Set the crm user service
+     * @param crmUserService the crm user service
+     */
+    public void setCRMUserService( CRMUserService crmUserService )
+    {
+        _crmUserService = crmUserService;
     }
 }

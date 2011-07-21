@@ -155,23 +155,29 @@ public class CRMApp implements XPageApplication
      */
     private XPage getCRMHomePage( HttpServletRequest request, LuteceUser user )
     {
-        XPage page = new XPage(  );
+        XPage page = null;
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        model.put( CRMConstants.MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
-        model.put( CRMConstants.MARK_CATEGORIES_LIST,
-            _categoryService.getCategories( request.getLocale(  ), false, true ) );
-        model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
-            _demandService.findByUserGuid( user.getName(  ), request.getLocale(  ) ) );
-        model.put( CRMConstants.MARK_MYLUTECE_USER, user );
-        model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
-        model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
+        if ( crmUser != null )
+        {
+            page = new XPage(  );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
+            Map<String, Object> model = new HashMap<String, Object>(  );
+            model.put( CRMConstants.MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
+            model.put( CRMConstants.MARK_CATEGORIES_LIST,
+                _categoryService.getCategories( request.getLocale(  ), false, true ) );
+            model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
+                _demandService.findByIdCRMUser( crmUser.getIdCRMUser(  ), request.getLocale(  ) ) );
+            model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
+            model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
+            model.put( CRMConstants.MARK_CRM_USER, crmUser );
 
-        page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_TITLE, request.getLocale(  ) ) );
-        page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
-        page.setContent( template.getHtml(  ) );
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
+
+            page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_TITLE, request.getLocale(  ) ) );
+            page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
+            page.setContent( template.getHtml(  ) );
+        }
 
         return page;
     }
@@ -185,14 +191,15 @@ public class CRMApp implements XPageApplication
     private XPage getManageNotificationsPage( HttpServletRequest request, LuteceUser user )
     {
         XPage page = null;
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
         String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
 
-        if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
+        if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
         {
             int nIdDemand = Integer.parseInt( strIdDemand );
             Demand demand = _demandService.findByPrimaryKey( nIdDemand );
 
-            if ( ( demand != null ) && user.getName(  ).equals( demand.getUserGuid(  ) ) )
+            if ( ( demand != null ) && ( crmUser.getIdCRMUser(  ) == demand.getIdCRMUser(  ) ) )
             {
                 // Check the existence of the demand and the owner of the demand is indeed the current user
                 page = new XPage(  );
@@ -205,7 +212,6 @@ public class CRMApp implements XPageApplication
                 Map<String, Object> model = new HashMap<String, Object>(  );
                 model.put( CRMConstants.MARK_NOTIFICATIONS_LIST, _notificationService.findByFilter( nFilter ) );
                 model.put( CRMConstants.MARK_DEMAND_TYPE, demandType );
-                model.put( CRMConstants.MARK_MYLUTECE_USER, user );
 
                 HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_NOTIFICATIONS,
                         request.getLocale(  ), model );
@@ -230,9 +236,11 @@ public class CRMApp implements XPageApplication
     private XPage getViewNotificationPage( HttpServletRequest request, LuteceUser user )
     {
         XPage page = null;
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
         String strIdNotification = request.getParameter( CRMConstants.PARAMETER_ID_NOTIFICATION );
 
-        if ( StringUtils.isNotBlank( strIdNotification ) && StringUtils.isNumeric( strIdNotification ) )
+        if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdNotification ) &&
+                StringUtils.isNumeric( strIdNotification ) )
         {
             int nIdNotification = Integer.parseInt( strIdNotification );
             Notification notification = _notificationService.findByPrimaryKey( nIdNotification );
@@ -241,7 +249,7 @@ public class CRMApp implements XPageApplication
             {
                 Demand demand = _demandService.findByPrimaryKey( notification.getIdDemand(  ) );
 
-                if ( ( demand != null ) && user.getName(  ).equals( demand.getUserGuid(  ) ) )
+                if ( ( demand != null ) && ( crmUser.getIdCRMUser(  ) == demand.getIdCRMUser(  ) ) )
                 {
                     // Check the existence of the demand and the owner of the demand is indeed the current user
                     if ( !notification.isRead(  ) )
@@ -258,7 +266,6 @@ public class CRMApp implements XPageApplication
                     Map<String, Object> model = new HashMap<String, Object>(  );
                     model.put( CRMConstants.MARK_NOTIFICATION, notification );
                     model.put( CRMConstants.MARK_DEMAND, demand );
-                    model.put( CRMConstants.MARK_MYLUTECE_USER, user );
                     model.put( CRMConstants.MARK_DEMAND_TYPE, demandType );
 
                     HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_VIEW_NOTIFICATION,
@@ -364,14 +371,15 @@ public class CRMApp implements XPageApplication
         throws SiteMessageException
     {
         String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
+        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
 
-        if ( StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
+        if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
         {
             int nIdDemand = Integer.parseInt( strIdDemand );
             Demand demand = _demandService.findByPrimaryKey( nIdDemand );
 
             if ( ( demand != null ) && ( demand.getIdStatusCRM(  ) != 1 ) &&
-                    user.getName(  ).equals( demand.getUserGuid(  ) ) )
+                    ( crmUser.getIdCRMUser(  ) == demand.getIdCRMUser(  ) ) )
             {
                 // Check the existence of the demand and the owner of the demand is indeed the current user and the demand is not validated
                 DemandType demandType = _demandTypeService.findByPrimaryKey( demand.getIdDemandType(  ) );

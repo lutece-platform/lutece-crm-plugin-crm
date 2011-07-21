@@ -13,7 +13,7 @@
 	<!-- Removal Service -->
     <bean id="crm.categoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
     
-    <!-- CRM Service -->
+    <!-- CRM Services -->
     <bean id="crm.demandStatusCRMService" class="fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService" />
     <bean id="crm.categoryService" class="fr.paris.lutece.plugins.crm.service.category.CategoryService" />
     <bean id="crm.notificationService" class="fr.paris.lutece.plugins.crm.service.notification.NotificationService" />
@@ -26,6 +26,7 @@
     <bean id="crm.crmService" class="fr.paris.lutece.plugins.crm.service.CRMService">
     	<property name="notificationService" ref="crm.notificationService" />
     	<property name="demandService" ref="crm.demandService" />
+    	<property name="cRMUserService" ref="crm.crmUserService" />
     </bean>
     
 </beans>

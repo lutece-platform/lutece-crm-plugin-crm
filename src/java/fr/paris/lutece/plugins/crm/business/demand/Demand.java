@@ -47,7 +47,7 @@ public class Demand
 {
     private int _nIdDemand;
     private int _nIdDemandType;
-    private String _strUserGuid;
+    private int _nIdCRMUser;
     private String _strStatusText;
     private int _nIdStatusCRM;
     private String _strData;
@@ -108,21 +108,21 @@ public class Demand
     }
 
     /**
-     * Set the user guid
-     * @param strUserGuid the user guid
+     * Set the user crm id
+     * @param nIdCRMUser the user crm id
      */
-    public void setUserGuid( String strUserGuid )
+    public void setIdCRMUser( int nIdCRMUser )
     {
-        _strUserGuid = strUserGuid;
+        _nIdCRMUser = nIdCRMUser;
     }
 
     /**
-     * Get the user guid
-     * @return the user guid
+     * Get the user user crm id
+     * @return the user crm id
      */
-    public String getUserGuid(  )
+    public int getIdCRMUser(  )
     {
-        return _strUserGuid;
+        return _nIdCRMUser;
     }
 
     /**

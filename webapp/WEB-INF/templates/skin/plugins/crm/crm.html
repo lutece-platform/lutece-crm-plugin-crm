@@ -2,9 +2,9 @@
 <#function buildDemandTypeUrlResource demand_type user>
 	<#if demand_type??>
 		<#if ( demand_type.urlResource?index_of( "?" ) >= 0 )>
-			<#return demand_type.urlResource + "&amp;id_demand_type=" + demand_type.idDemandType + "&amp;user_guid=" + user.name>
+			<#return demand_type.urlResource + "&amp;id_demand_type=" + demand_type.idDemandType + "&amp;id_crm_user=" + user.idCRMUser>
 		<#else>
-			<#return demand_type.urlResource + "?id_demand_type=" + demand_type.idDemandType + "&amp;user_guid=" + user.name>
+			<#return demand_type.urlResource + "?id_demand_type=" + demand_type.idDemandType + "&amp;id_crm_user=" + user.idCRMUser>
 		</#if>
 	</#if>
 	<#return "">
@@ -83,7 +83,7 @@
 	<div class="span-10 append-1 last">
 		<div class="portlet-background append-bottom">
 			<div class="portlet-background-header -lutece-border-radius-top">
-				${mylutece_user.getUserInfo( 'user.name.given' )} ${mylutece_user.getUserInfo( 'user.name.family' )}
+				${crm_user.firstName} ${crm_user.lastName}
 			</div>
 			<div class="portlet-background-content -lutece-border-radius">
 				<a href="jsp/site/Portal.jsp?page=crm&amp;action=modify_crm_user">
@@ -110,7 +110,7 @@
 								<ul>
 									<#list demand_types as demand_type>
 										<li>
-											<a href="${buildDemandTypeUrlResource( demand_type, mylutece_user )}" target="_blank">
+											<a href="${buildDemandTypeUrlResource( demand_type, crm_user )}" target="_blank">
 												${demand_type.label}
 											</a>
 											<#if demand_type.urlInfo?has_content>
