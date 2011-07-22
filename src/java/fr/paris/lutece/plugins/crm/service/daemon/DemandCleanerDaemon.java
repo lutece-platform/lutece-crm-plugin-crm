@@ -77,8 +77,8 @@ public class DemandCleanerDaemon extends Daemon
             {
                 if ( demand.getIdStatusCRM(  ) == 0 )
                 {
-                    // Only removing the demand that have the status draft
-                    DemandService.getService(  ).remove( demand.getIdDemand(  ) );
+                    // Only removing the demand that has the status draft
+                    DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ) );
                 }
             }
         }

@@ -29,4 +29,17 @@
     	<property name="cRMUserService" ref="crm.crmUserService" />
     </bean>
     
+    <!-- SignRequest -->
+    <bean id="crm.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" />
+    <bean id="crm.requestAuthenticator" class="fr.paris.lutece.util.signrequest.SimpleHashAuthenticator" >
+        <property name="hashService" ref="crm.hashService" />
+        <property name="signatureElements" > 
+            <list>
+                <value>id_demand</value>
+            </list>
+        </property>
+        <property name="privateKey">
+            <value>change me</value>
+        </property>
+    </bean>
 </beans>

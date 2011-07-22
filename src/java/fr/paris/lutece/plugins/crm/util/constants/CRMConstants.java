@@ -120,6 +120,7 @@ public final class CRMConstants
     public static final String ACTION_VIEW_NOTIFICATION = "view_notification";
     public static final String ACTION_REMOVE_DEMAND = "remove_demand";
     public static final String ACTION_DO_REMOVE_DRAFT = "do_remove_draft";
+    public static final String ACTION_REMOVE_DRAFT = "remove_draft";
     public static final String ACTION_MODIFY_CRM_USER = "modify_crm_user";
     public static final String ACTION_DO_MODIFY_CRM_USER = "do_modify_crm_user";
 

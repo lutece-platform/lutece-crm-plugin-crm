@@ -37,12 +37,19 @@ import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandHome;
 import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM;
+import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
+import fr.paris.lutece.plugins.crm.util.signrequest.CRMRequestAuthenticator;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.util.httpaccess.HttpAccess;
+import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -128,6 +135,46 @@ public final class DemandService
     }
 
     /**
+     * Remove a demand and its resource
+     * @param nIdDemand the id demand
+     */
+    public void removeWithItsResource( int nIdDemand )
+    {
+        Demand demand = findByPrimaryKey( nIdDemand );
+
+        if ( demand != null )
+        {
+            DemandType demandType = DemandTypeService.getService(  ).findByPrimaryKey( demand.getIdDemandType(  ) );
+
+            if ( demandType != null )
+            {
+                // List parameters to post
+                Map<String, String> params = new HashMap<String, String>(  );
+                params.put( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DRAFT );
+                params.put( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ).replace( "\"", "'" ) );
+                params.put( CRMConstants.PARAMETER_ID_DEMAND, Integer.toString( nIdDemand ) );
+
+                // List elements to include to the signature
+                List<String> listElements = new ArrayList<String>(  );
+                listElements.add( Integer.toString( nIdDemand ) );
+
+                try
+                {
+                    HttpAccess httpAccess = new HttpAccess(  );
+                    httpAccess.doPost( demandType.getUrlResource(  ), params,
+                        CRMRequestAuthenticator.getRequestAuthenticator(  ), listElements );
+                    remove( nIdDemand );
+                }
+                catch ( HttpAccessException e )
+                {
+                    String strError = "CRM - Error connecting to '" + demandType.getUrlResource(  ) + "' : ";
+                    AppLogService.error( strError + e.getMessage(  ), e );
+                }
+            }
+        }
+    }
+
+    /**
      * Remove the demands given an id demand type
      * @param nIdDemandType the id demand type
      */
@@ -138,7 +185,7 @@ public final class DemandService
 
         for ( Demand demand : findByFilter( dFilter ) )
         {
-            remove( demand.getIdDemand(  ) );
+            removeWithItsResource( demand.getIdDemand(  ) );
         }
     }
 
