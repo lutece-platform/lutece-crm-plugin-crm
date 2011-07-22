@@ -282,11 +282,10 @@ public class DemandType implements AdminWorkgroupResource
     {
         boolean bIsDateBeginCorrect = false;
         boolean bIsDateEndCorrect = false;
+        Date dateToday = new Date(  );
 
         if ( _dateBegin != null )
         {
-            Date dateToday = new Date(  );
-
             if ( _dateBegin.before( dateToday ) )
             {
                 bIsDateBeginCorrect = true;
@@ -299,8 +298,6 @@ public class DemandType implements AdminWorkgroupResource
 
         if ( _dateEnd != null )
         {
-            Date dateToday = new Date(  );
-
             if ( _dateEnd.after( dateToday ) || _dateEnd.equals( dateToday ) )
             {
                 bIsDateEndCorrect = true;
