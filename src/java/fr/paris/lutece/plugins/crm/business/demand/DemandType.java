@@ -298,7 +298,7 @@ public class DemandType implements AdminWorkgroupResource
 
         if ( _dateEnd != null )
         {
-            if ( _dateEnd.after( dateToday ) || _dateEnd.equals( dateToday ) )
+            if ( _dateEnd.after( dateToday ) )
             {
                 bIsDateEndCorrect = true;
             }
