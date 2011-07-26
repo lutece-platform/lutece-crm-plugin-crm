@@ -42,6 +42,7 @@ package fr.paris.lutece.plugins.crm.util.constants;
 public final class CRMConstants
 {
     // CONSTANTS
+    public static final int INVALID_ID_INT = -1;
     public static final String SLASH = "/";
 
     // PROPERTIES

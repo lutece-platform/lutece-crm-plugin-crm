@@ -144,8 +144,12 @@ public final class CRMService
                 demand.setData( strData );
             }
 
+            if ( nIdStatusCRM != CRMConstants.INVALID_ID_INT )
+            {
+                demand.setIdStatusCRM( nIdStatusCRM );
+            }
+
             demand.setStatusText( strStatusText );
-            demand.setIdStatusCRM( nIdStatusCRM );
             _demandService.update( demand );
         }
     }
