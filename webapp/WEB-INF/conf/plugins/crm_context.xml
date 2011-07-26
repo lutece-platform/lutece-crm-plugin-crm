@@ -18,6 +18,7 @@
     <bean id="crm.categoryService" class="fr.paris.lutece.plugins.crm.service.category.CategoryService" />
     <bean id="crm.notificationService" class="fr.paris.lutece.plugins.crm.service.notification.NotificationService" />
     <bean id="crm.demandService" class="fr.paris.lutece.plugins.crm.service.demand.DemandService"/>
+    <bean id="crm.demandWebService" class="fr.paris.lutece.plugins.crm.service.demand.DemandWebService"/>
     <bean id="crm.demandTypeService" class="fr.paris.lutece.plugins.crm.service.demand.DemandTypeService" />
     <bean id="crm.crmUserService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserService" />
     <bean id="crm.crmUserAttributesService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserAttributesService">
