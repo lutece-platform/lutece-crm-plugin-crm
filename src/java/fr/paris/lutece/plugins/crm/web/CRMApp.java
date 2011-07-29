@@ -58,6 +58,7 @@ import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.web.PortalJspBean;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.web.xpages.XPageApplication;
 import fr.paris.lutece.util.html.HtmlTemplate;
@@ -80,7 +81,8 @@ import javax.servlet.http.HttpServletRequest;
 public class CRMApp implements XPageApplication
 {
     // JSP
-    private static final String JSP_PORTAL = "jsp/site/Portal.jsp";
+    private static final String JSP_PORTAL = "Portal.jsp";
+    private static final String JSP_SITE = "jsp/site/";
 
     // TEMPLATES
     private static final String TEMPLATE_CRM_HOME_PAGE = "skin/plugins/crm/crm.html";
@@ -331,7 +333,7 @@ public class CRMApp implements XPageApplication
             String strEmail = request.getParameter( CRMConstants.PARAMETER_EMAIL );
             String strPhoneNumber = request.getParameter( CRMConstants.PARAMETER_PHONE_NUMBER );
 
-            UrlItem url = new UrlItem( JSP_PORTAL );
+            UrlItem url = new UrlItem( JSP_SITE + JSP_PORTAL );
             url.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
             url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_MODIFY_CRM_USER );
 
@@ -378,7 +380,7 @@ public class CRMApp implements XPageApplication
             int nIdDemand = Integer.parseInt( strIdDemand );
             Demand demand = _demandService.findByPrimaryKey( nIdDemand );
 
-            if ( ( demand != null ) && ( demand.getIdStatusCRM(  ) != 1 ) &&
+            if ( ( demand != null ) && ( demand.getIdStatusCRM(  ) == 0 ) &&
                     ( crmUser.getIdCRMUser(  ) == demand.getIdCRMUser(  ) ) )
             {
                 // Check the existence of the demand and the owner of the demand is indeed the current user and the demand is not validated
@@ -393,7 +395,7 @@ public class CRMApp implements XPageApplication
                         sbUrlReturn.append( CRMConstants.SLASH );
                     }
 
-                    sbUrlReturn.append( JSP_PORTAL );
+                    sbUrlReturn.append( JSP_SITE + JSP_PORTAL );
 
                     UrlItem urlReturn = new UrlItem( sbUrlReturn.toString(  ) );
                     urlReturn.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
@@ -432,6 +434,91 @@ public class CRMApp implements XPageApplication
             crmUser.setPhoneNumber( StringUtils.isNotBlank( strPhoneNumber ) ? strPhoneNumber : StringUtils.EMPTY );
             _crmUserService.create( crmUser );
         }
+    }
+
+    /**
+     * Do open a demand type
+     * @param request the HTTP request
+     * @return the resource url of the demand type
+     */
+    public String doOpenDemandType( HttpServletRequest request )
+    {
+        String strUrl = AppPathService.getBaseUrl( request );
+        LuteceUser user;
+
+        try
+        {
+            user = getUser( request );
+
+            CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+            String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
+
+            if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdDemandType ) &&
+                    StringUtils.isNumeric( strIdDemandType ) )
+            {
+                int nIdDemandType = Integer.parseInt( strIdDemandType );
+                DemandType demandType = _demandTypeService.findByPrimaryKey( nIdDemandType );
+
+                if ( ( demandType != null ) && demandType.isOpen(  ) )
+                {
+                    UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
+                    url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, demandType.getIdDemandType(  ) );
+                    url.addParameter( CRMConstants.PARAMETER_ID_CRM_USER, crmUser.getIdCRMUser(  ) );
+                    strUrl = url.getUrl(  );
+                }
+            }
+        }
+        catch ( UserNotSignedException e )
+        {
+            strUrl = strUrl + JSP_SITE + PortalJspBean.redirectLogin( request );
+        }
+
+        return strUrl;
+    }
+
+    /**
+     * Do edit a demand
+     * @param request the HTTP request
+     * @return the url resource to edit the resource
+     */
+    public String doEditDemand( HttpServletRequest request )
+    {
+        String strUrl = AppPathService.getBaseUrl( request );
+        LuteceUser user;
+
+        try
+        {
+            user = getUser( request );
+
+            CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+            String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
+
+            if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
+            {
+                int nIdDemand = Integer.parseInt( strIdDemand );
+                Demand demand = _demandService.findByPrimaryKey( nIdDemand );
+
+                if ( ( demand != null ) && ( crmUser.getIdCRMUser(  ) == demand.getIdCRMUser(  ) ) &&
+                        ( demand.getIdStatusCRM(  ) == 0 ) )
+                {
+                    DemandType demandType = _demandTypeService.findByPrimaryKey( demand.getIdDemandType(  ) );
+
+                    if ( ( demandType != null ) && demandType.isOpen(  ) )
+                    {
+                        UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
+                        url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, demand.getIdDemand(  ) );
+                        url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ) );
+                        strUrl = url.getUrl(  );
+                    }
+                }
+            }
+        }
+        catch ( UserNotSignedException e )
+        {
+            strUrl = strUrl + JSP_SITE + PortalJspBean.redirectLogin( request );
+        }
+
+        return strUrl;
     }
 
     /**
