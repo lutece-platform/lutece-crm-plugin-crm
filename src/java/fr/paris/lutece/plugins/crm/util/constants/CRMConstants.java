@@ -116,6 +116,8 @@ public final class CRMConstants
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_PHONE_NUMBER = "phone_number";
     public static final String PARAMETER_ID_CRM_USER = "id_crm_user";
+    public static final String PARAMETER_SIGNATURE = "signature";
+    public static final String PARAMETER_TIMESTAMP = "timestamp";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";

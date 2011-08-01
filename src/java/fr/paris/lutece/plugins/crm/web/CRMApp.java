@@ -44,6 +44,7 @@ import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.service.signrequest.CRMRequestAuthenticatorService;
 import fr.paris.lutece.plugins.crm.service.user.CRMUserService;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -67,7 +68,10 @@ import fr.paris.lutece.util.url.UrlItem;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -388,6 +392,14 @@ public class CRMApp implements XPageApplication
 
                 if ( demandType != null )
                 {
+                    List<String> listElements = new ArrayList<String>(  );
+                    listElements.add( Integer.toString( nIdDemand ) );
+                    listElements.add( demand.getData(  ) );
+
+                    String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
+                    String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
+                                                                        .buildSignature( listElements, strTimestamp );
+
                     StringBuilder sbUrlReturn = new StringBuilder( AppPathService.getBaseUrl( request ) );
 
                     if ( !sbUrlReturn.toString(  ).endsWith( CRMConstants.SLASH ) )
@@ -403,8 +415,11 @@ public class CRMApp implements XPageApplication
                     UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
                     url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_REMOVE_DRAFT );
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
+                    url.addParameter( CRMConstants.PARAMETER_TIMESTAMP, strTimestamp );
+                    url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
                     url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ).replace( "\"", "'" ) );
                     url.addParameter( CRMConstants.PARAMETER_URL_RETURN, urlReturn.getUrl(  ) );
+
                     SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
                         SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
                 }
@@ -461,9 +476,20 @@ public class CRMApp implements XPageApplication
 
                 if ( ( demandType != null ) && demandType.isOpen(  ) )
                 {
+                    List<String> listElements = new ArrayList<String>(  );
+                    listElements.add( Integer.toString( demandType.getIdDemandType(  ) ) );
+                    listElements.add( Integer.toString( crmUser.getIdCRMUser(  ) ) );
+
+                    String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
+                    String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
+                                                                        .buildSignature( listElements, strTimestamp );
+
                     UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, demandType.getIdDemandType(  ) );
                     url.addParameter( CRMConstants.PARAMETER_ID_CRM_USER, crmUser.getIdCRMUser(  ) );
+                    url.addParameter( CRMConstants.PARAMETER_TIMESTAMP, strTimestamp );
+                    url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
+
                     strUrl = url.getUrl(  );
                 }
             }
@@ -505,9 +531,20 @@ public class CRMApp implements XPageApplication
 
                     if ( ( demandType != null ) && demandType.isOpen(  ) )
                     {
+                        List<String> listElements = new ArrayList<String>(  );
+                        listElements.add( Integer.toString( demand.getIdDemand(  ) ) );
+                        listElements.add( demand.getData(  ) );
+
+                        String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
+                        String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
+                                                                            .buildSignature( listElements, strTimestamp );
+
                         UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
                         url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, demand.getIdDemand(  ) );
                         url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ) );
+                        url.addParameter( CRMConstants.PARAMETER_TIMESTAMP, strTimestamp );
+                        url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
+
                         strUrl = url.getUrl(  );
                     }
                 }

@@ -31,9 +31,10 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.util.signrequest;
+package fr.paris.lutece.plugins.crm.service.signrequest;
 
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.util.signrequest.AbstractAuthenticator;
 import fr.paris.lutece.util.signrequest.RequestAuthenticator;
 
 
@@ -42,14 +43,15 @@ import fr.paris.lutece.util.signrequest.RequestAuthenticator;
  * CRMRequestAuthenticator
  *
  */
-public final class CRMRequestAuthenticator
+public final class CRMRequestAuthenticatorService
 {
-    private static final String BEAN_CRM_REQUESTAUTHENTICATOR = "crm.requestAuthenticator";
+    private static final String BEAN_CRM_REQUESTAUTHENTICATOR_FOR_WS = "crm.requestAuthenticatorForWS";
+    private static final String BEAN_CRM_REQUESTAUTHENTICATOR_FOR_URL = "crm.requestAuthenticatorForUrl";
 
     /**
      * Private constructor
      */
-    private CRMRequestAuthenticator(  )
+    private CRMRequestAuthenticatorService(  )
     {
     }
 
@@ -57,8 +59,17 @@ public final class CRMRequestAuthenticator
      * Get the instance of {@link RequestAuthenticator} defined in the crm-formengine_context.xml
      * @return the instance of {@link RequestAuthenticator}
      */
-    public static RequestAuthenticator getRequestAuthenticator(  )
+    public static RequestAuthenticator getRequestAuthenticatorForWS(  )
     {
-        return (RequestAuthenticator) SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR );
+        return (RequestAuthenticator) SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_WS );
+    }
+
+    /**
+     * Get the instance of {@link RequestAuthenticator} defined in the crm-formengine_context.xml
+     * @return the instance of {@link RequestAuthenticator}
+     */
+    public static AbstractAuthenticator getRequestAuthenticatorForUrl(  )
+    {
+        return (AbstractAuthenticator) SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_URL );
     }
 }

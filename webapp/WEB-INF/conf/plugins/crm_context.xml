@@ -32,11 +32,25 @@
     
     <!-- SignRequest -->
     <bean id="crm.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" />
-    <bean id="crm.requestAuthenticator" class="fr.paris.lutece.util.signrequest.SimpleHashAuthenticator" >
+    <bean id="crm.requestAuthenticatorForWS" class="fr.paris.lutece.util.signrequest.HeaderHashAuthenticator" >
         <property name="hashService" ref="crm.hashService" />
         <property name="signatureElements" > 
             <list>
                 <value>id_demand</value>
+            </list>
+        </property>
+        <property name="privateKey">
+            <value>change me</value>
+        </property>
+    </bean>
+    <bean id="crm.requestAuthenticatorForUrl" class="fr.paris.lutece.util.signrequest.RequestHashAuthenticator" >
+        <property name="hashService" ref="crm.hashService" />
+        <property name="signatureElements" > 
+            <list>
+                <value>id_demand_type</value>
+                <value>id_demand</value>
+                <value>id_crm_user</value>
+                <value>demand_data</value>
             </list>
         </property>
         <property name="privateKey">

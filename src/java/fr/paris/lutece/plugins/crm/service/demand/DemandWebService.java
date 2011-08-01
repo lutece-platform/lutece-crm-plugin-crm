@@ -34,8 +34,8 @@
 package fr.paris.lutece.plugins.crm.service.demand;
 
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
+import fr.paris.lutece.plugins.crm.service.signrequest.CRMRequestAuthenticatorService;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
-import fr.paris.lutece.plugins.crm.util.signrequest.CRMRequestAuthenticator;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
@@ -84,14 +84,15 @@ public final class DemandWebService
         // List parameters to post
         Map<String, String> params = new HashMap<String, String>(  );
         params.put( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DRAFT );
-        params.put( CRMConstants.PARAMETER_DEMAND_DATA, strData );
         params.put( CRMConstants.PARAMETER_ID_DEMAND, Integer.toString( nIdDemand ) );
+        params.put( CRMConstants.PARAMETER_DEMAND_DATA, strData );
 
         // List elements to include to the signature
         List<String> listElements = new ArrayList<String>(  );
         listElements.add( Integer.toString( nIdDemand ) );
+        listElements.add( strData );
 
         HttpAccess httpAccess = new HttpAccess(  );
-        httpAccess.doPost( strUrl, params, CRMRequestAuthenticator.getRequestAuthenticator(  ), listElements );
+        httpAccess.doPost( strUrl, params, CRMRequestAuthenticatorService.getRequestAuthenticatorForWS(  ), listElements );
     }
 }
