@@ -392,9 +392,11 @@ public class CRMApp implements XPageApplication
 
                 if ( demandType != null )
                 {
+                    String strData = demand.getData(  ).replace( "\"", "'" );
+
                     List<String> listElements = new ArrayList<String>(  );
                     listElements.add( Integer.toString( nIdDemand ) );
-                    listElements.add( demand.getData(  ) );
+                    listElements.add( strData );
 
                     String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
                     String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
@@ -417,7 +419,7 @@ public class CRMApp implements XPageApplication
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND, nIdDemand );
                     url.addParameter( CRMConstants.PARAMETER_TIMESTAMP, strTimestamp );
                     url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
-                    url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, demand.getData(  ).replace( "\"", "'" ) );
+                    url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, strData );
                     url.addParameter( CRMConstants.PARAMETER_URL_RETURN, urlReturn.getUrl(  ) );
 
                     SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
