@@ -40,10 +40,12 @@ import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
@@ -237,7 +239,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     {
         setPageTitleProperty( CRMConstants.PROPERTY_MODIFY_DEMAND_TYPE_PAGE_TITLE );
 
-        String strUrl = StringUtils.EMPTY;
+        String strHtml = StringUtils.EMPTY;
         String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
 
         if ( StringUtils.isNotBlank( strIdDemandType ) && StringUtils.isNumeric( strIdDemandType ) )
@@ -263,19 +265,20 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DEMAND_TYPE, getLocale(  ),
                         model );
 
-                strUrl = getAdminPage( template.getHtml(  ) );
+                strHtml = getAdminPage( template.getHtml(  ) );
             }
             else
             {
-                strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+                throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR,
+                        request.getLocale(  ) ) );
             }
         }
         else
         {
-            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
+            throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR, request.getLocale(  ) ) );
         }
 
-        return strUrl;
+        return strHtml;
     }
 
     /**
