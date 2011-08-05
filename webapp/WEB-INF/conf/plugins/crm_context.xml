@@ -36,7 +36,6 @@
         <property name="hashService" ref="crm.hashService" />
         <property name="signatureElements" > 
             <list>
-                <value>id_demand</value>
             </list>
         </property>
         <property name="privateKey">
@@ -47,10 +46,6 @@
         <property name="hashService" ref="crm.hashService" />
         <property name="signatureElements" > 
             <list>
-                <value>id_demand_type</value>
-                <value>id_demand</value>
-                <value>id_crm_user</value>
-                <value>demand_data</value>
             </list>
         </property>
         <property name="privateKey">
