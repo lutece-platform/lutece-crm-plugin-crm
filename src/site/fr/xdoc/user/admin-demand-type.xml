@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Gestion des types de demande</title>
+	</properties>
+	<body>
+		<section name="Gestion des types de demande">
+			<p>
+				La gestion des types de demande est accessible dans l'onglet "Gestion des types de demande".
+				Cependant, pour acc&#233;der à l'interface de gestion des types de demande, il faut que l'utilisateur poss&#232;de le droit <strong>CRM_DEMAND_TYPES_MANAGEMENT</strong>.
+			</p>
+			<p>
+				L'interface de gestion des types de demande r&#233;capitule les actions pouvant &#234;tre effectu&#233;es sur un type de demande :
+			</p>
+			<ul>
+				<li>Cr&#233;ation d'un type de demande</li>
+				<li>Modification d'un type de demande</li>
+				<li>Cl&#244;turation d'un type de demande</li>
+				<li>Suppression d'un type de demande</li>
+				<li>Purge des demandes d'un type de demande</li>
+			</ul>
+			<p>
+				La liste des types de demande est tri&#233;e par ordre croissant de priorit&#233;.
+			</p>
+			<p>
+				<center>
+					<img src="../user/images/manage_demand_types.png" />
+				</center>
+			</p>
+			<subsection name="Cr&#233;ation/Modification d'un type de demande">
+				<p>
+					L'interface de saisie suivante r&#233;capitule les informations n&#233;cessaires à la cr&#233;ation/modification d'un type de demande :
+				</p>
+				<p>
+					<center>
+						<img src="../user/images/create_demand_type.png" />
+					</center>
+				</p>
+				<p>
+					Le champ "Lien ressource" correspond au lien de la ressource pour laquelle le type de demande sera li&#233;.
+				</p>
+				<p>
+					<strong>ATTENTION :</strong> il faut que le lien soit en absolue.
+				</p>
+				<p>
+					Le champ "Lien info" correspond au lien de l'info de la ressource.
+				</p>
+				<p>
+					Le champ "Lien contact" correspond au lien du contact de la ressource.
+				</p>
+				<p>
+					Le champ "Ordre" permet de d&#233;finir la priorit&#233; du type de demande à afficher en t&#234;te de pile.
+				</p>
+				<p>
+					Le champ "Cat&#233;gorie" permet de filtrer les types de demandes par cat&#233;gorie. (voir la rubrique "Gestion des cat&#233;gories" pour plus d'information)
+				</p>
+				<p>
+					Le champ "Groupe de travail" permet de restreindre l'acc&#232;s à ce type de demande aux utilisateurs Back-Office ayant le groupe de travail s&#233;lectionn&#233;.
+				</p>
+				<p>
+					Le champ "R&#244;le" permet de restreindre l'acc&#232;s à ce type de demande seulement aux utilisateurs Front-Office ayant le r&#244;le s&#233;lectionn&#233;.
+				</p>
+				<p>
+					Le champ "Date d'ouverture" permet de d&#233;finir l'ouverture du type de demande. En d'autres termes, il est possible d'afficher
+					en Front-Office le type de demande à partir d'une certaine date. Cependant, il est &#233;galement possible d'afficher tout le temps
+					le type de demande. Pour cela, il suffit de mettre le champs à vide.
+				</p>
+				<p>
+					Le champ "Date de fermeture" permet de d&#233;finir la fermeture du type de demande. En d'autres termes, il est possible d'arr&#234;ter d'afficher
+					en Front-Office le type de demande à partir d'une certaine date. Cependant, il est &#233;galement possible d'afficher tout le temps
+					le type de demande. Pour cela, il suffit de mettre le champs à vide.
+				</p>
+			</subsection>
+			<subsection name="Cl&#244;turation d'un type de demande">
+				<p>
+					La cl&#244;turation d'un type de demande permet d'arr&#234;ter d'afficher en Front-Office le type de demande.
+				</p>
+				<p>
+					<strong>ATTENTION :</strong> il n'y a pas de statut "cl&#244;tur&#233;" pour les types de demandes. Cette action ne fait que
+					mettre la date de fermeture à la date actuelle à 00:00:00.
+				</p>
+			</subsection>
+			<subsection name="Suppression d'un type de demande">
+				<p>
+					L'action de suppression permet de supprimer le type de demande s&#233;lectionn&#233;.
+				</p>
+				<p>
+					<strong>ATTENTION :</strong> cette action entra&#238;ne &#233;galement la suppression de toutes les demandes associ&#233;es à ce type de demande.
+					Cela supprimera &#233;galement toutes les notifications li&#233;es aux demandes.
+				</p>
+			</subsection>
+			<subsection name="Purge des demandes d'un type de demande">
+				<p>
+					L'action de purge permet de supprimer tous les demandes associ&#233;es à ce type de demande ayant le statut "Brouillon".
+					Cela supprimera &#233;galement toutes les notifications li&#233;es aux demandes.
+				</p>
+				<p>
+					Il existe un daemon supprimant automatiquement les demandes ayant le statut "Brouillon". Par d&#233;faut, c'est un daemon qui
+					s'ex&#233;cute une fois par jour et supprimant les demandes ayant le statut "Brouillon" et associ&#233;s aux types de demandes
+					qui ont &#233;t&#233; ferm&#233; depuis 7 jours. Ces chiffres sont configurables dans le fichier <strong>crm.properties</strong>.
+					Voir la rubrique "Configuration" pour plus d'information. 
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

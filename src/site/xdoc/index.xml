@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
 	<properties>
-		<title>Plugin crm</title>
+		<title>Introduction</title>
 	</properties>
 	<body>
-		<section name="Plugin crm">
+		<section name="Plugin's description">
 			<subsection name="Introduction">
+				<p>
+					This plugin handles the management of customer's demands.
+				</p>
 			</subsection>
 		</section>
 	</body>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Gestion des cat&#233;gories</title>
+	</properties>
+	<body>
+		<section name="Gestion des cat&#233;gories">
+			<p>
+				La gestion des cat&#233;gories est accessible dans l'onglet "Gestion des types de demande", puis en cliquant sur le bouton "Gestion des cat&#233;gories".
+				Cependant, pour acc&#233;der &#224; l'interface de gestion des types de demande, il faut que l'utilisateur poss&#232;de le droit <strong>CRM_DEMAND_TYPES_MANAGEMENT</strong>.
+			</p>
+			<p>
+				L'interface de gestion des cat&#233;gories r&#233;capitule les actions pouvant &#234;tre effectu&#233;es sur une cat&#233;gorie :
+			</p>
+			<ul>
+				<li>Cr&#233;ation d'une cat&#233;gorie</li>
+				<li>Modification d'une cat&#233;gorie</li>
+				<li>Suppression d'une cat&#233;gorie</li>
+			</ul>
+			<p>
+				La liste des cat&#233;gories est tri&#233;e par ordre alphab&#233;tique sur les noms des cat&#233;gories.
+			</p>
+			<subsection name="Cr&#233;ation/Modification d'une cat&#233;gorie">
+				<p>
+					L'interface de saisie suivante r&#233;capitule les informations n&#233;cessaires &#224; la cr&#233;ation/modification d'une cat&#233;gorie :
+				</p>
+				<p>
+					<center>
+						<img src="../user/images/create_category.png" />
+					</center>
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

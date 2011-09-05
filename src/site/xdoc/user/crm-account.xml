@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>CRM user account management</title>
+	</properties>
+	<body>
+		<section name="CRM user account management">
+			<p>
+				The Front-Office user has, besides a MyLutece account, a CRM user account.
+				This account allows the user to have the most important information centralized for multiple
+				authentication instances.
+			</p>
+			<p>
+				The account management is only accessible to authenticated users and by the following url :
+				<strong>jsp/site/Portal.jsp?page=crm&action=modify_crm_user</strong>
+			</p>
+			<p>
+				The CRM user account are created only when an user access to the CRM interface.
+			</p>
+		</section>
+	</body>
+</document>

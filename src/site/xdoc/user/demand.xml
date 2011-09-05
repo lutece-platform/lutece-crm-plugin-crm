@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Usage</title>
+	</properties>
+	<body>
+		<section name="Demand management">
+			<p>
+				The demand management is only accessible to authenticated users and by the following url :
+				<strong>jsp/site/Portal.jsp?page=crm</strong>
+			</p>
+			<p>
+				<center>
+					<img src="../user/images/manage_demands.png" />
+				</center>
+			</p>
+			<p>
+				The demands have 2 status :
+			</p>
+			<ul>
+				<li>Draft</li>
+				<li>Validated</li>
+			</ul>
+			<p>
+				The status "Draft" allows the user to manipulate the data of the demand : modify/remove.
+				When a demand is deleted, its notification will also be deleted.
+			</p>
+			<p>
+				When a demand has the status "Validated", it cannot be deleted manually.
+			</p>
+			<p>
+				The demand possesses a status text that allows the user to define more precisely the status of a demand
+				(i.e. "New" or "Ongoing" ...).
+			</p>
+			<p>
+				To each demand, there are notifications. 
+			</p>
+			<subsection name="Creation/Modification of a demand">
+				<p>
+					It is not possible to create/modify a demand directory with the plugin-crm.
+					You will need a third party application that will send creation/modification requests through
+					webservices.
+				</p>
+				<p>
+					An example with two distinct webapps :
+				</p>
+				<p>
+					<center>
+						<img src="../user/images/example_crm_usage.png" />
+					</center>
+				</p>
+				<p>
+					In this case, the webapp 2 will communicate to the webapp 1 through webservice with the help of the
+					module-crm-form. The webapp 1 will receive the requests of the webapp 2 by the module-crm-rest.
+				</p>
+			</subsection>
+			<subsection name="Notification of a demand">
+				<p>
+					It is possible for each demand to have notifications. The presence of a notification is 
+					illustrate by an enveloppe.
+				</p>
+				<p>
+					The number that is display beside the enveloppe is the number of unread notifications.
+				</p>
+				<p>
+					The notifications cannot be removed manually.
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

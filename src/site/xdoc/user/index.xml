@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Usage</title>
+	</properties>
+	<body>
+		<section name="Plugin CRM">
+			<p>
+				The main menu summarizes the main functionnality of the plugin : 
+			</p>
+			<ul>
+				<li>
+					Category management
+				</li>
+				<li>
+					Demand type management
+				</li>
+				<li>
+					Demand management
+				</li>
+				<li>
+					CRM user account management
+				</li>
+			</ul>
+			<p>
+				The functionnalities of the plugin can be illustrated with the following diagram :
+			</p>
+			<p>
+				<center>
+					<img src="../user/crm_diagram.png" />
+				</center>
+			</p>
+		</section>
+	</body>
+</document>

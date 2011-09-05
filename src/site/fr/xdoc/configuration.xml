@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Introduction</title>
+	</properties>
+	<body>
+		<section name="Configuration">
+			<subsection name="Fichiers param&#233;trables">
+				<p>
+					<strong>crm.properties :</strong>
+				</p>
+				<table>
+					<tr>
+						<th>
+							Propri&#233;t&#233;t&#233;
+						</th>
+						<th>
+							Description
+						</th>
+					</tr>
+					<tr>
+						<td>
+							crm.listCategories.itemsPerPage
+						</td>
+						<td>
+							Nombre de cat&#233;gories &#224; afficher par d&#233;faut pour le paginator dans l'interfaces d'administration du plugin.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							crm.listDemandTypes.itemsPerPage
+						</td>
+						<td>
+							Nombre de types de demande &#224; afficher par d&#233;faut pour le paginator dans l'interfaces d'administration du plugin.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							crm.crmUser.maxSize
+						</td>
+						<td>
+							Taille maximale des caract&#232;res pour le compte CRM.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							daemon.crmDemandCleaner.interval
+						</td>
+						<td>
+							Interval d'intervention du daemon responsable de la purge des demandes.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							daemon.crmDemandCleaner.onstartup
+						</td>
+						<td>
+							Activation ou non du daemon lors du lancement de la webapp.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							daemon.crmDemandCleaner.nbExpirationDays
+						</td>
+						<td>
+							Nombre de jours apr&#232;s cl&#244;turation du type de demande pour lequel les demandes ayant un statut "Brouillon" seront supprim&#233;es.
+						</td>
+					</tr>
+				</table>
+			</subsection>
+		</section>
+	</body>
+</document>

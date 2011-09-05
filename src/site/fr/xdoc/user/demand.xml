@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Utilisation</title>
+	</properties>
+	<body>
+		<section name="Gestion des demandes">
+			<p>
+				La gestion des demandes n'est accessible uniquement pour les utilisateurs authentifi&#233;s.
+				Il est accessible par l'url : <strong>jsp/site/Portal.jsp?page=crm</strong>
+			</p>
+			<p>
+				<center>
+					<img src="../user/images/manage_demands.png" />
+				</center>
+			</p>
+			<p>
+				Les demandes ont deux statuts :
+			</p>
+			<ul>
+				<li>Brouillon</li>
+				<li>Valid&#233;</li>
+			</ul>
+			<p>
+				Le statut "Brouillon" permet &#224; l'utilisateur de pouvoir manipuler les donn&#233;es de sa demande :
+				modifier ou supprimer. Lorsqu'une demande est supprim&#233;e, ses notifications le sont &#233;galement.
+			</p>
+			<p>
+				Lorsqu'une demande est en statut "Valid&#233;", il ne peut &#234;tre supprim&#233; manuellement.
+			</p>
+			<p>
+				Les demandes poss&#232;dent &#233;galement un statut texte qui permettent de pr&#233;ciser le statut de la 
+				demande (comme par exemple, "Nouveau" ou "En cours de saisie" etc...).
+			</p>
+			<p>
+				A chacune des demandes peuvent &#234;tre associ&#233;es des notifications.
+			</p>
+			<subsection name="Cr&#233;ation/Modification d'une demande">
+				<p>
+					Il n'est pas possible de cr&#233;er/modifier une demande directement par le plugin-crm.
+					Il faut une application tierce qui envoie des demandes de cr&#233;ation/modification/suppression
+					via webservice.
+				</p>
+				<p>
+					Un exemple avec deux webapps distinctes :
+				</p>
+				<p>
+					<center>
+						<img src="../user/images/example_crm_usage.png" />
+					</center>
+				</p>
+				<p>
+					Dans ce cas de figure, la webapp 2 va communiquer la webapp 1 via webservice &#224; l'aide du
+					module-crm-form. La webapp 1 va r&#233;ceptionner les requ&#234;tes de la webapp 2 par le 
+					module-crm-rest. C'est dans ces &#233;changes que la cr&#233;ation/modification/suppression des 
+					demandes se font.
+				</p>
+			</subsection>
+			<subsection name="Notification d'une demande">
+				<p>
+					Il est possible pour chacune des demandes d'avoir une notification. La pr&#233;sence d'une notification
+					est illustr&#233;e par une enveloppe.
+				</p>
+				<p>
+					Le chiffre &#224; c&#244;t&#233; de l'enveloppe repr&#233;sente le nombre de notifications non lues.
+				</p>
+				<p>
+					Les notifications ne peuvent &#234;tre supprim&#233;es manuellement.
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

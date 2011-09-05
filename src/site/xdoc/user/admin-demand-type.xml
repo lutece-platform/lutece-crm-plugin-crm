@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Demand type management</title>
+	</properties>
+	<body>
+		<section name="Demand type management">
+			<p>
+				The demand type management is accessible by the tab "Demand type management".
+				However, to access to the demand type interface, the user must have the right <strong>CRM_DEMAND_TYPES_MANAGEMENT</strong>.
+			</p>
+			<p>
+				The interface of the demand type management lists all the actions that can be done on a category :
+			</p>
+			<ul>
+				<li>Creation of a demand type</li>
+				<li>Modification of a demand type</li>
+				<li>Closing a demand type</li>
+				<li>Remove a demand type</li>
+				<li>Demand's purge of a demand type</li>
+			</ul>
+			<p>
+				The list of demand type is sorted by priority order ascending.
+			</p>
+			<p>
+				<center>
+					<img src="../user/images/manage_demand_types.png" />
+				</center>
+			</p>
+			<subsection name="Creation/Modification of a demand type">
+				<p>
+					The following interface summarize the information needed to the creation/modification of demand type :
+				</p>
+				<p>
+					<center>
+						<img src="../user/images/create_demand_type.png" />
+					</center>
+				</p>
+				<p>
+					The field "Resource link" refers to the resource link in which the demand type is linked to.
+				</p>
+				<p>
+					<strong>WARNING :</strong> the link must be absolute.
+				</p>
+				<p>
+					The field "Info link" refers to the info link of the resource.
+				</p>
+				<p>
+					The field "Contact link" refers to the contact link of the resource.
+				</p>
+				<p>
+					The field "Order" allows the user to define the priority of the demand type to display at the head of the pile.
+				</p>
+				<p>
+					The field "Category" allows the user to filter the demand tyoe by category (see "Category management for detail).
+				</p>
+				<p>
+					The field "Workgroup" allows the user to restrict the access of the demand type only to the Back-Office users that has the selected workgroup.
+				</p>
+				<p>
+					The field "Role" allows the user to restrict the access of the demand type only to the Front-Office users that has the selected role.
+				</p>
+				<p>
+					The field "Opening date" allows the user to define the opening date of the demand type. In other words, it is possible to display
+					the demand type from a particular date. However, it is also possible to display the demand type all the time. To display all the time,
+					the user just have to put the field at blank.
+				</p>
+				<p>
+					The field "Closing date" allows the user to define the opening date of the demand type. In other words, it is possible to not display
+					the demand type from a particular date. However, it is also possible to display the demand type all the time. To display all the time,
+					the user just have to put the field at blank.
+				</p>
+			</subsection>
+			<subsection name="Closing a demand type">
+				<p>
+					Closing a demand type will stop displaying the demand type in Front-Office.
+				</p>
+				<p>
+					<strong>WARNING :</strong> there is no status "closed" for the demand types. This action only put the closing date
+					to the current date at 00:00:00.
+				</p>
+			</subsection>
+			<subsection name="Removal of a demand type">
+				<p>
+					The action of removing a demand type will delete the selected demand type.
+				</p>
+				<p>
+					<strong>WARNING :</strong> this action will also remove all the demands linked to the demand type.
+					This will also remove all the notifications linked to the demands.
+				</p>
+			</subsection>
+			<subsection name="Demand's purge of a demand type">
+				<p>
+					The action of purging will delete all the demands linked to the demand type that has the status "Draft".
+					This will also remove all the notifications linked to the demands.
+				</p>
+				<p>
+					There is a cleaner daemon that delete automatically the demand that has the status "Draft". By default,
+					it is a daemon that will run once a day and delete the demand that has the status "Draft" and is linked to the demand types
+					that are closed for 7 days. Those numbers are configurable in the file <strong>crm.properties</strong>.
+					See the section "Configuration" for more detail.
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

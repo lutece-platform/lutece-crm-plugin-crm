@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Category management</title>
+	</properties>
+	<body>
+		<section name="Category management">
+			<p>
+				The category management is accessible by the tab "Demand type management", and by clicking on the button
+				"Category management". However, to access to the demand type interface, the user must have the right <strong>CRM_DEMAND_TYPES_MANAGEMENT</strong>.
+			</p>
+			<p>
+				The interface of the category management lists all the actions that can be done on a category :
+			</p>
+			<ul>
+				<li>Creation of a category</li>
+				<li>Modification of a category</li>
+				<li>Removal of a category</li>
+			</ul>
+			<p>
+				The list of categories is sorted alphabetically on the category's names.
+			</p>
+			<subsection name="Creation/Modification of a category">
+				<p>
+					The following interface lists all the information needed for the creation/modification of a category :
+				</p>
+				<p>
+					<center>
+						<img src="../user/images/create_category.png" />
+					</center>
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Gestion du compte utilisateur CRM</title>
+	</properties>
+	<body>
+		<section name="Gestion du compte utilisateur CRM">
+			<p>
+				Les utilisateurs Front-Office ont, en plus d'un compte MyLutece, un compte utilisateur CRM.
+				Cela permet de centraliser les informations les plus importantes pour des intances ayant des
+				authentifications multiples.
+			</p>
+			<p>
+				La gestion du compte est accessible uniquement pour les utilisateurs authentifi&#233;s et &#224; l'adresse
+				suivante : <strong>jsp/site/Portal.jsp?page=crm&action=modify_crm_user</strong>
+			</p>
+			<p>
+				Les compte utilisateurs CRM sont cr&#233;&#233;s uniquement &#224; l'affichage de l'interface de gestion des demandes.
+				En d'autres termes, un utilisateur Front-Office aura son compte utilisateur CRM uniquement lorsqu'il
+				affiche la page de gestion des demandes.
+			</p>
+		</section>
+	</body>
+</document>
