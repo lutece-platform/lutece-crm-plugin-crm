@@ -6,6 +6,17 @@
 		</links>
 		<menu name="Overview">
 			<item name="Introduction" href="index.html" />
+			<item name="Configuration" href="configuration.html" />
+			<item name="Usage" href="/user/index.html" collapse="true">
+                <item name="Category management" href="/user/admin-category.html"/>
+                <item name="Demand type management" href="/user/admin-demand-type.html"/>
+				<item name="Demand management" href="/user/demand.html"/>
+				<item name="CRM user account management" href="/user/crm-account.html"/>
+			</item>
+		</menu>
+		<menu name="Downloads" inherit="bottom">
+			<item name="Released versions" href="../../stable_builds/plugins/plugin-crm/"/>
+			<item name="Nightly builds" href="../../nightly_builds/plugins/plugin-crm/" />
 		</menu>
 		<menu ref="reports" />
 	</body>
