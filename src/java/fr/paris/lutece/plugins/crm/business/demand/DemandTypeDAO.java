@@ -57,7 +57,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand_type WHERE id_demand_type = ? ";
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type ";
     private static final String SQL_QUERY_SELECT_MAX_ORDER = " SELECT max( demand_type_order ) FROM crm_demand_type ";
-    private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE demand_type_order = ? ";
+    private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE demand_type_order = ? ";
     private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key " +
         " FROM crm_demand_type WHERE id_category = ? AND ( date_begin IS NULL OR date_begin <= ? ) AND ( date_end IS NULL OR date_end > ? ) ";
 

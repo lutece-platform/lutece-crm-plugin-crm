@@ -58,14 +58,14 @@ import java.util.Map;
  * DemandService
  *
  */
-public final class DemandService
+public class DemandService
 {
     private static final String BEAN_CRM_DEMANDSERVICE = "crm.demandService";
 
     /**
-     * Private constructor
+     * Constructor
      */
-    private DemandService(  )
+    protected DemandService(  )
     {
     }
 

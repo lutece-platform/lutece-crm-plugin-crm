@@ -47,15 +47,15 @@ import java.util.Locale;
  * DemandStatusCRMService
  *
  */
-public final class DemandStatusCRMService
+public class DemandStatusCRMService
 {
     private static final String BEAN_CRM_DEMANDSTATUSCRMSERVICE = "crm.demandStatusCRMService";
     private List<DemandStatusCRM> _listStatusCRM;
 
     /**
-     * Private constructor
+     * Constructor
      */
-    private DemandStatusCRMService(  )
+    protected DemandStatusCRMService(  )
     {
     }
 

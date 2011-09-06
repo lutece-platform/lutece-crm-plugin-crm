@@ -165,11 +165,11 @@ public final class DemandTypeHome
 
     /**
      * Find by filter
-     * @param rtFilter the filter
+     * @param dtFilter the filter
      * @return a list of {@link DemandType}
      */
-    public static List<DemandType> findByFilter( DemandTypeFilter rtFilter )
+    public static List<DemandType> findByFilter( DemandTypeFilter dtFilter )
     {
-        return _dao.selectDemandTypesByFilter( rtFilter, _plugin );
+        return _dao.selectDemandTypesByFilter( dtFilter, _plugin );
     }
 }

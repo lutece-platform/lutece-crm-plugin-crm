@@ -34,44 +34,29 @@
 package fr.paris.lutece.plugins.crm.service.user;
 
 import fr.paris.lutece.plugins.crm.business.user.CRMUser;
-import fr.paris.lutece.plugins.crm.business.user.CRMUserHome;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.plugins.crm.business.user.MokeCRMUser;
 
 
 /**
  *
- * CRMUserService
+ * MokeCRMUserService
  *
  */
-public class CRMUserService
+public class MokeCRMUserService extends CRMUserService
 {
-    private static final String BEAN_CRM_CRMUSERSERVICE = "crm.crmUserService";
+    private static final int ID_CRM_USER1 = 1;
 
     /**
-     * Constructor
-     */
-    protected CRMUserService(  )
-    {
-    }
-
-    /**
-     * Get the instance of CRMUserService
-     * @return the instance of CRMUserService
-     */
-    public static CRMUserService getService(  )
-    {
-        return (CRMUserService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_CRMUSERSERVICE );
-    }
-
-    /**
-     * Find by primary key
-     * @param nIdCRMUser the id crm user
-     * @return a {@link CRMUser}
-     */
+    * Find by primary key
+    * @param nIdCRMUser the id crm user
+    * @return a {@link CRMUser}
+    */
     public CRMUser findByPrimaryKey( int nIdCRMUser )
     {
-        return CRMUserHome.findByPrimaryKey( nIdCRMUser );
+        CRMUser crmUser = new MokeCRMUser( nIdCRMUser );
+        System.out.println( trace( crmUser ) );
+
+        return crmUser;
     }
 
     /**
@@ -81,7 +66,10 @@ public class CRMUserService
      */
     public CRMUser findByUserGuid( String strUserGuid )
     {
-        return CRMUserHome.findByUserGuid( strUserGuid );
+        CRMUser crmUser = new MokeCRMUser( ID_CRM_USER1 );
+        System.out.println( trace( crmUser ) );
+
+        return crmUser;
     }
 
     /**
@@ -91,14 +79,9 @@ public class CRMUserService
      */
     public int create( CRMUser user )
     {
-        int nIdCRMUser = -1;
+        System.out.println( trace( user ) );
 
-        if ( user != null )
-        {
-            nIdCRMUser = CRMUserHome.create( user );
-        }
-
-        return nIdCRMUser;
+        return ID_CRM_USER1;
     }
 
     /**
@@ -107,10 +90,7 @@ public class CRMUserService
      */
     public void update( CRMUser user )
     {
-        if ( user != null )
-        {
-            CRMUserHome.update( user );
-        }
+        System.out.println( trace( user ) );
     }
 
     /**
@@ -119,6 +99,41 @@ public class CRMUserService
      */
     public void remove( int nIdCRMUser )
     {
-        CRMUserHome.remove( nIdCRMUser );
+        System.out.println( trace(  ) );
+    }
+
+    /**
+     * Trace
+     * @return trace
+     */
+    private String trace(  )
+    {
+        return trace( null );
+    }
+
+    /**
+     * Trace
+     * @param crmUser the crm user
+     * @return trace
+     */
+    private String trace( CRMUser crmUser )
+    {
+        StringBuilder sbTrace = new StringBuilder(  );
+        sbTrace.append( "\n ---------------------- CRM User Service -------------------" );
+        sbTrace.append( "\nMethod name : " + Thread.currentThread(  ).getStackTrace(  )[2].getMethodName(  ) );
+
+        if ( crmUser != null )
+        {
+            sbTrace.append( "\nid_crm_user : " + crmUser.getIdCRMUser(  ) );
+            sbTrace.append( "\nemail : " + crmUser.getEmail(  ) );
+            sbTrace.append( "\nfirst_name : " + crmUser.getFirstName(  ) );
+            sbTrace.append( "\nlast_name : " + crmUser.getLastName(  ) );
+            sbTrace.append( "\nphone_number : " + crmUser.getPhoneNumber(  ) );
+            sbTrace.append( "\nuser_guid : " + crmUser.getUserGuid(  ) );
+        }
+
+        sbTrace.append( "\n --------------------------------------------------------------------" );
+
+        return sbTrace.toString(  );
     }
 }

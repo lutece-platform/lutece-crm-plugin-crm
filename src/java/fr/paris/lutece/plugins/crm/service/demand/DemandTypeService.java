@@ -67,14 +67,14 @@ import javax.servlet.http.HttpServletRequest;
  * DemandTypeService
  *
  */
-public final class DemandTypeService
+public class DemandTypeService
 {
     private static final String BEAN_CRM_DEMANDTYPESERVICE = "crm.demandTypeService";
 
     /**
-     * Private constructor
+     * Constructor
      */
-    private DemandTypeService(  )
+    protected DemandTypeService(  )
     {
     }
 

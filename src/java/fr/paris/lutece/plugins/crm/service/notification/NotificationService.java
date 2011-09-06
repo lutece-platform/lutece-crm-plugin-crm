@@ -50,14 +50,14 @@ import java.util.List;
  * NotificationService
  *
  */
-public final class NotificationService
+public class NotificationService
 {
     private static final String BEAN_CRM_NOTIFICATIONSERVICE = "crm.notificationService";
 
     /**
-     * Private constructor
+     * Constructor
      */
-    private NotificationService(  )
+    protected NotificationService(  )
     {
     }
 
@@ -73,12 +73,12 @@ public final class NotificationService
 
     /**
      * Find the notification by its primary key
-     * @param strIdNotification the id notification
+     * @param nIdNotification the id notification
      * @return a {@link Notification}
      */
-    public Notification findByPrimaryKey( int strIdNotification )
+    public Notification findByPrimaryKey( int nIdNotification )
     {
-        return NotificationHome.findByPrimaryKey( strIdNotification );
+        return NotificationHome.findByPrimaryKey( nIdNotification );
     }
 
     /**

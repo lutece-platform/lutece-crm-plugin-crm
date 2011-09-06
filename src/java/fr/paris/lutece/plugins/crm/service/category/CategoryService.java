@@ -54,7 +54,7 @@ import java.util.Locale;
  * CategoryService
  *
  */
-public final class CategoryService
+public class CategoryService
 {
     private static final String NO_CATEGORY = "0";
     private static final String ALL_CATEGORY = "-1";
@@ -63,9 +63,9 @@ public final class CategoryService
     private static final String BEAN_CRM_CATEGORYSERVICE = "crm.categoryService";
 
     /**
-     * Private constructor
+     * Constructor
      */
-    private CategoryService(  )
+    protected CategoryService(  )
     {
     }
 
