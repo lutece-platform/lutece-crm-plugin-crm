@@ -60,6 +60,14 @@
 					</tr>
 					<tr>
 						<td>
+							crm.userAttributes.keys
+						</td>
+						<td>
+							User attribute keys list.
+						</td>
+					</tr>
+					<tr>
+						<td>
 							daemon.crmDemandCleaner.nbExpirationDays
 						</td>
 						<td>
