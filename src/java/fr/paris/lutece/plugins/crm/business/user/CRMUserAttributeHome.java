@@ -33,90 +33,60 @@
  */
 package fr.paris.lutece.plugins.crm.business.user;
 
-import org.apache.commons.lang.StringUtils;
+import fr.paris.lutece.plugins.crm.service.CRMPlugin;
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.Map;
 
 
 /**
  *
- * CRMUser
+ * CRMUserAttributeHome
  *
  */
-public class CRMUser
+public final class CRMUserAttributeHome
 {
-    private int _nIdCRMUser;
-    private String _strUserGuid;
-    private Map<String, String> _userInfos;
+    private static final String BEAN_CRM_CRMUSERATTRIBUTEDAO = "crm.crmUserAttributeDAO";
+    private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
+    private static ICRMUserAttributeDAO _dao = (ICRMUserAttributeDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
+            BEAN_CRM_CRMUSERATTRIBUTEDAO );
 
     /**
-     * Set the id crm user
+     * Private constructor - this class need not be instantiated
+     */
+    private CRMUserAttributeHome(  )
+    {
+    }
+
+    /**
+     * Insert a new record in the table.
      * @param nIdCRMUser the id crm user
+     * @param strUserAttributeKey user attribute key
+     * @param strUserAttributeValue user attribute value
      */
-    public void setIdCRMUser( int nIdCRMUser )
+    public static void create( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue )
     {
-        _nIdCRMUser = nIdCRMUser;
+        _dao.insert( nIdCRMUser, strUserAttributeKey, strUserAttributeValue, _plugin );
     }
 
     /**
-     * Get the id crm user
-     * @return the id crm user
+     * Delete a record from the table
+     * @param nIdCRMUser int identifier of the CRMUser to delete
      */
-    public int getIdCRMUser(  )
+    public static void remove( int nIdCRMUser )
     {
-        return _nIdCRMUser;
+        _dao.delete( nIdCRMUser, _plugin );
     }
 
     /**
-     * Set the user guid
-     * @param strUserGuid the user guid
+     * Load the data from the table
+     * @param nIdCRMUser The identifier of the CRMUser
+     * @return The user attributes
      */
-    public void setUserGuid( String strUserGuid )
+    public static Map<String, String> findByPrimaryKey( int nIdCRMUser )
     {
-        _strUserGuid = strUserGuid;
-    }
-
-    /**
-     * Get the user guid
-     * @return the user guid
-     */
-    public String getUserGuid(  )
-    {
-        return _strUserGuid;
-    }
-
-    /**
-     * Set the user attributes
-     * @param userInfos the user attributes
-     */
-    public void setUserAttributes( Map<String, String> userInfos )
-    {
-        _userInfos = userInfos;
-    }
-
-    /**
-     * Get the user attributes
-     * @return the user attributes
-     */
-    public Map<String, String> getUserAttributes(  )
-    {
-        return _userInfos;
-    }
-
-    /**
-     * Get the user attribute value
-     * @param strUserAttributeKey the key
-     * @return the user attribute value
-     */
-    public String getUserAttributeValue( String strUserAttributeKey )
-    {
-        String strUserInfoValue = StringUtils.EMPTY;
-
-        if ( _userInfos != null )
-        {
-            strUserInfoValue = _userInfos.get( strUserAttributeKey );
-        }
-
-        return StringUtils.isNotBlank( strUserInfoValue ) ? strUserInfoValue : StringUtils.EMPTY;
+        return _dao.load( nIdCRMUser, _plugin );
     }
 }

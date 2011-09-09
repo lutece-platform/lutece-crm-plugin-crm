@@ -33,90 +33,39 @@
  */
 package fr.paris.lutece.plugins.crm.business.user;
 
-import org.apache.commons.lang.StringUtils;
+import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.Map;
 
 
 /**
  *
- * CRMUser
+ * ICRMUserAttributeDAO
  *
  */
-public class CRMUser
+public interface ICRMUserAttributeDAO
 {
-    private int _nIdCRMUser;
-    private String _strUserGuid;
-    private Map<String, String> _userInfos;
-
     /**
-     * Set the id crm user
+     * Insert a new record in the table.
      * @param nIdCRMUser the id crm user
+     * @param strUserAttributeKey user attribute key
+     * @param strUserAttributeValue user attribute value
+     * @param plugin the Plugin
      */
-    public void setIdCRMUser( int nIdCRMUser )
-    {
-        _nIdCRMUser = nIdCRMUser;
-    }
+    void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue, Plugin plugin );
 
     /**
-     * Get the id crm user
-     * @return the id crm user
+     * Delete a record from the table
+     * @param nIdCRMUser int identifier of the CRMUser to delete
+     * @param plugin the Plugin
      */
-    public int getIdCRMUser(  )
-    {
-        return _nIdCRMUser;
-    }
+    void delete( int nIdCRMUser, Plugin plugin );
 
     /**
-     * Set the user guid
-     * @param strUserGuid the user guid
+     * Load the data from the table
+     * @param nIdCRMUser The identifier of the CRMUser
+     * @param plugin the Plugin
+     * @return The instance of the CRMUser
      */
-    public void setUserGuid( String strUserGuid )
-    {
-        _strUserGuid = strUserGuid;
-    }
-
-    /**
-     * Get the user guid
-     * @return the user guid
-     */
-    public String getUserGuid(  )
-    {
-        return _strUserGuid;
-    }
-
-    /**
-     * Set the user attributes
-     * @param userInfos the user attributes
-     */
-    public void setUserAttributes( Map<String, String> userInfos )
-    {
-        _userInfos = userInfos;
-    }
-
-    /**
-     * Get the user attributes
-     * @return the user attributes
-     */
-    public Map<String, String> getUserAttributes(  )
-    {
-        return _userInfos;
-    }
-
-    /**
-     * Get the user attribute value
-     * @param strUserAttributeKey the key
-     * @return the user attribute value
-     */
-    public String getUserAttributeValue( String strUserAttributeKey )
-    {
-        String strUserInfoValue = StringUtils.EMPTY;
-
-        if ( _userInfos != null )
-        {
-            strUserInfoValue = _userInfos.get( strUserAttributeKey );
-        }
-
-        return StringUtils.isNotBlank( strUserInfoValue ) ? strUserInfoValue : StringUtils.EMPTY;
-    }
+    Map<String, String> load( int nIdCRMUser, Plugin plugin );
 }

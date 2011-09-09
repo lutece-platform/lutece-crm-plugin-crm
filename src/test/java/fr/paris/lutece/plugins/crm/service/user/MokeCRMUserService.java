@@ -36,6 +36,8 @@ package fr.paris.lutece.plugins.crm.service.user;
 import fr.paris.lutece.plugins.crm.business.user.CRMUser;
 import fr.paris.lutece.plugins.crm.business.user.MokeCRMUser;
 
+import java.util.Map.Entry;
+
 
 /**
  *
@@ -125,11 +127,12 @@ public class MokeCRMUserService extends CRMUserService
         if ( crmUser != null )
         {
             sbTrace.append( "\nid_crm_user : " + crmUser.getIdCRMUser(  ) );
-            sbTrace.append( "\nemail : " + crmUser.getEmail(  ) );
-            sbTrace.append( "\nfirst_name : " + crmUser.getFirstName(  ) );
-            sbTrace.append( "\nlast_name : " + crmUser.getLastName(  ) );
-            sbTrace.append( "\nphone_number : " + crmUser.getPhoneNumber(  ) );
             sbTrace.append( "\nuser_guid : " + crmUser.getUserGuid(  ) );
+
+            for ( Entry<String, String> userAttribute : crmUser.getUserAttributes(  ).entrySet(  ) )
+            {
+                sbTrace.append( "\n" + userAttribute.getKey(  ) + " : " + userAttribute.getValue(  ) );
+            }
         }
 
         sbTrace.append( "\n --------------------------------------------------------------------" );

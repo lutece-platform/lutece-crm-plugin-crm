@@ -44,6 +44,7 @@ public final class CRMConstants
     // CONSTANTS
     public static final int INVALID_ID_INT = -1;
     public static final String SLASH = "/";
+    public static final String COMMA = ",";
 
     // PROPERTIES
     public static final String PROPERTY_PAGE_PATH = "crm.crm.pagePathLabel";
@@ -62,6 +63,7 @@ public final class CRMConstants
     public static final String PROPERTY_DAEMON_NB_EXPIRATION_DAYS = "daemon.crmDemandCleaner.nbExpirationDays";
     public static final String PROPERTY_WEBMASTER_EMAIL = "email.webmaster";
     public static final String PROPERTY_CRM_USER_MAX_SIZE = "crm.crmUser.maxSize";
+    public static final String PROPERTY_CRM_USER_ATTRIBUTE_KEYS = "crm.userAttributes.keys";
 
     // MARKS 
     public static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
@@ -111,10 +113,7 @@ public final class CRMConstants
     public static final String PARAMETER_CATEGORY_DESCRIPTION = "category_description";
     public static final String PARAMETER_URL_RETURN = "url_return";
     public static final String PARAMETER_DEMAND_DATA = "demand_data";
-    public static final String PARAMETER_FIRST_NAME = "first_name";
-    public static final String PARAMETER_LAST_NAME = "last_name";
     public static final String PARAMETER_EMAIL = "email";
-    public static final String PARAMETER_PHONE_NUMBER = "phone_number";
     public static final String PARAMETER_ID_CRM_USER = "id_crm_user";
     public static final String PARAMETER_SIGNATURE = "signature";
     public static final String PARAMETER_TIMESTAMP = "timestamp";
@@ -139,7 +138,7 @@ public final class CRMConstants
     public static final String MESSAGE_ERROR = "crm.message.error";
     public static final String MESSAGE_CONFIRM_REMOVE_CATEGORY = "crm.message.confirmRemoveCategory";
     public static final String MESSAGE_CANNOT_REMOVE_CATEGORY = "crm.message.cannotRemoveCategory";
-    public static final String MESSAGE_SIZE_TO_BIG = "crm.message.sizeTooBig";
+    public static final String MESSAGE_SIZE_TOO_BIG = "crm.message.sizeTooBig";
     public static final String MESSAGE_INVALID_EMAIL = "crm.message.invalidEmail";
 
     /**

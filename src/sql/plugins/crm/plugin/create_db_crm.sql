@@ -75,9 +75,16 @@ DROP TABLE IF EXISTS crm_user;
 CREATE TABLE crm_user (
 	id_crm_user INT(11) DEFAULT 0 NOT NULL,
 	user_guid VARCHAR(255) DEFAULT '' NOT NULL,
-	first_name VARCHAR(255) DEFAULT '' NOT NULL,
-	last_name VARCHAR(255) DEFAULT '' NOT NULL,
-	email VARCHAR(255) DEFAULT '' NOT NULL,
-	phone_number VARCHAR(100) DEFAULT '' NOT NULL,
 	PRIMARY KEY (id_crm_user, user_guid)
+);
+
+--
+-- Structure for table crm_user_attribute
+--
+DROP TABLE IF EXISTS crm_user_attribute;
+CREATE TABLE crm_user_attribute (
+	id_crm_user INT(11) DEFAULT 0 NOT NULL,
+	user_attribute_key VARCHAR(255) DEFAULT '' NOT NULL,
+	user_attribute_value VARCHAR(255) DEFAULT '' NOT NULL,
+	PRIMARY KEY (id_crm_user, user_attribute_key)
 );

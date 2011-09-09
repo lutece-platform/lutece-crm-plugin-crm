@@ -9,6 +9,7 @@
 	<bean id="crm.categoryDAO" class="fr.paris.lutece.plugins.crm.business.demand.category.CategoryDAO" />
 	<bean id="crm.demandStatusCRMDAO" class="fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRMDAO" />
 	<bean id="crm.crmUserDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserDAO" />
+	<bean id="crm.crmUserAttributeDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserAttributeDAO" />
 	
 	<!-- Removal Service -->
     <bean id="crm.categoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
@@ -20,7 +21,9 @@
     <bean id="crm.demandService" class="fr.paris.lutece.plugins.crm.service.demand.DemandService"/>
     <bean id="crm.demandWebService" class="fr.paris.lutece.plugins.crm.service.demand.DemandWebService"/>
     <bean id="crm.demandTypeService" class="fr.paris.lutece.plugins.crm.service.demand.DemandTypeService" />
-    <bean id="crm.crmUserService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserService" />
+    <bean id="crm.crmUserService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserService">
+    	<property name="cRMUserAttributesService" ref="crm.crmUserAttributesService" />
+    </bean>
     <bean id="crm.crmUserAttributesService" class="fr.paris.lutece.plugins.crm.service.user.CRMUserAttributesService">
     	<property name="cRMUserService" ref="crm.crmUserService" />
     </bean>

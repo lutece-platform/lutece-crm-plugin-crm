@@ -46,10 +46,10 @@ public class CRMUserDAO implements ICRMUserDAO
 {
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_crm_user ) FROM crm_user ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid, first_name, last_name, email, phone_number) VALUES (?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_crm_user, user_guid, first_name, last_name, email, phone_number FROM crm_user WHERE id_crm_user = ? ";
-    private static final String SQL_QUERY_SELECT_BY_USER_GUID = " SELECT id_crm_user, user_guid, first_name, last_name, email, phone_number FROM crm_user WHERE user_guid = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ?, first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE id_crm_user = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid) VALUES (?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_crm_user, user_guid FROM crm_user WHERE id_crm_user = ? ";
+    private static final String SQL_QUERY_SELECT_BY_USER_GUID = " SELECT id_crm_user, user_guid FROM crm_user WHERE user_guid = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ? WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_user WHERE id_crm_user = ? ";
 
     /**
@@ -88,10 +88,6 @@ public class CRMUserDAO implements ICRMUserDAO
 
             daoUtil.setInt( nIndex++, user.getIdCRMUser(  ) );
             daoUtil.setString( nIndex++, user.getUserGuid(  ) );
-            daoUtil.setString( nIndex++, user.getFirstName(  ) );
-            daoUtil.setString( nIndex++, user.getLastName(  ) );
-            daoUtil.setString( nIndex++, user.getEmail(  ) );
-            daoUtil.setString( nIndex++, user.getPhoneNumber(  ) );
 
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
@@ -119,10 +115,6 @@ public class CRMUserDAO implements ICRMUserDAO
             user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
-            user.setFirstName( daoUtil.getString( nIndex++ ) );
-            user.setLastName( daoUtil.getString( nIndex++ ) );
-            user.setEmail( daoUtil.getString( nIndex++ ) );
-            user.setPhoneNumber( daoUtil.getString( nIndex++ ) );
         }
 
         daoUtil.free(  );
@@ -147,10 +139,6 @@ public class CRMUserDAO implements ICRMUserDAO
             user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
-            user.setFirstName( daoUtil.getString( nIndex++ ) );
-            user.setLastName( daoUtil.getString( nIndex++ ) );
-            user.setEmail( daoUtil.getString( nIndex++ ) );
-            user.setPhoneNumber( daoUtil.getString( nIndex++ ) );
         }
 
         daoUtil.free(  );
@@ -170,10 +158,6 @@ public class CRMUserDAO implements ICRMUserDAO
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
             daoUtil.setString( nIndex++, user.getUserGuid(  ) );
-            daoUtil.setString( nIndex++, user.getFirstName(  ) );
-            daoUtil.setString( nIndex++, user.getLastName(  ) );
-            daoUtil.setString( nIndex++, user.getEmail(  ) );
-            daoUtil.setString( nIndex++, user.getPhoneNumber(  ) );
 
             daoUtil.setInt( nIndex++, user.getIdCRMUser(  ) );
             daoUtil.executeUpdate(  );

@@ -38,6 +38,8 @@ import fr.paris.lutece.plugins.crm.business.user.CRMUserHome;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
+import java.util.Map.Entry;
+
 
 /**
  *
@@ -47,6 +49,7 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 public class CRMUserService
 {
     private static final String BEAN_CRM_CRMUSERSERVICE = "crm.crmUserService";
+    private CRMUserAttributesService _crmUserAttributesService;
 
     /**
      * Constructor
@@ -65,13 +68,25 @@ public class CRMUserService
     }
 
     /**
+     * Set the crm user attributes service
+     * @param crmUserAttributesService the crm user attributes service
+     */
+    public void setCRMUserAttributesService( CRMUserAttributesService crmUserAttributesService )
+    {
+        _crmUserAttributesService = crmUserAttributesService;
+    }
+
+    /**
      * Find by primary key
      * @param nIdCRMUser the id crm user
      * @return a {@link CRMUser}
      */
     public CRMUser findByPrimaryKey( int nIdCRMUser )
     {
-        return CRMUserHome.findByPrimaryKey( nIdCRMUser );
+        CRMUser user = CRMUserHome.findByPrimaryKey( nIdCRMUser );
+        user.setUserAttributes( _crmUserAttributesService.getAttributes( nIdCRMUser ) );
+
+        return user;
     }
 
     /**
@@ -81,7 +96,14 @@ public class CRMUserService
      */
     public CRMUser findByUserGuid( String strUserGuid )
     {
-        return CRMUserHome.findByUserGuid( strUserGuid );
+        CRMUser user = CRMUserHome.findByUserGuid( strUserGuid );
+
+        if ( user != null )
+        {
+            user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser(  ) ) );
+        }
+
+        return user;
     }
 
     /**
@@ -96,6 +118,14 @@ public class CRMUserService
         if ( user != null )
         {
             nIdCRMUser = CRMUserHome.create( user );
+
+            if ( user.getUserAttributes(  ) != null )
+            {
+                for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+                {
+                    _crmUserAttributesService.create( nIdCRMUser, userAttribute.getKey(  ), userAttribute.getValue(  ) );
+                }
+            }
         }
 
         return nIdCRMUser;
@@ -110,6 +140,18 @@ public class CRMUserService
         if ( user != null )
         {
             CRMUserHome.update( user );
+            // Remove its attributes first
+            _crmUserAttributesService.remove( user.getIdCRMUser(  ) );
+
+            if ( user.getUserAttributes(  ) != null )
+            {
+                // Recreate its attributes
+                for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+                {
+                    _crmUserAttributesService.create( user.getIdCRMUser(  ), userAttribute.getKey(  ),
+                        userAttribute.getValue(  ) );
+                }
+            }
         }
     }
 
@@ -120,5 +162,7 @@ public class CRMUserService
     public void remove( int nIdCRMUser )
     {
         CRMUserHome.remove( nIdCRMUser );
+        // Remove its attributes
+        _crmUserAttributesService.remove( nIdCRMUser );
     }
 }

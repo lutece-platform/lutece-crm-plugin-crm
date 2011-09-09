@@ -35,6 +35,10 @@ package fr.paris.lutece.plugins.crm.business.user;
 
 import fr.paris.lutece.test.LuteceTestCase;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 
 /**
  *
@@ -43,14 +47,14 @@ import fr.paris.lutece.test.LuteceTestCase;
  */
 public class CRMUserTest extends LuteceTestCase
 {
-    private static final String EMAIL1 = "Email1";
-    private static final String EMAIL2 = "Email2";
-    private static final String FIRST_NAME1 = "FirstName1";
-    private static final String FIRST_NAME2 = "FirstName2";
-    private static final String LAST_NAME1 = "LastName1";
-    private static final String LAST_NAME2 = "LastName2";
-    private static final String PHONE_NUMBER1 = "PhoneNumber1";
-    private static final String PHONE_NUMBER2 = "PhoneNumber2";
+    private static final String USER_ATTRIBUTE_KEY1 = "UserAttributeKey1";
+    private static final String USER_ATTRIBUTE_KEY2 = "UserAttributeKey2";
+    private static final String USER_ATTRIBUTE_KEY3 = "UserAttributeKey3";
+    private static final String USER_ATTRIBUTE_KEY4 = "UserAttributeKey4";
+    private static final String USER_ATTRIBUTE_VALUE1 = "UserAttributeValue1";
+    private static final String USER_ATTRIBUTE_VALUE2 = "UserAttributeValue2";
+    private static final String USER_ATTRIBUTE_VALUE3 = "UserAttributeValue3";
+    private static final String USER_ATTRIBUTE_VALUE4 = "UserAttributeValue4";
     private static final String USER_GUID1 = "UserGuid1";
     private static final String USER_GUID2 = "UserGuid2";
 
@@ -61,42 +65,60 @@ public class CRMUserTest extends LuteceTestCase
     {
         // Initialize an object
         CRMUser user = new CRMUser(  );
-        user.setEmail( EMAIL1 );
-        user.setFirstName( FIRST_NAME1 );
-        user.setLastName( LAST_NAME1 );
-        user.setPhoneNumber( PHONE_NUMBER1 );
         user.setUserGuid( USER_GUID1 );
+
+        Map<String, String> userAttributes = new HashMap<String, String>(  );
+        userAttributes.put( USER_ATTRIBUTE_KEY1, USER_ATTRIBUTE_VALUE1 );
+        userAttributes.put( USER_ATTRIBUTE_KEY2, USER_ATTRIBUTE_VALUE2 );
+        user.setUserAttributes( userAttributes );
 
         // Test create
         CRMUserHome.create( user );
 
+        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        {
+            CRMUserAttributeHome.create( user.getIdCRMUser(  ), userAttribute.getKey(  ), userAttribute.getValue(  ) );
+        }
+
         CRMUser userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser(  ) );
+        userStored.setUserAttributes( CRMUserAttributeHome.findByPrimaryKey( user.getIdCRMUser(  ) ) );
         assertEquals( user.getIdCRMUser(  ), userStored.getIdCRMUser(  ) );
-        assertEquals( user.getEmail(  ), userStored.getEmail(  ) );
-        assertEquals( user.getFirstName(  ), userStored.getFirstName(  ) );
-        assertEquals( user.getLastName(  ), userStored.getLastName(  ) );
-        assertEquals( user.getPhoneNumber(  ), userStored.getPhoneNumber(  ) );
         assertEquals( user.getUserGuid(  ), userStored.getUserGuid(  ) );
 
+        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        {
+            assertEquals( userAttribute.getValue(  ), userStored.getUserAttributeValue( userAttribute.getKey(  ) ) );
+        }
+
         // Test update
-        user.setEmail( EMAIL2 );
-        user.setFirstName( FIRST_NAME2 );
-        user.setLastName( LAST_NAME2 );
-        user.setPhoneNumber( PHONE_NUMBER2 );
         user.setUserGuid( USER_GUID2 );
+        userAttributes = new HashMap<String, String>(  );
+        userAttributes.put( USER_ATTRIBUTE_KEY3, USER_ATTRIBUTE_VALUE3 );
+        userAttributes.put( USER_ATTRIBUTE_KEY4, USER_ATTRIBUTE_VALUE4 );
+        user.setUserAttributes( userAttributes );
         CRMUserHome.update( user );
+        CRMUserAttributeHome.remove( user.getIdCRMUser(  ) );
+
+        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        {
+            CRMUserAttributeHome.create( user.getIdCRMUser(  ), userAttribute.getKey(  ), userAttribute.getValue(  ) );
+        }
+
         userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser(  ) );
+        userStored.setUserAttributes( CRMUserAttributeHome.findByPrimaryKey( user.getIdCRMUser(  ) ) );
         assertEquals( user.getIdCRMUser(  ), userStored.getIdCRMUser(  ) );
-        assertEquals( user.getEmail(  ), userStored.getEmail(  ) );
-        assertEquals( user.getFirstName(  ), userStored.getFirstName(  ) );
-        assertEquals( user.getLastName(  ), userStored.getLastName(  ) );
-        assertEquals( user.getPhoneNumber(  ), userStored.getPhoneNumber(  ) );
         assertEquals( user.getUserGuid(  ), userStored.getUserGuid(  ) );
+
+        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        {
+            assertEquals( userAttribute.getValue(  ), userStored.getUserAttributeValue( userAttribute.getKey(  ) ) );
+        }
 
         // Test finders
         CRMUserHome.findByUserGuid( USER_GUID2 );
 
         // Test remove
+        CRMUserAttributeHome.remove( user.getIdCRMUser(  ) );
         CRMUserHome.remove( user.getIdCRMUser(  ) );
         userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser(  ) );
         assertNull( userStored );

@@ -33,6 +33,9 @@
  */
 package fr.paris.lutece.plugins.crm.business.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  *
@@ -41,19 +44,20 @@ package fr.paris.lutece.plugins.crm.business.user;
  */
 public class MokeCRMUser extends CRMUser
 {
-    private static final String EMAIL = "Email";
-    private static final String FIRST_NAME = "FirstName";
-    private static final String LAST_NAME = "LastName";
-    private static final String PHONE_NUMBER = "PhoneNumber";
+    private static final String USER_ATTRIBUTE_KEY1 = "UserAttributeKey1";
+    private static final String USER_ATTRIBUTE_KEY2 = "UserAttributeKey2";
+    private static final String USER_ATTRIBUTE_VALUE1 = "UserAttributeValue1";
+    private static final String USER_ATTRIBUTE_VALUE2 = "UserAttributeValue2";
     private static final String USER_GUID = "UserGuid";
 
     public MokeCRMUser( int nIdCRMUser )
     {
         setIdCRMUser( nIdCRMUser );
-        setEmail( EMAIL + nIdCRMUser );
-        setFirstName( FIRST_NAME + nIdCRMUser );
-        setLastName( LAST_NAME + nIdCRMUser );
-        setPhoneNumber( PHONE_NUMBER + nIdCRMUser );
         setUserGuid( USER_GUID + nIdCRMUser );
+
+        Map<String, String> userAttributes = new HashMap<String, String>(  );
+        userAttributes.put( USER_ATTRIBUTE_KEY1, USER_ATTRIBUTE_VALUE1 );
+        userAttributes.put( USER_ATTRIBUTE_KEY2, USER_ATTRIBUTE_VALUE2 );
+        setUserAttributes( userAttributes );
     }
 }

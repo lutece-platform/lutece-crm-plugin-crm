@@ -45,6 +45,7 @@ import fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
 import fr.paris.lutece.plugins.crm.service.signrequest.CRMRequestAuthenticatorService;
+import fr.paris.lutece.plugins.crm.service.user.CRMUserAttributesService;
 import fr.paris.lutece.plugins.crm.service.user.CRMUserService;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
@@ -101,6 +102,7 @@ public class CRMApp implements XPageApplication
     private NotificationService _notificationService = NotificationService.getService(  );
     private DemandStatusCRMService _statusCRMService = DemandStatusCRMService.getService(  );
     private CRMUserService _crmUserService = CRMUserService.getService(  );
+    private CRMUserAttributesService _crmUserAttributesService = CRMUserAttributesService.getService(  );
 
     /**
      * Get the XPage of the plugin CRM
@@ -332,37 +334,39 @@ public class CRMApp implements XPageApplication
 
         if ( crmUser != null )
         {
-            String strFirstName = request.getParameter( CRMConstants.PARAMETER_FIRST_NAME );
-            String strLastName = request.getParameter( CRMConstants.PARAMETER_LAST_NAME );
-            String strEmail = request.getParameter( CRMConstants.PARAMETER_EMAIL );
-            String strPhoneNumber = request.getParameter( CRMConstants.PARAMETER_PHONE_NUMBER );
-
             UrlItem url = new UrlItem( JSP_SITE + JSP_PORTAL );
             url.addParameter( CRMConstants.PARAMETER_PAGE, CRMPlugin.PLUGIN_NAME );
             url.addParameter( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_MODIFY_CRM_USER );
 
             int nMaxSize = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_CRM_USER_MAX_SIZE, 255 );
 
-            if ( ( StringUtils.isNotBlank( strFirstName ) && ( strFirstName.length(  ) > nMaxSize ) ) ||
-                    ( StringUtils.isNotBlank( strLastName ) && ( strLastName.length(  ) > nMaxSize ) ) ||
-                    ( StringUtils.isNotBlank( strEmail ) && ( strEmail.length(  ) > nMaxSize ) ) ||
-                    ( StringUtils.isNotBlank( strPhoneNumber ) && ( strPhoneNumber.length(  ) > nMaxSize ) ) )
+            Map<String, String> userAttributes = new HashMap<String, String>(  );
+
+            for ( String strUserAttributeKey : _crmUserAttributesService.getUserAttributeKeys(  ) )
             {
-                Object[] params = { nMaxSize };
-                SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL, params,
-                    SiteMessage.TYPE_STOP );
+                String strUserAttributeValue = request.getParameter( strUserAttributeKey );
+
+                if ( StringUtils.isNotBlank( strUserAttributeValue ) && ( strUserAttributeValue.length(  ) > nMaxSize ) )
+                {
+                    Object[] params = { nMaxSize };
+                    SiteMessageService.setMessage( request, CRMConstants.MESSAGE_SIZE_TOO_BIG, params,
+                        SiteMessage.TYPE_STOP );
+                }
+
+                if ( StringUtils.isNotBlank( strUserAttributeKey ) &&
+                        strUserAttributeKey.endsWith( CRMConstants.PARAMETER_EMAIL ) &&
+                        !StringUtil.checkEmail( strUserAttributeValue ) )
+                {
+                    SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL, SiteMessage.TYPE_STOP,
+                        url.getUrl(  ) );
+                }
+
+                userAttributes.put( strUserAttributeKey,
+                    StringUtils.isNotBlank( strUserAttributeValue ) ? strUserAttributeValue : StringUtils.EMPTY );
             }
 
-            if ( !StringUtil.checkEmail( strEmail ) )
-            {
-                SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL, SiteMessage.TYPE_STOP,
-                    url.getUrl(  ) );
-            }
+            crmUser.setUserAttributes( userAttributes );
 
-            crmUser.setFirstName( StringUtils.isNotBlank( strFirstName ) ? strFirstName : StringUtils.EMPTY );
-            crmUser.setLastName( StringUtils.isNotBlank( strLastName ) ? strLastName : StringUtils.EMPTY );
-            crmUser.setEmail( StringUtils.isNotBlank( strEmail ) ? strEmail : StringUtils.EMPTY );
-            crmUser.setPhoneNumber( StringUtils.isNotBlank( strPhoneNumber ) ? strPhoneNumber : StringUtils.EMPTY );
             _crmUserService.update( crmUser );
         }
     }
@@ -439,16 +443,17 @@ public class CRMApp implements XPageApplication
 
         if ( crmUser == null )
         {
-            String strFirstName = user.getUserInfo( LuteceUser.NAME_GIVEN );
-            String strLastName = user.getUserInfo( LuteceUser.NAME_FAMILY );
-            String strEmail = user.getUserInfo( LuteceUser.BUSINESS_INFO_ONLINE_EMAIL );
-            String strPhoneNumber = user.getUserInfo( LuteceUser.BUSINESS_INFO_TELECOM_TELEPHONE_NUMBER );
             crmUser = new CRMUser(  );
             crmUser.setUserGuid( user.getName(  ) );
-            crmUser.setFirstName( StringUtils.isNotBlank( strFirstName ) ? strFirstName : StringUtils.EMPTY );
-            crmUser.setLastName( StringUtils.isNotBlank( strLastName ) ? strLastName : StringUtils.EMPTY );
-            crmUser.setEmail( StringUtils.isNotBlank( strEmail ) ? strEmail : StringUtils.EMPTY );
-            crmUser.setPhoneNumber( StringUtils.isNotBlank( strPhoneNumber ) ? strPhoneNumber : StringUtils.EMPTY );
+
+            Map<String, String> userAttributes = new HashMap<String, String>(  );
+
+            for ( String strUserAttributeKey : _crmUserAttributesService.getUserAttributeKeys(  ) )
+            {
+                userAttributes.put( strUserAttributeKey, user.getUserInfo( strUserAttributeKey ) );
+            }
+
+            crmUser.setUserAttributes( userAttributes );
             _crmUserService.create( crmUser );
         }
     }

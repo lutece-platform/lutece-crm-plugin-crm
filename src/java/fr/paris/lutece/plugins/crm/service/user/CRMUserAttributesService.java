@@ -34,14 +34,18 @@
 package fr.paris.lutece.plugins.crm.service.user;
 
 import fr.paris.lutece.plugins.crm.business.user.CRMUser;
+import fr.paris.lutece.plugins.crm.business.user.CRMUserAttributeHome;
 import fr.paris.lutece.plugins.crm.service.CRMPlugin;
-import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.security.UserAttributesService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -89,23 +93,13 @@ public final class CRMUserAttributesService implements UserAttributesService
         String strAttributeValue = StringUtils.EMPTY;
         CRMUser user = _crmUserService.findByUserGuid( strUserId );
 
-        if ( user != null )
+        if ( ( user != null ) && ( user.getUserAttributes(  ) != null ) )
         {
-            if ( LuteceUser.NAME_GIVEN.equals( strAttribute ) )
+            strAttributeValue = user.getUserAttributes(  ).get( strAttribute );
+
+            if ( StringUtils.isBlank( strAttributeValue ) )
             {
-                strAttributeValue = user.getFirstName(  );
-            }
-            else if ( LuteceUser.NAME_FAMILY.equals( strAttribute ) )
-            {
-                strAttributeValue = user.getLastName(  );
-            }
-            else if ( LuteceUser.BUSINESS_INFO_ONLINE_EMAIL.equals( strAttribute ) )
-            {
-                strAttributeValue = user.getEmail(  );
-            }
-            else if ( LuteceUser.BUSINESS_INFO_TELECOM_TELEPHONE_NUMBER.equals( strAttribute ) )
-            {
-                strAttributeValue = user.getPhoneNumber(  );
+                strAttributeValue = StringUtils.EMPTY;
             }
         }
 
@@ -122,12 +116,64 @@ public final class CRMUserAttributesService implements UserAttributesService
 
         if ( user != null )
         {
-            listAttributes.put( LuteceUser.NAME_GIVEN, user.getFirstName(  ) );
-            listAttributes.put( LuteceUser.NAME_FAMILY, user.getLastName(  ) );
-            listAttributes.put( LuteceUser.BUSINESS_INFO_ONLINE_EMAIL, user.getEmail(  ) );
-            listAttributes.put( LuteceUser.BUSINESS_INFO_TELECOM_TELEPHONE_NUMBER, user.getPhoneNumber(  ) );
+            listAttributes = user.getUserAttributes(  );
         }
 
         return listAttributes;
+    }
+
+    /**
+     * Get the user attributes from a given id crm user
+     * @param nIdCRMUser the id crm user
+     * @return a map of user attribute key, user attribute value
+     */
+    public Map<String, String> getAttributes( int nIdCRMUser )
+    {
+        return CRMUserAttributeHome.findByPrimaryKey( nIdCRMUser );
+    }
+
+    /**
+     * Remove the user attributes of the crm user
+     * @param nIdCRMUser the id crm user
+     */
+    public void remove( int nIdCRMUser )
+    {
+        CRMUserAttributeHome.remove( nIdCRMUser );
+    }
+
+    /**
+     * Create a new user attribute
+     * @param nIdCRMUser the id crm user
+     * @param strUserAttributeKey the user attribute key
+     * @param strUserAttributeValue the user attribute value
+     */
+    public void create( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue )
+    {
+        CRMUserAttributeHome.create( nIdCRMUser, strUserAttributeKey, strUserAttributeValue );
+    }
+
+    /**
+     * Get the list of user attribute keys defined in <b>crm.properties</b>
+     * @return a list of user attribute keys
+     */
+    public List<String> getUserAttributeKeys(  )
+    {
+        List<String> listUserAttributeKeys = new ArrayList<String>(  );
+        String strUserAttributeKeys = AppPropertiesService.getProperty( CRMConstants.PROPERTY_CRM_USER_ATTRIBUTE_KEYS );
+
+        if ( StringUtils.isNotBlank( strUserAttributeKeys ) )
+        {
+            String[] userAttributeKeys = strUserAttributeKeys.split( CRMConstants.COMMA );
+
+            if ( ( userAttributeKeys != null ) && ( userAttributeKeys.length > 0 ) )
+            {
+                for ( String strUserAttributeKey : userAttributeKeys )
+                {
+                    listUserAttributeKeys.add( strUserAttributeKey );
+                }
+            }
+        }
+
+        return listUserAttributeKeys;
     }
 }

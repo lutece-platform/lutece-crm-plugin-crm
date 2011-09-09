@@ -69,7 +69,7 @@
 	<div class="span-10 append-1 last">
 		<div class="portlet-background append-bottom">
 			<div class="portlet-background-header -lutece-border-radius-top">
-				${crm_user.firstName} ${crm_user.lastName}
+				${crm_user.getUserAttributeValue("user.name.given")} ${crm_user.getUserAttributeValue("user.name.family")}
 			</div>
 			<div class="portlet-background-content -lutece-border-radius">
 				<a href="jsp/site/Portal.jsp?page=crm&amp;action=modify_crm_user">
