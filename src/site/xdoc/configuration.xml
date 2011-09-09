@@ -44,6 +44,14 @@
 					</tr>
 					<tr>
 						<td>
+							crm.userAttributes.keys
+						</td>
+						<td>
+							User attribute keys list.
+						</td>
+					</tr>
+					<tr>
+						<td>
 							daemon.crmDemandCleaner.interval
 						</td>
 						<td>
@@ -56,14 +64,6 @@
 						</td>
 						<td>
 							Activate or not the daemon on startup.
-						</td>
-					</tr>
-					<tr>
-						<td>
-							crm.userAttributes.keys
-						</td>
-						<td>
-							User attribute keys list.
 						</td>
 					</tr>
 					<tr>

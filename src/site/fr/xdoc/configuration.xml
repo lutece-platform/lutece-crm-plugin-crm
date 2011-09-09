@@ -44,6 +44,14 @@
 					</tr>
 					<tr>
 						<td>
+							crm.userAttributes.keys
+						</td>
+						<td>
+							Liste des cl&#233;s des attributs utilisateurs.
+						</td>
+					</tr>
+					<tr>
+						<td>
 							daemon.crmDemandCleaner.interval
 						</td>
 						<td>
@@ -56,14 +64,6 @@
 						</td>
 						<td>
 							Activation ou non du daemon lors du lancement de la webapp.
-						</td>
-					</tr>
-					<tr>
-						<td>
-							crm.userAttributes.keys
-						</td>
-						<td>
-							Liste des cl&#233;s des attributs utilisateurs.
 						</td>
 					</tr>
 					<tr>
