@@ -92,7 +92,7 @@ public class DemandDAO implements IDemandDAO
     /**
      * {@inheritDoc}
      */
-    public int insert( Demand demand, Plugin plugin )
+    public synchronized int insert( Demand demand, Plugin plugin )
     {
         int nIdDemand = -1;
 
