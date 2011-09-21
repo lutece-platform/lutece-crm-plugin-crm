@@ -81,7 +81,7 @@ public final class CategoryDAO implements ICategoryDAO
     /**
      * {@inheritDoc}
      */
-    public int insert( Category category, Plugin plugin )
+    public synchronized int insert( Category category, Plugin plugin )
     {
         int nIndex = 1;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );

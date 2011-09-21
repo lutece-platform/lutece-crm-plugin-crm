@@ -89,7 +89,7 @@ public class NotificationDAO implements INotificationDAO
     /**
      * {@inheritDoc}
      */
-    public int insert( Notification notification, Plugin plugin )
+    public synchronized int insert( Notification notification, Plugin plugin )
     {
         int nKey = -1;
 

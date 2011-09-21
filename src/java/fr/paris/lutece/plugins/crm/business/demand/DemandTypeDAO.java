@@ -101,7 +101,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
     /**
      * {@inheritDoc}
      */
-    public int insert( DemandType demandType, Plugin plugin )
+    public synchronized int insert( DemandType demandType, Plugin plugin )
     {
         int nKey = -1;
 

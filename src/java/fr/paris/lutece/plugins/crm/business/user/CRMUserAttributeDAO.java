@@ -54,7 +54,7 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     /**
      * {@inheritDoc}
      */
-    public void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue, Plugin plugin )
+    public synchronized void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
