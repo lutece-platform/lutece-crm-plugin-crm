@@ -400,7 +400,6 @@ public class CRMApp implements XPageApplication
 
                     List<String> listElements = new ArrayList<String>(  );
                     listElements.add( Integer.toString( nIdDemand ) );
-                    listElements.add( strData );
 
                     String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
                     String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
