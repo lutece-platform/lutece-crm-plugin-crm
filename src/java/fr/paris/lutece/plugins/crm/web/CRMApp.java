@@ -539,7 +539,6 @@ public class CRMApp implements XPageApplication
                     {
                         List<String> listElements = new ArrayList<String>(  );
                         listElements.add( Integer.toString( demand.getIdDemand(  ) ) );
-                        listElements.add( demand.getData(  ) );
 
                         String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
                         String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
