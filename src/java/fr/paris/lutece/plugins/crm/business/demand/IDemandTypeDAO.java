@@ -120,4 +120,11 @@ public interface IDemandTypeDAO
      * @return a {@link DemandType}
      */
     DemandType selectByOrder( int nOrder, Plugin plugin );
+
+    /**
+     * Find the demand types that have not a date end
+     * @param plugin the plugin
+     * @return a list of demand types
+     */
+    List<DemandType> selectNoDateEndDemandTypes( Plugin plugin );
 }

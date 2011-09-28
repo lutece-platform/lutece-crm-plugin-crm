@@ -60,6 +60,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
     private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE demand_type_order = ? ";
     private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key " +
         " FROM crm_demand_type WHERE id_category = ? AND ( date_begin IS NULL OR date_begin <= ? ) AND ( date_end IS NULL OR date_end > ? ) ";
+    private static final String SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE date_end IS NULL ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -385,6 +386,39 @@ public class DemandTypeDAO implements IDemandTypeDAO
 
         DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
         setFilterValues( dtFilter, daoUtil );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            int nIndex = 1;
+            DemandType demandType = new DemandType(  );
+            demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
+            demandType.setLabel( daoUtil.getString( nIndex++ ) );
+            demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
+            demandType.setUrlInfo( daoUtil.getString( nIndex++ ) );
+            demandType.setUrlContact( daoUtil.getString( nIndex++ ) );
+            demandType.setOrder( daoUtil.getInt( nIndex++ ) );
+            demandType.setIdCategory( daoUtil.getInt( nIndex++ ) );
+            demandType.setDateBegin( daoUtil.getDate( nIndex++ ) );
+            demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
+            demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
+            demandType.setRole( daoUtil.getString( nIndex++ ) );
+            listDemandTypes.add( demandType );
+        }
+
+        daoUtil.free(  );
+
+        return listDemandTypes;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<DemandType> selectNoDateEndDemandTypes( Plugin plugin )
+    {
+        List<DemandType> listDemandTypes = new ArrayList<DemandType>(  );
+
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )

@@ -97,25 +97,7 @@ public class DemandTypeService
         RoleRemovalListenerService.getService(  ).registerListener( new DemandTypeRoleRemovalListener(  ) );
     }
 
-    /**
-     * Find a demand type by its primary key
-     * @param nIdDemandType the id demand type
-     * @return a {@link DemandType}
-     */
-    public DemandType findByPrimaryKey( int nIdDemandType )
-    {
-        return DemandTypeHome.findByPrimaryKey( nIdDemandType );
-    }
-
-    /**
-     * Find a demand type by its order
-     * @param nOrder the order
-     * @return a {@link DemandType}
-     */
-    public DemandType findByOrder( int nOrder )
-    {
-        return DemandTypeHome.findByOrder( nOrder );
-    }
+    // CRUD
 
     /**
      * Create a new demand type
@@ -176,6 +158,28 @@ public class DemandTypeService
         DemandTypeHome.remove( nIdDemandType );
     }
 
+    // FINDERS
+
+    /**
+     * Find a demand type by its primary key
+     * @param nIdDemandType the id demand type
+     * @return a {@link DemandType}
+     */
+    public DemandType findByPrimaryKey( int nIdDemandType )
+    {
+        return DemandTypeHome.findByPrimaryKey( nIdDemandType );
+    }
+
+    /**
+     * Find a demand type by its order
+     * @param nOrder the order
+     * @return a {@link DemandType}
+     */
+    public DemandType findByOrder( int nOrder )
+    {
+        return DemandTypeHome.findByOrder( nOrder );
+    }
+
     /**
      * Find all demand types
      * @return a list of {@link DemandType}
@@ -212,6 +216,74 @@ public class DemandTypeService
     {
         return DemandTypeHome.findByFilter( dtFilter );
     }
+
+    /**
+     * Find the list of demand types for the lutece user ordered by id category
+     * @param request {@link HttpServletRequest}
+     * @return a map of (id_category, List&lt;DemandType&gt;)
+     */
+    public Map<String, List<DemandType>> findForLuteceUser( HttpServletRequest request )
+    {
+        Map<String, List<DemandType>> map = new HashMap<String, List<DemandType>>(  );
+
+        for ( ReferenceItem category : CategoryService.getService(  ).getCategories( request.getLocale(  ), false, true ) )
+        {
+            int nIdCategory = Integer.parseInt( category.getCode(  ) );
+            DemandTypeFilter dtFilter = new DemandTypeFilter(  );
+            dtFilter.setIdCategory( nIdCategory );
+
+            List<DemandType> listAuthorizedDemandTypes = new ArrayList<DemandType>(  );
+            Date dateToday = new Date(  );
+
+            for ( DemandType demandType : DemandTypeHome.findByIdCategoryAndDate( nIdCategory, dateToday ) )
+            {
+                if ( checkRoleForDemandType( demandType, request ) )
+                {
+                    listAuthorizedDemandTypes.add( demandType );
+                }
+            }
+
+            map.put( category.getCode(  ), listAuthorizedDemandTypes );
+        }
+
+        return map;
+    }
+
+    /**
+     * Find the list of demand types that have not a date end
+     * @return a list of demand types
+     */
+    public List<DemandType> findNoDateEndDemandTypes(  )
+    {
+        return DemandTypeHome.findNoDateEndDemandTypes(  );
+    }
+
+    /**
+     * Get the list of MyLutece role as a {@link ReferenceList}
+     * @return {@link ReferenceList}
+     */
+    public ReferenceList getRolesList(  )
+    {
+        return RoleHome.getRolesList(  );
+    }
+
+    /**
+     * Get the list of operators as a {@link ReferenceList}
+     * @return a {@link ReferenceList}
+     */
+    public ReferenceList getOperatorsList(  )
+    {
+        ReferenceList list = new ReferenceList(  );
+
+        for ( OperatorEnum operator : OperatorEnum.values(  ) )
+        {
+            list.addItem( operator.getId(  ), operator.toString(  ) );
+        }
+
+        return list;
+    }
+
+    // DO
 
     /**
      * Reorder all demand types
@@ -280,37 +352,7 @@ public class DemandTypeService
         }
     }
 
-    /**
-     * Find the list of demand types for the lutece user ordered by id category
-     * @param request {@link HttpServletRequest}
-     * @return a map of (id_category, List&lt;DemandType&gt;)
-     */
-    public Map<String, List<DemandType>> findForLuteceUser( HttpServletRequest request )
-    {
-        Map<String, List<DemandType>> map = new HashMap<String, List<DemandType>>(  );
-
-        for ( ReferenceItem category : CategoryService.getService(  ).getCategories( request.getLocale(  ), false, true ) )
-        {
-            int nIdCategory = Integer.parseInt( category.getCode(  ) );
-            DemandTypeFilter dtFilter = new DemandTypeFilter(  );
-            dtFilter.setIdCategory( nIdCategory );
-
-            List<DemandType> listAuthorizedDemandTypes = new ArrayList<DemandType>(  );
-            Date dateToday = new Date(  );
-
-            for ( DemandType demandType : DemandTypeHome.findByIdCategoryAndDate( nIdCategory, dateToday ) )
-            {
-                if ( checkRoleForDemandType( demandType, request ) )
-                {
-                    listAuthorizedDemandTypes.add( demandType );
-                }
-            }
-
-            map.put( category.getCode(  ), listAuthorizedDemandTypes );
-        }
-
-        return map;
-    }
+    // CHECKS
 
     /**
      * Check if the user has the role in order to view the demand type
@@ -332,15 +374,6 @@ public class DemandTypeService
     }
 
     /**
-     * Get the list of MyLutece role as a {@link ReferenceList}
-     * @return {@link ReferenceList}
-     */
-    public ReferenceList getRolesList(  )
-    {
-        return RoleHome.getRolesList(  );
-    }
-
-    /**
      * Check if the list of demand types are well ordered
      * @return true if it is well ordered, false otherwise
      */
@@ -359,21 +392,5 @@ public class DemandTypeService
         }
 
         return true;
-    }
-
-    /**
-     * Get the list of operators as a {@link ReferenceList}
-     * @return a {@link ReferenceList}
-     */
-    public ReferenceList getOperatorsList(  )
-    {
-        ReferenceList list = new ReferenceList(  );
-
-        for ( OperatorEnum operator : OperatorEnum.values(  ) )
-        {
-            list.addItem( operator.getId(  ), operator.toString(  ) );
-        }
-
-        return list;
     }
 }

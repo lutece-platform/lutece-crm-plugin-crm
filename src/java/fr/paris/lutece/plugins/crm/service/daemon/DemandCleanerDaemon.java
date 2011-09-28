@@ -64,6 +64,7 @@ public class DemandCleanerDaemon extends Daemon
         Calendar calendar = new GregorianCalendar(  );
         calendar.add( Calendar.DATE, -nExpirationDays );
 
+        // Clean demand types that have a date end
         DemandTypeFilter dtFilter = new DemandTypeFilter(  );
         dtFilter.setDateEnd( calendar.getTime(  ) );
         dtFilter.setOperatorDateEnd( OperatorEnum.LOWER_OR_EQUAL );
@@ -72,14 +73,28 @@ public class DemandCleanerDaemon extends Daemon
         {
             DemandFilter dFilter = new DemandFilter(  );
             dFilter.setIdDemandType( demandType.getIdDemandType(  ) );
+            // Only removing the demand that has the status draft
+            dFilter.setIdStatusCRM( 0 );
 
             for ( Demand demand : DemandService.getService(  ).findByFilter( dFilter ) )
             {
-                if ( demand.getIdStatusCRM(  ) == 0 )
-                {
-                    // Only removing the demand that has the status draft
-                    DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ) );
-                }
+                DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ) );
+            }
+        }
+
+        // Clean demand types that have not a date end : use the modification date of the demands
+        for ( DemandType demandType : DemandTypeService.getService(  ).findNoDateEndDemandTypes(  ) )
+        {
+            DemandFilter dFilter = new DemandFilter(  );
+            dFilter.setIdDemandType( demandType.getIdDemandType(  ) );
+            // Only removing the demand that has the status draft
+            dFilter.setIdStatusCRM( 0 );
+            dFilter.setDateModification( calendar.getTime(  ) );
+            dFilter.setOperatorDateModification( OperatorEnum.LOWER_OR_EQUAL );
+
+            for ( Demand demand : DemandService.getService(  ).findByFilter( dFilter ) )
+            {
+                DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ) );
             }
         }
     }

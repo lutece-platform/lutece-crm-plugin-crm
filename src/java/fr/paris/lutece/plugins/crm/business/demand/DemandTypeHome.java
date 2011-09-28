@@ -172,4 +172,13 @@ public final class DemandTypeHome
     {
         return _dao.selectDemandTypesByFilter( dtFilter, _plugin );
     }
+
+    /**
+     * Find demand types that have not a date end
+     * @return a list of {@link DemandType}
+     */
+    public static List<DemandType> findNoDateEndDemandTypes(  )
+    {
+        return _dao.selectNoDateEndDemandTypes( _plugin );
+    }
 }

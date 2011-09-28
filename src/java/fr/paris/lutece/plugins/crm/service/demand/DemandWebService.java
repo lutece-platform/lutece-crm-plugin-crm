@@ -90,7 +90,6 @@ public class DemandWebService
         // List elements to include to the signature
         List<String> listElements = new ArrayList<String>(  );
         listElements.add( Integer.toString( nIdDemand ) );
-        listElements.add( strData );
 
         HttpAccess httpAccess = new HttpAccess(  );
         httpAccess.doPost( strUrl, params, CRMRequestAuthenticatorService.getRequestAuthenticatorForWS(  ), listElements );
