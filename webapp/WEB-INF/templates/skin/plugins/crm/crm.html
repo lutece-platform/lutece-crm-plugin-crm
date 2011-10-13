@@ -96,7 +96,7 @@
 								<ul>
 									<#list demand_types as demand_type>
 										<li>
-											<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type=${demand_type.idDemandType}&amp;id_crm_user=${crm_user.idCRMUser}" target="_blank">
+											<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type=${demand_type.idDemandType}" target="_blank">
 												${demand_type.label}
 											</a>
 											<#if demand_type.urlInfo?has_content>
