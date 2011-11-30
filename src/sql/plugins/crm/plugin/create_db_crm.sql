@@ -14,6 +14,7 @@ CREATE TABLE crm_demand_type (
 	date_end DATE DEFAULT NULL,
 	workgroup_key VARCHAR(50) DEFAULT '' NOT NULL,
 	role_key VARCHAR(50) DEFAULT '' NOT NULL,
+	target SMALLINT DEFAULT 0 NOT NULL,
 	PRIMARY KEY (id_demand_type) 
 );
 

@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
+import fr.paris.lutece.plugins.crm.util.TargetEnum;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +60,7 @@ public class DemandType implements AdminWorkgroupResource
     private Date _dateEnd;
     private String _strWorkgroupKey;
     private String _strRoleKey;
+    private TargetEnum _target;
 
     /**
      * Constructor
@@ -74,6 +76,7 @@ public class DemandType implements AdminWorkgroupResource
         _nIdCategory = -1;
         _strWorkgroupKey = StringUtils.EMPTY;
         _strRoleKey = StringUtils.EMPTY;
+        _target = TargetEnum.SELF;
     }
 
     /**
@@ -318,5 +321,23 @@ public class DemandType implements AdminWorkgroupResource
     public boolean isClosed(  )
     {
         return !isOpen(  );
+    }
+
+    /**
+     * Set target
+     * @param target the target
+     */
+    public void setTarget( TargetEnum target )
+    {
+        _target = target;
+    }
+
+    /**
+     * Get target
+     * @return the target
+     */
+    public TargetEnum getTarget(  )
+    {
+        return _target;
     }
 }

@@ -64,6 +64,13 @@
         	<@getDatePicker idField="date_end" language="fr" />
         </p>
         <p>
+        	<label for="target">#i18n{crm.create_demand_type.labelTarget} :</label>
+        	<@combo name="target" items=targets_list default_value=0 />
+        	<br />
+        	<label>&nbsp;</label>
+        	#i18n{crm.create_demand_type.labelTargetComment}
+        </p>
+        <p>
             <input type="submit" value="#i18n{crm.create_demand_type.buttonCreate}" class="button" tabindex="3" />
         </p>
     </form>

@@ -86,6 +86,7 @@ public final class CRMConstants
     public static final String MARK_OPERATORS_LIST = "operators_list";
     public static final String MARK_CATEGORY = "category";
     public static final String MARK_CRM_USER = "crm_user";
+    public static final String MARK_TARGETS_LIST = "targets_list";
 
     // PARAMETERS
     public static final String PARAMETER_ACTION = "action";
@@ -117,6 +118,7 @@ public final class CRMConstants
     public static final String PARAMETER_ID_CRM_USER = "id_crm_user";
     public static final String PARAMETER_SIGNATURE = "signature";
     public static final String PARAMETER_TIMESTAMP = "timestamp";
+    public static final String PARAMETER_TARGET = "target";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";

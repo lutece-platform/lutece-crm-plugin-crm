@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
+import fr.paris.lutece.plugins.crm.util.TargetEnum;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
@@ -51,16 +52,16 @@ public class DemandTypeDAO implements IDemandTypeDAO
 {
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_demand_type ) FROM crm_demand_type ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand_type (id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key) VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE id_demand_type = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand_type SET label = ?, url_resource = ?, url_info = ?, url_contact = ?, demand_type_order = ?, id_category = ?, date_begin = ?, date_end = ?, workgroup_key = ?, role_key = ? WHERE id_demand_type = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand_type (id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target FROM crm_demand_type WHERE id_demand_type = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand_type SET label = ?, url_resource = ?, url_info = ?, url_contact = ?, demand_type_order = ?, id_category = ?, date_begin = ?, date_end = ?, workgroup_key = ?, role_key = ?, target = ? WHERE id_demand_type = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand_type WHERE id_demand_type = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target FROM crm_demand_type ";
     private static final String SQL_QUERY_SELECT_MAX_ORDER = " SELECT max( demand_type_order ) FROM crm_demand_type ";
-    private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE demand_type_order = ? ";
-    private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key " +
+    private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target FROM crm_demand_type WHERE demand_type_order = ? ";
+    private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target " +
         " FROM crm_demand_type WHERE id_category = ? AND ( date_begin IS NULL OR date_begin <= ? ) AND ( date_end IS NULL OR date_end > ? ) ";
-    private static final String SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key FROM crm_demand_type WHERE date_end IS NULL ";
+    private static final String SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target FROM crm_demand_type WHERE date_end IS NULL ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -139,6 +140,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             daoUtil.setDate( nIndex++, dateEnd );
             daoUtil.setString( nIndex++, demandType.getWorkgroup(  ) );
             daoUtil.setString( nIndex++, demandType.getRole(  ) );
+            daoUtil.setInt( nIndex++, demandType.getTarget(  ).getId(  ) );
 
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
@@ -175,6 +177,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
             demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
             demandType.setRole( daoUtil.getString( nIndex++ ) );
+            demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
         }
 
         daoUtil.free(  );
@@ -218,6 +221,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             daoUtil.setDate( nIndex++, dateEnd );
             daoUtil.setString( nIndex++, demandType.getWorkgroup(  ) );
             daoUtil.setString( nIndex++, demandType.getRole(  ) );
+            daoUtil.setInt( nIndex++, demandType.getTarget(  ).getId(  ) );
 
             daoUtil.setInt( nIndex++, demandType.getIdDemandType(  ) );
 
@@ -266,6 +270,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
             demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
             demandType.setRole( daoUtil.getString( nIndex++ ) );
+            demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
 
             listDemandTypes.add( demandType );
         }
@@ -310,6 +315,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
             demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
             demandType.setRole( daoUtil.getString( nIndex++ ) );
+            demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
 
             listDemandTypes.add( demandType );
         }
@@ -345,6 +351,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
             demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
             demandType.setRole( daoUtil.getString( nIndex++ ) );
+            demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
         }
 
         daoUtil.free(  );
@@ -403,6 +410,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
             demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
             demandType.setRole( daoUtil.getString( nIndex++ ) );
+            demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
+
             listDemandTypes.add( demandType );
         }
 
@@ -436,6 +445,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setDateEnd( daoUtil.getDate( nIndex++ ) );
             demandType.setWorkgroup( daoUtil.getString( nIndex++ ) );
             demandType.setRole( daoUtil.getString( nIndex++ ) );
+            demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
+
             listDemandTypes.add( demandType );
         }
 

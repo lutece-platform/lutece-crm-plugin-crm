@@ -34,7 +34,7 @@
 										<#if status_crm.idStatusCRM = 0>
 											<td>
 												<#if demand_type.isOpen(  )>
-													<a href="jsp/site/plugins/crm/DoEditDemand.jsp?id_demand=${demand.idDemand}" target="_blank">
+													<a href="jsp/site/plugins/crm/DoEditDemand.jsp?id_demand=${demand.idDemand}" target="${demand_type.target}">
 														<img src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
 													</a>
 												</#if>
@@ -96,7 +96,7 @@
 								<ul>
 									<#list demand_types as demand_type>
 										<li>
-											<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type=${demand_type.idDemandType}" target="_blank">
+											<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type=${demand_type.idDemandType}" target="${demand_type.target}">
 												${demand_type.label}
 											</a>
 											<#if demand_type.urlInfo?has_content>

@@ -39,6 +39,7 @@ import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
+import fr.paris.lutece.plugins.crm.util.TargetEnum;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
@@ -148,6 +149,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST,
             AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
         model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder(  ) );
+        model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList(  ) );
 
         if ( SecurityService.isAuthenticationEnable(  ) )
         {
@@ -256,6 +258,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder(  ) );
                 model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST,
                     AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
+                model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList(  ) );
 
                 if ( SecurityService.isAuthenticationEnable(  ) )
                 {
@@ -437,6 +440,8 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         return strUrl;
     }
 
+    // PRIVATE METHODS
+
     /**
      * Get the data of the demand type
      * @param request {@link HttpServletRequest}
@@ -459,6 +464,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             String strIdCategory = request.getParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY );
             String strWorkgroupKey = request.getParameter( CRMConstants.PARAMETER_WORKGROUP_KEY );
             String strRoleKey = request.getParameter( CRMConstants.PARAMETER_ROLE_KEY );
+            String strTarget = request.getParameter( CRMConstants.PARAMETER_TARGET );
 
             int nOrder = 0;
 
@@ -472,6 +478,13 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             if ( StringUtils.isNotBlank( strIdCategory ) && StringUtils.isNumeric( strIdCategory ) )
             {
                 nIdCategory = Integer.parseInt( strIdCategory );
+            }
+
+            int nTarget = 0;
+
+            if ( StringUtils.isNotBlank( strTarget ) && StringUtils.isNumeric( strTarget ) )
+            {
+                nTarget = Integer.parseInt( strTarget );
             }
 
             Date dateBegin = null;
@@ -537,6 +550,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 demandType.setDateEnd( dateEnd );
                 demandType.setWorkgroup( StringUtils.isNotBlank( strWorkgroupKey ) ? strWorkgroupKey : StringUtils.EMPTY );
                 demandType.setRole( StringUtils.isNotBlank( strRoleKey ) ? strRoleKey : StringUtils.EMPTY );
+                demandType.setTarget( TargetEnum.getTarget( nTarget ) );
             }
         }
         else

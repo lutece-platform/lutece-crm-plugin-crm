@@ -43,6 +43,7 @@ import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.category.CategoryRemovalListenerService;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
+import fr.paris.lutece.plugins.crm.util.TargetEnum;
 import fr.paris.lutece.portal.business.role.RoleHome;
 import fr.paris.lutece.portal.service.role.RoleRemovalListenerService;
 import fr.paris.lutece.portal.service.security.SecurityService;
@@ -278,6 +279,22 @@ public class DemandTypeService
         for ( OperatorEnum operator : OperatorEnum.values(  ) )
         {
             list.addItem( operator.getId(  ), operator.toString(  ) );
+        }
+
+        return list;
+    }
+
+    /**
+     * Get the list of targets as a {@link ReferenceList}
+     * @return a {@link ReferenceList}
+     */
+    public ReferenceList getTargetsList(  )
+    {
+        ReferenceList list = new ReferenceList(  );
+
+        for ( TargetEnum target : TargetEnum.values(  ) )
+        {
+            list.addItem( target.getId(  ), target.toString(  ) );
         }
 
         return list;

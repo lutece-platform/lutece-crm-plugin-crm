@@ -36,33 +36,32 @@ package fr.paris.lutece.plugins.crm.util;
 
 /**
  *
- * OperatorEnum
+ * TargetEnum
  *
  */
-public enum OperatorEnum
-{EQUAL( 0, "=" ),
-    GREATER( 1, ">" ),
-    LOWER( 2, "<" ),
-    GREATER_OR_EQUAL( 3, ">=" ),
-    LOWER_OR_EQUAL( 4, "<=" );
+public enum TargetEnum
+{SELF( 0, "_self" ),
+    BLANK( 1, "_blank" ),
+    PARENT( 2, "_parent" ),
+    TOP( 3, "_top" );
 
     private int _nId;
-    private String _strOperator;
+    private String _strTarget;
 
     /**
      * Constructor
-     * @param nId the id of the operator
-     * @param strOperator the string value of the operator
+     * @param nId the id of the target
+     * @param strTarget the string value of the target
      */
-    private OperatorEnum( int nId, String strOperator )
+    private TargetEnum( int nId, String strTarget )
     {
         _nId = nId;
-        _strOperator = strOperator;
+        _strTarget = strTarget;
     }
 
     /**
-     * Get the id of the operator
-     * @return the id of the operator
+     * Get the id of the target
+     * @return the id of the target
      */
     public int getId(  )
     {
@@ -70,11 +69,26 @@ public enum OperatorEnum
     }
 
     /**
-     * Get the String value of the operator
-     * @return the String value of the operator
+     * Get the String value of the target
+     * @return the String value of the target
      */
     public String toString(  )
     {
-        return _strOperator;
+        return _strTarget;
+    }
+
+    /**
+     * Get the target given an id
+     * @param nId the id
+     * @return the target
+     */
+    public static TargetEnum getTarget( int nId )
+    {
+        if ( ( nId >= 0 ) && ( nId < values(  ).length ) )
+        {
+            return values(  )[nId];
+        }
+
+        return SELF;
     }
 }
