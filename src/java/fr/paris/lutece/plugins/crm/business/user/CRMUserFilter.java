@@ -67,9 +67,11 @@ public class CRMUserFilter implements Serializable
     // SQL FILTERS
     private static final String SQL_FILTER_ID_CRM_USER = " cu.id_crm_user = ? ";
     private static final String SQL_FILTER_USER_GUID = " cu.user_guid LIKE ? ";
+    private static final String SQL_FILTER_STATUS_ACTIVE = " cu.status = ? ";
     private int _nIdCRMUser;
     private String _strUserGuid;
     private Map<String, String> _userInfos;
+    private int _nStatus = -1;
     private boolean _bIsWideSearch;
 
     /**
@@ -226,6 +228,30 @@ public class CRMUserFilter implements Serializable
     }
 
     /**
+     * @return the nStatus
+     */
+    public int getStatus(  )
+    {
+        return _nStatus;
+    }
+
+    /**
+     * @param nStatus the nStatus to set
+     */
+    public void setStatus( int nStatus )
+    {
+        _nStatus = nStatus;
+    }
+
+    /**
+     * Contains status.
+     */
+    public boolean containsStatus(  )
+    {
+        return _nStatus > -1;
+    }
+
+    /**
      * Builds the sql query.
      *
      * @param strSQL the str sql
@@ -237,7 +263,8 @@ public class CRMUserFilter implements Serializable
         int nIndex = 1;
         nIndex = buildSQLQueryForAttribute( sbSQL, nIndex );
         nIndex = buildFilter( sbSQL, containsIdCRMUser(  ), SQL_FILTER_ID_CRM_USER, nIndex );
-        buildFilter( sbSQL, containsUserGuid(  ), SQL_FILTER_USER_GUID, nIndex );
+        nIndex = buildFilter( sbSQL, containsUserGuid(  ), SQL_FILTER_USER_GUID, nIndex );
+        buildFilter( sbSQL, containsStatus(  ), SQL_FILTER_STATUS_ACTIVE, nIndex );
 
         return sbSQL.toString(  );
     }
@@ -298,6 +325,11 @@ public class CRMUserFilter implements Serializable
         if ( containsUserGuid(  ) )
         {
             daoUtil.setString( nIndex++, SQL_PERCENT + getUserGuid(  ) + SQL_PERCENT );
+        }
+
+        if ( containsStatus(  ) )
+        {
+            daoUtil.setInt( nIndex++, getStatus(  ) );
         }
     }
 
