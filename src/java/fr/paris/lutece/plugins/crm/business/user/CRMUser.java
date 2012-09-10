@@ -45,9 +45,29 @@ import java.util.Map;
  */
 public class CRMUser
 {
+    /**
+    * Status of not activated users.
+    */
+    public static final int STATUS_NOT_ACTIVATED = 0;
+
+    /**
+     * Status of activated users.
+     */
+    public static final int STATUS_ACTIVATED = 1;
+
+    /**
+     * Status of expired users. Expired users will be anonymized.
+     */
+    public static final int STATUS_EXPIRED = 5;
+
+    /**
+     * Status of anonymized users.
+     */
+    public static final int STATUS_ANONYMIZED = 10;
     private int _nIdCRMUser;
     private String _strUserGuid;
     private Map<String, String> _userInfos;
+    private int _nStatus;
 
     /**
      * Set the id crm user
@@ -118,5 +138,42 @@ public class CRMUser
         }
 
         return StringUtils.isNotBlank( strUserInfoValue ) ? strUserInfoValue : StringUtils.EMPTY;
+    }
+
+    /**
+     * Get the status of the user
+     * @return The status of the user
+     */
+    public int getStatus(  )
+    {
+        return _nStatus;
+    }
+
+    /**
+     * Set the status of the user
+     * @param nStatus The status of the user
+     */
+    public void setStatus( int nStatus )
+    {
+        _nStatus = nStatus;
+    }
+
+    /**
+     * Check if the user is active
+     * @return true if it is active, false otherwise
+     */
+    public boolean isActive(  )
+    {
+        return ( ( _nStatus >= STATUS_ACTIVATED ) && ( _nStatus < STATUS_EXPIRED ) );
+    }
+
+    /**
+     * Checks if is anonymized.
+     *
+     * @return true, if is anonymized
+     */
+    public boolean isAnonymized(  )
+    {
+        return _nStatus == STATUS_ANONYMIZED;
     }
 }

@@ -113,6 +113,7 @@ public class CRMApp implements XPageApplication
      * @throws UserNotSignedException exception when user is not connected
      * @throws SiteMessageException site message when displaying messages
      */
+    @Override
     public XPage getPage( HttpServletRequest request, int nMode, Plugin plugin )
         throws UserNotSignedException, SiteMessageException
     {
@@ -444,6 +445,7 @@ public class CRMApp implements XPageApplication
         {
             crmUser = new CRMUser(  );
             crmUser.setUserGuid( user.getName(  ) );
+            crmUser.setStatus( CRMUser.STATUS_ACTIVATED );
 
             Map<String, String> userAttributes = new HashMap<String, String>(  );
 

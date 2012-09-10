@@ -76,6 +76,7 @@ DROP TABLE IF EXISTS crm_user;
 CREATE TABLE crm_user (
 	id_crm_user INT(11) DEFAULT 0 NOT NULL,
 	user_guid VARCHAR(255) DEFAULT '' NOT NULL,
+	status SMALLINT DEFAULT 1 NOT NULL,
 	PRIMARY KEY (id_crm_user, user_guid)
 );
 

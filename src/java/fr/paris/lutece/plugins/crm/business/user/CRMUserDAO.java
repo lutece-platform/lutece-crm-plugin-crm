@@ -49,11 +49,11 @@ public class CRMUserDAO implements ICRMUserDAO
 {
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_crm_user ) FROM crm_user ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid) VALUES (?,?) ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid FROM crm_user ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid, status) VALUES (?,?,?) ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid, status FROM crm_user ";
     private static final String SQL_QUERY_SELECT = SQL_QUERY_SELECT_ALL + " WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_SELECT_BY_USER_GUID = SQL_QUERY_SELECT_ALL + " WHERE user_guid = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ? WHERE id_crm_user = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ?, status = ? WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_user WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_SELECT_ID_CRM_USER = " SELECT cu.id_crm_user FROM crm_user AS cu ";
     private static final String SQL_QUERY_FILTER_BY_LIST_IDS = " WHERE id_crm_user IN ( ";
@@ -101,6 +101,7 @@ public class CRMUserDAO implements ICRMUserDAO
 
             daoUtil.setInt( nIndex++, user.getIdCRMUser(  ) );
             daoUtil.setString( nIndex++, user.getUserGuid(  ) );
+            daoUtil.setInt( nIndex, user.getStatus(  ) );
 
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
@@ -129,6 +130,7 @@ public class CRMUserDAO implements ICRMUserDAO
             user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
+            user.setStatus( daoUtil.getInt( nIndex ) );
         }
 
         daoUtil.free(  );
@@ -154,6 +156,7 @@ public class CRMUserDAO implements ICRMUserDAO
             user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
+            user.setStatus( daoUtil.getInt( nIndex ) );
         }
 
         daoUtil.free(  );
@@ -174,8 +177,9 @@ public class CRMUserDAO implements ICRMUserDAO
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
             daoUtil.setString( nIndex++, user.getUserGuid(  ) );
+            daoUtil.setInt( nIndex++, user.getStatus(  ) );
 
-            daoUtil.setInt( nIndex++, user.getIdCRMUser(  ) );
+            daoUtil.setInt( nIndex, user.getIdCRMUser(  ) );
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
         }
@@ -208,7 +212,8 @@ public class CRMUserDAO implements ICRMUserDAO
             int nIndex = 1;
             CRMUser user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
-            user.setUserGuid( daoUtil.getString( nIndex ) );
+            user.setUserGuid( daoUtil.getString( nIndex++ ) );
+            user.setStatus( daoUtil.getInt( nIndex ) );
             listUsers.add( user );
         }
 
@@ -218,8 +223,8 @@ public class CRMUserDAO implements ICRMUserDAO
     }
 
     /**
-         * {@inheritDoc}
-         */
+     * {@inheritDoc}
+     */
     @Override
     public List<Integer> selectListIdsCRMUserByFilter( CRMUserFilter filter, Plugin plugin )
     {
@@ -286,7 +291,8 @@ public class CRMUserDAO implements ICRMUserDAO
 
             CRMUser user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
-            user.setUserGuid( daoUtil.getString( nIndex ) );
+            user.setUserGuid( daoUtil.getString( nIndex++ ) );
+            user.setStatus( daoUtil.getInt( nIndex ) );
             listUsers.add( user );
         }
 

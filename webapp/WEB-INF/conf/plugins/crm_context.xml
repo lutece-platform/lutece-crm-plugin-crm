@@ -32,6 +32,7 @@
     	<property name="demandService" ref="crm.demandService" />
     	<property name="cRMUserService" ref="crm.crmUserService" />
     </bean>
+    <bean id="crm.crmUserAnonymizationService" class="fr.paris.lutece.plugins.crm.service.security.CRMUserAnonymizationService" />
     
     <!-- SignRequest -->
     <bean id="crm.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" />
