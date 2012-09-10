@@ -61,7 +61,7 @@ public final class CRMRequestAuthenticatorService
      */
     public static RequestAuthenticator getRequestAuthenticatorForWS(  )
     {
-        return (RequestAuthenticator) SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_WS );
+        return SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_WS );
     }
 
     /**
@@ -70,6 +70,6 @@ public final class CRMRequestAuthenticatorService
      */
     public static AbstractAuthenticator getRequestAuthenticatorForUrl(  )
     {
-        return (AbstractAuthenticator) SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_URL );
+        return SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_URL );
     }
 }

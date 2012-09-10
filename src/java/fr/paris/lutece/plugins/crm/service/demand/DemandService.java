@@ -38,7 +38,6 @@ import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandHome;
 import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -75,7 +74,7 @@ public class DemandService
      */
     public static DemandService getService(  )
     {
-        return (DemandService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_DEMANDSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_DEMANDSERVICE );
     }
 
     /**

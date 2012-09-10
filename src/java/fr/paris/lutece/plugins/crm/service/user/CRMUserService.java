@@ -34,10 +34,12 @@
 package fr.paris.lutece.plugins.crm.service.user;
 
 import fr.paris.lutece.plugins.crm.business.user.CRMUser;
+import fr.paris.lutece.plugins.crm.business.user.CRMUserFilter;
 import fr.paris.lutece.plugins.crm.business.user.CRMUserHome;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 
@@ -64,7 +66,7 @@ public class CRMUserService
      */
     public static CRMUserService getService(  )
     {
-        return (CRMUserService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_CRMUSERSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_CRMUSERSERVICE );
     }
 
     /**
@@ -104,6 +106,57 @@ public class CRMUserService
         }
 
         return user;
+    }
+
+    /**
+     * Find by primary key.
+     *
+     * @return a {@link CRMUser}
+     */
+    public List<CRMUser> findAll(  )
+    {
+        List<CRMUser> listUsers = CRMUserHome.findAll(  );
+
+        for ( CRMUser user : listUsers )
+        {
+            user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser(  ) ) );
+        }
+
+        return listUsers;
+    }
+
+    /**
+     * Find list ids by filter.
+     *
+     * @param filter the filter
+     * @return the list
+     */
+    public List<Integer> findListIdsByFilter( CRMUserFilter filter )
+    {
+        return CRMUserHome.findListIdsCRMUserByFilter( filter );
+    }
+
+    /**
+     * Find by list ids.
+     *
+     * @param listIdsCRMUser the list ids crm user
+     * @return the list
+     */
+    public List<CRMUser> findByListIds( List<Integer> listIdsCRMUser )
+    {
+        List<CRMUser> listUsers = new ArrayList<CRMUser>(  );
+
+        if ( ( listIdsCRMUser != null ) && !listIdsCRMUser.isEmpty(  ) )
+        {
+            listUsers = CRMUserHome.findByListIds( listIdsCRMUser );
+
+            for ( CRMUser user : listUsers )
+            {
+                user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser(  ) ) );
+            }
+        }
+
+        return listUsers;
     }
 
     /**

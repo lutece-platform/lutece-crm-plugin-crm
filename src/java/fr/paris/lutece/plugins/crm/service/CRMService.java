@@ -71,7 +71,7 @@ public final class CRMService
      */
     public static CRMService getService(  )
     {
-        return (CRMService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_CRMSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_CRMSERVICE );
     }
 
     /**

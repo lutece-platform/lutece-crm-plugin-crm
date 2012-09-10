@@ -49,6 +49,7 @@ public class CRMPlugin extends PluginDefaultImplementation
     /**
      * Initialize the CRMPlugin
      */
+    @Override
     public void init(  )
     {
         DemandTypeService.init(  );

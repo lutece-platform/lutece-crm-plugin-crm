@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crm.service.demand;
 
 import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM;
 import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRMHome;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
@@ -65,8 +64,7 @@ public class DemandStatusCRMService
      */
     public static DemandStatusCRMService getService(  )
     {
-        return (DemandStatusCRMService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_DEMANDSTATUSCRMSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_DEMANDSTATUSCRMSERVICE );
     }
 
     /**

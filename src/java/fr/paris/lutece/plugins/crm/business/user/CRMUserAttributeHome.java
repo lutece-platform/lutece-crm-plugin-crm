@@ -50,8 +50,7 @@ public final class CRMUserAttributeHome
 {
     private static final String BEAN_CRM_CRMUSERATTRIBUTEDAO = "crm.crmUserAttributeDAO";
     private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
-    private static ICRMUserAttributeDAO _dao = (ICRMUserAttributeDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CRMUSERATTRIBUTEDAO );
+    private static ICRMUserAttributeDAO _dao = SpringContextService.getBean( BEAN_CRM_CRMUSERATTRIBUTEDAO );
 
     /**
      * Private constructor - this class need not be instantiated

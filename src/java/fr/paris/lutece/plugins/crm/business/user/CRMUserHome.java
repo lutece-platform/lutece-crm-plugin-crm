@@ -38,6 +38,8 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
+import java.util.List;
+
 
 /**
  *
@@ -48,8 +50,7 @@ public final class CRMUserHome
 {
     private static final String BEAN_CRM_CRMUSERDAO = "crm.crmUserDAO";
     private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
-    private static ICRMUserDAO _dao = (ICRMUserDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CRMUSERDAO );
+    private static ICRMUserDAO _dao = SpringContextService.getBean( BEAN_CRM_CRMUSERDAO );
 
     /**
      * Private constructor - this class need not be instantiated
@@ -113,5 +114,37 @@ public final class CRMUserHome
     public static CRMUser findByUserGuid( String strUserGuid )
     {
         return _dao.loadByUserGuid( strUserGuid, _plugin );
+    }
+
+    /**
+     * Load the data from the table.
+     *
+     * @return The instance of the CRMUser
+     */
+    public static List<CRMUser> findAll(  )
+    {
+        return _dao.selectAll( _plugin );
+    }
+
+    /**
+     * Find list ids crm user by filter.
+     *
+     * @param filter the filter
+     * @return the list
+     */
+    public static List<Integer> findListIdsCRMUserByFilter( CRMUserFilter filter )
+    {
+        return _dao.selectListIdsCRMUserByFilter( filter, _plugin );
+    }
+
+    /**
+     * Find by list ids.
+     *
+     * @param listIdsCRMUser the list ids crm user
+     * @return the list
+     */
+    public static List<CRMUser> findByListIds( List<Integer> listIdsCRMUser )
+    {
+        return _dao.selectByListIds( listIdsCRMUser, _plugin );
     }
 }

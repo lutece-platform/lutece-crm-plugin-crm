@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crm.service.category;
 
 import fr.paris.lutece.plugins.crm.business.demand.category.Category;
 import fr.paris.lutece.plugins.crm.business.demand.category.CategoryHome;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -75,7 +74,7 @@ public class CategoryService
      */
     public static synchronized CategoryService getService(  )
     {
-        return (CategoryService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_CATEGORYSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_CATEGORYSERVICE );
     }
 
     /**

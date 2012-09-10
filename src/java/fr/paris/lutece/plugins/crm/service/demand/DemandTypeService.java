@@ -39,7 +39,6 @@ import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeHome;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeRoleRemovalListener;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeWorkgroupRemovalListener;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.category.CategoryRemovalListenerService;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
@@ -85,7 +84,7 @@ public class DemandTypeService
      */
     public static DemandTypeService getService(  )
     {
-        return (DemandTypeService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_DEMANDTYPESERVICE );
+        return SpringContextService.getBean( BEAN_CRM_DEMANDTYPESERVICE );
     }
 
     /**

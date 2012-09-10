@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crm.service.notification;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationHome;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.sql.Timestamp;
@@ -67,8 +66,7 @@ public class NotificationService
      */
     public static NotificationService getService(  )
     {
-        return (NotificationService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_NOTIFICATIONSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_NOTIFICATIONSERVICE );
     }
 
     /**

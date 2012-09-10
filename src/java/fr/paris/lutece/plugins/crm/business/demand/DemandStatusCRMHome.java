@@ -50,8 +50,7 @@ public final class DemandStatusCRMHome
 {
     private static final String BEAN_CRM_DEMANDSTATUSCRMDAO = "crm.demandStatusCRMDAO";
     private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
-    private static IDemandStatusCRMDAO _dao = (IDemandStatusCRMDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_DEMANDSTATUSCRMDAO );
+    private static IDemandStatusCRMDAO _dao = SpringContextService.getBean( BEAN_CRM_DEMANDSTATUSCRMDAO );
 
     /**
      * Private constructor

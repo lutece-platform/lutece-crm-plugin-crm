@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.crm.business.user;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
+import java.util.List;
+
 
 /**
  *
@@ -87,4 +89,30 @@ public interface ICRMUserDAO
      * @return The instance of the CRMUser
      */
     CRMUser loadByUserGuid( String strUserGuid, Plugin plugin );
+
+    /**
+     * Find all.
+     *
+     * @param plugin the plugin
+     * @return the list
+     */
+    List<CRMUser> selectAll( Plugin plugin );
+
+    /**
+     * Find list ids crm user by filter.
+     *
+     * @param filter the filter
+     * @param plugin the plugin
+     * @return the list
+     */
+    List<Integer> selectListIdsCRMUserByFilter( CRMUserFilter filter, Plugin plugin );
+
+    /**
+     * Select by list ids.
+     *
+     * @param listIdsCRMUser the list ids crm user
+     * @param plugin the plugin
+     * @return the list
+     */
+    List<CRMUser> selectByListIds( List<Integer> listIdsCRMUser, Plugin plugin );
 }

@@ -36,6 +36,9 @@ package fr.paris.lutece.plugins.crm.business.user;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -47,14 +50,23 @@ public class CRMUserDAO implements ICRMUserDAO
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_crm_user ) FROM crm_user ";
     private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid) VALUES (?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_crm_user, user_guid FROM crm_user WHERE id_crm_user = ? ";
-    private static final String SQL_QUERY_SELECT_BY_USER_GUID = " SELECT id_crm_user, user_guid FROM crm_user WHERE user_guid = ? ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid FROM crm_user ";
+    private static final String SQL_QUERY_SELECT = SQL_QUERY_SELECT_ALL + " WHERE id_crm_user = ? ";
+    private static final String SQL_QUERY_SELECT_BY_USER_GUID = SQL_QUERY_SELECT_ALL + " WHERE user_guid = ? ";
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ? WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_user WHERE id_crm_user = ? ";
+    private static final String SQL_QUERY_SELECT_ID_CRM_USER = " SELECT cu.id_crm_user FROM crm_user AS cu ";
+    private static final String SQL_QUERY_FILTER_BY_LIST_IDS = " WHERE id_crm_user IN ( ";
+
+    // CONSTANTS
+    private static final String INTERROGATION_MARK = "?";
+    private static final String COMMA = ",";
+    private static final String CLOSED_BRACKET = ")";
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
@@ -75,6 +87,7 @@ public class CRMUserDAO implements ICRMUserDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public int insert( CRMUser user, Plugin plugin )
     {
         int nKey = -1;
@@ -101,6 +114,7 @@ public class CRMUserDAO implements ICRMUserDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public CRMUser load( int nIdCRMUser, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
@@ -125,6 +139,7 @@ public class CRMUserDAO implements ICRMUserDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public CRMUser loadByUserGuid( String strUserGuid, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_USER_GUID, plugin );
@@ -149,6 +164,7 @@ public class CRMUserDAO implements ICRMUserDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void store( CRMUser user, Plugin plugin )
     {
         if ( user != null )
@@ -168,11 +184,114 @@ public class CRMUserDAO implements ICRMUserDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdCRMUser, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdCRMUser );
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<CRMUser> selectAll( Plugin plugin )
+    {
+        List<CRMUser> listUsers = new ArrayList<CRMUser>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL, plugin );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            int nIndex = 1;
+            CRMUser user = new CRMUser(  );
+            user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
+            user.setUserGuid( daoUtil.getString( nIndex ) );
+            listUsers.add( user );
+        }
+
+        daoUtil.free(  );
+
+        return listUsers;
+    }
+
+    /**
+         * {@inheritDoc}
+         */
+    @Override
+    public List<Integer> selectListIdsCRMUserByFilter( CRMUserFilter filter, Plugin plugin )
+    {
+        List<Integer> listIds = new ArrayList<Integer>(  );
+        String strSQL = filter.buildSQLQuery( SQL_QUERY_SELECT_ID_CRM_USER );
+        DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
+        filter.setFilterValues( daoUtil );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            listIds.add( daoUtil.getInt( 1 ) );
+        }
+
+        daoUtil.free(  );
+
+        return listIds;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<CRMUser> selectByListIds( List<Integer> listIdsCRMUser, Plugin plugin )
+    {
+        List<CRMUser> listUsers = new ArrayList<CRMUser>(  );
+
+        // Build the SQL query
+        StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
+
+        if ( !listIdsCRMUser.isEmpty(  ) )
+        {
+            sbSQL.append( SQL_QUERY_FILTER_BY_LIST_IDS );
+
+            for ( int nIndex = 0; nIndex < listIdsCRMUser.size(  ); nIndex++ )
+            {
+                sbSQL.append( INTERROGATION_MARK );
+
+                if ( nIndex < ( listIdsCRMUser.size(  ) - 1 ) )
+                {
+                    sbSQL.append( COMMA );
+                }
+            }
+
+            sbSQL.append( CLOSED_BRACKET );
+        }
+
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+
+        // Set the values
+        int nIndex = 1;
+
+        for ( int nIdCRMUser : listIdsCRMUser )
+        {
+            daoUtil.setInt( nIndex, nIdCRMUser );
+            nIndex++;
+        }
+
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            nIndex = 1;
+
+            CRMUser user = new CRMUser(  );
+            user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
+            user.setUserGuid( daoUtil.getString( nIndex ) );
+            listUsers.add( user );
+        }
+
+        daoUtil.free(  );
+
+        return listUsers;
     }
 }

@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.crm.business.user;
 import fr.paris.lutece.test.LuteceTestCase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -116,6 +117,14 @@ public class CRMUserTest extends LuteceTestCase
 
         // Test finders
         CRMUserHome.findByUserGuid( USER_GUID2 );
+        CRMUserHome.findAll(  );
+
+        CRMUserFilter filter = new CRMUserFilter(  );
+        filter.setUserGuid( USER_GUID2 );
+        filter.setUserAttributes( userAttributes );
+
+        List<Integer> listIdsCRMUser = CRMUserHome.findListIdsCRMUserByFilter( filter );
+        CRMUserHome.findByListIds( listIdsCRMUser );
 
         // Test remove
         CRMUserAttributeHome.remove( user.getIdCRMUser(  ) );

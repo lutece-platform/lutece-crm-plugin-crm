@@ -51,8 +51,7 @@ public final class CategoryHome
 {
     private static final String BEAN_CRM_CATEGORYDAO = "crm.categoryDAO";
     private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
-    private static ICategoryDAO _dao = (ICategoryDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CATEGORYDAO );
+    private static ICategoryDAO _dao = SpringContextService.getBean( BEAN_CRM_CATEGORYDAO );
 
     /**
      * Private constructor - this class need not be instantiated

@@ -51,8 +51,7 @@ public final class DemandTypeHome
 {
     private static final String BEAN_CRM_DEMANDTYPEDAO = "crm.demandTypeDAO";
     private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
-    private static IDemandTypeDAO _dao = (IDemandTypeDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_DEMANDTYPEDAO );
+    private static IDemandTypeDAO _dao = SpringContextService.getBean( BEAN_CRM_DEMANDTYPEDAO );
 
     /**
      * Private constructor - this class need not be instantiated

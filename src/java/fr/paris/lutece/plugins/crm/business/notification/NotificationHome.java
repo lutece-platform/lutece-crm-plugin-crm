@@ -50,8 +50,7 @@ public final class NotificationHome
 {
     private static final String BEAN_CRM_NOTIFICATIONDAO = "crm.notificationDAO";
     private static Plugin _plugin = PluginService.getPlugin( CRMPlugin.PLUGIN_NAME );
-    private static INotificationDAO _dao = (INotificationDAO) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_NOTIFICATIONDAO );
+    private static INotificationDAO _dao = SpringContextService.getBean( BEAN_CRM_NOTIFICATIONDAO );
 
     /**
      * Private constructor - this class need not be instantiated

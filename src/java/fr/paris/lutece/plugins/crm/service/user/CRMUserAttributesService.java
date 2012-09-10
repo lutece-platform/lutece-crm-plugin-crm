@@ -35,8 +35,8 @@ package fr.paris.lutece.plugins.crm.service.user;
 
 import fr.paris.lutece.plugins.crm.business.user.CRMUser;
 import fr.paris.lutece.plugins.crm.business.user.CRMUserAttributeHome;
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.security.UserAttributesService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -46,6 +46,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -72,8 +73,7 @@ public final class CRMUserAttributesService implements UserAttributesService
      */
     public static CRMUserAttributesService getService(  )
     {
-        return (CRMUserAttributesService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CRMUSERATTRIBUTESSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_CRMUSERATTRIBUTESSERVICE );
     }
 
     /**
@@ -88,6 +88,7 @@ public final class CRMUserAttributesService implements UserAttributesService
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getAttribute( String strUserId, String strAttribute )
     {
         String strAttributeValue = StringUtils.EMPTY;
@@ -109,6 +110,7 @@ public final class CRMUserAttributesService implements UserAttributesService
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, String> getAttributes( String strUserId )
     {
         Map<String, String> listAttributes = new HashMap<String, String>(  );
@@ -175,5 +177,23 @@ public final class CRMUserAttributesService implements UserAttributesService
         }
 
         return listUserAttributeKeys;
+    }
+
+    /**
+     * Gets the user attribute key labels.
+     *
+     * @param locale the locale
+     * @return the user attribute key labels
+     */
+    public List<String> getUserAttributeKeyLabels( Locale locale )
+    {
+        List<String> listLabels = new ArrayList<String>(  );
+
+        for ( String strAttributeKey : getUserAttributeKeys(  ) )
+        {
+            listLabels.add( I18nService.getLocalizedString( strAttributeKey, locale ) );
+        }
+
+        return listLabels;
     }
 }

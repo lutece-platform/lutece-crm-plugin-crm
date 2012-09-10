@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.service.demand;
 
-import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.plugins.crm.service.signrequest.CRMRequestAuthenticatorService;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -68,7 +67,7 @@ public class DemandWebService
      */
     public static DemandWebService getService(  )
     {
-        return (DemandWebService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_DEMANDWEBSERVICE );
+        return SpringContextService.getBean( BEAN_CRM_DEMANDWEBSERVICE );
     }
 
     /**

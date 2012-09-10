@@ -54,6 +54,7 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue,
         Plugin plugin )
     {
@@ -72,6 +73,7 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdCRMUser, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
@@ -83,6 +85,7 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, String> load( int nIdCRMUser, Plugin plugin )
     {
         Map<String, String> userAttributes = new HashMap<String, String>(  );
