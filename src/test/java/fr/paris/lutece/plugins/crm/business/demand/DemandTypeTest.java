@@ -141,7 +141,7 @@ public class DemandTypeTest extends LuteceTestCase
         dtFilter.setLabel( LABEL2 );
         dtFilter.setOrder( ORDER2 );
         dtFilter.setRole( ROLE2 );
-        dtFilter.setUrlResourece( URL_RESOURCE2 );
+        dtFilter.setUrlResource( URL_RESOURCE2 );
         dtFilter.setWorkgroup( WORKGROUP2 );
         DemandTypeHome.findAll(  );
         DemandTypeHome.findDemandTypes(  );

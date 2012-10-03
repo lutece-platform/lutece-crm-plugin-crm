@@ -78,7 +78,7 @@ public class DemandCleanerDaemon extends Daemon
 
             for ( Demand demand : DemandService.getService(  ).findByFilter( dFilter ) )
             {
-                DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ) );
+                DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ), true );
             }
         }
 
@@ -94,7 +94,7 @@ public class DemandCleanerDaemon extends Daemon
 
             for ( Demand demand : DemandService.getService(  ).findByFilter( dFilter ) )
             {
-                DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ) );
+                DemandService.getService(  ).removeWithItsResource( demand.getIdDemand(  ), true );
             }
         }
     }

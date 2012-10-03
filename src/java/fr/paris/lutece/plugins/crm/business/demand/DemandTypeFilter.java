@@ -60,6 +60,7 @@ public class DemandTypeFilter
     private OperatorEnum _operatorOrder;
     private OperatorEnum _operatorDateBegin;
     private OperatorEnum _operatorDateEnd;
+    private String _strUrlDelete;
 
     /**
      * Constructor
@@ -75,6 +76,7 @@ public class DemandTypeFilter
         _operatorOrder = OperatorEnum.EQUAL;
         _operatorDateBegin = OperatorEnum.EQUAL;
         _operatorDateEnd = OperatorEnum.EQUAL;
+        _strUrlDelete = StringUtils.EMPTY;
     }
 
     /**
@@ -147,7 +149,7 @@ public class DemandTypeFilter
      * Sets the UrlResource
      * @param strUrlResource The UrlResource
      */
-    public void setUrlResourece( String strUrlResource )
+    public void setUrlResource( String strUrlResource )
     {
         _strUrlResource = strUrlResource;
     }
@@ -375,5 +377,32 @@ public class DemandTypeFilter
     public OperatorEnum getOperatorDateEnd(  )
     {
         return _operatorDateEnd;
+    }
+    
+    /**
+     * Returns the UrlDelete
+     * @return The UrlDelete
+     */
+    public String getUrlDelete(  )
+    {
+        return _strUrlDelete;
+    }
+
+    /**
+     * Sets the UrlDelete
+     * @param strUrlDelete The UrlDelete
+     */
+    public void setUrlDelete( String strUrlDelete )
+    {
+        _strUrlResource = strUrlDelete;
+    }
+
+    /**
+     * Check if the filter contains the attribute UrlDelete
+     * @return true if it contains, false otherwise
+     */
+    public boolean containsUrlDelete(  )
+    {
+        return StringUtils.isNotBlank( _strUrlResource );
     }
 }

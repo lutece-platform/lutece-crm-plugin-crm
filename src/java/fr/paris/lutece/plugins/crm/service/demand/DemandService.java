@@ -51,6 +51,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *
@@ -133,7 +135,7 @@ public class DemandService
      * Remove a demand and its resource
      * @param nIdDemand the id demand
      */
-    public void removeWithItsResource( int nIdDemand )
+    public void removeWithItsResource( int nIdDemand, boolean bByDaemon )
     {
         Demand demand = findByPrimaryKey( nIdDemand );
 
@@ -143,18 +145,37 @@ public class DemandService
 
             if ( demandType != null )
             {
-                try
-                {
-                    DemandWebService.getService(  )
-                                    .sendRemoveDraft( demandType.getUrlResource(  ), nIdDemand,
-                        demand.getData(  ).replace( "\"", "'" ) );
-                    remove( nIdDemand );
-                }
-                catch ( HttpAccessException e )
-                {
-                    String strError = "CRM Demand - Error connecting to '" + demandType.getUrlResource(  ) + "' : ";
-                    AppLogService.error( strError + e.getMessage(  ), e );
-                }
+            	if( StringUtils.isNotBlank( demandType.getUrlDelete(  ) ) && bByDaemon )
+            	{
+            		try
+                    {
+                        DemandWebService.getService(  )
+                                        .sendRemoveDraft( demandType.getUrlDelete(  ), nIdDemand,
+                            demand.getData(  ).replace( "\"", "'" ) );
+                        remove( nIdDemand );
+                    }
+                    catch ( HttpAccessException e )
+                    {
+                        String strError = "CRM Demand - Error connecting to '" + demandType.getUrlDelete(  ) + "' : ";
+                        AppLogService.error( strError + e.getMessage(  ), e );
+                    }
+            	}
+            	else
+            	{
+            		try
+                    {
+                        DemandWebService.getService(  )
+                                        .sendRemoveDraft( demandType.getUrlResource(  ), nIdDemand,
+                            demand.getData(  ).replace( "\"", "'" ) );
+                        remove( nIdDemand );
+                    }
+                    catch ( HttpAccessException e )
+                    {
+                        String strError = "CRM Demand - Error connecting to '" + demandType.getUrlResource(  ) + "' : ";
+                        AppLogService.error( strError + e.getMessage(  ), e );
+                    }
+            		
+            	}                
             }
         }
     }
@@ -170,7 +191,7 @@ public class DemandService
 
         for ( Demand demand : findByFilter( dFilter ) )
         {
-            removeWithItsResource( demand.getIdDemand(  ) );
+            removeWithItsResource( demand.getIdDemand(  ), false );
         }
     }
 

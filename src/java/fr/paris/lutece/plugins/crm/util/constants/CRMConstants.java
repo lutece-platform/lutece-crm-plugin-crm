@@ -119,6 +119,7 @@ public final class CRMConstants
     public static final String PARAMETER_SIGNATURE = "signature";
     public static final String PARAMETER_TIMESTAMP = "timestamp";
     public static final String PARAMETER_TARGET = "target";
+    public static final String PARAMETER_URL_DELETE = "url_delete";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";

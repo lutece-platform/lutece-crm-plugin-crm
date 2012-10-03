@@ -61,6 +61,7 @@ public class DemandType implements AdminWorkgroupResource
     private String _strWorkgroupKey;
     private String _strRoleKey;
     private TargetEnum _target;
+    private String _strUrlDelete;
 
     /**
      * Constructor
@@ -77,6 +78,7 @@ public class DemandType implements AdminWorkgroupResource
         _strWorkgroupKey = StringUtils.EMPTY;
         _strRoleKey = StringUtils.EMPTY;
         _target = TargetEnum.SELF;
+        _strUrlDelete = StringUtils.EMPTY;
     }
 
     /**
@@ -339,5 +341,23 @@ public class DemandType implements AdminWorkgroupResource
     public TargetEnum getTarget(  )
     {
         return _target;
+    }
+    
+    /**
+     * Get the url to delete the demand
+     * @return the url to delete the demand
+     */
+    public String getUrlDelete(  )
+    {
+        return _strUrlDelete;
+    }
+
+    /**
+     * Set the url to delete the demand
+     * @param strUrlDelete the url to delete the demand
+     */
+    public void setUrlDelete( String strUrlDelete )
+    {
+        _strUrlDelete = strUrlDelete;
     }
 }

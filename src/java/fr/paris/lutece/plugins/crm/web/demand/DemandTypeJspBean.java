@@ -465,6 +465,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             String strWorkgroupKey = request.getParameter( CRMConstants.PARAMETER_WORKGROUP_KEY );
             String strRoleKey = request.getParameter( CRMConstants.PARAMETER_ROLE_KEY );
             String strTarget = request.getParameter( CRMConstants.PARAMETER_TARGET );
+            String strUrlDelete  = request.getParameter( CRMConstants.PARAMETER_URL_DELETE ); 
 
             int nOrder = 0;
 
@@ -551,6 +552,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 demandType.setWorkgroup( StringUtils.isNotBlank( strWorkgroupKey ) ? strWorkgroupKey : StringUtils.EMPTY );
                 demandType.setRole( StringUtils.isNotBlank( strRoleKey ) ? strRoleKey : StringUtils.EMPTY );
                 demandType.setTarget( TargetEnum.getTarget( nTarget ) );
+                demandType.setUrlDelete(  StringUtils.isNotBlank( strUrlDelete ) ? strUrlDelete : StringUtils.EMPTY );
             }
         }
         else
@@ -627,6 +629,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             String strDateEnd = request.getParameter( CRMConstants.PARAMETER_DATE_END );
             String strOperatorDateBegin = request.getParameter( CRMConstants.PARAMETER_OPERATOR_DATE_BEGIN );
             String strOperatorDateEnd = request.getParameter( CRMConstants.PARAMETER_OPERATOR_DATE_END );
+            String strUrlDelete = request.getParameter( CRMConstants.PARAMETER_URL_DELETE );
 
             if ( StringUtils.isNotBlank( strLabel ) )
             {
@@ -635,7 +638,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
             if ( StringUtils.isNotBlank( strUrlForm ) )
             {
-                _dtFilter.setUrlResourece( strUrlForm );
+                _dtFilter.setUrlResource( strUrlForm );
             }
 
             if ( StringUtils.isNotBlank( strIdCategory ) && StringUtils.isNumeric( strIdCategory ) )
@@ -688,6 +691,10 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 {
                     _dtFilter.setOperatorDateEnd( OperatorEnum.values(  )[nIdOperatorDateEnd] );
                 }
+            }
+            if ( StringUtils.isNotBlank( strUrlDelete ) )
+            {
+                _dtFilter.setUrlDelete( strUrlDelete );
             }
         }
 
