@@ -10,76 +10,83 @@
 	</select>
 </#macro>
 
-<div class="content-box" >
-    <h2>#i18n{crm.modify_demand_type.pageTitle}</h2>
-    <form method="post" name="modify_demand_type" id="modify_demand_type" action="jsp/admin/plugins/crm/DoModifyDemandType.jsp">
-    	<input type="hidden" name="id_demand_type" value="${demand_type.idDemandType}" />
-        <p>
-            <label for="demand_type_label" >#i18n{crm.modify_demand_type.labelLabel} * :</label>
-            <input type="text" id="demand_type_label" name="demand_type_label" size="60" maxlength="255" value="${demand_type.label}" />
-        </p>
-        <p>
-            <label for="url_resource" >#i18n{crm.modify_demand_type.labelUrlResource} * :</label>
-            <input type="text" id="url_resource" name="url_resource" size="60" maxlength="255" value="${demand_type.urlResource}" />
-        </p>
-        <p>
-            <label for="url_info" >#i18n{crm.modify_demand_type.labelUrlInfo} :</label>
-            <input type="text" id="url_info" name="url_info" size="60" maxlength="255" value="${demand_type.urlInfo}" />
-        </p>
-        <p>
-            <label for="url_contact" >#i18n{crm.modify_demand_type.labelUrlContact} :</label>
-            <input type="text" id="url_contact" name="url_contact" size="60" maxlength="255" value="${demand_type.urlContact}" />
-        </p>
-        <p>
-            <label for="order" >#i18n{crm.modify_demand_type.labelOrder} :</label>
-            <@comboOrder max_order=max_order current_order=demand_type.order />
-        </p>
-        <p>
-            <label for="category_id_category" >#i18n{crm.modify_demand_type.labelCategory} :</label>
-            <@combo name="category_id_category" items=categories_list default_value=demand_type.idCategory />
-        </p>
-        <p>
-			<label for="workgroup_key">#i18n{crm.modify_demand_type.labelWorkgroup} : </label>
-			<@combo name="workgroup_key" items=user_workgroup_list default_value=demand_type.workgroup />
-			<br/>
-			<label>&nbsp;</label>
-			#i18n{crm.modify_demand_type.labelWorkgroupComment}
-	   	</p>
-	   	<#if role_list??>
-		   	<p>
-		    	<label for="role_key">#i18n{crm.create_demand_type.labelRole} : </label>
-	        		 <@combo name="role_key" default_value=demand_type.role items=role_list />
-				 <br/>
-			  	<label>&nbsp;</label>
-				#i18n{crm.create_demand_type.labelRoleComment}
-			</p>
-		</#if>
-        <p>
-        	<label for="date_begin" >#i18n{crm.modify_demand_type.labelDateBegin} :</label>
-            <input type="text" id="date_begin" name="date_begin" size="10" maxlength="10" value="<#if demand_type.dateBegin??>${demand_type.dateBegin?date}</#if>" />
-        	<@getDatePicker idField="date_begin" language="fr" />
-        </p>
-        <p>
-        	<label for="date_end" >#i18n{crm.modify_demand_type.labelDateEnd} :</label>
-            <input type="text" id="date_end" name="date_end" size="10" maxlength="10" value="<#if demand_type.dateEnd??>${demand_type.dateEnd?date}</#if>" />
-        	<@getDatePicker idField="date_end" language="fr" />
-        </p>
-        <p>
-        	<label for="target">#i18n{crm.modify_demand_type.labelTarget} :</label>
-        	<@combo name="target" items=targets_list default_value=demand_type.target.id />
-        	<br />
-        	<label>&nbsp;</label>
-        	#i18n{crm.modify_demand_type.labelTargetComment}
-        </p>
-        <p>
-            <label for="url_delete" >#i18n{crm.modify_demand_type.labelUrlDelete} :</label>            
-            <input type="text" id="url_delete" name="url_delete" size="60" maxlength="255" value="<#if demand_type.urlDelete??>${demand_type.urlDelete}</#if>" />
-            <br />
-        	<label>&nbsp;</label>
-        	#i18n{crm.modify_demand_type.labelUrlDeleteComment}
-        </p>
-        <p>
-            <input type="submit" value="#i18n{crm.modify_demand_type.buttonModify}" class="button" tabindex="3" />
-        </p>
-    </form>
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
+			<legend class="clearfix">#i18n{crm.modify_demand_type.pageTitle}</legend>
+		    <form method="post" name="modify_demand_type" id="modify_demand_type" action="jsp/admin/plugins/crm/DoModifyDemandType.jsp">
+		    	<input type="hidden" name="id_demand_type" value="${demand_type.idDemandType}" />
+		        <p>
+		            <label for="demand_type_label" >#i18n{crm.modify_demand_type.labelLabel} * :</label>
+		            <input type="text" id="demand_type_label" name="demand_type_label" size="60" maxlength="255" value="${demand_type.label}" />
+		        </p>
+		        <p>
+		            <label for="url_resource" >#i18n{crm.modify_demand_type.labelUrlResource} * :</label>
+		            <input type="text" id="url_resource" name="url_resource" size="60" maxlength="255" value="${demand_type.urlResource}" />
+		        </p>
+		        <p>
+		            <label for="url_info" >#i18n{crm.modify_demand_type.labelUrlInfo} :</label>
+		            <input type="text" id="url_info" name="url_info" size="60" maxlength="255" value="${demand_type.urlInfo}" />
+		        </p>
+		        <p>
+		            <label for="url_contact" >#i18n{crm.modify_demand_type.labelUrlContact} :</label>
+		            <input type="text" id="url_contact" name="url_contact" size="60" maxlength="255" value="${demand_type.urlContact}" />
+		        </p>
+		        <p>
+		            <label for="order" >#i18n{crm.modify_demand_type.labelOrder} :</label>
+		            <@comboOrder max_order=max_order current_order=demand_type.order />
+		        </p>
+		        <p>
+		            <label for="category_id_category" >#i18n{crm.modify_demand_type.labelCategory} :</label>
+		            <@combo name="category_id_category" items=categories_list default_value=demand_type.idCategory />
+		        </p>
+		        <p>
+					<label for="workgroup_key">#i18n{crm.modify_demand_type.labelWorkgroup} : </label>
+					<@combo name="workgroup_key" items=user_workgroup_list default_value=demand_type.workgroup />
+					<br/>
+					<label>&nbsp;</label>
+					#i18n{crm.modify_demand_type.labelWorkgroupComment}
+			   	</p>
+			   	<#if role_list??>
+				   	<p>
+				    	<label for="role_key">#i18n{crm.create_demand_type.labelRole} : </label>
+			        		 <@combo name="role_key" default_value=demand_type.role items=role_list />
+						 <br/>
+					  	<label>&nbsp;</label>
+						#i18n{crm.create_demand_type.labelRoleComment}
+					</p>
+				</#if>
+		        <p>
+		        	<label for="date_begin" >#i18n{crm.modify_demand_type.labelDateBegin} :</label>
+		            <input type="text" id="date_begin" name="date_begin" size="10" maxlength="10" value="<#if demand_type.dateBegin??>${demand_type.dateBegin?date}</#if>" />
+		        	<@getDatePicker idField="date_begin" language="fr" />
+		        </p>
+		        <p>
+		        	<label for="date_end" >#i18n{crm.modify_demand_type.labelDateEnd} :</label>
+		            <input type="text" id="date_end" name="date_end" size="10" maxlength="10" value="<#if demand_type.dateEnd??>${demand_type.dateEnd?date}</#if>" />
+		        	<@getDatePicker idField="date_end" language="fr" />
+		        </p>
+		        <p>
+		        	<label for="target">#i18n{crm.modify_demand_type.labelTarget} :</label>
+		        	<@combo name="target" items=targets_list default_value=demand_type.target.id />
+		        	<br />
+		        	<label>&nbsp;</label>
+		        	#i18n{crm.modify_demand_type.labelTargetComment}
+		        </p>
+		        <p>
+		            <label for="url_delete" >#i18n{crm.modify_demand_type.labelUrlDelete} :</label>            
+		            <input type="text" id="url_delete" name="url_delete" size="60" maxlength="255" value="<#if demand_type.urlDelete??>${demand_type.urlDelete}</#if>" />
+		            <br />
+		        	<label>&nbsp;</label>
+		        	#i18n{crm.modify_demand_type.labelUrlDeleteComment}
+		        </p>
+		        <p>
+		            <button type="submit" value="#i18n{crm.modify_demand_type.buttonModify}" class="btn btn-primary btn-small" tabindex="3" >
+		            	#i18n{crm.modify_demand_type.buttonModify}
+		            </button>
+		        </p>
+		    </form>
+		</fieldset>
+    </div>
 </div>
+<br /><br />

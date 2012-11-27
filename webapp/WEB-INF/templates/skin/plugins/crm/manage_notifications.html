@@ -1,44 +1,40 @@
-<div class="span-22 prepend-1 append-1">
-	<div class="portlet-background append-bottom">
-		<div class="portlet-background-content -lutece-border-radius">
-			<p>
-				<a href="jsp/site/Portal.jsp?page=crm">
-					<img src="images/local/skin/buttons/b_back.png" alt="#i18n{crm.manage_notifications.buttonBack}" title="#i18n{crm.manage_notifications.buttonBack}" />
-				</a>
-			</p>
-			<h2>${demand_type.label}</h2>
-			<#if notifications_list?has_content>
-				<table>
-					<tr>
-						<th>#i18n{crm.manage_notifications.labelSender}</th>
-						<th>#i18n{crm.manage_notifications.labelObject}</th>
-						<th>#i18n{crm.manage_notifications.labelReceived}</th>
-					</tr>
-					<#list notifications_list as notification>
-						<tr>
-							<td>
-								${notification.sender}
-							</td>
-							<td>
-								<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
-									<#if notification.isRead(  )>
-										${notification.object}
-									<#else>
-										<b>
-											${notification.object}
-										</b>
-									</#if>
-								</a>
-							</td>
-							<td>
-								${notification.dateCreation?date}
-							</td>
-						</tr>
-					</#list>
-				</table>
-			<#else>
-				<b>#i18n{crm.manage_notifications.messageNoNotifications}</b>
-			</#if>
-		</div>
-	</div>
+<div class="span11">
+	<p>
+		<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm" title="#i18n{crm.manage_notifications.buttonBack}">
+			#i18n{crm.manage_notifications.buttonBack}
+		</a>
+	</p>
+	<h2>${demand_type.label}</h2>
+	<#if notifications_list?has_content>
+		<table class="table">
+			<tr>
+				<th>#i18n{crm.manage_notifications.labelSender}</th>
+				<th>#i18n{crm.manage_notifications.labelObject}</th>
+				<th>#i18n{crm.manage_notifications.labelReceived}</th>
+			</tr>
+			<#list notifications_list as notification>
+				<tr>
+					<td>
+						${notification.sender}
+					</td>
+					<td>
+						<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
+							<#if notification.isRead(  )>
+								${notification.object}
+							<#else>
+								<b>
+									${notification.object}
+								</b>
+							</#if>
+						</a>
+					</td>
+					<td>
+						${notification.dateCreation?date}
+					</td>
+				</tr>
+			</#list>
+		</table>
+	<#else>
+		<b>#i18n{crm.manage_notifications.messageNoNotifications}</b>
+	</#if>
 </div>

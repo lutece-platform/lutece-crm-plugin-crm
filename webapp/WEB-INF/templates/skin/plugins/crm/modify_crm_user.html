@@ -1,34 +1,32 @@
-<div class="span-22 prepend-1 append-1">
-	<div class="portlet-background append-bottom">
-		<div class="portlet-background-content -lutece-border-radius">
-			<p>
-				<a href="jsp/site/Portal.jsp?page=crm">
-					<img src="images/local/skin/buttons/b_back.png" alt="#i18n{crm.modify_crm_user.buttonBack}" title="#i18n{crm.modify_crm_user.buttonBack}" />
-				</a>
-			</p>
-			<form action="jsp/site/Portal.jsp" method="post">
-				<input type="hidden" name="page" value="crm" />
-				<input type="hidden" name="action" value="do_modify_crm_user" />
-				<p>
-					<label for="user.name.given">#i18n{crm.modify_crm_user.labelFirstName} : </label>
-					<input type="text" name="user.name.given" size="50" maxlength="255" value="${crm_user.getUserAttributeValue('user.name.given')}" />
-				</p>
-				<p>
-					<label for="user.name.family">#i18n{crm.modify_crm_user.labelLastName} : </label>
-					<input type="text" name="user.name.family" size="50" maxlength="255" value="${crm_user.getUserAttributeValue('user.name.family')}" />
-				</p>
-				<p>
-					<label for="user.business-info.online.email">#i18n{crm.modify_crm_user.labelEmail} : </label>
-					<input type="text" name="user.business-info.online.email" size="50" maxlength="255" value="${crm_user.getUserAttributeValue('user.business-info.online.email')}" />
-				</p>
-				<p>
-					<label for="user.business-info.telecom.telephone.number">#i18n{crm.modify_crm_user.labelPhoneNumber} : </label>
-					<input type="text" name="user.business-info.telecom.telephone.number" size="10" maxlength="100" value="${crm_user.getUserAttributeValue('user.business-info.telecom.telephone.number')}" />
-				</p>
-				<p>
-					<input type="submit" class="-lutece-input -lutece-border-radius-mini" value="#i18n{portal.util.labelModify}" />
-				</p>
-			</form>
-		</div>
-	</div>
+<div class="span11">
+	<p>
+		<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm" title="#i18n{crm.modify_crm_user.buttonBack}">
+			#i18n{crm.modify_crm_user.buttonBack}
+		</a>
+	</p>
+	<form action="jsp/site/Portal.jsp" method="post">
+		<input type="hidden" name="page" value="crm" />
+		<input type="hidden" name="action" value="do_modify_crm_user" />
+		<p>
+			<label for="user.name.given">#i18n{crm.modify_crm_user.labelFirstName} : </label>
+			<input type="text" name="user.name.given" size="50" maxlength="255" value="${crm_user.getUserAttributeValue('user.name.given')}" />
+		</p>
+		<p>
+			<label for="user.name.family">#i18n{crm.modify_crm_user.labelLastName} : </label>
+			<input type="text" name="user.name.family" size="50" maxlength="255" value="${crm_user.getUserAttributeValue('user.name.family')}" />
+		</p>
+		<p>
+			<label for="user.business-info.online.email">#i18n{crm.modify_crm_user.labelEmail} : </label>
+			<input type="text" name="user.business-info.online.email" size="50" maxlength="255" value="${crm_user.getUserAttributeValue('user.business-info.online.email')}" />
+		</p>
+		<p>
+			<label for="user.business-info.telecom.telephone.number">#i18n{crm.modify_crm_user.labelPhoneNumber} : </label>
+			<input type="text" name="user.business-info.telecom.telephone.number" size="10" maxlength="100" value="${crm_user.getUserAttributeValue('user.business-info.telecom.telephone.number')}" />
+		</p>
+		<p>
+			<button type="submit" class="btn btn-primary btn-small" value="#i18n{portal.util.labelModify}" >
+				#i18n{portal.util.labelModify}
+			</button>
+		</p>
+	</form>
 </div>

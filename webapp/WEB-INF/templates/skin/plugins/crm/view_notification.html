@@ -1,24 +1,20 @@
-<div class="span-22 prepend-1 append-1">
-	<div class="portlet-background append-bottom">
-		<div class="portlet-background-content -lutece-border-radius">
-			<p>
-				<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
-					<img src="images/local/skin/buttons/b_back.png" alt="#i18n{crm.view_notification.buttonBack}" title="#i18n{crm.view_notification.buttonBack}" />
-				</a>
-			</p>
-			<h2>${notification.object}</h2>
-			<p>
-				<b>#i18n{crm.view_notification.labelSender} : </b>${notification.sender}
-			</p>
-			<p>
-				<b>#i18n{crm.view_notification.labelDateSent} : </b>${notification.dateCreation?date}
-			</p>
-			<p>
-				<b>#i18n{crm.view_notification.labelTargetResource} : </b>${demand_type.label}
-			</p>
-			<p>
-				${notification.message}
-			</p>
-		</div>
-	</div>
+<div class="span11">
+	<p>
+		<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}" title="#i18n{crm.view_notification.buttonBack}">
+			#i18n{crm.view_notification.buttonBack}
+		</a>
+	</p>
+	<h2>${notification.object}</h2>
+	<p>
+		<b>#i18n{crm.view_notification.labelSender} : </b>${notification.sender}
+	</p>
+	<p>
+		<b>#i18n{crm.view_notification.labelDateSent} : </b>${notification.dateCreation?date}
+	</p>
+	<p>
+		<b>#i18n{crm.view_notification.labelTargetResource} : </b>${demand_type.label}
+	</p>
+	<p>
+		${notification.message}
+	</p>
 </div>

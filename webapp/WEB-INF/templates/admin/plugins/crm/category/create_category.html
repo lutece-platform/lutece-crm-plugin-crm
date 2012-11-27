@@ -1,16 +1,23 @@
-<div class="content-box" >
-    <h2>#i18n{crm.create_category.pageTitle}</h2>
-    <form method="post" name="create_category" id="create_category" action="jsp/admin/plugins/crm/DoCreateCategory.jsp">
-        <p>
-            <label for="category_name" >#i18n{crm.create_category.labelName} * :</label>
-            <input type="text" id="category_name" name="category_name" size="60" maxlength="50" tabindex="1" />
-        </p>
-        <p>
-            <label for="category_description" >#i18n{crm.create_category.labelDescription} * :</label>
-            <input type="text" id="category_description" name="category_description" size="60" maxlength="50" tabindex="1" />
-        </p>
-        <p>   
-            <input type="submit" value="#i18n{crm.create_category.buttonCreate}" class="button" tabindex="3" />
-        </p>
-    </form>
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
+			<legend class="clearfix">#i18n{crm.create_category.pageTitle}</legend>
+		    <form method="post" name="create_category" id="create_category" action="jsp/admin/plugins/crm/DoCreateCategory.jsp">
+		        <p>
+		            <label for="category_name" >#i18n{crm.create_category.labelName} * :</label>
+		            <input type="text" id="category_name" name="category_name" size="60" maxlength="50" tabindex="1" />
+		        </p>
+		        <p>
+		            <label for="category_description" >#i18n{crm.create_category.labelDescription} * :</label>
+		            <input type="text" id="category_description" name="category_description" size="60" maxlength="50" tabindex="1" />
+		        </p>
+		        <p>   
+		            <button type="submit" value="#i18n{crm.create_category.buttonCreate}" class="btn btn-primary btn-small" tabindex="3" >
+		            	#i18n{crm.create_category.buttonCreate}
+		            </button>
+		        </p>
+		    </form>
+	    </fieldset>
+    </div>
 </div>
+<br /><br />

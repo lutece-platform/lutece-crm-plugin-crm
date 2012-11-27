@@ -9,128 +9,133 @@
 	</#if>
 </#function>
 
-<div class="span-11 prepend-1 append-1">
-	<div class="portlet-background append-bottom">
-		<div class="portlet-background-header -lutece-border-radius-top">
-			#i18n{crm.crm.labelDemandsList}
-		</div>
-		<div class="portlet-background-content -lutece-border-radius-bottom">
-			<#list status_crm_list as status_crm>
-				<#assign demands_list = map_demands_list[""+status_crm.idStatusCRM]>
-				<#if demands_list?has_content>
-					<fieldset>
-						<legend>${status_crm.label}</legend>
-						<table>
-							<#list demands_list as demand>
-								<#assign demand_type = getDemandType( demand_types_list, demand.idDemandType )>
-								<#if demand_type??>
-									<tr>
-										<td>
-											${demand_type.label}
-										</td>
-										<td>
-											${demand.statusText}
-										</td>
-										<#if status_crm.idStatusCRM = 0>
-											<td>
-												<#if demand_type.isOpen(  )>
-													<a href="jsp/site/plugins/crm/DoEditDemand.jsp?id_demand=${demand.idDemand}" target="${demand_type.target}">
-														<img src="images/admin/skin/actions/modify.png" alt="#i18n{crm.crm.buttonModify}" title="#i18n{crm.crm.buttonModify}" />
-													</a>
-												</#if>
-												<a href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}">
-													<img src="images/admin/skin/actions/delete.png" alt="#i18n{crm.crm.buttonDelete}" title="#i18n{crm.crm.buttonDelete}" />
-												</a>
-											</td>
-										</#if>
-										<td>
-											<#if ( demand.getNumberNotifications(  ) > 0 )>
-												<a href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}">
-													<img src="images/local/skin/plugins/crm/mail.png" alt="#i18n{crm.crm.labelMail}" title="#i18n{crm.crm.labelMail}" />
-												</a>
-												<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
-													<span class="alert">
-														${demand.numberUnreadNotifications}
-													</span>
-												</#if>
-											</#if> 
-										</td>
-									</tr>
-								</#if>
-							</#list>
-						</table>
-					</fieldset>
-				</#if>
-			</#list>
-		</div>
-	</div>
-</div>
-<div class="span-10 append-1 last">
-	<div class="span-10 append-1 last">
-		<div class="portlet-background append-bottom">
-			<div class="portlet-background-header -lutece-border-radius-top">
-				${crm_user.getUserAttributeValue("user.name.given")} ${crm_user.getUserAttributeValue("user.name.family")}
-			</div>
-			<div class="portlet-background-content -lutece-border-radius">
-				<a href="jsp/site/Portal.jsp?page=crm&amp;action=modify_crm_user">
-					#i18n{crm.crm.labelMyAccount}
-				</a>
-			</div>
-		</div>
-	</div>
-	<#if categories_list?has_content>
-		<div class="span-10 append-1 last">
-			<div class="portlet-background append-bottom">
-				<div class="portlet-background-header -lutece-border-radius-top">
-					#i18n{crm.crm.labelDemandTypesList}
+<div class="row-fluid">
+	<div class="span9">
+		<div class="portlet">
+			<div class="well">
+				<div class="row-fluid">
+					<h2>#i18n{crm.crm.labelDemandsList}</h2>
 				</div>
-				<div class="portlet-background-content -lutece-border-radius">
-					<#list categories_list as category>
-						<#assign demand_types = map_demand_types_list[category.code]>
-						<#if demand_types?has_content>
+				<div class="row-fluid">
+					<#list status_crm_list as status_crm>
+						<#assign demands_list = map_demands_list[""+status_crm.idStatusCRM]>
+						<#if demands_list?has_content>
 							<fieldset>
-								<#-- Category = display the legend -->
-								<#if category.code != "0">
-									<legend>${category.name}</legend>
-								</#if>
-								<ul>
-									<#list demand_types as demand_type>
-										<li>
-											<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type=${demand_type.idDemandType}" target="${demand_type.target}">
-												${demand_type.label}
-											</a>
-											<#if demand_type.urlInfo?has_content>
-												<br />
-												<em>
-													<a href="${demand_type.urlInfo}">
-														#i18n{crm.crm.labelInfo}
-													</a>
-												</em>
-											</#if>
-											<#if demand_type.urlContact?has_content>
-												<br />
-												<em>
-													<a href="${demand_type.urlContact}">
-														#i18n{crm.crm.labelContact}
-													</a>
-												</em>
-											</#if>
-											<#if demand_type.dateBegin??>
-												<br />
-												#i18n{crm.crm.labelDateBegin} : ${demand_type.dateBegin?date}
-											</#if>
-											<#if demand_type.dateEnd??>
-												<br />
-												#i18n{crm.crm.labelDateEnd} : ${demand_type.dateEnd?date}
-											</#if>
-										</li>
+								<legend>${status_crm.label}</legend>
+								<table class="table">
+									<#list demands_list as demand>
+										<#assign demand_type = getDemandType( demand_types_list, demand.idDemandType )>
+										<#if demand_type??>
+											<tr>
+												<td>
+													${demand_type.label}
+												</td>
+												<td>
+													${demand.statusText}
+												</td>
+												<#if status_crm.idStatusCRM = 0>
+													<td>
+														<#if demand_type.isOpen(  )>
+															<a class="btn btn-primary btn-small" href="jsp/site/plugins/crm/DoEditDemand.jsp?id_demand=${demand.idDemand}" target="${demand_type.target}" title="#i18n{crm.crm.buttonModify}">
+																<i class="icon-edit icon-white"></i>
+															</a>
+														</#if>
+														<a class="btn btn-danger btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}" title="#i18n{crm.crm.buttonDelete}">
+															<i class="icon-trash icon-white"></i>
+														</a>
+													</td>
+												</#if>
+												<td>
+													<#if ( demand.getNumberNotifications(  ) > 0 )>
+														<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}"title="#i18n{crm.crm.labelMail}">
+															<i class="icon-envelope icon-white"></i>
+														</a>
+														<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
+															<span class="alert">
+																${demand.numberUnreadNotifications}
+															</span>
+														</#if>
+													</#if> 
+												</td>
+											</tr>
+										</#if>
 									</#list>
-								</ul>
+								</table>
 							</fieldset>
 						</#if>
 					</#list>
 				</div>
 			</div>
 		</div>
-	</#if>
+	</div>
+
+	<div class="span3">
+		<div class="portlet">
+			<div class="well">
+				<div class="row-fluid">
+					${crm_user.getUserAttributeValue("user.name.given")} ${crm_user.getUserAttributeValue("user.name.family")}
+				</div>
+				<div class="row-fluid">
+					<a href="jsp/site/Portal.jsp?page=crm&amp;action=modify_crm_user">
+						#i18n{crm.crm.labelMyAccount}
+					</a>
+				</div>
+			</div>
+		</div>
+		<#if categories_list?has_content>
+			<div class="portlet">
+				<div class="well">
+					<div class="row-fluid">
+						#i18n{crm.crm.labelDemandTypesList}
+					</div>
+					<div class="row-fluid">
+						<#list categories_list as category>
+							<#assign demand_types = map_demand_types_list[category.code]>
+							<#if demand_types?has_content>
+								<fieldset>
+									<#-- Category = display the legend -->
+									<#if category.code != "0">
+										<legend>${category.name}</legend>
+									</#if>
+									<ul>
+										<#list demand_types as demand_type>
+											<li>
+												<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type=${demand_type.idDemandType}" target="${demand_type.target}">
+													${demand_type.label}
+												</a>
+												<#if demand_type.urlInfo?has_content>
+													<br />
+													<em>
+														<a href="${demand_type.urlInfo}">
+															#i18n{crm.crm.labelInfo}
+														</a>
+													</em>
+												</#if>
+												<#if demand_type.urlContact?has_content>
+													<br />
+													<em>
+														<a href="${demand_type.urlContact}">
+															#i18n{crm.crm.labelContact}
+														</a>
+													</em>
+												</#if>
+												<#if demand_type.dateBegin??>
+													<br />
+													#i18n{crm.crm.labelDateBegin} : ${demand_type.dateBegin?date}
+												</#if>
+												<#if demand_type.dateEnd??>
+													<br />
+													#i18n{crm.crm.labelDateEnd} : ${demand_type.dateEnd?date}
+												</#if>
+											</li>
+										</#list>
+									</ul>
+								</fieldset>
+							</#if>
+						</#list>
+					</div>
+				</div>
+			</div>
+		</#if>
+	</div>
 </div>
