@@ -79,6 +79,7 @@ CREATE TABLE crm_user (
 	user_guid VARCHAR(255) DEFAULT '' NOT NULL,
 	status SMALLINT DEFAULT 1 NOT NULL,
 	last_login TIMESTAMP DEFAULT '1980-01-01',
+	current_last_login TIMESTAMP DEFAULT '1980-01-01',
 	PRIMARY KEY (id_crm_user, user_guid)
 );
 
