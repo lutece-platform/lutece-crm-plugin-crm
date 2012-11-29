@@ -10,6 +10,7 @@
 	<bean id="crm.demandStatusCRMDAO" class="fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRMDAO" />
 	<bean id="crm.crmUserDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserDAO" />
 	<bean id="crm.crmUserAttributeDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserAttributeDAO" />
+	<bean id="crm.advancedParametersDAO" class="fr.paris.lutece.plugins.crm.business.parameters.AdvancedParametersDAO" />
 	
 	<!-- Removal Service -->
     <bean id="crm.categoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
@@ -33,6 +34,7 @@
     	<property name="cRMUserService" ref="crm.crmUserService" />
     </bean>
     <bean id="crm.crmUserAnonymizationService" class="fr.paris.lutece.plugins.crm.service.security.CRMUserAnonymizationService" />
+    <bean id="crm.advancedParametersService" class="fr.paris.lutece.plugins.crm.service.parameters.AdvancedParametersService" />
     
     <!-- SignRequest -->
     <bean id="crm.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" />
