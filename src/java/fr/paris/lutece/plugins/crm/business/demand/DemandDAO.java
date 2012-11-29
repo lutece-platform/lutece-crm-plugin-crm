@@ -36,10 +36,11 @@ package fr.paris.lutece.plugins.crm.business.demand;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-import java.sql.Date;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -55,6 +56,7 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand ";
+    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand AS demand INNER JOIN crm_notification AS notif ON demand.id_demand=notif.id_demand ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -65,9 +67,9 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_DATE_MODIFICATION = " date_modification ";
     private static final String SQL_FILTER_ID_CRM_USER = " id_crm_user = ? ";
     private static final String SQL_FILTER_ID_DEMAND_TYPE = " id_demand_type = ? ";
-    private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification ";
+    private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification LIKE '";
     private static final String SQL_FILTER_ID_STATUS_CRM = " id_status_crm = ? ";
-    private static final String QUESTION_MARK = " ? ";
+
 
     /**
      * {@inheritDoc}
@@ -255,7 +257,17 @@ public class DemandDAO implements IDemandDAO
      */
     private String buildSQLQuery( DemandFilter dFilter )
     {
-        StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
+        StringBuilder sbSQL = new StringBuilder( );
+
+        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
+        {
+            sbSQL.append( SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION );
+        }
+        else
+        {
+            sbSQL.append( SQL_QUERY_SELECT_ALL );
+        }
+
         int nIndex = 1;
 
         if ( dFilter.containsIdCRMUser(  ) )
@@ -273,15 +285,30 @@ public class DemandDAO implements IDemandDAO
         if ( dFilter.containsDateModification(  ) )
         {
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
-            sbSQL.append( SQL_FILTER_DATE_MODIFICATION );
-            sbSQL.append( dFilter.getOperatorDateModification(  ) );
-            sbSQL.append( QUESTION_MARK );
+            SimpleDateFormat sdfSQL = new SimpleDateFormat( "yyyy-MM-dd" );
+            String strDateModification = sdfSQL.format( dFilter.getDateModification( ) );
+            
+            sbSQL.append( SQL_FILTER_DATE_MODIFICATION + strDateModification + "%'" );
         }
 
         if ( dFilter.containsIdStatusCRM(  ) )
         {
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_ID_STATUS_CRM );
+        }
+
+        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
+        {
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
+            
+            StringBuilder strFilterNotification = new StringBuilder( );
+            strFilterNotification.append( " (object LIKE '%" );
+            strFilterNotification.append( dFilter.getNotification( ) );
+            strFilterNotification.append( "%' OR message LIKE '%" );
+            strFilterNotification.append( dFilter.getNotification( ) );
+            strFilterNotification.append( "%')" );
+            
+            sbSQL.append( strFilterNotification.toString( ) );
         }
 
         return sbSQL.toString(  );
@@ -332,10 +359,13 @@ public class DemandDAO implements IDemandDAO
             daoUtil.setInt( nIndex++, dFilter.getIdDemandType(  ) );
         }
 
-        if ( dFilter.containsDateModification(  ) )
-        {
-            daoUtil.setDate( nIndex++, new Date( dFilter.getDateModification(  ).getTime(  ) ) );
-        }
+        //        if ( dFilter.containsDateModification(  ) )
+        //        {
+        //            String strDateModification = dFilter.getDateModification( ).toString( );
+        //
+        //
+        //            daoUtil.setString( nIndex++, strDateModification.toString( ) );
+        //        }
 
         if ( dFilter.containsIdStatusCRM(  ) )
         {

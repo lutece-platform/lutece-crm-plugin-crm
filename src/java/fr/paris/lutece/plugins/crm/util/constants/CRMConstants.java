@@ -45,6 +45,12 @@ public final class CRMConstants
     public static final int INVALID_ID_INT = -1;
     public static final String SLASH = "/";
     public static final String COMMA = ",";
+    public static final String CONSTANT_ON = "on";
+    public static final String CONSTANT_TRUE = "true";
+    public static final String CONSTANT_FALSE = "false";
+    public static final String CONSTANT_PLUGIN_NAME = "plugin_name";
+    public static final String CONSTANT_CRM = "crm";
+    public static final String CONSTANT_DISPLAYDRAFT = "displayDraft";
 
     // PROPERTIES
     public static final String PROPERTY_PAGE_PATH = "crm.crm.pagePathLabel";
@@ -87,6 +93,11 @@ public final class CRMConstants
     public static final String MARK_CATEGORY = "category";
     public static final String MARK_CRM_USER = "crm_user";
     public static final String MARK_TARGETS_LIST = "targets_list";
+    public static final String MARK_DISPLAYDRAFT = "bDisplayDraft";
+    public static final String MARK_LOCALE = "locale";
+    public static final String MARK_DEMAND_TYPES_REFLIST = "demandTypesRefList";
+    public static final String MARK_FILTER = "filter";
+    public static final String MARK_MODIFICATIONDATE = "modificationDate";
 
     // PARAMETERS
     public static final String PARAMETER_ACTION = "action";
@@ -120,6 +131,10 @@ public final class CRMConstants
     public static final String PARAMETER_TIMESTAMP = "timestamp";
     public static final String PARAMETER_TARGET = "target";
     public static final String PARAMETER_URL_DELETE = "url_delete";
+    public static final String PARAMETER_CHECKBOX_DRAFT_DISPLAY = "bDisplayDraft";
+    public static final String PARAMETER_MODIFICATIONDATE = "modificationDate";
+    public static final String PARAMETER_DEMANDTYPE = "demandType";
+    public static final String PARAMETER_NOTIFICATION = "notification";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
@@ -143,6 +158,7 @@ public final class CRMConstants
     public static final String MESSAGE_CANNOT_REMOVE_CATEGORY = "crm.message.cannotRemoveCategory";
     public static final String MESSAGE_SIZE_TOO_BIG = "crm.message.sizeTooBig";
     public static final String MESSAGE_INVALID_EMAIL = "crm.message.invalidEmail";
+    public static final String MESSAGE_INVALID_FORMAT_DATE_MODIFICATION = "crm.message.invalidFormatDateModification";
 
     /**
      * Private constructor

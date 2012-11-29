@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.crm.web;
 
 import fr.paris.lutece.plugins.crm.business.demand.Demand;
+import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
@@ -44,9 +45,11 @@ import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandStatusCRMService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
+import fr.paris.lutece.plugins.crm.service.parameters.AdvancedParametersService;
 import fr.paris.lutece.plugins.crm.service.signrequest.CRMRequestAuthenticatorService;
 import fr.paris.lutece.plugins.crm.service.user.CRMUserAttributesService;
 import fr.paris.lutece.plugins.crm.service.user.CRMUserService;
+import fr.paris.lutece.plugins.crm.util.ListUtils;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.SiteMessage;
@@ -67,8 +70,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
-import org.apache.commons.lang.StringUtils;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,6 +78,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -103,6 +107,7 @@ public class CRMApp implements XPageApplication
     private DemandStatusCRMService _statusCRMService = DemandStatusCRMService.getService(  );
     private CRMUserService _crmUserService = CRMUserService.getService(  );
     private CRMUserAttributesService _crmUserAttributesService = CRMUserAttributesService.getService(  );
+    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService( );
 
     /**
      * Get the XPage of the plugin CRM
@@ -161,8 +166,9 @@ public class CRMApp implements XPageApplication
      * @param request {@link HttpServletRequest}
      * @param user the {@link LuteceUser}
      * @return a {@link XPage}
+     * @throws SiteMessageException
      */
-    private XPage getCRMHomePage( HttpServletRequest request, LuteceUser user )
+    private XPage getCRMHomePage( HttpServletRequest request, LuteceUser user ) throws SiteMessageException
     {
         XPage page = null;
         CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
@@ -170,16 +176,52 @@ public class CRMApp implements XPageApplication
         if ( crmUser != null )
         {
             page = new XPage(  );
-
+            DemandFilter dFilter = new DemandFilter( );
             Map<String, Object> model = new HashMap<String, Object>(  );
+
+            //research by filter
+            dFilter.setIdCRMUser( crmUser.getIdCRMUser( ) );
+
+            String strModificationDate = request.getParameter( CRMConstants.PARAMETER_MODIFICATIONDATE );
+
+            if ( strModificationDate != null && strModificationDate != StringUtils.EMPTY )
+            {
+                Date modificationDate = checkFormatModificationDateFilter( strModificationDate, request );
+                dFilter.setDateModification( modificationDate );
+                model.put( CRMConstants.MARK_MODIFICATIONDATE, strModificationDate );
+            }
+
+            String strDemandType = request.getParameter( CRMConstants.PARAMETER_DEMANDTYPE );
+            if ( strDemandType != null && strDemandType != StringUtils.EMPTY )
+            {
+                int nIdDemandType = Integer.parseInt( strDemandType );
+                dFilter.setIdDemandType( nIdDemandType );
+            }
+
+            String strNotification = request.getParameter( CRMConstants.PARAMETER_NOTIFICATION );
+            if ( strNotification != null && strNotification != StringUtils.EMPTY )
+            {
+                dFilter.setNotification( strNotification );
+            }
+
             model.put( CRMConstants.MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
             model.put( CRMConstants.MARK_CATEGORIES_LIST,
                 _categoryService.getCategories( request.getLocale(  ), false, true ) );
+            //model.put( CRMConstants.MARK_MAP_DEMANDS_LIST, _demandService.findByIdCRMUser( crmUser.getIdCRMUser(  ), request.getLocale(  ) ) );
             model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
-                _demandService.findByIdCRMUser( crmUser.getIdCRMUser(  ), request.getLocale(  ) ) );
-            model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
+                    _demandService.findByFilterMap( dFilter, request.getLocale( ) ) );
+            model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll( ) );
             model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
             model.put( CRMConstants.MARK_CRM_USER, crmUser );
+            model.put( CRMConstants.MARK_DISPLAYDRAFT,
+                    _advancedParametersService.isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT ) );
+            model.put( CRMConstants.MARK_LOCALE, request.getLocale( ) );
+            model.put( CRMConstants.MARK_FILTER, dFilter );
+
+            List<DemandType> listAllOpenedDemandType = initListAllOpenedDemandType( );
+
+            model.put( CRMConstants.MARK_DEMAND_TYPES_REFLIST,
+                    ListUtils.toReferenceList( listAllOpenedDemandType, "idDemandType", "label", "" ) );
 
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
 
@@ -590,4 +632,52 @@ public class CRMApp implements XPageApplication
             throw new PageNotFoundException(  );
         }
     }
+
+    /**
+     * Get the list of all the opened demand types only
+     * @return the list of opened demand types
+     */
+    private List<DemandType> initListAllOpenedDemandType( )
+    {
+        List<DemandType> listAllDemandType = _demandTypeService.findAll( );
+        List<DemandType> listAllOpenedDemandType = new ArrayList<DemandType>( );
+
+        for ( DemandType demandType : listAllDemandType )
+        {
+            if ( demandType.isOpen( ) )
+            {
+                listAllOpenedDemandType.add( demandType );
+            }
+        }
+        return listAllOpenedDemandType;
+    }
+
+    /**
+     * Check the format of the filter modification date
+     * @throws SiteMessageException
+     */
+    private Date checkFormatModificationDateFilter( String strModificationDate, HttpServletRequest request )
+            throws SiteMessageException
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
+        sdf.setLenient( true );
+        Date d = new Date( );
+
+        try
+        {
+            d = sdf.parse( strModificationDate );
+        }
+        catch ( Exception e )
+        {
+            SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_FORMAT_DATE_MODIFICATION );
+        }
+        String t = sdf.format( d );
+        if ( t.compareTo( strModificationDate ) != 0 )
+        {
+            SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_FORMAT_DATE_MODIFICATION );
+        }
+
+        return d;
+    }
+
 }

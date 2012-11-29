@@ -37,6 +37,8 @@ import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *
@@ -52,6 +54,7 @@ public class DemandFilter
     private Date _dateModification;
     private int _nIdStatusCRM;
     private OperatorEnum _operatorDateModification;
+    private String _strNotification;
 
     /**
      * Constructor
@@ -63,6 +66,7 @@ public class DemandFilter
         _nIdDemandType = ALL_INT;
         _nIdStatusCRM = ALL_INT;
         _operatorDateModification = OperatorEnum.EQUAL;
+        _strNotification = StringUtils.EMPTY;
     }
 
     /**
@@ -220,4 +224,22 @@ public class DemandFilter
     {
         return _operatorDateModification;
     }
+
+    /**
+     * Get the notification
+     * @return the notification
+     */
+    public String getNotification( )
+    {
+        return _strNotification;
+    }
+
+    /**
+     * Set the notification
+     */
+    public void setNotification( String notification )
+    {
+        this._strNotification = notification;
+    }
+
 }

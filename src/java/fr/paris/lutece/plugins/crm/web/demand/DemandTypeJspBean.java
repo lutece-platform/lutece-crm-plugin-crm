@@ -38,6 +38,7 @@ import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandService;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
+import fr.paris.lutece.plugins.crm.service.parameters.AdvancedParametersService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 import fr.paris.lutece.plugins.crm.util.TargetEnum;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
@@ -60,8 +61,6 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.sort.AttributeComparator;
 import fr.paris.lutece.util.url.UrlItem;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,6 +68,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -84,6 +85,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     private static final String TEMPLATE_MANAGE_DEMAND_TYPES = "/admin/plugins/crm/demand/manage_demand_types.html";
     private static final String TEMPLATE_CREATE_DEMAND_TYPE = "/admin/plugins/crm/demand/create_demand_type.html";
     private static final String TEMPLATE_MODIFY_DEMAND_TYPE = "/admin/plugins/crm/demand/modify_demand_type.html";
+    private static final String TEMPLATE_MANAGE_ADVANCED_PARAMETERS = "/admin/plugins/crm/demand/manage_advanced_parameters.html";
 
     // JSP
     private static final String JSP_MANAGE_DEMAND_TYPES = "jsp/admin/plugins/crm/ManageDemandTypes.jsp";
@@ -91,6 +93,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     private static final String JSP_DO_PURGE_DEMAND_TYPE = "jsp/admin/plugins/crm/DoPurgeDemandType.jsp";
 
     // VARIABLES
+    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService( );
     private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
     private DemandService _demandService = DemandService.getService(  );
     private CategoryService _categoryService = CategoryService.getService(  );
@@ -136,10 +139,33 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     }
 
     /**
-    * Returns the form to create a demand type
-    * @param request The Http request
-    * @return the html code of the demand type form
-    */
+     * Get interface of advanced parameters
+     * @param request {@link HttpServletRequest}
+     * @return the html code
+     */
+    public String getManageAdvancedParameters( HttpServletRequest request )
+    {
+        setPageTitleProperty( CRMConstants.PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE );
+
+        //get the actual displayDraft parameter
+        Boolean bDisplayDraft = _advancedParametersService
+                .isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT );
+
+        Map<String, Object> model = new HashMap<String, Object>( );
+
+        model.put( CRMConstants.MARK_DISPLAYDRAFT, bDisplayDraft );
+
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale( ),
+                model );
+
+        return getAdminPage( templateList.getHtml( ) );
+    }
+
+    /**
+     * Returns the form to create a demand type
+     * @param request The Http request
+     * @return the html code of the demand type form
+     */
     public String getCreateDemandType( HttpServletRequest request )
     {
         setPageTitleProperty( CRMConstants.PROPERTY_CREATE_DEMAND_TYPE_PAGE_TITLE );
@@ -313,6 +339,31 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         }
 
         return strUrl;
+    }
+
+    /**
+     * Process the parameter change for "display draft"
+     * @param request The Http request
+     * @return The Jsp URL of the process result
+     */
+    public String doModifyDraftDisplay( HttpServletRequest request )
+    {
+        String strModifyDraftDisplay = request.getParameter( CRMConstants.PARAMETER_CHECKBOX_DRAFT_DISPLAY );
+
+        if ( StringUtils.isNotBlank( strModifyDraftDisplay ) && strModifyDraftDisplay.equals( CRMConstants.CONSTANT_ON ) )
+        {
+            _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
+                    CRMConstants.CONSTANT_TRUE );
+        }
+        else
+        {
+            _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
+                    CRMConstants.CONSTANT_FALSE );
+        }
+
+        UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DEMAND_TYPES );
+        url.addParameter( CRMConstants.CONSTANT_PLUGIN_NAME, CRMConstants.CONSTANT_CRM );
+        return url.getUrl( );
     }
 
     /**

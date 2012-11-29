@@ -44,7 +44,6 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
 import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -236,4 +235,28 @@ public class DemandService
 
         return map;
     }
+
+    /**
+     * Find by filter with map
+     * @param nIdCRMUser the user crm id
+     * @param locale {@link Locale}
+     * @return a map of (id_status_crm, List&lt;Demand&gt;)
+     */
+
+    public Map<String, List<Demand>> findByFilterMap( DemandFilter dFilter, Locale locale )
+    {
+        Map<String, List<Demand>> map = new HashMap<String, List<Demand>>( );
+
+        for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService( ).getAllStatusCRM( locale ) )
+        {
+            dFilter.setIdCRMUser( dFilter.getIdCRMUser( ) );
+            dFilter.setIdStatusCRM( statusCRM.getIdStatusCRM( ) );
+
+            List<Demand> listDemands = findByFilter( dFilter );
+            map.put( Integer.toString( statusCRM.getIdStatusCRM( ) ), listDemands );
+        }
+
+        return map;
+    }
+
 }
