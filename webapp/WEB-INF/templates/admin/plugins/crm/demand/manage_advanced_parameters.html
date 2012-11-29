@@ -1,0 +1,16 @@
+<div class="content-box">
+	<h2>#i18n{crm.manage_demand_types.advancedParametersLabel}</h2> 
+	<div class="highlight-box">
+			<form action="jsp/admin/plugins/crm/DoModifyDraftDisplay.jsp" name="modifyDraftDisplay" method="post">
+				<p>
+					<label for="advancedParametersLabel">#i18n{crm.manage_demand_types.displayDraftLabel} ? :</label>
+					<input type="checkbox" <#if bDisplayDraft! == true> checked="checked" </#if> name="bDisplayDraft" />
+					<br />
+					<label>&nbsp;</label>
+					#i18n{crm.manage_demand_types.displayDraftDescription}
+				<br/><br/>	
+					<input type="submit" value="#i18n{crm.crm.buttonModify}" class="button">
+				</p>
+			</form>
+	</div>
+</div>
