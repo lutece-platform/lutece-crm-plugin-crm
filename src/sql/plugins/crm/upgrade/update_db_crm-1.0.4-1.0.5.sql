@@ -12,3 +12,5 @@ CREATE TABLE crm_parameter (
 -- Init table crm_parameter
 --
 INSERT INTO crm_parameter (parameter_key, parameter_value) VALUES ('displayDraft', 'true' );
+
+ALTER TABLE crm_user ADD COLUMN last_login TIMESTAMP DEFAULT '1980-01-01';

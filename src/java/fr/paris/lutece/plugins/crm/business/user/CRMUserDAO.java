@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.crm.business.user;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class CRMUserDAO implements ICRMUserDAO
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_crm_user ) FROM crm_user ";
     private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid, status) VALUES (?,?,?) ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid, status FROM crm_user ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid, status, last_login FROM crm_user ";
     private static final String SQL_QUERY_SELECT = SQL_QUERY_SELECT_ALL + " WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_SELECT_BY_USER_GUID = SQL_QUERY_SELECT_ALL + " WHERE user_guid = ? ";
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ?, status = ? WHERE id_crm_user = ? ";
@@ -130,7 +131,19 @@ public class CRMUserDAO implements ICRMUserDAO
             user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
-            user.setStatus( daoUtil.getInt( nIndex ) );
+            user.setStatus( daoUtil.getInt( nIndex++ ) );
+            try
+            {
+                Timestamp dateLastLogin = daoUtil.getTimestamp( nIndex++ );
+                if ( dateLastLogin != null && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
+                {
+                    user.setDateLastLogin( dateLastLogin );
+                }
+            }
+            catch ( Exception e )
+            {
+                user.setDateLastLogin( null );
+            }
         }
 
         daoUtil.free(  );
@@ -157,6 +170,18 @@ public class CRMUserDAO implements ICRMUserDAO
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
             user.setStatus( daoUtil.getInt( nIndex ) );
+            try
+            {
+                Timestamp dateLastLogin = daoUtil.getTimestamp( nIndex++ );
+                if ( dateLastLogin != null && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
+                {
+                    user.setDateLastLogin( dateLastLogin );
+                }
+            }
+            catch ( Exception e )
+            {
+                user.setDateLastLogin( null );
+            }
         }
 
         daoUtil.free(  );
@@ -214,6 +239,18 @@ public class CRMUserDAO implements ICRMUserDAO
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
             user.setStatus( daoUtil.getInt( nIndex ) );
+            try
+            {
+                Timestamp dateLastLogin = daoUtil.getTimestamp( nIndex++ );
+                if ( dateLastLogin != null && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
+                {
+                    user.setDateLastLogin( dateLastLogin );
+                }
+            }
+            catch ( Exception e )
+            {
+                user.setDateLastLogin( null );
+            }
             listUsers.add( user );
         }
 
