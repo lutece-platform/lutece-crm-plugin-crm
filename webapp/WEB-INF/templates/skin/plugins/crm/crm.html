@@ -17,7 +17,34 @@
 					<h2>#i18n{crm.crm.labelDemandsList}</h2>
 				</div>
 				<div class="row-fluid">
-					<#list status_crm_list as status_crm>
+				
+				<!-- Filter on "type demande", "date de modification", "notification" -->
+				<div class="well">
+						<form action="jsp/site/Portal.jsp?page=crm" method="post" name="form">
+						<table class="table">
+							<tr>
+								<td><strong><label for="filter_type_demand">#i18n{crm.crm.filterTypeDemandLabel} : </label></strong></td>
+								<td><@combo name="demandType" default_value="" items=demandTypesRefList /></td>
+							</tr>
+							<tr>
+								<td><strong><label for="filter_modification_date">#i18n{crm.crm.filterModificationDateLabel} : </label></strong></td>
+								<td><input type="text" value="${(filter.modificationDate)!}" name="modificationDate" id="filter_modification_date" size="7" maxlength="10" />
+								<@getDatePicker idField="filter_modification_date" language="${locale!}" /> </td>
+							</tr>
+							<tr>
+								<td><strong><label for="filter_notification">#i18n{crm.crm.filterNotificationLabel} : </label></strong></td>
+								<td><input type="text" value="${(filter.notification)!}" name="notification" id="filter_notification"/ size="40" maxlength="255"></td>
+							</tr>
+						</table>
+						<button type="submit" value="#i18n{crm.crm.buttonSearch}" name="search" class="btn btn-primary btn-small" >
+					   		#i18n{crm.crm.buttonSearch}
+					   	</button>
+						</form>
+				</div>
+				
+				<#list status_crm_list as status_crm>
+					<!-- Doesn't display the draft bloc if the checkbox is not checked in the parameters -->
+					<#if (status_crm.idStatusCRM != 0 || (status_crm.idStatusCRM == 0 && bDisplayDraft = true ))>
 						<#assign demands_list = map_demands_list[""+status_crm.idStatusCRM]>
 						<#if demands_list?has_content>
 							<fieldset>
@@ -63,11 +90,12 @@
 								</table>
 							</fieldset>
 						</#if>
-					</#list>
-				</div>
+					</#if>
+				</#list>
 			</div>
 		</div>
 	</div>
+</div>
 
 	<div class="span3">
 		<div class="portlet">
