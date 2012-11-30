@@ -1,3 +1,7 @@
+<script type="text/javascript" src="js/jquery/plugins/ui/datepicker/ui.datepicker.js" ></script>
+<script type="text/javascript" src="js/jquery/plugins/ui/datepicker/ui.datepicker-${locale.language}.js" ></script>
+<link rel="stylesheet" type="text/css" href="js/jquery/ui/datepicker/ui.datepicker.css" />
+
 <#-- Get the demand_type from a given id demand type -->
 <#function getDemandType demand_types_list id_demand_type>
 	<#if demand_types_list?? && demand_types_list?has_content>
@@ -21,15 +25,15 @@
 				<!-- Filter on "type demande", "date de modification", "notification" -->
 				<div class="well">
 						<form action="jsp/site/Portal.jsp?page=crm" method="post" name="form">
-						<table class="table">
+						<table class="table table-condensed">
 							<tr>
 								<td><strong><label for="filter_type_demand">#i18n{crm.crm.filterTypeDemandLabel} : </label></strong></td>
-								<td><@combo name="demandType" default_value="" items=demandTypesRefList /></td>
+								<td><@combo name="demandType" default_value="${(filter.idDemandType)!}" items=demandTypesRefList /></td>
 							</tr>
 							<tr>
 								<td><strong><label for="filter_modification_date">#i18n{crm.crm.filterModificationDateLabel} : </label></strong></td>
-								<td><input type="text" value="${(filter.modificationDate)!}" name="modificationDate" id="filter_modification_date" size="7" maxlength="10" />
-								<@getDatePicker idField="filter_modification_date" language="${locale!}" /> </td>
+								<td><input type="text" value="${modificationDate!}" name="modificationDate" id="filter_modification_date" size="7" maxlength="10" />
+								</td>
 							</tr>
 							<tr>
 								<td><strong><label for="filter_notification">#i18n{crm.crm.filterNotificationLabel} : </label></strong></td>
@@ -167,3 +171,5 @@
 		</#if>
 	</div>
 </div>
+
+<@getDatePicker idField="filter_modification_date" language=locale.language />
