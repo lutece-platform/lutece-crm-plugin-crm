@@ -56,8 +56,9 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand ";
-    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand AS demand INNER JOIN crm_notification AS notif ON demand.id_demand=notif.id_demand ";
-
+    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand AS demand WHERE EXISTS  (SELECT * FROM crm_notification WHERE ";
+    
+    
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
     private static final String SQL_DESC = " DESC ";
@@ -306,7 +307,7 @@ public class DemandDAO implements IDemandDAO
             strFilterNotification.append( dFilter.getNotification( ) );
             strFilterNotification.append( "%' OR message LIKE '%" );
             strFilterNotification.append( dFilter.getNotification( ) );
-            strFilterNotification.append( "%')" );
+            strFilterNotification.append( "%'))" );
             
             sbSQL.append( strFilterNotification.toString( ) );
         }
