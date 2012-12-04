@@ -31,21 +31,65 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.business.parameters;
-
-import fr.paris.lutece.portal.service.plugin.Plugin;
+package fr.paris.lutece.plugins.crm.business.demand;
 
 
-public interface IAdvancedParametersDAO
+/**
+ * Defines a sort for demands
+ *
+ */
+public class DemandSort
 {
-    /**
-     * Get the String value of a parameter
-     * @return the string value
-     */
-    String getParameterStringValueByKey( String key, Plugin plugin );
+    private String _strField;
+    private boolean _asc;
 
     /**
-     * Modify the String value of a parameter
+     * Constructor
      */
-    void modifyParameterStringValueByKey( String key, String value, Plugin plugin );
+    public DemandSort(  )
+    {
+    }
+
+    /**
+     * Constructor
+     * @param strField the field
+     * @param asc asc or desc
+     */
+    public DemandSort( String strField, boolean asc )
+    {
+        _strField = strField;
+        _asc = asc;
+    }
+
+    /**
+     * @return the strField
+     */
+    public String getField(  )
+    {
+        return _strField;
+    }
+
+    /**
+     * @param strField the strField to set
+     */
+    public void setField( String strField )
+    {
+        this._strField = strField;
+    }
+
+    /**
+     * @return the asc
+     */
+    public boolean isAsc(  )
+    {
+        return _asc;
+    }
+
+    /**
+     * @param asc the asc to set
+     */
+    public void setAsc( boolean asc )
+    {
+        this._asc = asc;
+    }
 }

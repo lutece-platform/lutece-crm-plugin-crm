@@ -92,8 +92,17 @@ public interface IDemandDAO
     /**
      * Find by filter
      * @param dFilter the filter
+     * @param paginationProperties the pagination properties (can be null)
      * @param plugin {@link Plugin}
      * @return a list of {@link Demand}
      */
-    List<Demand> selectByFilter( DemandFilter dFilter, Plugin plugin );
+    List<Demand> selectByFilter( DemandFilter dFilter, IPaginationProperties paginationProperties, Plugin plugin );
+
+    /**
+     * Count results by filter
+     * @param dFilter the filter
+     * @param plugin {@link Plugin}
+     * @return the number of result
+     */
+    int countByFilter( DemandFilter dFilter, Plugin plugin );
 }

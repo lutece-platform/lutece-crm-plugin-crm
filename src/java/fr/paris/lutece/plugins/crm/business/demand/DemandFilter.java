@@ -35,9 +35,11 @@ package fr.paris.lutece.plugins.crm.business.demand;
 
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 
-import java.util.Date;
-
 import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -55,6 +57,7 @@ public class DemandFilter
     private int _nIdStatusCRM;
     private OperatorEnum _operatorDateModification;
     private String _strNotification;
+    private List<DemandSort> _listDemandSort;
 
     /**
      * Constructor
@@ -67,6 +70,7 @@ public class DemandFilter
         _nIdStatusCRM = ALL_INT;
         _operatorDateModification = OperatorEnum.EQUAL;
         _strNotification = StringUtils.EMPTY;
+        _listDemandSort = new ArrayList<DemandSort>(  );
     }
 
     /**
@@ -229,7 +233,7 @@ public class DemandFilter
      * Get the notification
      * @return the notification
      */
-    public String getNotification( )
+    public String getNotification(  )
     {
         return _strNotification;
     }
@@ -242,4 +246,28 @@ public class DemandFilter
         this._strNotification = notification;
     }
 
+    /**
+     * @return the listDemandSort
+     */
+    public List<DemandSort> getListDemandSort(  )
+    {
+        return _listDemandSort;
+    }
+
+    /**
+     * @param listDemandSort the listDemandSort to set
+     */
+    public void setListDemandSort( List<DemandSort> listDemandSort )
+    {
+        this._listDemandSort = listDemandSort;
+    }
+
+    /**
+     * Add a sort
+     * @param demandSort the demandSort to add
+     */
+    public void addDemandSort( DemandSort demandSort )
+    {
+        this._listDemandSort.add( demandSort );
+    }
 }

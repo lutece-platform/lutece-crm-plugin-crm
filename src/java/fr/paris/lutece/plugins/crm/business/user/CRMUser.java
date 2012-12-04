@@ -33,10 +33,11 @@
  */
 package fr.paris.lutece.plugins.crm.business.user;
 
-import java.sql.Timestamp;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
+
+import java.sql.Timestamp;
+
+import java.util.Map;
 
 
 /**
@@ -47,6 +48,7 @@ import org.apache.commons.lang.StringUtils;
 public class CRMUser
 {
     public static final Timestamp DEFAULT_DATE_LAST_LOGIN = Timestamp.valueOf( "1980-01-01 00:00:00" );
+
     /**
     * Status of not activated users.
     */
@@ -185,7 +187,7 @@ public class CRMUser
      * @return The last login date of the user. The last login date is null if
      *         the user never logged in before.
      */
-    public Timestamp getDateLastLogin( )
+    public Timestamp getDateLastLogin(  )
     {
         return _dateLastLogin;
     }
@@ -199,5 +201,4 @@ public class CRMUser
     {
         this._dateLastLogin = dateLastLogin;
     }
-
 }

@@ -33,14 +33,16 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -55,13 +57,14 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand WHERE id_demand = ? ";
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand ";
-    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification FROM crm_demand AS demand WHERE EXISTS  (SELECT * FROM crm_notification WHERE ";
-    
-    
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand demand ";
+    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand WHERE EXISTS  (SELECT * FROM crm_notification WHERE ";
+    private static final String SQL_QUERY_COUNT = " SELECT count(*) FROM ";
+
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
     private static final String SQL_DESC = " DESC ";
+    private static final String SQL_ASC = " ASC ";
     private static final String SQL_OR = " OR ";
     private static final String SQL_AND = " AND ";
     private static final String SQL_WHERE = " WHERE ";
@@ -70,7 +73,7 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_FILTER_ID_DEMAND_TYPE = " id_demand_type = ? ";
     private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification LIKE '";
     private static final String SQL_FILTER_ID_STATUS_CRM = " id_status_crm = ? ";
-
+    private static final String SQL_NB_UNREAD_NOTIFICATION = " nb_unread_notif ";
 
     /**
      * {@inheritDoc}
@@ -219,13 +222,17 @@ public class DemandDAO implements IDemandDAO
     /**
      * {@inheritDoc}
      */
-    public List<Demand> selectByFilter( DemandFilter dFilter, Plugin plugin )
+    public List<Demand> selectByFilter( DemandFilter dFilter, IPaginationProperties paginationProperties, Plugin plugin )
     {
         List<Demand> listDemands = new ArrayList<Demand>(  );
         StringBuilder sbSQL = new StringBuilder( buildSQLQuery( dFilter ) );
-        sbSQL.append( SQL_ORDER_BY );
-        sbSQL.append( SQL_DATE_MODIFICATION );
-        sbSQL.append( SQL_DESC );
+
+        if ( paginationProperties != null )
+        {
+            sbSQL.append( " LIMIT " + paginationProperties.getItemsPerPage(  ) );
+            sbSQL.append( " OFFSET " +
+                ( ( paginationProperties.getPageIndex(  ) - 1 ) * paginationProperties.getItemsPerPage(  ) ) );
+        }
 
         DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
         setFilterValues( dFilter, daoUtil );
@@ -258,9 +265,9 @@ public class DemandDAO implements IDemandDAO
      */
     private String buildSQLQuery( DemandFilter dFilter )
     {
-        StringBuilder sbSQL = new StringBuilder( );
+        StringBuilder sbSQL = new StringBuilder(  );
 
-        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
+        if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
         {
             sbSQL.append( SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION );
         }
@@ -286,9 +293,10 @@ public class DemandDAO implements IDemandDAO
         if ( dFilter.containsDateModification(  ) )
         {
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+
             SimpleDateFormat sdfSQL = new SimpleDateFormat( "yyyy-MM-dd" );
-            String strDateModification = sdfSQL.format( dFilter.getDateModification( ) );
-            
+            String strDateModification = sdfSQL.format( dFilter.getDateModification(  ) );
+
             sbSQL.append( SQL_FILTER_DATE_MODIFICATION + strDateModification + "%'" );
         }
 
@@ -298,18 +306,62 @@ public class DemandDAO implements IDemandDAO
             sbSQL.append( SQL_FILTER_ID_STATUS_CRM );
         }
 
-        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
+        if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
         {
-            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
-            
-            StringBuilder strFilterNotification = new StringBuilder( );
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+
+            StringBuilder strFilterNotification = new StringBuilder(  );
             strFilterNotification.append( " (object LIKE '%" );
-            strFilterNotification.append( dFilter.getNotification( ) );
+            strFilterNotification.append( dFilter.getNotification(  ) );
             strFilterNotification.append( "%' OR message LIKE '%" );
-            strFilterNotification.append( dFilter.getNotification( ) );
+            strFilterNotification.append( dFilter.getNotification(  ) );
             strFilterNotification.append( "%'))" );
-            
-            sbSQL.append( strFilterNotification.toString( ) );
+
+            sbSQL.append( strFilterNotification.toString(  ) );
+        }
+
+        // order by
+        sbSQL.append( SQL_ORDER_BY );
+
+        List<DemandSort> listDemandSort = dFilter.getListDemandSort(  );
+
+        if ( ( listDemandSort == null ) || listDemandSort.isEmpty(  ) )
+        {
+            // default order
+            sbSQL.append( SQL_DATE_MODIFICATION );
+            sbSQL.append( SQL_DESC );
+        }
+        else
+        {
+            int nSize = listDemandSort.size(  );
+
+            for ( int i = 0; i < nSize; i++ )
+            {
+                if ( i != 0 )
+                {
+                    sbSQL.append( " , " );
+                }
+
+                DemandSort demandSort = listDemandSort.get( i );
+
+                if ( CRMConstants.SORT_DATE_MODIFICATION.equals( demandSort.getField(  ) ) )
+                {
+                    sbSQL.append( SQL_DATE_MODIFICATION );
+                }
+                else if ( CRMConstants.SORT_NB_UNREAD_NOTIFICATION.equals( demandSort.getField(  ) ) )
+                {
+                    sbSQL.append( SQL_NB_UNREAD_NOTIFICATION );
+                }
+
+                if ( demandSort.isAsc(  ) )
+                {
+                    sbSQL.append( SQL_ASC );
+                }
+                else
+                {
+                    sbSQL.append( SQL_DESC );
+                }
+            }
         }
 
         return sbSQL.toString(  );
@@ -367,10 +419,35 @@ public class DemandDAO implements IDemandDAO
         //
         //            daoUtil.setString( nIndex++, strDateModification.toString( ) );
         //        }
-
         if ( dFilter.containsIdStatusCRM(  ) )
         {
             daoUtil.setInt( nIndex++, dFilter.getIdStatusCRM(  ) );
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int countByFilter( DemandFilter dFilter, Plugin plugin )
+    {
+        StringBuilder sbSQL = new StringBuilder( SQL_QUERY_COUNT );
+        sbSQL.append( " ( " );
+        sbSQL.append( buildSQLQuery( dFilter ) );
+        sbSQL.append( " ) AS results" );
+
+        int nTotalResult = 0;
+
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        setFilterValues( dFilter, daoUtil );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            nTotalResult = daoUtil.getInt( 1 );
+        }
+
+        daoUtil.free(  );
+
+        return nTotalResult;
     }
 }

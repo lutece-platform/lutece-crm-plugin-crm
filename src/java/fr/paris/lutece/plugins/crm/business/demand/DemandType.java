@@ -342,7 +342,7 @@ public class DemandType implements AdminWorkgroupResource
     {
         return _target;
     }
-    
+
     /**
      * Get the url to delete the demand
      * @return the url to delete the demand

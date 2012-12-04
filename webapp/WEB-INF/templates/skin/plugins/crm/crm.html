@@ -24,26 +24,31 @@
 				
 				<!-- Filter on "type demande", "date de modification", "notification" -->
 				<div class="well">
-						<form action="jsp/site/Portal.jsp?page=crm" method="post" name="form">
-						<table class="table table-condensed">
-							<tr>
-								<td><strong><label for="filter_type_demand">#i18n{crm.crm.filterTypeDemandLabel} : </label></strong></td>
-								<td><@combo name="demandType" default_value="${(filter.idDemandType)!}" items=demandTypesRefList /></td>
-							</tr>
-							<tr>
-								<td><strong><label for="filter_modification_date">#i18n{crm.crm.filterModificationDateLabel} : </label></strong></td>
-								<td><input type="text" value="${modificationDate!}" name="modificationDate" id="filter_modification_date" size="7" maxlength="10" />
-								</td>
-							</tr>
-							<tr>
-								<td><strong><label for="filter_notification">#i18n{crm.crm.filterNotificationLabel} : </label></strong></td>
-								<td><input type="text" value="${(filter.notification)!}" name="notification" id="filter_notification"/ size="40" maxlength="255"></td>
-							</tr>
-						</table>
-						<button type="submit" value="#i18n{crm.crm.buttonSearch}" name="search" class="btn btn-primary btn-small" >
-					   		#i18n{crm.crm.buttonSearch}
-					   	</button>
-						</form>
+					<form class="form-horizontal" action="jsp/site/Portal.jsp?page=crm" method="post" name="form">
+						<div class="control-group">
+							<label class="control-label" for="filter_type_demand">#i18n{crm.crm.filterTypeDemandLabel} : </label>
+							<div class="controls">
+								<@combo name="demandType" default_value="${(filter.idDemandType)!}" items=demandTypesRefList />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="filter_modification_date">#i18n{crm.crm.filterModificationDateLabel} : </label>
+							<div class="controls">
+								<input type="text" value="${modificationDate!}" name="modificationDate" id="filter_modification_date" size="7" maxlength="10" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="filter_notification">#i18n{crm.crm.filterNotificationLabel} : </label>
+							<div class="controls">
+								<input type="text" value="${(filter.notification)!}" name="notification" id="filter_notification"/ size="40" maxlength="255"></td>
+							</div>
+						</div>
+						<div class="form-actions">
+							<button type="submit" value="#i18n{crm.crm.buttonSearch}" name="search" class="btn btn-primary btn-small" >
+						   		#i18n{crm.crm.buttonSearch}
+						   	</button>
+					   	</div>
+					</form>
 				</div>
 				
 				<#list status_crm_list as status_crm>
@@ -51,48 +56,66 @@
 					<#if (status_crm.idStatusCRM != 0 || (status_crm.idStatusCRM == 0 && bDisplayDraft = true ))>
 						<#assign demands_list = map_demands_list[""+status_crm.idStatusCRM]>
 						<#if demands_list?has_content>
-							<fieldset>
-								<legend>${status_crm.label}</legend>
-								<table class="table">
-									<#list demands_list as demand>
-										<#assign demand_type = getDemandType( demand_types_list, demand.idDemandType )>
-										<#if demand_type??>
-											<tr>
+							<@paginationAdmin paginator=map_paginator[""+status_crm.idStatusCRM] combo=1 nb_items_per_page=map_nb_items_per_page[""+status_crm.idStatusCRM] />
+							<table class="table">
+								<tr>
+									<th>
+										${status_crm.label}
+									</th>
+									<th>
+										#i18n{crm.crm.columnDate}
+										<@sort jsp_url="jsp/site/Portal.jsp?page=crm&session=true&id_status=${status_crm.idStatusCRM}" attribute="dateModification" />
+									</th>
+									<th>
+										#i18n{crm.crm.columnStatus}
+									</th>
+									<th>
+										#i18n{crm.crm.columnNotification}
+										<@sort jsp_url="jsp/site/Portal.jsp?page=crm&session=true&id_status=${status_crm.idStatusCRM}" attribute="unreadNotification" />
+									</th>									
+								</tr>
+								<#list demands_list as demand>
+									<#assign demand_type = getDemandType( demand_types_list, demand.idDemandType )>
+									<#if demand_type??>
+										<tr>
+											<td>
+												${demand_type.label}
+											</td>
+											<td>
+												${demand.dateModification?string.short}
+											</td>
+											<td>
+												${demand.statusText}
+											</td>
+											<#if status_crm.idStatusCRM = 0>
 												<td>
-													${demand_type.label}
-												</td>
-												<td>
-													${demand.statusText}
-												</td>
-												<#if status_crm.idStatusCRM = 0>
-													<td>
-														<#if demand_type.isOpen(  )>
-															<a class="btn btn-primary btn-small" href="jsp/site/plugins/crm/DoEditDemand.jsp?id_demand=${demand.idDemand}" target="${demand_type.target}" title="#i18n{crm.crm.buttonModify}">
-																<i class="icon-edit icon-white"></i>
-															</a>
-														</#if>
-														<a class="btn btn-danger btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}" title="#i18n{crm.crm.buttonDelete}">
-															<i class="icon-trash icon-white"></i>
+													<#if demand_type.isOpen(  )>
+														<a class="btn btn-primary btn-small" href="jsp/site/plugins/crm/DoEditDemand.jsp?id_demand=${demand.idDemand}" target="${demand_type.target}" title="#i18n{crm.crm.buttonModify}">
+															<i class="icon-edit icon-white"></i>
 														</a>
-													</td>
-												</#if>
-												<td>
-													<#if ( demand.getNumberNotifications(  ) > 0 )>
-														<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}"title="#i18n{crm.crm.labelMail}">
-															<i class="icon-envelope icon-white"></i>
-														</a>
-														<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
-															<span class="alert">
-																${demand.numberUnreadNotifications}
-															</span>
-														</#if>
-													</#if> 
+													</#if>
+													<a class="btn btn-danger btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=remove_demand&amp;id_demand=${demand.idDemand}" title="#i18n{crm.crm.buttonDelete}">
+														<i class="icon-trash icon-white"></i>
+													</a>
 												</td>
-											</tr>
-										</#if>
-									</#list>
-								</table>
-							</fieldset>
+											</#if>
+											<td>
+												<#if ( demand.getNumberNotifications(  ) > 0 )>
+													<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm&amp;action=manage_notifications&amp;id_demand=${demand.idDemand}"title="#i18n{crm.crm.labelMail}">
+														<i class="icon-envelope icon-white"></i>
+													</a>
+													<#if ( demand.getNumberUnreadNotifications(  ) > 0 )>
+														<span class="alert">
+															${demand.numberUnreadNotifications}
+														</span>
+													</#if>
+												</#if> 
+											</td>
+										</tr>
+									</#if>
+								</#list>
+							</table>
+							<@paginationAdmin paginator=map_paginator[""+status_crm.idStatusCRM] nb_items_per_page=map_nb_items_per_page[""+status_crm.idStatusCRM] />
 						</#if>
 					</#if>
 				</#list>

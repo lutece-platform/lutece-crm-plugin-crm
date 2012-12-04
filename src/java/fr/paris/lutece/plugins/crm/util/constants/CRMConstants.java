@@ -70,6 +70,7 @@ public final class CRMConstants
     public static final String PROPERTY_WEBMASTER_EMAIL = "email.webmaster";
     public static final String PROPERTY_CRM_USER_MAX_SIZE = "crm.crmUser.maxSize";
     public static final String PROPERTY_CRM_USER_ATTRIBUTE_KEYS = "crm.userAttributes.keys";
+    public static final String PROPERTY_DEMANDS_PER_PAGE = "crm.paginator.demand.itemsPerPage";
 
     // MARKS 
     public static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
@@ -84,6 +85,7 @@ public final class CRMConstants
     public static final String MARK_STATUS_CRM_LIST = "status_crm_list";
     public static final String MARK_PAGINATOR = "paginator";
     public static final String MARK_NB_ITEMS_PER_PAGE = "nb_items_per_page";
+    public static final String MARK_MAP_NB_ITEMS_PER_PAGE = "map_nb_items_per_page";
     public static final String MARK_MAX_ORDER = "max_order";
     public static final String MARK_DEMAND_TYPE_FILTER = "demand_type_filter";
     public static final String MARK_USER_WORKGROUP_REF_LIST = "user_workgroup_list";
@@ -98,6 +100,7 @@ public final class CRMConstants
     public static final String MARK_DEMAND_TYPES_REFLIST = "demandTypesRefList";
     public static final String MARK_FILTER = "filter";
     public static final String MARK_MODIFICATIONDATE = "modificationDate";
+    public static final String MARK_MAP_PAGINATOR = "map_paginator";
 
     // PARAMETERS
     public static final String PARAMETER_ACTION = "action";
@@ -135,6 +138,9 @@ public final class CRMConstants
     public static final String PARAMETER_MODIFICATIONDATE = "modificationDate";
     public static final String PARAMETER_DEMANDTYPE = "demandType";
     public static final String PARAMETER_NOTIFICATION = "notification";
+    public static final String PARAMETER_ID_STATUS = "id_status";
+    public static final String PARAMETER_SORT_ATTRIBUTE = "sorted_attribute_name";
+    public static final String PARAMETER_SORT_ORDER = "asc_sort";
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
@@ -159,6 +165,10 @@ public final class CRMConstants
     public static final String MESSAGE_SIZE_TOO_BIG = "crm.message.sizeTooBig";
     public static final String MESSAGE_INVALID_EMAIL = "crm.message.invalidEmail";
     public static final String MESSAGE_INVALID_FORMAT_DATE_MODIFICATION = "crm.message.invalidFormatDateModification";
+
+    // SORTS
+    public static final String SORT_DATE_MODIFICATION = "dateModification";
+    public static final String SORT_NB_UNREAD_NOTIFICATION = "unreadNotification";
 
     /**
      * Private constructor

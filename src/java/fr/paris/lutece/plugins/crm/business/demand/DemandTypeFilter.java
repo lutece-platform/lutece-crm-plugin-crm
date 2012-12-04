@@ -378,7 +378,7 @@ public class DemandTypeFilter
     {
         return _operatorDateEnd;
     }
-    
+
     /**
      * Returns the UrlDelete
      * @return The UrlDelete

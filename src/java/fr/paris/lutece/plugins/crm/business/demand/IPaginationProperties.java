@@ -31,21 +31,28 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.business.parameters;
-
-import fr.paris.lutece.portal.service.plugin.Plugin;
+package fr.paris.lutece.plugins.crm.business.demand;
 
 
-public interface IAdvancedParametersDAO
+/**
+ * Pagination properties
+ *
+ */
+public interface IPaginationProperties
 {
     /**
-     * Get the String value of a parameter
-     * @return the string value
+     * Returns index of the first result requested
+     * @return index of the first result requested
      */
-    String getParameterStringValueByKey( String key, Plugin plugin );
+    int getFirstResult( );
 
     /**
-     * Modify the String value of a parameter
+     * Returns number of results per page requested
+     * @return number of results per page requested
      */
-    void modifyParameterStringValueByKey( String key, String value, Plugin plugin );
+    int getPageSize( );
+
+    int getItemsPerPage( );
+
+    int getPageIndex( );
 }

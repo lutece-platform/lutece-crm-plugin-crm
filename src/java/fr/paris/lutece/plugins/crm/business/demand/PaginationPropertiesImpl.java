@@ -31,21 +31,59 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crm.business.parameters;
-
-import fr.paris.lutece.portal.service.plugin.Plugin;
+package fr.paris.lutece.plugins.crm.business.demand;
 
 
-public interface IAdvancedParametersDAO
+/**
+ * Pagination properties
+ *
+ */
+public class PaginationPropertiesImpl implements IPaginationProperties
 {
-    /**
-     * Get the String value of a parameter
-     * @return the string value
-     */
-    String getParameterStringValueByKey( String key, Plugin plugin );
+    private int _nFirstResult;
+    private int _nPageSize;
+    private int _nItemsPerPage;
+    private int _nPageIndex;
 
     /**
-     * Modify the String value of a parameter
+     * Creates a new PaginationPropertiesImpl.java object.
      */
-    void modifyParameterStringValueByKey( String key, String value, Plugin plugin );
+    public PaginationPropertiesImpl(  )
+    {
+        super(  );
+    }
+
+    /**
+     * Creates a new PaginationPropertiesImpl.java object.
+     * @param firstResult
+     * @param pageSize
+     */
+    public PaginationPropertiesImpl( int firstResult, int pageSize, int itemsPerPage, int pageIndex )
+    {
+        super(  );
+        this._nFirstResult = firstResult;
+        this._nPageSize = pageSize;
+        this._nItemsPerPage = itemsPerPage;
+        this._nPageIndex = pageIndex;
+    }
+
+    public int getFirstResult(  )
+    {
+        return this._nFirstResult;
+    }
+
+    public int getPageSize(  )
+    {
+        return this._nPageSize;
+    }
+
+    public int getItemsPerPage(  )
+    {
+        return this._nItemsPerPage;
+    }
+
+    public int getPageIndex(  )
+    {
+        return this._nPageIndex;
+    }
 }

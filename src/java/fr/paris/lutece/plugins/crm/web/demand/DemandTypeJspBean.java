@@ -61,6 +61,8 @@ import fr.paris.lutece.util.html.Paginator;
 import fr.paris.lutece.util.sort.AttributeComparator;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,8 +70,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -93,7 +93,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     private static final String JSP_DO_PURGE_DEMAND_TYPE = "jsp/admin/plugins/crm/DoPurgeDemandType.jsp";
 
     // VARIABLES
-    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService( );
+    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService(  );
     private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
     private DemandService _demandService = DemandService.getService(  );
     private CategoryService _categoryService = CategoryService.getService(  );
@@ -148,17 +148,16 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         setPageTitleProperty( CRMConstants.PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE );
 
         //get the actual displayDraft parameter
-        Boolean bDisplayDraft = _advancedParametersService
-                .isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT );
+        Boolean bDisplayDraft = _advancedParametersService.isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT );
 
-        Map<String, Object> model = new HashMap<String, Object>( );
+        Map<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( CRMConstants.MARK_DISPLAYDRAFT, bDisplayDraft );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale( ),
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale(  ),
                 model );
 
-        return getAdminPage( templateList.getHtml( ) );
+        return getAdminPage( templateList.getHtml(  ) );
     }
 
     /**
@@ -350,20 +349,22 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     {
         String strModifyDraftDisplay = request.getParameter( CRMConstants.PARAMETER_CHECKBOX_DRAFT_DISPLAY );
 
-        if ( StringUtils.isNotBlank( strModifyDraftDisplay ) && strModifyDraftDisplay.equals( CRMConstants.CONSTANT_ON ) )
+        if ( StringUtils.isNotBlank( strModifyDraftDisplay ) &&
+                strModifyDraftDisplay.equals( CRMConstants.CONSTANT_ON ) )
         {
             _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
-                    CRMConstants.CONSTANT_TRUE );
+                CRMConstants.CONSTANT_TRUE );
         }
         else
         {
             _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
-                    CRMConstants.CONSTANT_FALSE );
+                CRMConstants.CONSTANT_FALSE );
         }
 
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DEMAND_TYPES );
         url.addParameter( CRMConstants.CONSTANT_PLUGIN_NAME, CRMConstants.CONSTANT_CRM );
-        return url.getUrl( );
+
+        return url.getUrl(  );
     }
 
     /**
@@ -516,7 +517,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             String strWorkgroupKey = request.getParameter( CRMConstants.PARAMETER_WORKGROUP_KEY );
             String strRoleKey = request.getParameter( CRMConstants.PARAMETER_ROLE_KEY );
             String strTarget = request.getParameter( CRMConstants.PARAMETER_TARGET );
-            String strUrlDelete  = request.getParameter( CRMConstants.PARAMETER_URL_DELETE ); 
+            String strUrlDelete = request.getParameter( CRMConstants.PARAMETER_URL_DELETE );
 
             int nOrder = 0;
 
@@ -603,7 +604,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 demandType.setWorkgroup( StringUtils.isNotBlank( strWorkgroupKey ) ? strWorkgroupKey : StringUtils.EMPTY );
                 demandType.setRole( StringUtils.isNotBlank( strRoleKey ) ? strRoleKey : StringUtils.EMPTY );
                 demandType.setTarget( TargetEnum.getTarget( nTarget ) );
-                demandType.setUrlDelete(  StringUtils.isNotBlank( strUrlDelete ) ? strUrlDelete : StringUtils.EMPTY );
+                demandType.setUrlDelete( StringUtils.isNotBlank( strUrlDelete ) ? strUrlDelete : StringUtils.EMPTY );
             }
         }
         else
@@ -743,6 +744,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                     _dtFilter.setOperatorDateEnd( OperatorEnum.values(  )[nIdOperatorDateEnd] );
                 }
             }
+
             if ( StringUtils.isNotBlank( strUrlDelete ) )
             {
                 _dtFilter.setUrlDelete( strUrlDelete );

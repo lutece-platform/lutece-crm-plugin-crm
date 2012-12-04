@@ -37,6 +37,7 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
 import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,10 +133,12 @@ public class CRMUserDAO implements ICRMUserDAO
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
             user.setStatus( daoUtil.getInt( nIndex++ ) );
+
             try
             {
                 Timestamp dateLastLogin = daoUtil.getTimestamp( nIndex++ );
-                if ( dateLastLogin != null && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
+
+                if ( ( dateLastLogin != null ) && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
                 {
                     user.setDateLastLogin( dateLastLogin );
                 }
@@ -170,10 +173,12 @@ public class CRMUserDAO implements ICRMUserDAO
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
             user.setStatus( daoUtil.getInt( nIndex ) );
+
             try
             {
                 Timestamp dateLastLogin = daoUtil.getTimestamp( nIndex++ );
-                if ( dateLastLogin != null && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
+
+                if ( ( dateLastLogin != null ) && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
                 {
                     user.setDateLastLogin( dateLastLogin );
                 }
@@ -239,10 +244,12 @@ public class CRMUserDAO implements ICRMUserDAO
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
             user.setStatus( daoUtil.getInt( nIndex ) );
+
             try
             {
                 Timestamp dateLastLogin = daoUtil.getTimestamp( nIndex++ );
-                if ( dateLastLogin != null && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
+
+                if ( ( dateLastLogin != null ) && !dateLastLogin.equals( CRMUser.DEFAULT_DATE_LAST_LOGIN ) )
                 {
                     user.setDateLastLogin( dateLastLogin );
                 }
@@ -251,6 +258,7 @@ public class CRMUserDAO implements ICRMUserDAO
             {
                 user.setDateLastLogin( null );
             }
+
             listUsers.add( user );
         }
 

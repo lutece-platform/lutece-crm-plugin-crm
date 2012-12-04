@@ -35,7 +35,9 @@ package fr.paris.lutece.plugins.crm.web;
 
 import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
+import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
+import fr.paris.lutece.plugins.crm.business.demand.PaginationFilterSortManager;
 import fr.paris.lutece.plugins.crm.business.notification.Notification;
 import fr.paris.lutece.plugins.crm.business.notification.NotificationFilter;
 import fr.paris.lutece.plugins.crm.business.user.CRMUser;
@@ -67,10 +69,14 @@ import fr.paris.lutece.portal.web.PortalJspBean;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.web.xpages.XPageApplication;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.util.html.IPaginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -78,8 +84,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -107,7 +111,7 @@ public class CRMApp implements XPageApplication
     private DemandStatusCRMService _statusCRMService = DemandStatusCRMService.getService(  );
     private CRMUserService _crmUserService = CRMUserService.getService(  );
     private CRMUserAttributesService _crmUserAttributesService = CRMUserAttributesService.getService(  );
-    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService( );
+    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService(  );
 
     /**
      * Get the XPage of the plugin CRM
@@ -168,7 +172,8 @@ public class CRMApp implements XPageApplication
      * @return a {@link XPage}
      * @throws SiteMessageException
      */
-    private XPage getCRMHomePage( HttpServletRequest request, LuteceUser user ) throws SiteMessageException
+    private XPage getCRMHomePage( HttpServletRequest request, LuteceUser user )
+        throws SiteMessageException
     {
         XPage page = null;
         CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
@@ -176,52 +181,126 @@ public class CRMApp implements XPageApplication
         if ( crmUser != null )
         {
             page = new XPage(  );
-            DemandFilter dFilter = new DemandFilter( );
+
+            DemandFilter dFilter = new DemandFilter(  );
             Map<String, Object> model = new HashMap<String, Object>(  );
 
             //research by filter
-            dFilter.setIdCRMUser( crmUser.getIdCRMUser( ) );
+            dFilter.setIdCRMUser( crmUser.getIdCRMUser(  ) );
+
+            PaginationFilterSortManager paginationFilterSortManager = new PaginationFilterSortManager( request );
+
+            String strSession = (String) ( request.getParameter( CRMConstants.PARAMETER_SESSION ) );
+
+            if ( StringUtils.isBlank( strSession ) )
+            {
+                paginationFilterSortManager.cleanSession(  );
+            }
+
+            String strIdStatusToSort = (String) ( request.getParameter( CRMConstants.PARAMETER_ID_STATUS ) );
+            String strSortField = (String) ( request.getParameter( CRMConstants.PARAMETER_SORT_ATTRIBUTE ) );
+            String strSortOrder = (String) ( request.getParameter( CRMConstants.PARAMETER_SORT_ORDER ) );
+
+            int nIdStatusToSort = -1;
+
+            if ( StringUtils.isNotEmpty( strIdStatusToSort ) )
+            {
+                nIdStatusToSort = Integer.parseInt( strIdStatusToSort );
+            }
+
+            if ( StringUtils.isNotEmpty( strSortField ) && StringUtils.isNotEmpty( strSortOrder ) )
+            {
+                paginationFilterSortManager.storeSort( nIdStatusToSort, strSortField,
+                    Boolean.parseBoolean( strSortOrder ) );
+            }
 
             String strModificationDate = request.getParameter( CRMConstants.PARAMETER_MODIFICATIONDATE );
+            String strDemandType = request.getParameter( CRMConstants.PARAMETER_DEMANDTYPE );
+            String strNotification = request.getParameter( CRMConstants.PARAMETER_NOTIFICATION );
 
-            if ( strModificationDate != null && strModificationDate != StringUtils.EMPTY )
+            if ( StringUtils.isNotBlank( strModificationDate ) || StringUtils.isNotBlank( strDemandType ) ||
+                    StringUtils.isNotBlank( strNotification ) )
+            {
+                paginationFilterSortManager.cleanSessionFilter(  );
+            }
+
+            if ( StringUtils.isNotBlank( strModificationDate ) )
             {
                 Date modificationDate = checkFormatModificationDateFilter( strModificationDate, request );
-                dFilter.setDateModification( modificationDate );
-                model.put( CRMConstants.MARK_MODIFICATIONDATE, strModificationDate );
+                paginationFilterSortManager.storeFilterModificationDate( modificationDate );
+                paginationFilterSortManager.storeFilterStringModificationDate( strModificationDate );
             }
 
-            String strDemandType = request.getParameter( CRMConstants.PARAMETER_DEMANDTYPE );
-            if ( strDemandType != null && strDemandType != StringUtils.EMPTY )
+            if ( StringUtils.isNotBlank( strDemandType ) )
             {
                 int nIdDemandType = Integer.parseInt( strDemandType );
-                dFilter.setIdDemandType( nIdDemandType );
+                paginationFilterSortManager.storeFilterDemandType( nIdDemandType );
             }
 
-            String strNotification = request.getParameter( CRMConstants.PARAMETER_NOTIFICATION );
-            if ( strNotification != null && strNotification != StringUtils.EMPTY )
+            if ( StringUtils.isNotBlank( strNotification ) )
             {
-                dFilter.setNotification( strNotification );
+                paginationFilterSortManager.storeFilterNotification( strNotification );
+            }
+
+            Date dateModificationSession = paginationFilterSortManager.retrieveFilterModificationDate(  );
+
+            if ( dateModificationSession != null )
+            {
+                dFilter.setDateModification( dateModificationSession );
+                model.put( CRMConstants.MARK_MODIFICATIONDATE,
+                    paginationFilterSortManager.retrieveFilterStringModificationDate(  ) );
+            }
+
+            Integer nIdDemandTypeSession = paginationFilterSortManager.retrieveFilterDemandType(  );
+
+            if ( ( nIdDemandTypeSession != null ) && ( nIdDemandTypeSession >= 0 ) )
+            {
+                dFilter.setIdDemandType( nIdDemandTypeSession );
+            }
+
+            String strNotificationSession = paginationFilterSortManager.retrieveFilterNotification(  );
+
+            if ( StringUtils.isNotBlank( strNotificationSession ) )
+            {
+                dFilter.setNotification( strNotificationSession );
             }
 
             model.put( CRMConstants.MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
             model.put( CRMConstants.MARK_CATEGORIES_LIST,
                 _categoryService.getCategories( request.getLocale(  ), false, true ) );
-            //model.put( CRMConstants.MARK_MAP_DEMANDS_LIST, _demandService.findByIdCRMUser( crmUser.getIdCRMUser(  ), request.getLocale(  ) ) );
             model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
-                    _demandService.findByFilterMap( dFilter, request.getLocale( ) ) );
-            model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll( ) );
+                _demandService.findByFilterMap( dFilter, request.getLocale(  ), paginationFilterSortManager ) );
+            model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
             model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
             model.put( CRMConstants.MARK_CRM_USER, crmUser );
             model.put( CRMConstants.MARK_DISPLAYDRAFT,
-                    _advancedParametersService.isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT ) );
-            model.put( CRMConstants.MARK_LOCALE, request.getLocale( ) );
+                _advancedParametersService.isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT ) );
+            model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
             model.put( CRMConstants.MARK_FILTER, dFilter );
 
-            List<DemandType> listAllOpenedDemandType = initListAllOpenedDemandType( );
+            List<DemandType> listAllOpenedDemandType = initListAllOpenedDemandType(  );
 
             model.put( CRMConstants.MARK_DEMAND_TYPES_REFLIST,
-                    ListUtils.toReferenceList( listAllOpenedDemandType, "idDemandType", "label", "" ) );
+                ListUtils.toReferenceList( listAllOpenedDemandType, "idDemandType", "label", "" ) );
+
+            Map<String, IPaginator<Demand>> mapPaginator = new HashMap<String, IPaginator<Demand>>(  );
+            Map<String, String> mapNbItemsPerPage = new HashMap<String, String>(  );
+            int nIdStatus;
+
+            for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  )
+                                                                    .getAllStatusCRM( request.getLocale(  ) ) )
+            {
+                nIdStatus = statusCRM.getIdStatusCRM(  );
+
+                IPaginator<Demand> paginator = paginationFilterSortManager.retrievePaginator( nIdStatus );
+                int nItemsPerPage = paginationFilterSortManager.retrieveItemsPerPage( nIdStatus );
+
+                mapNbItemsPerPage.put( Integer.toString( nIdStatus ), Integer.toString( nItemsPerPage ) );
+                mapPaginator.put( Integer.toString( nIdStatus ), paginator );
+            }
+
+            model.put( CRMConstants.MARK_MAP_PAGINATOR, mapPaginator );
+            model.put( CRMConstants.MARK_MAP_NB_ITEMS_PER_PAGE, mapNbItemsPerPage );
 
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
 
@@ -637,18 +716,19 @@ public class CRMApp implements XPageApplication
      * Get the list of all the opened demand types only
      * @return the list of opened demand types
      */
-    private List<DemandType> initListAllOpenedDemandType( )
+    private List<DemandType> initListAllOpenedDemandType(  )
     {
-        List<DemandType> listAllDemandType = _demandTypeService.findAll( );
-        List<DemandType> listAllOpenedDemandType = new ArrayList<DemandType>( );
+        List<DemandType> listAllDemandType = _demandTypeService.findAll(  );
+        List<DemandType> listAllOpenedDemandType = new ArrayList<DemandType>(  );
 
         for ( DemandType demandType : listAllDemandType )
         {
-            if ( demandType.isOpen( ) )
+            if ( demandType.isOpen(  ) )
             {
                 listAllOpenedDemandType.add( demandType );
             }
         }
+
         return listAllOpenedDemandType;
     }
 
@@ -657,11 +737,12 @@ public class CRMApp implements XPageApplication
      * @throws SiteMessageException
      */
     private Date checkFormatModificationDateFilter( String strModificationDate, HttpServletRequest request )
-            throws SiteMessageException
+        throws SiteMessageException
     {
         SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
         sdf.setLenient( true );
-        Date d = new Date( );
+
+        Date d = new Date(  );
 
         try
         {
@@ -671,7 +752,9 @@ public class CRMApp implements XPageApplication
         {
             SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_FORMAT_DATE_MODIFICATION );
         }
+
         String t = sdf.format( d );
+
         if ( t.compareTo( strModificationDate ) != 0 )
         {
             SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_FORMAT_DATE_MODIFICATION );
@@ -679,5 +762,4 @@ public class CRMApp implements XPageApplication
 
         return d;
     }
-
 }

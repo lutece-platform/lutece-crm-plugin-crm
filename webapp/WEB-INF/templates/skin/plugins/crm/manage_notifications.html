@@ -1,40 +1,42 @@
 <div class="span11">
-	<p>
+	<div class="row-fluid">
 		<a class="btn btn-primary btn-small" href="jsp/site/Portal.jsp?page=crm" title="#i18n{crm.manage_notifications.buttonBack}">
 			#i18n{crm.manage_notifications.buttonBack}
 		</a>
-	</p>
-	<h2>${demand_type.label}</h2>
-	<#if notifications_list?has_content>
-		<table class="table">
-			<tr>
-				<th>#i18n{crm.manage_notifications.labelSender}</th>
-				<th>#i18n{crm.manage_notifications.labelObject}</th>
-				<th>#i18n{crm.manage_notifications.labelReceived}</th>
-			</tr>
-			<#list notifications_list as notification>
+	</div>
+	<div class="row-fluid">
+		<h2>${demand_type.label}</h2>
+		<#if notifications_list?has_content>
+			<table class="table">
 				<tr>
-					<td>
-						${notification.sender}
-					</td>
-					<td>
-						<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
-							<#if notification.isRead(  )>
-								${notification.object}
-							<#else>
-								<b>
-									${notification.object}
-								</b>
-							</#if>
-						</a>
-					</td>
-					<td>
-						${notification.dateCreation?date}
-					</td>
+					<th>#i18n{crm.manage_notifications.labelSender}</th>
+					<th>#i18n{crm.manage_notifications.labelObject}</th>
+					<th>#i18n{crm.manage_notifications.labelReceived}</th>
 				</tr>
-			</#list>
-		</table>
-	<#else>
-		<b>#i18n{crm.manage_notifications.messageNoNotifications}</b>
-	</#if>
+				<#list notifications_list as notification>
+					<tr>
+						<td>
+							${notification.sender}
+						</td>
+						<td>
+							<a href="jsp/site/Portal.jsp?page=crm&amp;action=view_notification&amp;id_notification=${notification.idNotification}">
+								<#if notification.isRead(  )>
+									${notification.object}
+								<#else>
+									<b>
+										${notification.object}
+									</b>
+								</#if>
+							</a>
+						</td>
+						<td>
+							${notification.dateCreation?date}
+						</td>
+					</tr>
+				</#list>
+			</table>
+		<#else>
+			<b>#i18n{crm.manage_notifications.messageNoNotifications}</b>
+		</#if>
+	</div>
 </div>

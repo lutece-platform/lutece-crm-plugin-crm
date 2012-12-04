@@ -113,6 +113,27 @@ public final class DemandHome
      */
     public static List<Demand> findByFilter( DemandFilter dFilter )
     {
-        return _dao.selectByFilter( dFilter, _plugin );
+        return _dao.selectByFilter( dFilter, null, _plugin );
+    }
+
+    /**
+     * Find by filter with pagination properties
+     * @param dFilter the filter
+     * @param paginationProperties the pagination properties
+     * @return a list of {@link Demand}
+     */
+    public static List<Demand> findByFilter( DemandFilter dFilter, IPaginationProperties paginationProperties )
+    {
+        return _dao.selectByFilter( dFilter, paginationProperties, _plugin );
+    }
+
+    /**
+     * Count results by filter
+     * @param dFilter the filter
+     * @return the number of results
+     */
+    public static int countByFilter( DemandFilter dFilter )
+    {
+        return _dao.countByFilter( dFilter, _plugin );
     }
 }
