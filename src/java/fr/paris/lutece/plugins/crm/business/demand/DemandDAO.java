@@ -37,12 +37,11 @@ import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -58,7 +57,7 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand demand ";
-    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand WHERE EXISTS  (SELECT * FROM crm_notification WHERE ";
+    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand ";
     private static final String SQL_QUERY_COUNT = " SELECT count(*) FROM ";
 
     // FILTERS
@@ -311,7 +310,7 @@ public class DemandDAO implements IDemandDAO
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
 
             StringBuilder strFilterNotification = new StringBuilder(  );
-            strFilterNotification.append( " (object LIKE '%" );
+            strFilterNotification.append( " EXISTS (SELECT * FROM crm_notification WHERE (object LIKE '%" );
             strFilterNotification.append( dFilter.getNotification(  ) );
             strFilterNotification.append( "%' OR message LIKE '%" );
             strFilterNotification.append( dFilter.getNotification(  ) );
