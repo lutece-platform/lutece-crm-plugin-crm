@@ -310,11 +310,12 @@ public class DemandDAO implements IDemandDAO
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
 
             StringBuilder strFilterNotification = new StringBuilder(  );
-            strFilterNotification.append( " EXISTS (SELECT * FROM crm_notification WHERE (object LIKE '%" );
+            strFilterNotification
+                    .append( " EXISTS (SELECT id_notification FROM crm_notification notif WHERE (notif.object LIKE '%" );
             strFilterNotification.append( dFilter.getNotification(  ) );
-            strFilterNotification.append( "%' OR message LIKE '%" );
+            strFilterNotification.append( "%' OR notif.message LIKE '%" );
             strFilterNotification.append( dFilter.getNotification(  ) );
-            strFilterNotification.append( "%'))" );
+            strFilterNotification.append( "%') AND notif.id_demand = demand.id_demand )" );
 
             sbSQL.append( strFilterNotification.toString(  ) );
         }
