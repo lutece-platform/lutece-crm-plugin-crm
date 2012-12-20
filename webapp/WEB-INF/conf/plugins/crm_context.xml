@@ -58,4 +58,7 @@
             <value>change me</value>
         </property>
     </bean>
+    
+    <bean id="crm.crmUserListenerService" class="fr.paris.lutece.plugins.crm.service.listener.CRMUserModificationListenerService" />
+    
 </beans>

@@ -170,6 +170,9 @@ public final class CRMConstants
     public static final String SORT_DATE_MODIFICATION = "dateModification";
     public static final String SORT_NB_UNREAD_NOTIFICATION = "unreadNotification";
 
+    // EVENTS
+    public static final String EVENT_CRM_USER_MODIFIED = "EventCRMUserModified";
+
     /**
      * Private constructor
      */
