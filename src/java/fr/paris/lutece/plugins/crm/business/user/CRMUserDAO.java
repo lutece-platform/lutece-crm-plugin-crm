@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,7 +171,7 @@ public class CRMUserDAO implements ICRMUserDAO
             user = new CRMUser(  );
             user.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
             user.setUserGuid( daoUtil.getString( nIndex++ ) );
-            user.setStatus( daoUtil.getInt( nIndex ) );
+            user.setStatus( daoUtil.getInt( nIndex++ ) );
 
             try
             {
