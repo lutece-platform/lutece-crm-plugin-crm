@@ -74,7 +74,10 @@ import fr.paris.lutece.util.html.IPaginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -82,8 +85,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -490,8 +491,8 @@ public class CRMApp implements XPageApplication
             crmUser.setUserAttributes( userAttributes );
 
             _crmUserService.update( crmUser );
-            CRMUserModificationListenerService.getService( ).notifyListeners( crmUser,
-                    CRMConstants.EVENT_CRM_USER_MODIFIED );
+            CRMUserModificationListenerService.getService(  )
+                                              .notifyListeners( crmUser, CRMConstants.EVENT_CRM_USER_MODIFIED );
         }
     }
 

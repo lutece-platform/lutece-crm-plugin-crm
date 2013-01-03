@@ -39,6 +39,9 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 
+/**
+ * The Class AdvancedParametersHome.
+ */
 public final class AdvancedParametersHome
 {
     private static final String BEAN_CRM_ADVANCEDPARAMETERSDAO = "crm.advancedParametersDAO";
@@ -48,24 +51,29 @@ public final class AdvancedParametersHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private AdvancedParametersHome( )
+    private AdvancedParametersHome(  )
     {
     }
 
     /**
-     * Get the String value of a parameter
-     * @return the string value
+     * Get the String strValue of a parameter.
+     *
+     * @param strKey the str key
+     * @return the string strValue
      */
-    public static String getParameterStringValueByKey( String key )
+    public static String getParameterStringValueByKey( String strKey )
     {
-        return _dao.getParameterStringValueByKey( key, _plugin );
+        return _dao.getParameterStringValueByKey( strKey, _plugin );
     }
 
     /**
-     * Modify the String value of a parameter
+     * Modify the String strValue of a parameter.
+     *
+     * @param strKey the str key
+     * @param strValue the strValue
      */
-    public static void modifyParameterStringValueByKey( String key, String value )
+    public static void modifyParameterStringValueByKey( String strKey, String strValue )
     {
-        _dao.modifyParameterStringValueByKey( key, value, _plugin );
+        _dao.modifyParameterStringValueByKey( strKey, strValue, _plugin );
     }
 }

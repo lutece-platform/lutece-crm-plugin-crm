@@ -36,16 +36,26 @@ package fr.paris.lutece.plugins.crm.business.parameters;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
 
+/**
+ * The Interface IAdvancedParametersDAO.
+ */
 public interface IAdvancedParametersDAO
 {
     /**
-     * Get the String value of a parameter
-     * @return the string value
+     * Get the String strValue of a parameter.
+     *
+     * @param strKey the str key
+     * @param plugin the plugin
+     * @return the string strValue
      */
-    String getParameterStringValueByKey( String key, Plugin plugin );
+    String getParameterStringValueByKey( String strKey, Plugin plugin );
 
     /**
-     * Modify the String value of a parameter
+     * Modify the String strValue of a parameter.
+     *
+     * @param strKey the str key
+     * @param strValue the str value
+     * @param plugin the plugin
      */
-    void modifyParameterStringValueByKey( String key, String value, Plugin plugin );
+    void modifyParameterStringValueByKey( String strKey, String strValue, Plugin plugin );
 }

@@ -1,26 +1,13 @@
-<div class="row-fluid">
-	<div class="span9">
-		<div class="portlet">
-			<div class="well">
-				<h2>#i18n{crm.manage_demand_types.advancedParametersLabel}</h2>
-				<br />
-				<form class="form-horizontal">
-					<form action="jsp/admin/plugins/crm/DoModifyDraftDisplay.jsp"
-						name="modifyDraftDisplay" method="post">
-						<div class="control-group">
-							<label for="advancedParametersLabel">#i18n{crm.manage_demand_types.displayDraftLabel}
-								? :</label>
-							<div class="controls" style="margin-left: 189px; margin-top: -27px;">
-								<input type="checkbox"<#if bDisplayDraft! == true>
-								checked="checked" </#if> name="bDisplayDraft" /> <span
-									class="help-block">#i18n{crm.manage_demand_types.displayDraftDescription}</span>
-							</div>
-							<br/>
-							<button type="submit" class="btn">#i18n{crm.crm.buttonModify}</button>
-						</div>
+<form action="jsp/admin/plugins/crm/DoModifyDraftDisplay.jsp" name="modifyDraftDisplay" method="post">
+	<fieldset>
+		<legend>#i18n{crm.manage_demand_types.advancedParametersLabel}</legend>
+		<div class="control-group">
+			<label for="advancedParametersLabel">#i18n{crm.manage_demand_types.displayDraftLabel} :</label>
+			<div class="controls" style="margin-left: 189px; margin-top: -27px;">
+				<input type="checkbox" <#if bDisplayDraft!>checked="checked"</#if> name="bDisplayDraft" />
+				<span class="help-block">#i18n{crm.manage_demand_types.displayDraftDescription}</span>
 			</div>
-			</form>
+			<button type="submit" class="btn btn-primary btn-small">#i18n{crm.crm.buttonModify}</button>
 		</div>
-	</div>
-</div>
-</div>
+	</fieldset>
+</form>

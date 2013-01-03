@@ -37,11 +37,12 @@ import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -310,8 +311,8 @@ public class DemandDAO implements IDemandDAO
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
 
             StringBuilder strFilterNotification = new StringBuilder(  );
-            strFilterNotification
-                    .append( " EXISTS (SELECT id_notification FROM crm_notification notif WHERE (notif.object LIKE '%" );
+            strFilterNotification.append( 
+                " EXISTS (SELECT id_notification FROM crm_notification notif WHERE (notif.object LIKE '%" );
             strFilterNotification.append( dFilter.getNotification(  ) );
             strFilterNotification.append( "%' OR notif.message LIKE '%" );
             strFilterNotification.append( dFilter.getNotification(  ) );

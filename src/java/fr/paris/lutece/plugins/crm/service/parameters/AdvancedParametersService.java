@@ -38,13 +38,15 @@ import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 
+/**
+ *
+ * The Class AdvancedParametersService.
+ *
+ */
 public class AdvancedParametersService
 {
-    //BEAN 
+    //BEAN
     private static final String BEAN_CRM_ADVANCED_PARAMETERS = "crm.advancedParametersService";
-
-    //CONSTANTS
-    private static final String STRING_TRUE = "true";
 
     /**
      * Constructor
@@ -63,36 +65,35 @@ public class AdvancedParametersService
     }
 
     /**
-     * Get the String value of a parameter
-     * @return the string value
+     * Get the String strValue of a parameter.
+     *
+     * @param strKey the str key
+     * @return the string strValue
      */
-    public String getParameterStringValueByKey( String key )
+    public String getParameterStringValueByKey( String strKey )
     {
-        return AdvancedParametersHome.getParameterStringValueByKey( key );
+        return AdvancedParametersHome.getParameterStringValueByKey( strKey );
     }
 
     /**
-     * Get the boolean value for the parameter displayDraft
-     * @return the string value
+     * Get the boolean strValue for the parameter displayDraft.
+     *
+     * @param strKey the str key
+     * @return the string strValue
      */
-    public Boolean isParameterValueDisplayDraftTrue( String key )
+    public boolean isParameterValueDisplayDraftTrue( String strKey )
     {
-        boolean ret = false;
-        String strValue = AdvancedParametersHome.getParameterStringValueByKey( key );
-
-        if ( ( strValue != null ) && strValue.equals( STRING_TRUE ) )
-        {
-            ret = true;
-        }
-
-        return ret;
+        return Boolean.valueOf( AdvancedParametersHome.getParameterStringValueByKey( strKey ) );
     }
 
     /**
-     * Modify the String value of a parameter
+     * Modify the String strValue of a parameter.
+     *
+     * @param strKey the str key
+     * @param strValue the str value
      */
-    public void modifyParameterStringValueByKey( String key, String value )
+    public void modifyParameterStringValueByKey( String strKey, String strValue )
     {
-        AdvancedParametersHome.modifyParameterStringValueByKey( key, value );
+        AdvancedParametersHome.modifyParameterStringValueByKey( strKey, strValue );
     }
 }

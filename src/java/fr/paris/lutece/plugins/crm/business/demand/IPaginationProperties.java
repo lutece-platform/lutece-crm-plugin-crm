@@ -44,15 +44,15 @@ public interface IPaginationProperties
      * Returns index of the first result requested
      * @return index of the first result requested
      */
-    int getFirstResult( );
+    int getFirstResult(  );
 
     /**
      * Returns number of results per page requested
      * @return number of results per page requested
      */
-    int getPageSize( );
+    int getPageSize(  );
 
-    int getItemsPerPage( );
+    int getItemsPerPage(  );
 
-    int getPageIndex( );
+    int getPageIndex(  );
 }

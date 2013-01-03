@@ -39,6 +39,9 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import org.apache.commons.lang.StringUtils;
 
 
+/**
+ * The Class AdvancedParametersDAO.
+ */
 public class AdvancedParametersDAO implements IAdvancedParametersDAO
 {
     //SQL QUERIES
@@ -46,35 +49,36 @@ public class AdvancedParametersDAO implements IAdvancedParametersDAO
     private static final String SQL_QUERY_MODIFY_VALUE_PARAMETER_BY_KEY = "UPDATE crm_parameter SET parameter_value=? WHERE parameter_key=?";
 
     /**
-     * Get the String value of a parameter
-     * @return the string value
+     * {@inheritDoc}
      */
-    public String getParameterStringValueByKey( String key, Plugin plugin )
+    @Override
+    public String getParameterStringValueByKey( String strKey, Plugin plugin )
     {
-        String value = StringUtils.EMPTY;
+        String strValue = StringUtils.EMPTY;
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_VALUE_PARAMETER_BY_KEY, plugin );
-        daoUtil.setString( 1, key );
+        daoUtil.setString( 1, strKey );
 
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
         {
-            value = daoUtil.getString( 1 );
+            strValue = daoUtil.getString( 1 );
         }
 
         daoUtil.free(  );
 
-        return value;
+        return strValue;
     }
 
     /**
-     * Modify the String value of a parameter
+     * {@inheritDoc}
      */
-    public void modifyParameterStringValueByKey( String key, String value, Plugin plugin )
+    @Override
+    public void modifyParameterStringValueByKey( String key, String strValue, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_MODIFY_VALUE_PARAMETER_BY_KEY, plugin );
-        daoUtil.setString( 1, value );
+        daoUtil.setString( 1, strValue );
         daoUtil.setString( 2, key );
 
         daoUtil.executeUpdate(  );

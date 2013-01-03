@@ -132,6 +132,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale(  ), true, false ) );
         model.put( CRMConstants.MARK_IS_WELL_ORDERED, _demandTypeService.isWellOrdered(  ) );
         model.put( CRMConstants.MARK_OPERATORS_LIST, _demandTypeService.getOperatorsList(  ) );
+        model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DEMAND_TYPES, getLocale(  ), model );
 
@@ -175,6 +176,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
         model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder(  ) );
         model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList(  ) );
+        model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
 
         if ( SecurityService.isAuthenticationEnable(  ) )
         {
@@ -284,6 +286,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST,
                     AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
                 model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList(  ) );
+                model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
 
                 if ( SecurityService.isAuthenticationEnable(  ) )
                 {
