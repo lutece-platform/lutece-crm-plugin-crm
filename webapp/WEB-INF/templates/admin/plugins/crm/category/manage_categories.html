@@ -1,13 +1,16 @@
 <div class="row-fluid">
 	<div class="span12">
-			<fieldset>
-				<legend class="clearfix">#i18n{crm.manage_categories.tableLabel}</legend>
-					<form class="form-inline" method="post" action="jsp/admin/plugins/crm/CreateCategory.jsp">
+		<fieldset>
+			<legend class="clearfix">#i18n{crm.manage_categories.tableLabel}
+				<span class="pull-right">
+					<form class="form-inline space" method="post" action="jsp/admin/plugins/crm/CreateCategory.jsp">
 				        <button type="submit" value="#i18n{crm.manage_categories.buttonAddCategory}" class="btn btn-primary btn-small" >
 				        	<i class="icon-plus icon-white" ></i>&nbsp;#i18n{crm.manage_categories.buttonAddCategory}
 				        </button>
 				    </form>
-		    </fieldset>
+				</span>
+			</legend>
+	    </fieldset>
 	</div>
 	<div class="row-fluid" >
 	    <@paginationAdmin paginator=paginator combo=1 />
