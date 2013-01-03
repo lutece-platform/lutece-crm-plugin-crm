@@ -78,15 +78,19 @@
 		        <div class="control-group">
 		        	<label class="control-label" for="date_begin" >#i18n{crm.create_demand_type.labelDateBegin} :</label>
 		            <div class="controls">
-		            	<input type="text" id="date_begin" name="date_begin" size="10" maxlength="255" value="" />
-		        		<@getDatePicker idField="date_begin" language="fr" />
+		            	<div class="input-prepend">
+			            	<span class="add-on"><i class="icon-calendar"></i></span>
+			            	<input type="text" id="date_begin" name="date_begin" size="10" maxlength="255" value="" />
+		            	</div>
 		        	</div>
 		        </div>
 		        <div class="control-group">
 		        	<label class="control-label" for="date_end" >#i18n{crm.create_demand_type.labelDateEnd} :</label>
 		            <div class="controls">
-		            	<input type="text" id="date_end" name="date_end" size="10" maxlength="255" value="" />
-		        		<@getDatePicker idField="date_end" language="fr" />
+		            	<div class="input-prepend">
+			            	<span class="add-on"><i class="icon-calendar"></i></span>
+			            	<input type="text" id="date_end" name="date_end" size="10" maxlength="255" value="" />
+			            </div>
 		        	</div>
 		        </div>
 		        <div class="control-group">
@@ -121,3 +125,8 @@
     </div>
 </div>
 <br /><br />
+
+<script src="js/jquery/plugins/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
+<@getDatePicker idField="date_begin" language=locale.language />
+<@getDatePicker idField="date_end" language=locale.language />

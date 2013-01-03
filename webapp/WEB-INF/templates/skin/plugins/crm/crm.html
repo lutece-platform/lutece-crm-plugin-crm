@@ -40,7 +40,8 @@
 						<div class="control-group">
 							<label class="control-label" for="filter_notification">#i18n{crm.crm.filterNotificationLabel} : </label>
 							<div class="controls">
-								<input type="text" value="${(filter.notification)!}" name="notification" id="filter_notification"/ size="40" maxlength="255"></td>
+								<input type="text" value="${(filter.notification)!}" name="notification" id="filter_notification"/ size="40" maxlength="255">
+								<span class="help-block">#i18n{crm.crm.filterNotificationLabelComment}</span>
 							</div>
 						</div>
 						<div class="form-actions">
@@ -205,4 +206,6 @@
 	</div>
 </div>
 
+<script src="js/jquery/plugins/ui/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
 <@getDatePicker idField="filter_modification_date" language=locale.language />
