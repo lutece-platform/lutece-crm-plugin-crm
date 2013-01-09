@@ -43,11 +43,11 @@
 				    	<input type="hidden" name="search" value="search" />
 				    	<div class="control-group">
 				    		<label class="control-label" for="label">#i18n{crm.manage_demand_types.columnLabel} :</label>
-				    		<input type="text" name="label" value="<#if demand_type_filter??>${demand_type_filter.label}</#if>" />
+				    		<input type="text" class="input-medium" name="label" value="<#if demand_type_filter??>${demand_type_filter.label}</#if>" />
 				    	</div>
 				    	<div class="control-group">
 				    		<label class="control-label" for="url_resource">#i18n{crm.manage_demand_types.columnUrlResource} :</label>
-				    		<input type="text" name="url_resource" value="<#if demand_type_filter??>${demand_type_filter.urlResource}</#if>" />
+				    		<input type="text" class="input-medium" name="url_resource" value="<#if demand_type_filter??>${demand_type_filter.urlResource}</#if>" />
 				    	</div>
 				    	<div class="control-group">
 				    		<label for="category_id_category">#i18n{crm.manage_demand_types.columnCategory} :</label>
@@ -68,7 +68,7 @@
 				    		<@combo name="operator_date_begin" items=operators_list default_value=id_operator_date_begin />
 				    		<div class="input-prepend">
 			            		<span class="add-on"><i class="icon-calendar"></i></span>
-				    			<input type="text" id="date_begin" name="date_begin" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateBegin??>${demand_type_filter.dateBegin?date}</#if>" />
+				    			<input type="text" class="input-medium" id="date_begin" name="date_begin" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateBegin??>${demand_type_filter.dateBegin?date}</#if>" />
 				    		</div>
 				    	</div>
 				    	<div class="control-group">
@@ -81,7 +81,7 @@
 				    		<@combo name="operator_date_end" items=operators_list default_value=id_operator_date_end />
 				    		<div class="input-prepend">
 			            		<span class="add-on"><i class="icon-calendar"></i></span>
-				    			<input type="text" id="date_end" name="date_end" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateEnd??>${demand_type_filter.dateEnd?date}</#if>" />
+				    			<input type="text" class="input-medium" id="date_end" name="date_end" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateEnd??>${demand_type_filter.dateEnd?date}</#if>" />
 				    		</div>
 				    	</div>
 				    	<button class="btn btn-primary btn-small" type="submit" value="#i18n{crm.manage_demand_types.buttonSearch}" >
