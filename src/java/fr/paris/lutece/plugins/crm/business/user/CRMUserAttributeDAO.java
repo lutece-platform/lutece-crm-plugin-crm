@@ -50,6 +50,7 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user_attribute (id_crm_user, user_attribute_key, user_attribute_value) VALUES (?,?,?) ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_user_attribute WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_SELECT = " SELECT user_attribute_key, user_attribute_value FROM crm_user_attribute WHERE id_crm_user = ? ";
+    private static final String SQL_QUERY_COUNT_ATTRIBUTE_OCCURENCES = " SELECT COUNT(id_crm_user) FROM crm_user_attribute WHERE user_attribute_key = ? AND user_attribute_value = ? ";
 
     /**
      * {@inheritDoc}
@@ -102,5 +103,27 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
         daoUtil.free(  );
 
         return userAttributes;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int countAttributeValueInstances( String strUserAttributeValue, String strUserAttributeKey, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_COUNT_ATTRIBUTE_OCCURENCES, plugin );
+        daoUtil.setString( 1, strUserAttributeKey );
+        daoUtil.setString( 2, strUserAttributeValue );
+        daoUtil.executeQuery( );
+
+        int nNbInstances = 0;
+        if ( daoUtil.next( ) )
+        {
+            nNbInstances = daoUtil.getInt( 1 );
+        }
+
+        daoUtil.free( );
+
+        return nNbInstances;
     }
 }

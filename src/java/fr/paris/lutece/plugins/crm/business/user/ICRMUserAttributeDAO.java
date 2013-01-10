@@ -68,4 +68,14 @@ public interface ICRMUserAttributeDAO
      * @return The instance of the CRMUser
      */
     Map<String, String> load( int nIdCRMUser, Plugin plugin );
+
+    /**
+     * Count the number of instance of a given value of an attribute
+     * @param strUserAttributeValue The value of the attribute
+     * @param strUserAttributeKey The key of the attribute
+     * @param plugin The plugin
+     * @return The number of instances of attributes with the given value for
+     *         the given attribute key.
+     */
+    int countAttributeValueInstances( String strUserAttributeValue, String strUserAttributeKey, Plugin plugin );
 }

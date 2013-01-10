@@ -88,4 +88,16 @@ public final class CRMUserAttributeHome
     {
         return _dao.load( nIdCRMUser, _plugin );
     }
+
+    /**
+     * Count the number of instance of a given value of an attribute
+     * @param strUserAttributeValue The value of the attribute
+     * @param strUserAttributeKey The key of the attribute
+     * @return The number of instances of attributes with the given value for
+     *         the given attribute key.
+     */
+    public static int countAttributeValueInstances( String strUserAttributeValue, String strUserAttributeKey )
+    {
+        return _dao.countAttributeValueInstances( strUserAttributeValue, strUserAttributeKey, _plugin );
+    }
 }

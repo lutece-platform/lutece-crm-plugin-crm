@@ -74,10 +74,7 @@ import fr.paris.lutece.util.html.IPaginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -85,6 +82,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -476,13 +475,27 @@ public class CRMApp implements XPageApplication
                         SiteMessage.TYPE_STOP );
                 }
 
-                if ( StringUtils.isNotBlank( strUserAttributeKey ) &&
-                        strUserAttributeKey.endsWith( CRMConstants.PARAMETER_EMAIL ) &&
-                        !StringUtil.checkEmail( strUserAttributeValue ) )
+                if ( StringUtils.isNotBlank( strUserAttributeKey )
+                        && strUserAttributeKey.endsWith( CRMConstants.PARAMETER_EMAIL ) )
                 {
-                    SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL, SiteMessage.TYPE_STOP,
-                        url.getUrl(  ) );
+                    if ( !StringUtil.checkEmail( strUserAttributeValue ) )
+                    {
+                        SiteMessageService.setMessage( request, CRMConstants.MESSAGE_INVALID_EMAIL,
+                                SiteMessage.TYPE_STOP, url.getUrl( ) );
+                    }
+                    // If the user changed one of his emails
+                    if ( !StringUtils.equals( crmUser.getUserAttributeValue( strUserAttributeKey ),
+                            strUserAttributeValue ) )
+                    {
+                        if ( _crmUserAttributesService.isAttributeValueInUse( strUserAttributeValue,
+                                strUserAttributeKey ) )
+                        {
+                            SiteMessageService.setMessage( request, CRMConstants.MESSAGE_EMAIL_ALREADY_IN_USE,
+                                    SiteMessage.TYPE_STOP, url.getUrl( ) );
+                        }
+                    }
                 }
+
 
                 userAttributes.put( strUserAttributeKey,
                     StringUtils.isNotBlank( strUserAttributeValue ) ? strUserAttributeValue : StringUtils.EMPTY );

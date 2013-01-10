@@ -41,13 +41,13 @@ import fr.paris.lutece.portal.service.security.UserAttributesService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -195,5 +195,23 @@ public final class CRMUserAttributesService implements UserAttributesService
         }
 
         return listLabels;
+    }
+
+    /**
+     * Check if a value of an attribute is used by a user for a given attribute
+     * key
+     * @param strUserAttributeValue The value of the attribute
+     * @param strUserAttributeKey The key of the attribute
+     * @return True if a user has an attribute matching the given key and value,
+     *         false otherwise. Also return false if the given attribute key is
+     *         null or empty.
+     */
+    public boolean isAttributeValueInUse( String strAttributeValue, String strUserAttributeKey )
+    {
+        if ( StringUtils.isEmpty( strUserAttributeKey ) )
+        {
+            return false;
+        }
+        return CRMUserAttributeHome.countAttributeValueInstances( strAttributeValue, strUserAttributeKey ) > 0;
     }
 }
