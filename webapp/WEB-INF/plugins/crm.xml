@@ -2,7 +2,7 @@
     <!-- Plugin Informations -->
     <name>crm</name>
     <class>fr.paris.lutece.plugins.crm.service.CRMPlugin</class>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <documentation/>
     <installation/>
     <changes/>
