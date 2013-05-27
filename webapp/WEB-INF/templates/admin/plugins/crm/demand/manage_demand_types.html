@@ -14,7 +14,7 @@
 		    	<span class="pull-right">
 					<form class="form-inline spaced" method="post" action="jsp/admin/plugins/crm/ManageAdvancedParameters.jsp">
 					   	<button type="submit" value="#i18n{crm.manage_demand_types.buttonAdvancedParameters}" class="btn btn-primary btn-small" >
-					   		#i18n{crm.manage_demand_types.buttonAdvancedParameters}
+					   		<i class="icon-cog icon-white"></i>&nbsp;#i18n{crm.manage_demand_types.buttonAdvancedParameters}
 					   	</button>
 					</form>
 				</span>
@@ -22,7 +22,7 @@
 				<span class="pull-right">
 					<form class="form-inline spaced" method="post" action="jsp/admin/plugins/crm/ManageCategories.jsp">
 					   	<button type="submit" value="#i18n{crm.manage_demand_types.buttonManageCategories}" class="btn btn-primary btn-small" >
-					   		#i18n{crm.manage_demand_types.buttonManageCategories}
+					   		<i class="icon-tags icon-white"></i>&nbsp;#i18n{crm.manage_demand_types.buttonManageCategories}
 					   	</button>
 					</form>
 				</span>
@@ -43,11 +43,11 @@
 				    	<input type="hidden" name="search" value="search" />
 				    	<div class="control-group">
 				    		<label class="control-label" for="label">#i18n{crm.manage_demand_types.columnLabel} :</label>
-				    		<input type="text" class="input-medium" name="label" value="<#if demand_type_filter??>${demand_type_filter.label}</#if>" />
+				    		<input type="text" class="input-normal" name="label" value="<#if demand_type_filter??>${demand_type_filter.label}</#if>" />
 				    	</div>
 				    	<div class="control-group">
 				    		<label class="control-label" for="url_resource">#i18n{crm.manage_demand_types.columnUrlResource} :</label>
-				    		<input type="text" class="input-medium" name="url_resource" value="<#if demand_type_filter??>${demand_type_filter.urlResource}</#if>" />
+				    		<input type="text" class="input-normal" name="url_resource" value="<#if demand_type_filter??>${demand_type_filter.urlResource}</#if>" />
 				    	</div>
 				    	<div class="control-group">
 				    		<label for="category_id_category">#i18n{crm.manage_demand_types.columnCategory} :</label>
@@ -65,10 +65,11 @@
 				    		<#else>
 				    			<#assign id_operator_date_begin = 0>
 				    		</#if>
-				    		<@combo name="operator_date_begin" items=operators_list default_value=id_operator_date_begin />
+				    		<!-- @combo name="operator_date_begin" items=operators_list default_value=id_operator_date_begin / -->
 				    		<div class="input-prepend">
+<@comboWithParams name="operator_date_begin" default_value="id_operator_date_begin" additionalParameters="class=\"input-mini spaced\"" items=operators_list />
 			            		<span class="add-on"><i class="icon-calendar"></i></span>
-				    			<input type="text" class="input-medium" id="date_begin" name="date_begin" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateBegin??>${demand_type_filter.dateBegin?date}</#if>" />
+				    			<input type="text" class="input-small" id="date_begin" name="date_begin" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateBegin??>${demand_type_filter.dateBegin?date}</#if>" />
 				    		</div>
 				    	</div>
 				    	<div class="control-group">
@@ -78,24 +79,26 @@
 				    		<#else>
 				    			<#assign id_operator_date_end = 0>
 				    		</#if>
-				    		<@combo name="operator_date_end" items=operators_list default_value=id_operator_date_end />
 				    		<div class="input-prepend">
+								<@comboWithParams name="operator_date_end" default_value="id_operator_date_end" additionalParameters="class=\"input-mini spaced\"" items=operators_list />
 			            		<span class="add-on"><i class="icon-calendar"></i></span>
-				    			<input type="text" class="input-medium" id="date_end" name="date_end" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateEnd??>${demand_type_filter.dateEnd?date}</#if>" />
+				    			<input type="text" class="input-small" id="date_end" name="date_end" size="10" maxlength="10" value="<#if demand_type_filter?? && demand_type_filter.dateEnd??>${demand_type_filter.dateEnd?date}</#if>" />
 				    		</div>
 				    	</div>
+						<div class="form-actions">
 				    	<button class="btn btn-primary btn-small" type="submit" value="#i18n{crm.manage_demand_types.buttonSearch}" >
 				    		<i class="icon-search icon-white" ></i>&nbsp;#i18n{crm.manage_demand_types.buttonSearch}
 				    	</button>
+						</div>
 				    </form>
 				</div>
 				<div class="span9">
 				    <#if !is_well_ordered>
-				    	<p>
-				    		<a class="alert" href="jsp/admin/plugins/crm/DoReorderDemandTypes.jsp">
-				    			#i18n{crm.manage_demand_types.labelReorderDemandTypes}
+				    	<div class="alert alert-warning span6">
+				    		<a class="btn btn-warning" href="jsp/admin/plugins/crm/DoReorderDemandTypes.jsp">
+				    			<i class="icon-refresh icon-white"></i>&nbsp;#i18n{crm.manage_demand_types.labelReorderDemandTypes}
 				    		</a>
-				    	</p>
+				    	</div>
 				    </#if>
 				    <form method="post" action="jsp/admin/plugins/crm/ManageDemandTypes.jsp">
 			        	<@paginationAdmin paginator=paginator combo=1 form=0/>
@@ -107,16 +110,14 @@
 				        		#i18n{crm.manage_demand_types.columnOrder}
 				        		<@sort jsp_url="jsp/admin/plugins/crm/ManageDemandTypes.jsp" attribute="order&amp;session=session" />
 				        	</th>
-					        <th nowrap="nowrap">
+					        <th>
 					        	#i18n{crm.manage_demand_types.columnLabel}
 					        	<@sort jsp_url="jsp/admin/plugins/crm/ManageDemandTypes.jsp" attribute="label&amp;session=session" />
-					        </th>
-					        <th nowrap="nowrap">
+					       <!--
 					        	#i18n{crm.manage_demand_types.columnUrlResource}
 					        	<@sort jsp_url="jsp/admin/plugins/crm/ManageDemandTypes.jsp" attribute="urlResource&amp;session=session" />
-					        </th>
-					        <th nowrap="nowrap">
-					        	#i18n{crm.manage_demand_types.columnCategory}
+					        -->
+					        	
 					        </th>
 					        <th nowrap="nowrap">
 					        	#i18n{crm.manage_demand_types.columnDateBegin}
@@ -130,19 +131,15 @@
 				        </tr>
 				        <#list demand_types_list as demand_type>
 					        <tr>
-					        	<td>
-					        		${demand_type.order}
-					        	</td>
+					        	<td>${demand_type.order}</td>
 						        <td>
-									${demand_type.label}
-						        </td>
-						        <td>
-						        	<a class="btn btn-link" href="${demand_type.urlResource}">
-						        		${demand_type.urlResource}
-						        	</a>
-						        </td>
-						        <td>
-						        	${getCategoryName( categories_list, demand_type.idCategory)}
+									<strong>${demand_type.label}</strong>
+									<p>
+									<a href="${demand_type.urlResource}" title="${demand_type.urlResource}" target="_blank">
+										<i class="icon-globe"></i>&nbsp;${demand_type.urlResource?substring(0,35)}...
+									</a>
+									</p>
+									<p>#i18n{crm.manage_demand_types.columnCategory}: <strong>${getCategoryName( categories_list, demand_type.idCategory)}</strong></p>
 						        </td>
 						        <td>
 						        	<#if demand_type.dateBegin??>
@@ -183,8 +180,6 @@
 		</fieldset>
 	</div>
 </div>
-<br /><br />
-
 <script src="js/jquery/plugins/ui/jquery-ui-1.8.16.custom.min.js"></script>
 <script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
 <@getDatePicker idField="date_begin" language=locale.language />

@@ -1,13 +1,24 @@
-<form action="jsp/admin/plugins/crm/DoModifyDraftDisplay.jsp" name="modifyDraftDisplay" method="post">
-	<fieldset>
+<div class="row-fluid">
+	<div class="span12">
+		<fieldset>
 		<legend>#i18n{crm.manage_demand_types.advancedParametersLabel}</legend>
-		<div class="control-group">
-			<label for="advancedParametersLabel">#i18n{crm.manage_demand_types.displayDraftLabel} :</label>
-			<div class="controls" style="margin-left: 189px; margin-top: -27px;">
-				<input type="checkbox" <#if bDisplayDraft!>checked="checked"</#if> name="bDisplayDraft" />
-				<span class="help-block">#i18n{crm.manage_demand_types.displayDraftDescription}</span>
+			<form action="jsp/admin/plugins/crm/DoModifyDraftDisplay.jsp" name="modifyDraftDisplay" method="post">
+			<div class="control-group">
+				<label for="advancedParametersLabel" class="checkbox">
+				#i18n{crm.manage_demand_types.displayDraftLabel}
+					<input type="checkbox" <#if bDisplayDraft!>checked="checked"</#if> name="bDisplayDraft" />
+				</label>
+				<p class="help-block">#i18n{crm.manage_demand_types.displayDraftDescription}</p>
 			</div>
-			<button type="submit" class="btn btn-primary btn-small">#i18n{crm.crm.buttonModify}</button>
-		</div>
-	</fieldset>
-</form>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary btn-small">
+					<i class="icon-ok icon-white"></i>&nbsp;#i18n{crm.crm.buttonModify}
+				</button>
+				<a class="btn btn-small" href="jsp/admin/plugins/crm/ManageCategories.jsp">
+					<i class="icon-remove-circle"></i>&nbsp;#i18n{crm.modify_category.buttonCancel}
+				</a>
+			</div>
+			</form>
+		</fieldset>
+	</div>
+</div>
