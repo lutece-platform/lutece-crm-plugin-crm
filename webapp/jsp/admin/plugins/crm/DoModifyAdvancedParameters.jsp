@@ -5,4 +5,6 @@
 <%
 	crmDemandType.init( request, crmDemandType.RIGHT_MANAGE_CRM_DEMAND_TYPES );
 %>
-<% response.sendRedirect( crmDemandType.doModifyDraftDisplay( request ) ); %>
+<%
+	response.sendRedirect( crmDemandType.doModifyAdvancedParameters( request ) );
+%>

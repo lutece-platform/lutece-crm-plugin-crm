@@ -136,7 +136,13 @@
 									<strong>${demand_type.label}</strong>
 									<p>
 									<a href="${demand_type.urlResource}" title="${demand_type.urlResource}" target="_blank">
-										<i class="icon-globe"></i>&nbsp;${demand_type.urlResource?substring(0,35)}...
+										<i class="icon-globe"></i>&nbsp;
+										
+										<#if demand_type.urlResource?length &gt; 35>
+											${demand_type.urlResource?substring(0,35)}...
+										<#else>
+											${demand_type.urlResource}
+										</#if>	
 									</a>
 									</p>
 									<p>#i18n{crm.manage_demand_types.columnCategory}: <strong>${getCategoryName( categories_list, demand_type.idCategory)}</strong></p>

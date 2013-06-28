@@ -33,6 +33,17 @@
  */
 package fr.paris.lutece.plugins.crm.web;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.crm.business.demand.Demand;
 import fr.paris.lutece.plugins.crm.business.demand.DemandFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM;
@@ -73,17 +84,6 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.html.IPaginator;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -127,13 +127,25 @@ public class CRMApp implements XPageApplication
         throws UserNotSignedException, SiteMessageException
     {
         XPage page = null;
-        LuteceUser user = getUser( request );
-        createCRMAccount( user );
-
+        LuteceUser user = null;
+        
+        try {
+        	user=getUser( request );
+		} catch (UserNotSignedException e) {
+			
+		}
+        
+       createCRMAccount( user );
+        
         String strAction = request.getParameter( CRMConstants.PARAMETER_ACTION );
 
         if ( StringUtils.isNotBlank( strAction ) )
         {
+        	if(user == null)
+            {
+        		throw new UserNotSignedException();
+            }
+        	
             if ( CRMConstants.ACTION_MANAGE_NOTIFICATIONS.equals( strAction ) )
             {
                 page = getManageNotificationsPage( request, user );
@@ -148,11 +160,11 @@ public class CRMApp implements XPageApplication
             }
             else if ( CRMConstants.ACTION_MODIFY_CRM_USER.equals( strAction ) )
             {
-                page = getModifyCRMUserPage( request, user );
+            	page = getModifyCRMUserPage( request, user );
             }
             else if ( CRMConstants.ACTION_DO_MODIFY_CRM_USER.equals( strAction ) )
             {
-                doModifyCRMUser( request, user );
+            	doModifyCRMUser( request, user );
                 page = getModifyCRMUserPage( request, user );
             }
         }
@@ -176,138 +188,139 @@ public class CRMApp implements XPageApplication
         throws SiteMessageException
     {
         XPage page = null;
-        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
-
+        CRMUser crmUser = user!=null?_crmUserService.findByUserGuid( user.getName(  ) ):null;
+        page = new XPage(  );
+        Map<String, Object> model = new HashMap<String, Object>(  );
         if ( crmUser != null )
         {
-            page = new XPage(  );
-
-            DemandFilter dFilter = new DemandFilter(  );
-            Map<String, Object> model = new HashMap<String, Object>(  );
-
-            //research by filter
-            dFilter.setIdCRMUser( crmUser.getIdCRMUser(  ) );
-
-            PaginationFilterSortManager paginationFilterSortManager = new PaginationFilterSortManager( request );
-
-            String strSession = (String) ( request.getParameter( CRMConstants.PARAMETER_SESSION ) );
-
-            if ( StringUtils.isBlank( strSession ) )
-            {
-                paginationFilterSortManager.cleanSession(  );
-            }
-
-            String strIdStatusToSort = (String) ( request.getParameter( CRMConstants.PARAMETER_ID_STATUS ) );
-            String strSortField = (String) ( request.getParameter( CRMConstants.PARAMETER_SORT_ATTRIBUTE ) );
-            String strSortOrder = (String) ( request.getParameter( CRMConstants.PARAMETER_SORT_ORDER ) );
-
-            int nIdStatusToSort = -1;
-
-            if ( StringUtils.isNotEmpty( strIdStatusToSort ) )
-            {
-                nIdStatusToSort = Integer.parseInt( strIdStatusToSort );
-            }
-
-            if ( StringUtils.isNotEmpty( strSortField ) && StringUtils.isNotEmpty( strSortOrder ) )
-            {
-                paginationFilterSortManager.storeSort( nIdStatusToSort, strSortField,
-                    Boolean.parseBoolean( strSortOrder ) );
-            }
-
-            String strModificationDate = request.getParameter( CRMConstants.PARAMETER_MODIFICATIONDATE );
-            String strDemandType = request.getParameter( CRMConstants.PARAMETER_DEMANDTYPE );
-            String strNotification = request.getParameter( CRMConstants.PARAMETER_NOTIFICATION );
-
-            if ( StringUtils.isNotBlank( strModificationDate ) || StringUtils.isNotBlank( strDemandType ) ||
-                    StringUtils.isNotBlank( strNotification ) )
-            {
-                paginationFilterSortManager.cleanSessionFilter(  );
-            }
-
-            if ( StringUtils.isNotBlank( strModificationDate ) )
-            {
-                Date modificationDate = checkFormatModificationDateFilter( strModificationDate, request );
-                paginationFilterSortManager.storeFilterModificationDate( modificationDate );
-                paginationFilterSortManager.storeFilterStringModificationDate( strModificationDate );
-            }
-
-            if ( StringUtils.isNotBlank( strDemandType ) )
-            {
-                int nIdDemandType = Integer.parseInt( strDemandType );
-                paginationFilterSortManager.storeFilterDemandType( nIdDemandType );
-            }
-
-            if ( StringUtils.isNotBlank( strNotification ) )
-            {
-                paginationFilterSortManager.storeFilterNotification( strNotification );
-            }
-
-            Date dateModificationSession = paginationFilterSortManager.retrieveFilterModificationDate(  );
-
-            if ( dateModificationSession != null )
-            {
-                dFilter.setDateModification( dateModificationSession );
-                model.put( CRMConstants.MARK_MODIFICATIONDATE,
-                    paginationFilterSortManager.retrieveFilterStringModificationDate(  ) );
-            }
-
-            Integer nIdDemandTypeSession = paginationFilterSortManager.retrieveFilterDemandType(  );
-
-            if ( ( nIdDemandTypeSession != null ) && ( nIdDemandTypeSession >= 0 ) )
-            {
-                dFilter.setIdDemandType( nIdDemandTypeSession );
-            }
-
-            String strNotificationSession = paginationFilterSortManager.retrieveFilterNotification(  );
-
-            if ( StringUtils.isNotBlank( strNotificationSession ) )
-            {
-                dFilter.setNotification( strNotificationSession );
-            }
-
+	           //research by filter
+	            DemandFilter dFilter = new DemandFilter(  );
+	            dFilter.setIdCRMUser( crmUser.getIdCRMUser(  ) );
+	
+	            PaginationFilterSortManager paginationFilterSortManager = new PaginationFilterSortManager( request );
+	
+	            String strSession = (String) ( request.getParameter( CRMConstants.PARAMETER_SESSION ) );
+	
+	            if ( StringUtils.isBlank( strSession ) )
+	            {
+	                paginationFilterSortManager.cleanSession(  );
+	            }
+	
+	            String strIdStatusToSort = (String) ( request.getParameter( CRMConstants.PARAMETER_ID_STATUS ) );
+	            String strSortField = (String) ( request.getParameter( CRMConstants.PARAMETER_SORT_ATTRIBUTE ) );
+	            String strSortOrder = (String) ( request.getParameter( CRMConstants.PARAMETER_SORT_ORDER ) );
+	
+	            int nIdStatusToSort = -1;
+	
+	            if ( StringUtils.isNotEmpty( strIdStatusToSort ) )
+	            {
+	                nIdStatusToSort = Integer.parseInt( strIdStatusToSort );
+	            }
+	
+	            if ( StringUtils.isNotEmpty( strSortField ) && StringUtils.isNotEmpty( strSortOrder ) )
+	            {
+	                paginationFilterSortManager.storeSort( nIdStatusToSort, strSortField,
+	                    Boolean.parseBoolean( strSortOrder ) );
+	            }
+	
+	            String strModificationDate = request.getParameter( CRMConstants.PARAMETER_MODIFICATIONDATE );
+	            String strDemandType = request.getParameter( CRMConstants.PARAMETER_DEMANDTYPE );
+	            String strNotification = request.getParameter( CRMConstants.PARAMETER_NOTIFICATION );
+	
+	            if ( StringUtils.isNotBlank( strModificationDate ) || StringUtils.isNotBlank( strDemandType ) ||
+	                    StringUtils.isNotBlank( strNotification ) )
+	            {
+	                paginationFilterSortManager.cleanSessionFilter(  );
+	            }
+	
+	            if ( StringUtils.isNotBlank( strModificationDate ) )
+	            {
+	                Date modificationDate = checkFormatModificationDateFilter( strModificationDate, request );
+	                paginationFilterSortManager.storeFilterModificationDate( modificationDate );
+	                paginationFilterSortManager.storeFilterStringModificationDate( strModificationDate );
+	            }
+	
+	            if ( StringUtils.isNotBlank( strDemandType ) )
+	            {
+	                int nIdDemandType = Integer.parseInt( strDemandType );
+	                paginationFilterSortManager.storeFilterDemandType( nIdDemandType );
+	            }
+	
+	            if ( StringUtils.isNotBlank( strNotification ) )
+	            {
+	                paginationFilterSortManager.storeFilterNotification( strNotification );
+	            }
+	
+	            Date dateModificationSession = paginationFilterSortManager.retrieveFilterModificationDate(  );
+	
+	            if ( dateModificationSession != null )
+	            {
+	                dFilter.setDateModification( dateModificationSession );
+	                model.put( CRMConstants.MARK_MODIFICATIONDATE,
+	                    paginationFilterSortManager.retrieveFilterStringModificationDate(  ) );
+	            }
+	
+	            Integer nIdDemandTypeSession = paginationFilterSortManager.retrieveFilterDemandType(  );
+	
+	            if ( ( nIdDemandTypeSession != null ) && ( nIdDemandTypeSession >= 0 ) )
+	            {
+	                dFilter.setIdDemandType( nIdDemandTypeSession );
+	            }
+	
+	            String strNotificationSession = paginationFilterSortManager.retrieveFilterNotification(  );
+	
+	            if ( StringUtils.isNotBlank( strNotificationSession ) )
+	            {
+	                dFilter.setNotification( strNotificationSession );
+	            }
+	            
+	            model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
+	                    _demandService.findByFilterMap( dFilter, request.getLocale(  ), paginationFilterSortManager ) );
+	            model.put( CRMConstants.MARK_FILTER, dFilter );
+	            
+	            Map<String, IPaginator<Demand>> mapPaginator = new HashMap<String, IPaginator<Demand>>(  );
+	            Map<String, String> mapNbItemsPerPage = new HashMap<String, String>(  );
+	            int nIdStatus;
+	
+	            for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  )
+	                                                                    .getAllStatusCRM( request.getLocale(  ) ) )
+	            {
+	                nIdStatus = statusCRM.getIdStatusCRM(  );
+	
+	                IPaginator<Demand> paginator = paginationFilterSortManager.retrievePaginator( nIdStatus );
+	                int nItemsPerPage = paginationFilterSortManager.retrieveItemsPerPage( nIdStatus );
+	
+	                mapNbItemsPerPage.put( Integer.toString( nIdStatus ), Integer.toString( nItemsPerPage ) );
+	                mapPaginator.put( Integer.toString( nIdStatus ), paginator );
+	            }
+	            model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
+	
+	            model.put( CRMConstants.MARK_MAP_PAGINATOR, mapPaginator );
+	            model.put( CRMConstants.MARK_MAP_NB_ITEMS_PER_PAGE, mapNbItemsPerPage );
+	            model.put( CRMConstants.MARK_DISPLAYDRAFT,
+	                    _advancedParametersService.isParameterValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT ) );
+	             
+        	}
+        	model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
             model.put( CRMConstants.MARK_MAP_DEMAND_TYPES_LIST, _demandTypeService.findForLuteceUser( request ) );
             model.put( CRMConstants.MARK_CATEGORIES_LIST,
                 _categoryService.getCategories( request.getLocale(  ), false, true ) );
-            model.put( CRMConstants.MARK_MAP_DEMANDS_LIST,
-                _demandService.findByFilterMap( dFilter, request.getLocale(  ), paginationFilterSortManager ) );
-            model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
-            model.put( CRMConstants.MARK_STATUS_CRM_LIST, _statusCRMService.getAllStatusCRM( request.getLocale(  ) ) );
+             model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, _demandTypeService.findAll(  ) );
+          
             model.put( CRMConstants.MARK_CRM_USER, crmUser );
-            model.put( CRMConstants.MARK_DISPLAYDRAFT,
-                _advancedParametersService.isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT ) );
-            model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
-            model.put( CRMConstants.MARK_FILTER, dFilter );
-
             List<DemandType> listAllOpenedDemandType = initListAllOpenedDemandType(  );
 
             model.put( CRMConstants.MARK_DEMAND_TYPES_REFLIST,
                 ListUtils.toReferenceList( listAllOpenedDemandType, "idDemandType", "label", "" ) );
-
-            Map<String, IPaginator<Demand>> mapPaginator = new HashMap<String, IPaginator<Demand>>(  );
-            Map<String, String> mapNbItemsPerPage = new HashMap<String, String>(  );
-            int nIdStatus;
-
-            for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  )
-                                                                    .getAllStatusCRM( request.getLocale(  ) ) )
-            {
-                nIdStatus = statusCRM.getIdStatusCRM(  );
-
-                IPaginator<Demand> paginator = paginationFilterSortManager.retrievePaginator( nIdStatus );
-                int nItemsPerPage = paginationFilterSortManager.retrieveItemsPerPage( nIdStatus );
-
-                mapNbItemsPerPage.put( Integer.toString( nIdStatus ), Integer.toString( nItemsPerPage ) );
-                mapPaginator.put( Integer.toString( nIdStatus ), paginator );
-            }
-
-            model.put( CRMConstants.MARK_MAP_PAGINATOR, mapPaginator );
-            model.put( CRMConstants.MARK_MAP_NB_ITEMS_PER_PAGE, mapNbItemsPerPage );
-
+            
+            model.put(CRMConstants.MARK_MAP_DO_LOGIN,SecurityService.getInstance(  ).getLoginPageUrl() );
+            
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
 
             page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_TITLE, request.getLocale(  ) ) );
             page.setPathLabel( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_PATH, request.getLocale(  ) ) );
             page.setContent( template.getHtml(  ) );
-        }
+        
 
         return page;
     }
@@ -576,24 +589,28 @@ public class CRMApp implements XPageApplication
      */
     private void createCRMAccount( LuteceUser user )
     {
-        CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
-
-        if ( crmUser == null )
-        {
-            crmUser = new CRMUser(  );
-            crmUser.setUserGuid( user.getName(  ) );
-            crmUser.setStatus( CRMUser.STATUS_ACTIVATED );
-
-            Map<String, String> userAttributes = new HashMap<String, String>(  );
-
-            for ( String strUserAttributeKey : _crmUserAttributesService.getUserAttributeKeys(  ) )
-            {
-                userAttributes.put( strUserAttributeKey, user.getUserInfo( strUserAttributeKey ) );
-            }
-
-            crmUser.setUserAttributes( userAttributes );
-            _crmUserService.create( crmUser );
-        }
+    	  if(	user!=null	)
+          {
+         
+	    	CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+	
+	        if ( crmUser == null )
+	        {
+	            crmUser = new CRMUser(  );
+	            crmUser.setUserGuid( user.getName(  ) );
+	            crmUser.setStatus( CRMUser.STATUS_ACTIVATED );
+	
+	            Map<String, String> userAttributes = new HashMap<String, String>(  );
+	
+	            for ( String strUserAttributeKey : _crmUserAttributesService.getUserAttributeKeys(  ) )
+	            {
+	                userAttributes.put( strUserAttributeKey, user.getUserInfo( strUserAttributeKey ) );
+	            }
+	
+	            crmUser.setUserAttributes( userAttributes );
+	            _crmUserService.create( crmUser );
+	        }
+          }
     }
 
     /**
@@ -608,30 +625,50 @@ public class CRMApp implements XPageApplication
 
         try
         {
-            user = getUser( request );
-
-            CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
-            String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
-
-            if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdDemandType ) &&
-                    StringUtils.isNumeric( strIdDemandType ) )
+            
+    		
+        	boolean bUseIdCrmUser=_advancedParametersService.isParameterValueByKey(CRMConstants.CONSTANT_USE_ID_CRM_USER);
+        	String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
+    		CRMUser crmUser=null;
+        	if( bUseIdCrmUser)
+        	{
+        		user = getUser( request );
+        		crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+        		
+        	}
+            
+            
+           if ( StringUtils.isNotBlank( strIdDemandType ) &&
+                    StringUtils.isNumeric( strIdDemandType ) && !(bUseIdCrmUser && crmUser==null) )
             {
-                int nIdDemandType = Integer.parseInt( strIdDemandType );
+        	   
+        	    int nIdDemandType = Integer.parseInt( strIdDemandType );
                 DemandType demandType = _demandTypeService.findByPrimaryKey( nIdDemandType );
 
                 if ( ( demandType != null ) && demandType.isOpen(  ) )
                 {
                     List<String> listElements = new ArrayList<String>(  );
+                     
                     listElements.add( Integer.toString( demandType.getIdDemandType(  ) ) );
-                    listElements.add( Integer.toString( crmUser.getIdCRMUser(  ) ) );
-
+                    if(bUseIdCrmUser)
+                    {
+                    	listElements.add( Integer.toString( crmUser.getIdCRMUser(  ) ) );
+                    	
+                    }
+                    
+                    
+                  
+                    
                     String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
                     String strSignature = CRMRequestAuthenticatorService.getRequestAuthenticatorForUrl(  )
                                                                         .buildSignature( listElements, strTimestamp );
 
                     UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, demandType.getIdDemandType(  ) );
-                    url.addParameter( CRMConstants.PARAMETER_ID_CRM_USER, crmUser.getIdCRMUser(  ) );
+                    if (bUseIdCrmUser)
+                    {
+                    	url.addParameter( CRMConstants.PARAMETER_ID_CRM_USER, crmUser.getIdCRMUser(  ) );
+                    }
                     url.addParameter( CRMConstants.PARAMETER_TIMESTAMP, strTimestamp );
                     url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
 
@@ -641,7 +678,7 @@ public class CRMApp implements XPageApplication
         }
         catch ( UserNotSignedException e )
         {
-            strUrl = strUrl + JSP_SITE + PortalJspBean.redirectLogin( request );
+            strUrl = PortalJspBean.redirectLogin( request );
         }
 
         return strUrl;
@@ -696,7 +733,7 @@ public class CRMApp implements XPageApplication
         }
         catch ( UserNotSignedException e )
         {
-            strUrl = strUrl + JSP_SITE + PortalJspBean.redirectLogin( request );
+            strUrl = PortalJspBean.redirectLogin( request );
         }
 
         return strUrl;
@@ -714,12 +751,10 @@ public class CRMApp implements XPageApplication
         if ( SecurityService.isAuthenticationEnable(  ) )
         {
             LuteceUser user = SecurityService.getInstance(  ).getRemoteUser( request );
-
             if ( user == null )
             {
                 throw new UserNotSignedException(  );
             }
-
             return user;
         }
         else

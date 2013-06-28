@@ -39,6 +39,7 @@ import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeHome;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeRoleRemovalListener;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeWorkgroupRemovalListener;
+import fr.paris.lutece.plugins.crm.business.portlet.DemandTypePortlet;
 import fr.paris.lutece.plugins.crm.service.category.CategoryRemovalListenerService;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
@@ -216,6 +217,32 @@ public class DemandTypeService
     {
         return DemandTypeHome.findByFilter( dtFilter );
     }
+    
+    
+    
+    /**
+     * Find the list of demand types for the lutece user and a category
+     * @param request {@link HttpServletRequest}
+     * @param nIdCategory the category Id Selected
+     * @return a list of demand Type
+     */
+    public List<DemandType> findForLuteceUser( HttpServletRequest request , int  nIdCategory)
+    {
+       
+    	DemandTypeFilter dtFilter = new DemandTypeFilter(  );
+         dtFilter.setIdCategory( nIdCategory );
+         List<DemandType> listAuthorizedDemandTypes = new ArrayList<DemandType>(  );
+         Date dateToday = new Date(  );
+         for ( DemandType demandType : DemandTypeHome.findByIdCategoryAndDate( nIdCategory, dateToday ) )
+         {
+        	 if ( checkRoleForDemandType( demandType, request ) )
+        	 {
+                listAuthorizedDemandTypes.add( demandType );
+        	 }
+         }
+        return listAuthorizedDemandTypes;
+    }
+
 
     /**
      * Find the list of demand types for the lutece user ordered by id category
@@ -229,21 +256,7 @@ public class DemandTypeService
         for ( ReferenceItem category : CategoryService.getService(  ).getCategories( request.getLocale(  ), false, true ) )
         {
             int nIdCategory = Integer.parseInt( category.getCode(  ) );
-            DemandTypeFilter dtFilter = new DemandTypeFilter(  );
-            dtFilter.setIdCategory( nIdCategory );
-
-            List<DemandType> listAuthorizedDemandTypes = new ArrayList<DemandType>(  );
-            Date dateToday = new Date(  );
-
-            for ( DemandType demandType : DemandTypeHome.findByIdCategoryAndDate( nIdCategory, dateToday ) )
-            {
-                if ( checkRoleForDemandType( demandType, request ) )
-                {
-                    listAuthorizedDemandTypes.add( demandType );
-                }
-            }
-
-            map.put( category.getCode(  ), listAuthorizedDemandTypes );
+            map.put( category.getCode(  ), findForLuteceUser(request,nIdCategory) );
         }
 
         return map;

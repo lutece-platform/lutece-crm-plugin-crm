@@ -11,7 +11,7 @@
 	<bean id="crm.crmUserDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserDAO" />
 	<bean id="crm.crmUserAttributeDAO" class="fr.paris.lutece.plugins.crm.business.user.CRMUserAttributeDAO" />
 	<bean id="crm.advancedParametersDAO" class="fr.paris.lutece.plugins.crm.business.parameters.AdvancedParametersDAO" />
-	
+	<bean id="crm.demandTypePortletDAO" class="fr.paris.lutece.plugins.crm.business.portlet.DemandTypePortletDAO" />
 	<!-- Removal Service -->
     <bean id="crm.categoryRemovalService" class="fr.paris.lutece.portal.service.util.RemovalListenerService" />
     

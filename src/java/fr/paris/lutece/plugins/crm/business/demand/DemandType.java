@@ -33,12 +33,19 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
-import fr.paris.lutece.plugins.crm.util.TargetEnum;
-import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Date;
+import fr.paris.lutece.plugins.crm.util.CrmUtils;
+import fr.paris.lutece.plugins.crm.util.TargetEnum;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
+import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
+import fr.paris.lutece.util.date.DateUtil;
+import fr.paris.lutece.util.xml.XmlUtil;
 
 
 /**
@@ -49,6 +56,8 @@ import java.util.Date;
 public class DemandType implements AdminWorkgroupResource
 {
     public static final String ROLE_NONE = "none";
+    
+    
     private int _nIdDemandType;
     private String _strLabel;
     private String _strUrlResource;
@@ -360,4 +369,40 @@ public class DemandType implements AdminWorkgroupResource
     {
         _strUrlDelete = strUrlDelete;
     }
+    
+    
+    /**
+     * Returns the xml of this Demande Type
+     *
+     * @param request The HTTP Servlet request
+     * @param locale the Locale
+     * @return the xml of this Demande Type
+     */
+    public String getXml( HttpServletRequest request, Locale locale )
+    {
+        StringBuffer strXml = new StringBuffer(  );
+        XmlUtil.beginElement( strXml, CRMConstants.TAG_DEMAND_TYPE );
+        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_ID,_nIdDemandType );
+        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_CATEGORY,_nIdCategory );
+        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_ORDER, _nOrder );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_LABEL,_strLabel  );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_RESOURCE,_strUrlResource);
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_INFO,_strUrlInfo);
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_CONTACT,_strUrlContact);
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_TARGET,_target.toString());
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_DELETE,_strUrlDelete);
+        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_DATE_BEGIN, _dateBegin !=null ?DateUtil.getDateString(_dateBegin,locale):null);
+        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_DATE_END, _dateEnd !=null ?DateUtil.getDateString(_dateEnd,locale):null);
+        XmlUtil.endElement( strXml, CRMConstants.TAG_DEMAND_TYPE );
+        return strXml.toString(  );
+    }
+    
+    
+    
+    
+    
+   
+    
+    
+    
 }

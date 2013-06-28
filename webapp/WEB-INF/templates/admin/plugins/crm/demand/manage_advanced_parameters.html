@@ -2,13 +2,20 @@
 	<div class="span12">
 		<fieldset>
 		<legend>#i18n{crm.manage_demand_types.advancedParametersLabel}</legend>
-			<form action="jsp/admin/plugins/crm/DoModifyDraftDisplay.jsp" name="modifyDraftDisplay" method="post">
+			<form action="jsp/admin/plugins/crm/DoModifyAdvancedParameters.jsp" name="modifyAdvancedParameters" method="post">
 			<div class="control-group">
 				<label for="advancedParametersLabel" class="checkbox">
 				#i18n{crm.manage_demand_types.displayDraftLabel}
-					<input type="checkbox" <#if bDisplayDraft!>checked="checked"</#if> name="bDisplayDraft" />
+					<input type="checkbox" <#if bDisplayDraft!>checked="checked"</#if> name="bDisplayDraft" checked='checked' />
 				</label>
 				<p class="help-block">#i18n{crm.manage_demand_types.displayDraftDescription}</p>
+			</div>
+			<div class="control-group">
+				<label for="" class="checkbox">
+				#i18n{crm.manage_demand_types.useIdCrmUserLabel}
+					<input type="checkbox" <#if bUseIdCrmUser!>checked="checked"</#if> name="bUseIdCrmUser" />
+				</label>
+				<p class="help-block">#i18n{crm.manage_demand_types.useIdCrmUserDescription}</p>
 			</div>
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary btn-small">

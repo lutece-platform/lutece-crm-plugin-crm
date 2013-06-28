@@ -76,12 +76,12 @@ public class AdvancedParametersService
     }
 
     /**
-     * Get the boolean strValue for the parameter displayDraft.
+     * Get the boolean strValue of a parameter.
      *
      * @param strKey the str key
      * @return the string strValue
      */
-    public boolean isParameterValueDisplayDraftTrue( String strKey )
+    public boolean isParameterValueByKey( String strKey )
     {
         return Boolean.valueOf( AdvancedParametersHome.getParameterStringValueByKey( strKey ) );
     }

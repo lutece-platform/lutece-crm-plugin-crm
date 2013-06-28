@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.crm.service.category;
 
 import fr.paris.lutece.plugins.crm.business.demand.category.Category;
 import fr.paris.lutece.plugins.crm.business.demand.category.CategoryHome;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -55,10 +56,8 @@ import java.util.Locale;
  */
 public class CategoryService
 {
-    private static final String NO_CATEGORY = "0";
-    private static final String ALL_CATEGORY = "-1";
-    private static final String PROPERTY_NO_CATEGORY = "crm.crm.labelNoCategory";
-    private static final String PROPERTY_ALL_CATEGORY = "crm.crm.labelAllCategory";
+    
+    
     private static final String BEAN_CRM_CATEGORYSERVICE = "crm.categoryService";
 
     /**
@@ -99,11 +98,11 @@ public class CategoryService
 
         if ( bIsDefaultChoiceTop )
         {
-            list.addItem( NO_CATEGORY, I18nService.getLocalizedString( PROPERTY_NO_CATEGORY, locale ) );
+            list.addItem( CRMConstants.NO_CATEGORY, I18nService.getLocalizedString( CRMConstants.PROPERTY_NO_CATEGORY, locale ) );
 
             if ( bAddAllCategory )
             {
-                list.addItem( ALL_CATEGORY, I18nService.getLocalizedString( PROPERTY_ALL_CATEGORY, locale ) );
+                list.addItem( CRMConstants.ALL_CATEGORY, I18nService.getLocalizedString( CRMConstants.PROPERTY_ALL_CATEGORY, locale ) );
             }
 
             list.addAll( CategoryHome.getCategories(  ) );
@@ -111,11 +110,11 @@ public class CategoryService
         else
         {
             list = CategoryHome.getCategories(  );
-            list.addItem( NO_CATEGORY, I18nService.getLocalizedString( PROPERTY_NO_CATEGORY, locale ) );
+            list.addItem( CRMConstants.NO_CATEGORY, I18nService.getLocalizedString(CRMConstants.PROPERTY_NO_CATEGORY, locale ) );
 
             if ( bAddAllCategory )
             {
-                list.addItem( ALL_CATEGORY, I18nService.getLocalizedString( PROPERTY_ALL_CATEGORY, locale ) );
+                list.addItem( CRMConstants.ALL_CATEGORY, I18nService.getLocalizedString( CRMConstants.PROPERTY_ALL_CATEGORY, locale ) );
             }
         }
 

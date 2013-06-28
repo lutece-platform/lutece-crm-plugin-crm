@@ -33,6 +33,16 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand.category;
 
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import fr.paris.lutece.plugins.crm.business.demand.DemandType;
+import fr.paris.lutece.plugins.crm.util.CrmUtils;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
+import fr.paris.lutece.util.xml.XmlUtil;
+
 
 /**
  *
@@ -41,6 +51,8 @@ package fr.paris.lutece.plugins.crm.business.demand.category;
  */
 public class Category
 {
+	
+	 
     private int _nIdCategory;
     private String _strName;
     private String _strDescription;
@@ -97,5 +109,48 @@ public class Category
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
+    }
+    
+    
+    /**
+     * Returns the xml of this Category with demand Type associated
+     *
+     * @param request The HTTP Servlet request
+     * @param locale the Locale
+     * @param listDemandType the list of demande type
+     * @return the xml of this Category
+     */
+    public String getXml( HttpServletRequest request, Locale locale,List<DemandType> listDemandType )
+    {
+        StringBuffer strXml = new StringBuffer(  );
+        XmlUtil.beginElement( strXml, CRMConstants.TAG_CATEGORY);
+        XmlUtil.addElement( strXml, CRMConstants.TAG_CATEGORY_ID,_nIdCategory  );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_CATEGORY_NAME,_strName  );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_CATEGORY_DESCRIPTION,_strDescription  );
+        if (listDemandType!=null)
+        {
+        	XmlUtil.beginElement(strXml, CRMConstants.TAG_DEMAND_TYPE_LIST);
+        	for(DemandType demandType:listDemandType)
+        	{
+        		strXml.append(demandType.getXml(request, locale));
+        		
+        	}
+        	XmlUtil.endElement(strXml, CRMConstants.TAG_DEMAND_TYPE_LIST);
+        }   		
+        	
+        
+        XmlUtil.endElement( strXml, CRMConstants.TAG_CATEGORY);
+        return strXml.toString(  );
+    }
+    /**
+     * Returns the xml of this Category
+     *
+     * @param request The HTTP Servlet request
+     * @param locale the Locale
+     * @return the xml of this Category
+     */
+    public String getXml( HttpServletRequest request, Locale locale )
+    {
+    	return getXml(request, locale, null); 
     }
 }

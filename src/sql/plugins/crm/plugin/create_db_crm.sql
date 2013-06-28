@@ -103,3 +103,13 @@ CREATE TABLE crm_parameter (
 	parameter_value VARCHAR(100) NOT NULL,
 	PRIMARY KEY (parameter_key)
 );
+
+--
+-- Table structure for table crm_demand_type_portlet
+--
+DROP TABLE IF EXISTS crm_demand_type_portlet;
+CREATE TABLE crm_demand_type_portlet(
+	id_portlet int NOT NULL,
+	id_category int NOT NULL,
+	PRIMARY KEY (id_portlet,id_category)
+);

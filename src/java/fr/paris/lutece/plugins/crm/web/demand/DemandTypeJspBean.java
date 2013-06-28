@@ -149,11 +149,12 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         setPageTitleProperty( CRMConstants.PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE );
 
         //get the actual displayDraft parameter
-        Boolean bDisplayDraft = _advancedParametersService.isParameterValueDisplayDraftTrue( CRMConstants.CONSTANT_DISPLAYDRAFT );
-
+        Boolean bDisplayDraft = _advancedParametersService.isParameterValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT );
+        Boolean bUseIdCrmUser=_advancedParametersService.isParameterValueByKey( CRMConstants.CONSTANT_USE_ID_CRM_USER);
         Map<String, Object> model = new HashMap<String, Object>(  );
 
         model.put( CRMConstants.MARK_DISPLAYDRAFT, bDisplayDraft );
+        model.put( CRMConstants.MARK_USE_IDCRMUSER, bUseIdCrmUser );
 
         HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale(  ),
                 model );
@@ -348,12 +349,14 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
      * @param request The Http request
      * @return The Jsp URL of the process result
      */
-    public String doModifyDraftDisplay( HttpServletRequest request )
+    public String doModifyAdvancedParameters( HttpServletRequest request )
     {
         String strModifyDraftDisplay = request.getParameter( CRMConstants.PARAMETER_CHECKBOX_DRAFT_DISPLAY );
-
-        if ( StringUtils.isNotBlank( strModifyDraftDisplay ) &&
-                strModifyDraftDisplay.equals( CRMConstants.CONSTANT_ON ) )
+        String strUseIdCrmUser= request.getParameter( CRMConstants.PARAMETER_CHECKBOX_USE_IDCRMUSER );
+        
+        
+        
+        if ( StringUtils.isNotBlank( strModifyDraftDisplay ) )
         {
             _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
                 CRMConstants.CONSTANT_TRUE );
@@ -364,6 +367,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 CRMConstants.CONSTANT_FALSE );
         }
 
+        _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_USE_ID_CRM_USER,
+            		StringUtils.isNotBlank( strUseIdCrmUser )? CRMConstants.CONSTANT_TRUE : CRMConstants.CONSTANT_FALSE );
+      
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DEMAND_TYPES );
         url.addParameter( CRMConstants.CONSTANT_PLUGIN_NAME, CRMConstants.CONSTANT_CRM );
 

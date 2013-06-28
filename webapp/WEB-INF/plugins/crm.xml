@@ -53,4 +53,24 @@
 			</daemon-class>
 		</daemon>
 	</daemons>
+	    <!-- Portlet parameters -->
+    <portlets>
+        <portlet>
+            <portlet-class>fr.paris.lutece.plugins.crm.business.portlet.DemandTypePortletHome</portlet-class>
+            <portlet-type-id>CRM_DEMAND_TYPE_PORTLET</portlet-type-id>
+            <portlet-type-name>crm.portlet.demandType.name</portlet-type-name>
+            <portlet-creation-url>plugins/crm/CreateDemandTypePortlet.jsp</portlet-creation-url>
+            <portlet-update-url>plugins/crm/ModifyDemandTypePortlet.jsp</portlet-update-url>
+            <portlet-create-action-url>jsp/admin/plugins/crm/DoCreateDemandTypePortlet.jsp</portlet-create-action-url>
+            <portlet-modify-action-url>jsp/admin/plugins/crm/DoModifyDemandTypePortlet.jsp</portlet-modify-action-url>
+
+            <!-- optional entries -->
+            <portlet-create-script-template/>
+            <portlet-modify-script-template/>
+            <portlet-create-specific-template>/admin/plugins/crm/portlet/list_category.html</portlet-create-specific-template>
+            <portlet-modify-specific-template>/admin/plugins/crm/portlet/list_category.html</portlet-modify-specific-template>
+            <portlet-create-specific-form-template/>
+            <portlet-modify-specific-form-template/>
+        </portlet>
+    </portlets>
 </plug-in>

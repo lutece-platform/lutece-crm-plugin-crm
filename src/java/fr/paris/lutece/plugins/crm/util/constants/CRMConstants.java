@@ -51,6 +51,9 @@ public final class CRMConstants
     public static final String CONSTANT_PLUGIN_NAME = "plugin_name";
     public static final String CONSTANT_CRM = "crm";
     public static final String CONSTANT_DISPLAYDRAFT = "displayDraft";
+    public static final String CONSTANT_USE_ID_CRM_USER = "useIdCrmUser";
+    public static final String NO_CATEGORY = "0";
+    public static final String ALL_CATEGORY = "-1";
 
     // PROPERTIES
     public static final String PROPERTY_PAGE_PATH = "crm.crm.pagePathLabel";
@@ -71,7 +74,14 @@ public final class CRMConstants
     public static final String PROPERTY_CRM_USER_MAX_SIZE = "crm.crmUser.maxSize";
     public static final String PROPERTY_CRM_USER_ATTRIBUTE_KEYS = "crm.userAttributes.keys";
     public static final String PROPERTY_DEMANDS_PER_PAGE = "crm.paginator.demand.itemsPerPage";
-
+    
+    public static final String PROPERTY_LABEL_DEMAND_TYPES_LIST = "crm.crm.labelDemandTypesList"; 
+    public static final String PROPERTY_LABEL_CRM_INFO = "crm.crm.labelInfo"; 
+    public static final String PROPERTY_LABEL_CRM_CONTACT = "crm.crm.labelContact";
+    public static final String PROPERTY_LABEL_CRM_DATE_BEGIN = "crm.crm.labelDateBegin";
+    public static final String PROPERTY_LABEL_CRM_DATE_END = "crm.crm.labelDateEnd";
+    public static final String PROPERTY_NO_CATEGORY = "crm.crm.labelNoCategory";
+    public static final String PROPERTY_ALL_CATEGORY = "crm.crm.labelAllCategory";
     // MARKS 
     public static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
     public static final String MARK_MAP_DEMANDS_LIST = "map_demands_list";
@@ -96,11 +106,21 @@ public final class CRMConstants
     public static final String MARK_CRM_USER = "crm_user";
     public static final String MARK_TARGETS_LIST = "targets_list";
     public static final String MARK_DISPLAYDRAFT = "bDisplayDraft";
+    public static final String MARK_USE_IDCRMUSER = "bUseIdCrmUser";
     public static final String MARK_LOCALE = "locale";
     public static final String MARK_DEMAND_TYPES_REFLIST = "demandTypesRefList";
     public static final String MARK_FILTER = "filter";
     public static final String MARK_MODIFICATIONDATE = "modificationDate";
     public static final String MARK_MAP_PAGINATOR = "map_paginator";
+    public static final String MARK_MAP_DO_LOGIN = "url_dologin";
+    public static final String MARK_CATEGORY_ID_CATEGORY = "category_id_category";
+  
+    // MARKS XSL
+    public static final String MARK_XSL_PARAM_I18N_LABEL_DEMAND_TYPES_LIST = "i18n-label-demand-types-list"; 
+    public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_INFO = "i18n-label-crm-info"; 
+    public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_CONTACT = "i18n-label-crm-contact";
+    public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_BEGIN = "i18n-label-crm-date-begin";
+    public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_END = "i18n-label-crm-date-end";
 
     // PARAMETERS
     public static final String PARAMETER_ACTION = "action";
@@ -135,6 +155,7 @@ public final class CRMConstants
     public static final String PARAMETER_TARGET = "target";
     public static final String PARAMETER_URL_DELETE = "url_delete";
     public static final String PARAMETER_CHECKBOX_DRAFT_DISPLAY = "bDisplayDraft";
+    public static final String PARAMETER_CHECKBOX_USE_IDCRMUSER = "bUseIdCrmUser";
     public static final String PARAMETER_MODIFICATIONDATE = "modificationDate";
     public static final String PARAMETER_DEMANDTYPE = "demandType";
     public static final String PARAMETER_NOTIFICATION = "notification";
@@ -173,6 +194,33 @@ public final class CRMConstants
 
     // EVENTS
     public static final String EVENT_CRM_USER_MODIFIED = "EventCRMUserModified";
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    // Xml Tags
+    public static final String TAG_DEMANDE_TYPE_PORTLET = "crm-demand-type-portlet";
+    public static final String TAG_DEMANDE_TYPE_PORTLET_CONTENT = "crm-demand-type-portlet-content";
+    public static final String TAG_CATEGORY_LIST = "crm-demand-type-category-list";
+    
+    public static final String TAG_CATEGORY = "category";
+    public static final String TAG_CATEGORY_ID = "category-id";
+    public static final String TAG_CATEGORY_NAME = "category-name";
+    public static final String TAG_CATEGORY_DESCRIPTION = "category-description";
+	public static final String TAG_DEMAND_TYPE_LIST = "demand-type-list";
+ 
+	public static final String TAG_DEMAND_TYPE = "demand-type";
+	public static final String TAG_DEMAND_TYPE_ID = "demand-type-id";
+	public static final String TAG_DEMAND_TYPE_LABEL = "demand-type-label";
+    public static final String TAG_DEMAND_TYPE_URL_RESOURCE = "demand-type-url-resource";
+    public static final String TAG_DEMAND_TYPE_URL_INFO = "demand-type-url-info";
+    public static final String TAG_DEMAND_TYPE_URL_CONTACT = "demand-type-url-contact";
+    public static final String TAG_DEMAND_TYPE_ORDER = "demand-type-order";
+    public static final String TAG_DEMAND_TYPE_CATEGORY = "demand-type-category";
+    public static final String TAG_DEMAND_TYPE_TARGET = "demand-type-target";
+    public static final String TAG_DEMAND_TYPE_URL_DELETE = "demand-type-delete";
+    public static final String TAG_DEMAND_TYPE_DATE_BEGIN = "demand-type-date-begin";
+    public static final String TAG_DEMAND_TYPE_DATE_END = "demand-type-date-end";
+    
+  
 
     /**
      * Private constructor
