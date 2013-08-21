@@ -22,3 +22,6 @@ INSERT INTO  core_style (id_style, description_style, id_portlet_type, id_portal
 -- Dumping data for table core_style_mode_stylesheet
 --
 INSERT INTO core_style_mode_stylesheet (id_style, id_mode, id_stylesheet) VALUES (1012, 0, 809);
+
+
+INSERT INTO crm_parameter (parameter_key, parameter_value) VALUES ('useIdCrmUser', 'true' );
