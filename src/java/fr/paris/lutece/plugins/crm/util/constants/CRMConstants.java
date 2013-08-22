@@ -162,6 +162,9 @@ public final class CRMConstants
     public static final String PARAMETER_ID_STATUS = "id_status";
     public static final String PARAMETER_SORT_ATTRIBUTE = "sorted_attribute_name";
     public static final String PARAMETER_SORT_ORDER = "asc_sort";
+    public static final String PARAMETER_INCLUDE_ID_CRM_USER = "include_id_crm_user";
+    
+    
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";

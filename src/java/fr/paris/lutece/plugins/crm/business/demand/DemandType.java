@@ -71,6 +71,7 @@ public class DemandType implements AdminWorkgroupResource
     private String _strRoleKey;
     private TargetEnum _target;
     private String _strUrlDelete;
+    private boolean _bIncludeIdCrmUser;
 
     /**
      * Constructor
@@ -88,6 +89,7 @@ public class DemandType implements AdminWorkgroupResource
         _strRoleKey = StringUtils.EMPTY;
         _target = TargetEnum.SELF;
         _strUrlDelete = StringUtils.EMPTY;
+        _bIncludeIdCrmUser=false;
     }
 
     /**
@@ -396,6 +398,23 @@ public class DemandType implements AdminWorkgroupResource
         XmlUtil.endElement( strXml, CRMConstants.TAG_DEMAND_TYPE );
         return strXml.toString(  );
     }
+
+    /**
+     * 		
+     * @return true if the crm user id must be added to the list of _strUrlResource parameters 
+     */
+	public boolean isIncludeIdCrmUser() {
+		return _bIncludeIdCrmUser;
+	}
+
+	
+	/**
+	 * 
+	 * @param _bUseIdCrmUser true if the crm user id must be added to the list of _strUrlResource parameters
+	 */
+	public void setIncludeIdCrmUser(boolean _bUseIdCrmUser) {
+		this._bIncludeIdCrmUser = _bUseIdCrmUser;
+	}
     
     
     

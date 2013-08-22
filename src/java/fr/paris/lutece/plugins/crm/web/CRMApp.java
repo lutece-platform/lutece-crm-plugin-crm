@@ -627,30 +627,33 @@ public class CRMApp implements XPageApplication
         {
             
     		
-        	boolean bUseIdCrmUser=_advancedParametersService.isParameterValueByKey(CRMConstants.CONSTANT_USE_ID_CRM_USER);
         	String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
     		CRMUser crmUser=null;
-        	if( bUseIdCrmUser)
-        	{
-        		user = getUser( request );
-        		crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
-        		
-        	}
+        	
             
             
            if ( StringUtils.isNotBlank( strIdDemandType ) &&
-                    StringUtils.isNumeric( strIdDemandType ) && !(bUseIdCrmUser && crmUser==null) )
+                    StringUtils.isNumeric( strIdDemandType )  )
             {
         	   
         	    int nIdDemandType = Integer.parseInt( strIdDemandType );
                 DemandType demandType = _demandTypeService.findByPrimaryKey( nIdDemandType );
-
+                
                 if ( ( demandType != null ) && demandType.isOpen(  ) )
                 {
-                    List<String> listElements = new ArrayList<String>(  );
+                 
+                	if( demandType.isIncludeIdCrmUser())
+                	{
+                		user = getUser( request );
+                		crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+                		
+                	}
+                	
+                	
+                	List<String> listElements = new ArrayList<String>(  );
                      
                     listElements.add( Integer.toString( demandType.getIdDemandType(  ) ) );
-                    if(bUseIdCrmUser)
+                    if(demandType.isIncludeIdCrmUser())
                     {
                     	listElements.add( Integer.toString( crmUser.getIdCRMUser(  ) ) );
                     	
@@ -665,7 +668,7 @@ public class CRMApp implements XPageApplication
 
                     UrlItem url = new UrlItem( demandType.getUrlResource(  ) );
                     url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, demandType.getIdDemandType(  ) );
-                    if (bUseIdCrmUser)
+                    if (demandType.isIncludeIdCrmUser())
                     {
                     	url.addParameter( CRMConstants.PARAMETER_ID_CRM_USER, crmUser.getIdCRMUser(  ) );
                     }

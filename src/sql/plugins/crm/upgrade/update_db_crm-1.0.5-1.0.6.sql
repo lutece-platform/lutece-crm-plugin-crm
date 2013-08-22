@@ -23,5 +23,8 @@ INSERT INTO  core_style (id_style, description_style, id_portlet_type, id_portal
 --
 INSERT INTO core_style_mode_stylesheet (id_style, id_mode, id_stylesheet) VALUES (1012, 0, 809);
 
+ --
+ -- ALTER TABLE crm_demand_type ADD COLUMN is_include_id_user
+ --
 
-INSERT INTO crm_parameter (parameter_key, parameter_value) VALUES ('useIdCrmUser', 'true' );
+ALTER TABLE crm_demand_type ADD COLUMN is_include_id_user SMALLINT DEFAULT 0 NOT NULL;
