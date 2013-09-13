@@ -17,6 +17,7 @@ CREATE TABLE crm_demand_type (
 	target SMALLINT DEFAULT 0 NOT NULL,
 	url_delete VARCHAR(255) DEFAULT '',
 	is_include_id_user SMALLINT DEFAULT 0 NOT NULL,
+	is_need_authentication SMALLINT DEFAULT 0 NOT NULL,
 	PRIMARY KEY (id_demand_type) 
 );
 

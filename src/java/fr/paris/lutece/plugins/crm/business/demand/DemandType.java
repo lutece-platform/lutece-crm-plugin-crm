@@ -72,6 +72,7 @@ public class DemandType implements AdminWorkgroupResource
     private TargetEnum _target;
     private String _strUrlDelete;
     private boolean _bIncludeIdCrmUser;
+    private boolean _bNeedAuthentication;;
 
     /**
      * Constructor
@@ -90,6 +91,8 @@ public class DemandType implements AdminWorkgroupResource
         _target = TargetEnum.SELF;
         _strUrlDelete = StringUtils.EMPTY;
         _bIncludeIdCrmUser=false;
+        _bNeedAuthentication=false;
+       
     }
 
     /**
@@ -395,6 +398,7 @@ public class DemandType implements AdminWorkgroupResource
         CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_DELETE,_strUrlDelete);
         CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_DATE_BEGIN, _dateBegin !=null ?DateUtil.getDateString(_dateBegin,locale):null);
         CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_DATE_END, _dateEnd !=null ?DateUtil.getDateString(_dateEnd,locale):null);
+        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_NEED_AUTHENTICATION, new Boolean(_bNeedAuthentication).toString());
         XmlUtil.endElement( strXml, CRMConstants.TAG_DEMAND_TYPE );
         return strXml.toString(  );
     }
@@ -414,6 +418,22 @@ public class DemandType implements AdminWorkgroupResource
 	 */
 	public void setIncludeIdCrmUser(boolean _bUseIdCrmUser) {
 		this._bIncludeIdCrmUser = _bUseIdCrmUser;
+	}
+
+	/**
+	 * 
+	 * @return true if the demand type need authentication access
+	 */
+	public boolean isNeedAuthentication() {
+		return _bNeedAuthentication;
+	}
+
+	/**
+	 * 
+	 * @param _bNeedAuthentication true if the demand type need authentication access
+	 */
+	public void setNeedAuthentication(boolean _bNeedAuthentication) {
+		this._bNeedAuthentication = _bNeedAuthentication;
 	}
     
     

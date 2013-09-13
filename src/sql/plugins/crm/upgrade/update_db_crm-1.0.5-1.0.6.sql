@@ -28,3 +28,10 @@ INSERT INTO core_style_mode_stylesheet (id_style, id_mode, id_stylesheet) VALUES
  --
 
 ALTER TABLE crm_demand_type ADD COLUMN is_include_id_user SMALLINT DEFAULT 0 NOT NULL;
+ --
+ -- ALTER TABLE crm_demand_type ADD COLUMN is_need_authentication
+ --
+
+ALTER TABLE crm_demand_type ADD COLUMN is_need_authentication SMALLINT DEFAULT 0 NOT NULL;
+
+	

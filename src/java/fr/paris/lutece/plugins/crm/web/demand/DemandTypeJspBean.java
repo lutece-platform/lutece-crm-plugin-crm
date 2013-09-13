@@ -528,6 +528,8 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             String strTarget = request.getParameter( CRMConstants.PARAMETER_TARGET );
             String strUrlDelete = request.getParameter( CRMConstants.PARAMETER_URL_DELETE );
             String strIncludeIdCrmUser=request.getParameter( CRMConstants.PARAMETER_INCLUDE_ID_CRM_USER );
+            String strNeedAuthentication=request.getParameter( CRMConstants.PARAMETER_NEED_AUTHENTICATION );
+            
             int nOrder = 0;
 
             if ( StringUtils.isNotBlank( strOrder ) && StringUtils.isNumeric( strOrder ) )
@@ -615,6 +617,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 demandType.setTarget( TargetEnum.getTarget( nTarget ) );
                 demandType.setUrlDelete( StringUtils.isNotBlank( strUrlDelete ) ? strUrlDelete : StringUtils.EMPTY );
                 demandType.setIncludeIdCrmUser( strIncludeIdCrmUser != null);
+                demandType.setNeedAuthentication( strNeedAuthentication != null);
             }
         }
         else

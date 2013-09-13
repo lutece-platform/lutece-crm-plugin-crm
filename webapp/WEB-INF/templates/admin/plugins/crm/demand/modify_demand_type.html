@@ -122,6 +122,13 @@
 					</label>
 					<p class="help-block">#i18n{crm.modify_demand_type.labelIncludeIdCrmUserComment}</p>
 				</div>
+				 <div class="control-group">
+					<label for="" class="checkbox">
+						#i18n{crm.modify_demand_type.labelNeedAuthentication}
+						<input type="checkbox" <#if demand_type.needAuthentication>checked="checked"</#if>   name="need_authentication" />
+					</label>
+					<p class="help-block">#i18n{crm.modify_demand_type.labelNeedAuthenticationComment}</p>
+				</div>
 		</div>
 </div>
 <div class="row-fluid">
