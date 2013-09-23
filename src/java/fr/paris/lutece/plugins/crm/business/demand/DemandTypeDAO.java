@@ -52,16 +52,16 @@ public class DemandTypeDAO implements IDemandTypeDAO
 {
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_demand_type ) FROM crm_demand_type ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand_type (id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user,is_need_authentication) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user,is_need_authentication FROM crm_demand_type WHERE id_demand_type = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand_type SET label = ?, url_resource = ?, url_info = ?, url_contact = ?, demand_type_order = ?, id_category = ?, date_begin = ?, date_end = ?, workgroup_key = ?, role_key = ?, target = ?, url_delete = ?,is_include_id_user=?, is_need_authentication=? WHERE id_demand_type = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand_type (id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user,is_need_authentication ,  is_need_validation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user,is_need_authentication ,  is_need_validation FROM crm_demand_type WHERE id_demand_type = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand_type SET label = ?, url_resource = ?, url_info = ?, url_contact = ?, demand_type_order = ?, id_category = ?, date_begin = ?, date_end = ?, workgroup_key = ?, role_key = ?, target = ?, url_delete = ?,is_include_id_user=?, is_need_authentication =? ,is_need_validation=? WHERE id_demand_type = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand_type WHERE id_demand_type = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication FROM crm_demand_type ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation FROM crm_demand_type ";
     private static final String SQL_QUERY_SELECT_MAX_ORDER = " SELECT max( demand_type_order ) FROM crm_demand_type ";
-    private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication FROM crm_demand_type WHERE demand_type_order = ? ";
-    private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication " +
+    private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation FROM crm_demand_type WHERE demand_type_order = ? ";
+    private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation " +
         " FROM crm_demand_type WHERE id_category = ? AND ( date_begin IS NULL OR date_begin <= ? ) AND ( date_end IS NULL OR date_end > ? ) ";
-    private static final String SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication FROM crm_demand_type WHERE date_end IS NULL ";
+    private static final String SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation FROM crm_demand_type WHERE date_end IS NULL ";
 
     // FILTERS
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -145,6 +145,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
             daoUtil.setString( nIndex++, demandType.getUrlDelete(  ) );
             daoUtil.setBoolean(nIndex++, demandType.isIncludeIdCrmUser());
             daoUtil.setBoolean(nIndex++, demandType.isNeedAuthentication());
+            daoUtil.setBoolean(nIndex++, demandType.isNeedValidation());
+            
             daoUtil.executeUpdate(  );
             daoUtil.free(  );
 
@@ -184,6 +186,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
             demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
             demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
+            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
         }
 
         daoUtil.free(  );
@@ -231,6 +234,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             daoUtil.setString( nIndex++, demandType.getUrlDelete(  ) );
             daoUtil.setBoolean(nIndex++, demandType.isIncludeIdCrmUser());
             daoUtil.setBoolean(nIndex++, demandType.isNeedAuthentication());
+            daoUtil.setBoolean(nIndex++, demandType.isNeedValidation());
             
             daoUtil.setInt( nIndex++, demandType.getIdDemandType(  ) );
 
@@ -283,6 +287,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
             demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
             demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
+            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
             
             listDemandTypes.add( demandType );
         }
@@ -331,6 +336,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
             demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
             demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
+            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
             
             listDemandTypes.add( demandType );
         }
@@ -370,6 +376,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
             demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
             demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
+            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
+            
         }
 
         daoUtil.free(  );
@@ -432,6 +440,7 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
             demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
             demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
+            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
             
             listDemandTypes.add( demandType );
         }
@@ -470,6 +479,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
             demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
             demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
+            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
+            
             
             
             listDemandTypes.add( demandType );

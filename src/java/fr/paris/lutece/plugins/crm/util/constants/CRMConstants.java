@@ -164,6 +164,7 @@ public final class CRMConstants
     public static final String PARAMETER_SORT_ORDER = "asc_sort";
     public static final String PARAMETER_INCLUDE_ID_CRM_USER = "include_id_crm_user";
     public static final String PARAMETER_NEED_AUTHENTICATION = "need_authentication";
+    public static final String PARAMETER_NEED_VALIDATION = "need_validation";
     
     
 
@@ -224,6 +225,7 @@ public final class CRMConstants
     public static final String TAG_DEMAND_TYPE_DATE_BEGIN = "demand-type-date-begin";
     public static final String TAG_DEMAND_TYPE_DATE_END = "demand-type-date-end";
     public static final String TAG_DEMAND_TYPE_NEED_AUTHENTICATION = "demand-type-need-authentication";
+    public static final String TAG_DEMAND_TYPE_NEED_VALIDATION = "demand-type-need-validation";
     
   
 

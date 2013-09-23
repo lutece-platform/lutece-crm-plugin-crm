@@ -7,7 +7,7 @@
 		<xsl:param name="i18n-label-crm-date-end" />
 		<xsl:output method="html" indent="yes"/>
 		<xsl:template match="portlet">
-			<div class="portlet -lutece-border-radius append-bottom">
+			<div class="portlet span4">
 				<xsl:apply-templates select="crm-demand-type-portlet" />
 			</div>
 		</xsl:template>
@@ -17,26 +17,20 @@
 		</xsl:template>
 	
 		<xsl:template match="crm-demand-type-portlet-content">
-			<div class="portlet">
-				<div class="well">
-					<div class="row-fluid">
-						<xsl:apply-templates select="crm-demand-type-category-list/category"/>
-					</div>
-				</div>
-			</div>
+			<xsl:apply-templates select="crm-demand-type-category-list/category"/>
 		</xsl:template>
 	
 		<xsl:template match="category">
-			<fieldset>
-				<legend>
-					<xsl:if test="category-name!=''">
-						<xsl:value-of select="category-name" />
+		<div class="well well-gu">
+			<h4>
+				<xsl:if test="category-name!=''">
+					<xsl:value-of select="category-name" />
 					</xsl:if>
-				</legend>		
-				<ul>
-					<xsl:apply-templates select="demand-type-list/demand-type"/>
-				</ul>
-			</fieldset>
+			</h4>
+			<ul class="unstyled">
+				<xsl:apply-templates select="demand-type-list/demand-type"/>
+			</ul>
+		</div>
 		</xsl:template>
 	
 		<xsl:template match="demand-type">
@@ -67,6 +61,21 @@
 				<xsl:if test="demand-type-date-end!=''">
 					<br />
 					<xsl:value-of select="$i18n-label-crm-date-end" /> : <xsl:value-of select="demand-type-date-end" />
+				</xsl:if>
+				<xsl:if test="demand-type-need-authentication='true'">
+					<span class="badge badge-warning pull-right">
+						<a href="#" class="tooltips" data-toggle="tooltip" title="L'accès à ce téléservice nécessite un compte de connexion ">
+							<i class="icon-lock icon-white">&#160;</i>
+						</a>
+					</span>
+				</xsl:if>
+		
+				<xsl:if test="demand-type-need-validation='true'">
+					<span class="badge badge-success pull-right spaced-right">
+						<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="L'accès à ce téléservice nécessite la validation de votre compte ">
+							<i class="icon-ok icon-white">&#160;</i>
+						</a>
+					</span>
 				</xsl:if>
 			</li>		
 		</xsl:template>
