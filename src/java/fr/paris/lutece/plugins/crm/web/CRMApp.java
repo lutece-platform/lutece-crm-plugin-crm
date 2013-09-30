@@ -102,7 +102,8 @@ public class CRMApp implements XPageApplication
     private static final String TEMPLATE_MANAGE_NOTIFICATIONS = "skin/plugins/crm/manage_notifications.html";
     private static final String TEMPLATE_VIEW_NOTIFICATION = "skin/plugins/crm/view_notification.html";
     private static final String TEMPLATE_MODIFY_CRM_USER = "skin/plugins/crm/modify_crm_user.html";
-
+    
+    
     // VARIABLES
     private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
     private DemandService _demandService = DemandService.getService(  );
@@ -112,7 +113,11 @@ public class CRMApp implements XPageApplication
     private CRMUserService _crmUserService = CRMUserService.getService(  );
     private CRMUserAttributesService _crmUserAttributesService = CRMUserAttributesService.getService(  );
     private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService(  );
-
+    //PROPERTIE
+    private static final String CRM_WEBB_APP_CODE_PROPERTY ="crm.webapp.code";
+    private static final String CRM_WEBB_APP_CODE=AppPropertiesService.getProperty(CRM_WEBB_APP_CODE_PROPERTY) ;
+    
+    
     /**
      * Get the XPage of the plugin CRM
      * @param request {@link HttpServletRequest}
@@ -532,6 +537,7 @@ public class CRMApp implements XPageApplication
         throws SiteMessageException
     {
         String strIdDemand = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND );
+        
         CRMUser crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
 
         if ( ( crmUser != null ) && StringUtils.isNotBlank( strIdDemand ) && StringUtils.isNumeric( strIdDemand ) )
@@ -575,7 +581,10 @@ public class CRMApp implements XPageApplication
                     url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
                     url.addParameter( CRMConstants.PARAMETER_DEMAND_DATA, strData );
                     url.addParameter( CRMConstants.PARAMETER_URL_RETURN, urlReturn.getUrl(  ) );
-
+                    if(StringUtils.isNotBlank(CRM_WEBB_APP_CODE ))
+                    {
+                    	 url.addParameter( CRMConstants.PARAMETER_CRM_WEBB_APP_CODE, CRM_WEBB_APP_CODE );
+                    }
                     SiteMessageService.setMessage( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND,
                         SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ) );
                 }
@@ -627,6 +636,7 @@ public class CRMApp implements XPageApplication
         {
             
     		
+        
         	String strIdDemandType = request.getParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE );
     		CRMUser crmUser=null;
         	
@@ -659,6 +669,10 @@ public class CRMApp implements XPageApplication
                     	
                     }
                     
+                     if(StringUtils.isNotBlank(CRM_WEBB_APP_CODE ))
+                    {
+                    	listElements.add( CRM_WEBB_APP_CODE );
+                    }
                     
                   
                     
@@ -672,9 +686,15 @@ public class CRMApp implements XPageApplication
                     {
                     	url.addParameter( CRMConstants.PARAMETER_ID_CRM_USER, crmUser.getIdCRMUser(  ) );
                     }
+                    if(StringUtils.isNotBlank(CRM_WEBB_APP_CODE ))
+                    {
+                    	 url.addParameter( CRMConstants.PARAMETER_CRM_WEBB_APP_CODE, CRM_WEBB_APP_CODE );
+                    }
+                    
                     url.addParameter( CRMConstants.PARAMETER_TIMESTAMP, strTimestamp );
                     url.addParameter( CRMConstants.PARAMETER_SIGNATURE, strSignature );
-
+                    
+                    
                     strUrl = url.getUrl(  );
                 }
             }

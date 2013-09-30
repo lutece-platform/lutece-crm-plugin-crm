@@ -151,6 +151,7 @@ public final class CRMConstants
     public static final String PARAMETER_EMAIL = "email";
     public static final String PARAMETER_ID_CRM_USER = "id_crm_user";
     public static final String PARAMETER_SIGNATURE = "signature";
+    public static final String PARAMETER_CRM_WEBB_APP_CODE = "crm_web_app_code";
     public static final String PARAMETER_TIMESTAMP = "timestamp";
     public static final String PARAMETER_TARGET = "target";
     public static final String PARAMETER_URL_DELETE = "url_delete";
