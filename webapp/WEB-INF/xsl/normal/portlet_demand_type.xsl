@@ -35,7 +35,7 @@
 	
 		<xsl:template match="demand-type">
 			<li>												
-				<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type={demand-type-id}" target="{demand-type-target}">
+				<a href="jsp/site/plugins/crm/DoOpenDemandType.jsp?id_demand_type={demand-type-id}" target="{demand-type-target}" class="label-demand">
 					<xsl:value-of select="demand-type-label" />
 				</a>
 				<xsl:if test="demand-type-url-info!=''">
