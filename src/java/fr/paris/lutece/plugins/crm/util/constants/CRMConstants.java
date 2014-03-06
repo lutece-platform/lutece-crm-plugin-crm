@@ -114,6 +114,7 @@ public final class CRMConstants
     public static final String MARK_MAP_PAGINATOR = "map_paginator";
     public static final String MARK_MAP_DO_LOGIN = "url_dologin";
     public static final String MARK_CATEGORY_ID_CATEGORY = "category_id_category";
+    public static final String MARK_BASE_URL = "base_url";
   
     // MARKS XSL
     public static final String MARK_XSL_PARAM_I18N_LABEL_DEMAND_TYPES_LIST = "i18n-label-demand-types-list"; 

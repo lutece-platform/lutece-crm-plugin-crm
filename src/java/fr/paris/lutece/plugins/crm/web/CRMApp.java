@@ -318,7 +318,7 @@ public class CRMApp implements XPageApplication
                 ListUtils.toReferenceList( listAllOpenedDemandType, "idDemandType", "label", "" ) );
             
             model.put(CRMConstants.MARK_MAP_DO_LOGIN,SecurityService.getInstance(  ).getLoginPageUrl() );
-            
+            model.put(CRMConstants.MARK_BASE_URL, AppPathService.getBaseUrl(request));
             HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CRM_HOME_PAGE, request.getLocale(  ), model );
 
             page.setTitle( I18nService.getLocalizedString( CRMConstants.PROPERTY_PAGE_TITLE, request.getLocale(  ) ) );
