@@ -60,20 +60,24 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand demand ";
     private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand ";
     private static final String SQL_QUERY_COUNT = " SELECT count(*) FROM ";
-
+    
     // FILTERS
+    private static final String SQL_PERCENT = "%";
     private static final String SQL_ORDER_BY = " ORDER BY ";
     private static final String SQL_DESC = " DESC ";
     private static final String SQL_ASC = " ASC ";
     private static final String SQL_OR = " OR ";
     private static final String SQL_AND = " AND ";
     private static final String SQL_WHERE = " WHERE ";
-    private static final String SQL_DATE_MODIFICATION = " date_modification ";
+    private static final String SQL_DATE_MODIFICATION_ORDER = " date_modification ";
     private static final String SQL_FILTER_ID_CRM_USER = " id_crm_user = ? ";
     private static final String SQL_FILTER_ID_DEMAND_TYPE = " id_demand_type = ? ";
-    private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification LIKE '";
+    private static final String SQL_FILTER_DATE_MODIFICATION = " date_modification LIKE ? ";
     private static final String SQL_FILTER_ID_STATUS_CRM = " id_status_crm = ? ";
     private static final String SQL_NB_UNREAD_NOTIFICATION = " nb_unread_notif ";
+    private static final String SQL_FILTER_NOTIFICATION = " EXISTS (SELECT id_notification FROM crm_notification notif WHERE (notif.object LIKE ? OR notif.message LIKE ?) AND notif.id_demand = demand.id_demand )";
+    
+    
 
     /**
      * {@inheritDoc}
@@ -293,11 +297,7 @@ public class DemandDAO implements IDemandDAO
         if ( dFilter.containsDateModification(  ) )
         {
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
-
-            SimpleDateFormat sdfSQL = new SimpleDateFormat( "yyyy-MM-dd" );
-            String strDateModification = sdfSQL.format( dFilter.getDateModification(  ) );
-
-            sbSQL.append( SQL_FILTER_DATE_MODIFICATION + strDateModification + "%'" );
+            sbSQL.append( SQL_FILTER_DATE_MODIFICATION);
         }
 
         if ( dFilter.containsIdStatusCRM(  ) )
@@ -309,16 +309,7 @@ public class DemandDAO implements IDemandDAO
         if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
         {
             nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
-
-            StringBuilder strFilterNotification = new StringBuilder(  );
-            strFilterNotification.append( 
-                " EXISTS (SELECT id_notification FROM crm_notification notif WHERE (notif.object LIKE '%" );
-            strFilterNotification.append( dFilter.getNotification(  ) );
-            strFilterNotification.append( "%' OR notif.message LIKE '%" );
-            strFilterNotification.append( dFilter.getNotification(  ) );
-            strFilterNotification.append( "%') AND notif.id_demand = demand.id_demand )" );
-
-            sbSQL.append( strFilterNotification.toString(  ) );
+            sbSQL.append( SQL_FILTER_NOTIFICATION );
         }
 
         // order by
@@ -329,7 +320,7 @@ public class DemandDAO implements IDemandDAO
         if ( ( listDemandSort == null ) || listDemandSort.isEmpty(  ) )
         {
             // default order
-            sbSQL.append( SQL_DATE_MODIFICATION );
+            sbSQL.append( SQL_DATE_MODIFICATION_ORDER );
             sbSQL.append( SQL_DESC );
         }
         else
@@ -347,7 +338,7 @@ public class DemandDAO implements IDemandDAO
 
                 if ( CRMConstants.SORT_DATE_MODIFICATION.equals( demandSort.getField(  ) ) )
                 {
-                    sbSQL.append( SQL_DATE_MODIFICATION );
+                    sbSQL.append( SQL_DATE_MODIFICATION_ORDER );
                 }
                 else if ( CRMConstants.SORT_NB_UNREAD_NOTIFICATION.equals( demandSort.getField(  ) ) )
                 {
@@ -412,17 +403,30 @@ public class DemandDAO implements IDemandDAO
         {
             daoUtil.setInt( nIndex++, dFilter.getIdDemandType(  ) );
         }
-
-        //        if ( dFilter.containsDateModification(  ) )
-        //        {
-        //            String strDateModification = dFilter.getDateModification( ).toString( );
-        //
-        //
-        //            daoUtil.setString( nIndex++, strDateModification.toString( ) );
-        //        }
+        if ( dFilter.containsDateModification(  ) )
+        {
+        	SimpleDateFormat sdfSQL = new SimpleDateFormat( "yyyy-MM-dd" );
+            String strDateModification = sdfSQL.format( dFilter.getDateModification(  ) );
+            StringBuilder strNotificationBuilder=new StringBuilder();
+            strNotificationBuilder.append(strDateModification);
+        	strNotificationBuilder.append(SQL_PERCENT);
+        	
+        	daoUtil.setString(nIndex++, strNotificationBuilder.toString( ));
+         }
+        
         if ( dFilter.containsIdStatusCRM(  ) )
         {
             daoUtil.setInt( nIndex++, dFilter.getIdStatusCRM(  ) );
+        }
+        if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
+        {
+        	StringBuilder strNotificationBuilder=new StringBuilder();
+        	strNotificationBuilder.append(SQL_PERCENT);
+        	strNotificationBuilder.append(dFilter.getNotification(  ));
+        	strNotificationBuilder.append(SQL_PERCENT);
+        	
+        	daoUtil.setString(nIndex++,strNotificationBuilder.toString());
+        	daoUtil.setString(nIndex++,strNotificationBuilder.toString());
         }
     }
 
