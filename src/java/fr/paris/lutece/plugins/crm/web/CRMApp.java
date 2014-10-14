@@ -139,7 +139,7 @@ public class CRMApp implements XPageApplication
 			
 		}
         
-       createCRMAccount( user );
+       createOrUpdateCRMAccount( user );
         
         String strAction = request.getParameter( CRMConstants.PARAMETER_ACTION );
 
@@ -599,7 +599,7 @@ public class CRMApp implements XPageApplication
      * Create a CRM account if the current user does not have one
      * @param user the LuteceUser
      */
-    private void createCRMAccount( LuteceUser user )
+    private void createOrUpdateCRMAccount( LuteceUser user )
     {
     	  if(	user!=null	)
           {
@@ -621,6 +621,20 @@ public class CRMApp implements XPageApplication
 	
 	            crmUser.setUserAttributes( userAttributes );
 	            _crmUserService.create( crmUser );
+	        }
+	        else if ( crmUser.isMustBeUpdated())
+	        {
+	        	 crmUser.setMustBeUpdated(false);
+		         crmUser.setStatus( CRMUser.STATUS_ACTIVATED );
+		         Map<String, String> userAttributes = new HashMap<String, String>(  );
+		         for ( String strUserAttributeKey : _crmUserAttributesService.getUserAttributeKeys(  ) )
+	             {
+	                userAttributes.put( strUserAttributeKey, user.getUserInfo( strUserAttributeKey ) );
+	             }
+	
+		         crmUser.setUserAttributes( userAttributes );
+		         _crmUserService.update( crmUser );
+	        	
 	        }
           }
     }
@@ -655,6 +669,15 @@ public class CRMApp implements XPageApplication
                 	{
                 		user = getUser( request );
                 		crmUser = _crmUserService.findByUserGuid( user.getName(  ) );
+                		//if crm user does not exist create crm user
+                		if(user!= null &&  crmUser == null )
+                		{
+                			crmUser=new CRMUser();
+                			crmUser.setUserGuid(user.getName());
+                			crmUser.setMustBeUpdated(true);
+                			crmUser.setIdCRMUser(_crmUserService.create(crmUser));
+                		}
+                		
                 		
                 	}
                 	

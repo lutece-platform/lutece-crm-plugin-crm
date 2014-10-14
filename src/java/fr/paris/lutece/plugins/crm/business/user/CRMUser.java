@@ -73,6 +73,7 @@ public class CRMUser
     private Map<String, String> _userInfos;
     private int _nStatus;
     private Timestamp _dateLastLogin;
+    private boolean _bMustBeUpdated;
 
     /**
      * Set the id crm user
@@ -201,4 +202,20 @@ public class CRMUser
     {
         this._dateLastLogin = dateLastLogin;
     }
+
+    /**
+     * 
+     * @return true if the user information must be updated
+     */
+	public boolean isMustBeUpdated() {
+		return _bMustBeUpdated;
+	}
+	
+	/**
+	 * 
+	 * @param _bMustBeUpdated true if the user information must be updated
+	 */
+	public void setMustBeUpdated(boolean _bMustBeUpdated) {
+		this._bMustBeUpdated = _bMustBeUpdated;
+	}
 }

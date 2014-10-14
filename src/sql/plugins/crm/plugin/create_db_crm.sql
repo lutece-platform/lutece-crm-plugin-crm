@@ -83,8 +83,12 @@ CREATE TABLE crm_user (
 	status SMALLINT DEFAULT 1 NOT NULL,
 	last_login TIMESTAMP DEFAULT '1980-01-01',
 	current_last_login TIMESTAMP DEFAULT '1980-01-01',
+	must_be_updated SMALLINT DEFAULT 0 NOT NULL,
 	PRIMARY KEY (id_crm_user, user_guid)
 );
+
+ALTER TABLE crm_user ADD UNIQUE (user_guid);
+CREATE INDEX  index_crm_user on crm_user(user_guid);
 
 --
 -- Structure for table crm_user_attribute

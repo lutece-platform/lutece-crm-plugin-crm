@@ -58,20 +58,23 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CRMUserFilter implements Serializable
 {
-    private static final long serialVersionUID = -4489731073268811381L;
+	public static final int MUST_BE_UPDATED_TRUE=1;
+	public static final int MUST_BE_UPDATED_FALSE=0;
+	private static final long serialVersionUID = -4489731073268811381L;
     private static final String SQL_WHERE = " WHERE ";
     private static final String SQL_AND = " AND ";
     private static final String SQL_OR = " OR ";
     private static final String SQL_PERCENT = "%";
-
     // SQL FILTERS
     private static final String SQL_FILTER_ID_CRM_USER = " cu.id_crm_user = ? ";
     private static final String SQL_FILTER_USER_GUID = " cu.user_guid LIKE ? ";
     private static final String SQL_FILTER_STATUS_ACTIVE = " cu.status = ? ";
+    private static final String SQL_FILTER_MUST_BE_UPDATED = " cu.must_be_updated = ? ";
     private int _nIdCRMUser;
     private String _strUserGuid;
     private Map<String, String> _userInfos;
     private int _nStatus = -1;
+    private int _nMustBeUpdated = -1;
     private boolean _bIsWideSearch;
 
     /**
@@ -250,6 +253,37 @@ public class CRMUserFilter implements Serializable
     {
         return _nStatus > -1;
     }
+    
+    
+    
+    /**
+     * 
+     * @return 
+     */
+	public int getMustBeUpdated() {
+		return _nMustBeUpdated;
+	}
+	/**
+	 * 
+	 * @param _nMustBeUpdated
+	 */
+	public void setMustBeUpdated(int nMustBeUpdated) {
+		this._nMustBeUpdated = nMustBeUpdated;
+	}
+	
+	
+	 /**
+     * Contains id crm user.
+     *
+     * @return true, if successful
+     */
+    public boolean containsMustBeUpdated(  )
+    {
+        return _nMustBeUpdated > 0;
+    }
+    
+    
+    
 
     /**
      * Builds the sql query.
@@ -264,8 +298,9 @@ public class CRMUserFilter implements Serializable
         nIndex = buildSQLQueryForAttribute( sbSQL, nIndex );
         nIndex = buildFilter( sbSQL, containsIdCRMUser(  ), SQL_FILTER_ID_CRM_USER, nIndex );
         nIndex = buildFilter( sbSQL, containsUserGuid(  ), SQL_FILTER_USER_GUID, nIndex );
-        buildFilter( sbSQL, containsStatus(  ), SQL_FILTER_STATUS_ACTIVE, nIndex );
-
+        nIndex = buildFilter( sbSQL, containsStatus(  ), SQL_FILTER_STATUS_ACTIVE, nIndex );
+        buildFilter( sbSQL, containsStatus(  ), SQL_FILTER_MUST_BE_UPDATED, nIndex );
+        
         return sbSQL.toString(  );
     }
 
@@ -331,6 +366,14 @@ public class CRMUserFilter implements Serializable
         {
             daoUtil.setInt( nIndex++, getStatus(  ) );
         }
+        
+        if ( containsMustBeUpdated() )
+        {
+            daoUtil.setInt( nIndex++, getMustBeUpdated(  ) );
+        }
+        
+        
+        
     }
 
     /**
@@ -380,4 +423,6 @@ public class CRMUserFilter implements Serializable
 
         return nIndex + 1;
     }
+
+
 }
