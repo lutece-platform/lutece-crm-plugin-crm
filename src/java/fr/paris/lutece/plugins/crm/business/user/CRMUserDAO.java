@@ -52,7 +52,7 @@ public class CRMUserDAO implements ICRMUserDAO
     // SQL QUERIES
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_crm_user ) FROM crm_user ";
     private static final String SQL_QUERY_INSERT = " INSERT INTO crm_user (id_crm_user, user_guid, status,must_be_updated) VALUES (?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid, status, last_login,must_be_updated FROM crm_user ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_crm_user, user_guid, status, must_be_updated,last_login FROM crm_user ";
     private static final String SQL_QUERY_SELECT = SQL_QUERY_SELECT_ALL + " WHERE id_crm_user = ? ";
     private static final String SQL_QUERY_SELECT_BY_USER_GUID = SQL_QUERY_SELECT_ALL + " WHERE user_guid = ? ";
     private static final String SQL_QUERY_UPDATE = " UPDATE crm_user SET user_guid = ?, status = ?,must_be_updated= ? WHERE id_crm_user = ? ";
