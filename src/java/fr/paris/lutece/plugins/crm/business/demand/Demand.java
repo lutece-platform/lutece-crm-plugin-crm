@@ -52,6 +52,7 @@ public class Demand
     private int _nIdStatusCRM;
     private String _strData;
     private Timestamp _dateModification;
+    private String _strRemoteId;
 
     /**
      * Set the ID demand
@@ -196,4 +197,21 @@ public class Demand
     {
         return _nIdStatusCRM;
     }
+
+    
+    /**
+     * 
+     * @return the remote Id
+     */
+	public String getRemoteId() {
+		return _strRemoteId;
+	}
+
+	/**
+	 * 
+	 * @param _strRemoteId the Remote Id
+	 */
+	public void setRemoteId(String _strRemoteId) {
+		this._strRemoteId = _strRemoteId;
+	}
 }
