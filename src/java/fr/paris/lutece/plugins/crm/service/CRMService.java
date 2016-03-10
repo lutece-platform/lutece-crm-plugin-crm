@@ -137,8 +137,11 @@ public final class CRMService
             demand.setStatusText( StringUtils.isNotEmpty( strStatusText ) ? strStatusText : StringUtils.EMPTY );
             demand.setIdStatusCRM( nIdStatusCRM );
             demand.setRemoteId(strRemoteId);
-
-            nIdDemand = _demandService.create( demand );
+            //Test if the multiple key Remote Id and Id Demand Type do not already exist 
+            if(_demandService.findByRemoteKey(strRemoteId, nIdDemandType) == null)
+            {
+            	nIdDemand = _demandService.create( demand );
+            }
         }
 
         return nIdDemand;

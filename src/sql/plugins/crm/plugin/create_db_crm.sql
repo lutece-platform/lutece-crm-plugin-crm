@@ -35,6 +35,7 @@ CREATE TABLE crm_demand (
 	data VARCHAR(255) DEFAULT '' NOT NULL,
 	date_modification TIMESTAMP DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	remote_id VARCHAR(255),
+	UNIQUE INDEX (id_demand_type,remote_id),
     PRIMARY KEY (id_demand)
 );
 
