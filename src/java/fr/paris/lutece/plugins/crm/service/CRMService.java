@@ -108,6 +108,23 @@ public final class CRMService
      */
     public int registerDemand( int nIdDemandType, int nIdCRMUser, String strData, String strStatusText, int nIdStatusCRM )
     {
+      
+    	return registerDemand(null,nIdDemandType, nIdCRMUser, strData, strStatusText, nIdStatusCRM);
+    }
+    
+    
+    /**
+     * Register the demand
+     * @param strRemoteId the remoteId
+     * @param nIdDemandType the id demand type
+     * @param nIdCRMUser the ID CRM user
+     * @param strData the data
+     * @param strStatusText the status of the demand
+     * @param nIdStatusCRM the id status crm
+     *  @return the newly created id demand
+     */
+    public int registerDemand(String strRemoteId, int nIdDemandType, int nIdCRMUser, String strData, String strStatusText, int nIdStatusCRM )
+    {
         int nIdDemand = -1;
         CRMUser crmUser = _crmUserService.findByPrimaryKey( nIdCRMUser );
 
@@ -119,8 +136,12 @@ public final class CRMService
             demand.setData( StringUtils.isNotEmpty( strData ) ? strData : StringUtils.EMPTY );
             demand.setStatusText( StringUtils.isNotEmpty( strStatusText ) ? strStatusText : StringUtils.EMPTY );
             demand.setIdStatusCRM( nIdStatusCRM );
-
-            nIdDemand = _demandService.create( demand );
+            demand.setRemoteId(strRemoteId);
+            //Test if the multiple key Remote Id and Id Demand Type do not already exist 
+            if(_demandService.findByRemoteKey(strRemoteId, nIdDemandType) == null)
+            {
+            	nIdDemand = _demandService.create( demand );
+            }
         }
 
         return nIdDemand;

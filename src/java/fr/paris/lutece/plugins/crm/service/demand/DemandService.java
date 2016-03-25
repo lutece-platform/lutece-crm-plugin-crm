@@ -93,6 +93,18 @@ public class DemandService
     {
         return DemandHome.findByPrimaryKey( nIdDemand );
     }
+    
+    
+    /**
+     * Find a demand by Remote key
+     * @param  strRemoteId the remote Id
+     * @param nIdDemandType the idDemandType
+     * @return a {@link Demand}
+     */
+    public Demand findByRemoteKey( String strRemoteId,int nIdDemandType )
+    {
+        return DemandHome.findByRemoteKey( strRemoteId, nIdDemandType );
+    }
 
     /**
      * Create a new demand

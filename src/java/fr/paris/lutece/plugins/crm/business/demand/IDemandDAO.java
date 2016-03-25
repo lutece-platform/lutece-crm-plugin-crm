@@ -105,4 +105,14 @@ public interface IDemandDAO
      * @return the number of result
      */
     int countByFilter( DemandFilter dFilter, Plugin plugin );
+    
+    /**
+     * Load demand by Remote Id and id demand 
+     * @param strRemoteId the remote Id
+     * @param nIdDemandType the Id demand type
+     * @param plugin the plugin
+     * @return  The instance of the object
+     */
+    Demand loadByRemoteKey( String strRemoteId, int nIdDemandType, Plugin plugin );
+    
 }

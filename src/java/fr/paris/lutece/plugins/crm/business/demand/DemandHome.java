@@ -96,6 +96,19 @@ public final class DemandHome
     {
         return _dao.load( nIdDemand, _plugin );
     }
+    
+    
+    
+    /**
+     * Load the data from the table
+     * @param nIdDemand The identifier of the demand
+     * @return The instance of the Demand
+     */
+    public static Demand findByRemoteKey( String strRemoteId, int nIdDemandType )
+    {
+    	
+    	  return _dao.loadByRemoteKey(strRemoteId, nIdDemandType, _plugin);
+    }
 
     /**
      * Find all demands
