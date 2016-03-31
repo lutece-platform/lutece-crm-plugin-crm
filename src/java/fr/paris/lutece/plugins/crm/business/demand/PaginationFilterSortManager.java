@@ -74,6 +74,7 @@ public class PaginationFilterSortManager
     public static final String SESSION_FILTER_DEMAND_TYPE = "demandType";
     public static final String SESSION_FILTER_NOTIFICATION = "notification";
     private HttpServletRequest _request;
+    private String _strXpageApp;
 
     /**
      * Constructor
@@ -81,7 +82,21 @@ public class PaginationFilterSortManager
      */
     public PaginationFilterSortManager( HttpServletRequest request )
     {
+    	this(request,CRMPlugin.PLUGIN_NAME);
+       
+    }
+    
+    
+    /**
+     * Constructor
+     * @param request the request
+     * @param strXpageApp the XpageApp
+     * 
+     */
+    public PaginationFilterSortManager( HttpServletRequest request ,String strXpageApp)
+    {
         _request = request;
+        _strXpageApp=strXpageApp;
     }
 
     /**
@@ -251,7 +266,7 @@ public class PaginationFilterSortManager
     {
         HttpSession session = _request.getSession(  );
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( _request ) + AppPathService.getPortalUrl(  ) );
-        url.addParameter( XPageAppService.PARAM_XPAGE_APP, CRMPlugin.PLUGIN_NAME );
+        url.addParameter(  XPageAppService.PARAM_XPAGE_APP, _strXpageApp );
         url.addParameter( CRMConstants.PARAMETER_SESSION, Boolean.TRUE.toString(  ) );
 
         int nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEMANDS_PER_PAGE, 50 );
