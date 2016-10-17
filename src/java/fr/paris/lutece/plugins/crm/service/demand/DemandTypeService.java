@@ -52,9 +52,11 @@ import fr.paris.lutece.portal.service.workgroup.WorkgroupRemovalListenerService;
 import fr.paris.lutece.util.ReferenceItem;
 import fr.paris.lutece.util.ReferenceList;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -252,12 +254,16 @@ public class DemandTypeService
     public Map<String, List<DemandType>> findForLuteceUser( HttpServletRequest request )
     {
         Map<String, List<DemandType>> map = new HashMap<String, List<DemandType>>(  );
-
-        for ( ReferenceItem category : CategoryService.getService(  ).getCategories( request.getLocale(  ), false, true ) )
+        
+       ReferenceList refListCategories= CategoryService.getService(  ).getCategories( request.getLocale(  ), false, true );
+       if(!CollectionUtils.isEmpty( refListCategories ))
         {
-            int nIdCategory = Integer.parseInt( category.getCode(  ) );
-            map.put( category.getCode(  ), findForLuteceUser(request,nIdCategory) );
-        }
+            for ( ReferenceItem category : refListCategories)
+            {
+                int nIdCategory = Integer.parseInt( category.getCode(  ) );
+                map.put( category.getCode(  ), findForLuteceUser(request,nIdCategory) );
+            }
+         }
 
         return map;
     }
