@@ -201,6 +201,7 @@ public final class CRMConstants
 
     // EVENTS
     public static final String EVENT_CRM_USER_MODIFIED = "EventCRMUserModified";
+    public static final String EVENT_CRM_DEMAND_TYPE_REMOVED = "EventCRMDemandTypeRemoved";
     
     /////////////////////////////////////////////////////////////////////////////////
     // Xml Tags

@@ -60,5 +60,6 @@
     </bean>
     
     <bean id="crm.crmUserListenerService" class="fr.paris.lutece.plugins.crm.service.listener.CRMUserModificationListenerService" />
+    <bean id="crm.crmDemandCategoryRemovalListenerService" class="fr.paris.lutece.plugins.crm.service.listener.CRMDemandTypeRemovalListenerService" />
     
 </beans>

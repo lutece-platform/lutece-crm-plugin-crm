@@ -39,11 +39,12 @@ import fr.paris.lutece.plugins.crm.business.demand.DemandTypeFilter;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeHome;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeRoleRemovalListener;
 import fr.paris.lutece.plugins.crm.business.demand.DemandTypeWorkgroupRemovalListener;
-import fr.paris.lutece.plugins.crm.business.portlet.DemandTypePortlet;
 import fr.paris.lutece.plugins.crm.service.category.CategoryRemovalListenerService;
 import fr.paris.lutece.plugins.crm.service.category.CategoryService;
+import fr.paris.lutece.plugins.crm.service.listener.CRMDemandTypeRemovalListenerService;
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 import fr.paris.lutece.plugins.crm.util.TargetEnum;
+import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.portal.business.role.RoleHome;
 import fr.paris.lutece.portal.service.role.RoleRemovalListenerService;
 import fr.paris.lutece.portal.service.security.SecurityService;
@@ -56,7 +57,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -157,6 +157,8 @@ public class DemandTypeService
     public void remove( int nIdDemandType )
     {
         // Remove all demands associated to the demand type
+        DemandType demandType = findByPrimaryKey( nIdDemandType );
+        CRMDemandTypeRemovalListenerService.getService().notifyListeners( demandType, CRMConstants.EVENT_CRM_DEMAND_TYPE_REMOVED );
         DemandService.getService(  ).removeByIdDemandType( nIdDemandType );
         DemandTypeHome.remove( nIdDemandType );
     }
