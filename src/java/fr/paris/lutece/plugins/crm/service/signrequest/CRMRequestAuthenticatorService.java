@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.crm.service.signrequest;
 
 import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.util.signrequest.AbstractAuthenticator;
+import fr.paris.lutece.util.signrequest.AbstractPrivateKeyAuthenticator;
 import fr.paris.lutece.util.signrequest.RequestAuthenticator;
 
 
@@ -68,7 +68,7 @@ public final class CRMRequestAuthenticatorService
      * Get the instance of {@link RequestAuthenticator} defined in the crm-formengine_context.xml
      * @return the instance of {@link RequestAuthenticator}
      */
-    public static AbstractAuthenticator getRequestAuthenticatorForUrl(  )
+    public static AbstractPrivateKeyAuthenticator getRequestAuthenticatorForUrl(  )
     {
         return SpringContextService.getBean( BEAN_CRM_REQUESTAUTHENTICATOR_FOR_URL );
     }
