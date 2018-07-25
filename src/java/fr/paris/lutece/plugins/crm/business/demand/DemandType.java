@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.Locale;
 
@@ -57,22 +59,37 @@ public class DemandType implements AdminWorkgroupResource
 {
     public static final String ROLE_NONE = "none";
     
-    
+    @JsonProperty("id_demand_type")
     private int _nIdDemandType;
+    @JsonProperty("label")
     private String _strLabel;
+    @JsonProperty("url")
     private String _strUrlResource;
+    @JsonIgnore
     private String _strUrlInfo;
+    @JsonIgnore
     private String _strUrlContact;
+    @JsonIgnore
     private int _nOrder;
+    @JsonIgnore
     private int _nIdCategory;
+    @JsonIgnore
     private Date _dateBegin;
+    @JsonIgnore
     private Date _dateEnd;
+    @JsonIgnore
     private String _strWorkgroupKey;
+    @JsonIgnore
     private String _strRoleKey;
+    @JsonIgnore
     private TargetEnum _target;
+    @JsonIgnore
     private String _strUrlDelete;
+    @JsonIgnore
     private boolean _bIncludeIdCrmUser;
+    @JsonIgnore
     private boolean _bNeedAuthentication;
+    @JsonIgnore
     private boolean _bNeedValidation;
 
     /**
@@ -101,6 +118,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the id demand type
      * @return the id demand type
      */
+    @JsonProperty("id_demand_type")
     public int getIdDemandType(  )
     {
         return _nIdDemandType;
@@ -110,6 +128,7 @@ public class DemandType implements AdminWorkgroupResource
      * Set the id demand type
      * @param nIdDemandType the id deman type
      */
+    @JsonProperty("id_demand_type")
     public void setIdDemandType( int nIdDemandType )
     {
         _nIdDemandType = nIdDemandType;
@@ -119,6 +138,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the label
      * @return the label
      */
+    @JsonProperty("label")
     public String getLabel(  )
     {
         return _strLabel;
@@ -137,6 +157,9 @@ public class DemandType implements AdminWorkgroupResource
      * Get the url of the resource
      * @return the url of the resource
      */
+        
+    
+    @JsonProperty("url")
     public String getUrlResource(  )
     {
         return _strUrlResource;
@@ -155,6 +178,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the url of the information
      * @return the url of the information
      */
+    @JsonIgnore
     public String getUrlInfo(  )
     {
         return _strUrlInfo;
@@ -173,6 +197,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the url of the contact
      * @return the url of the contact
      */
+    @JsonIgnore
     public String getUrlContact(  )
     {
         return _strUrlContact;
@@ -182,6 +207,7 @@ public class DemandType implements AdminWorkgroupResource
      * Set the url of the contact
      * @param strUrlContact the url of the contact
      */
+    @JsonIgnore
     public void setUrlContact( String strUrlContact )
     {
         _strUrlContact = strUrlContact;
@@ -191,6 +217,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the order
      * @return the order
      */
+    @JsonIgnore
     public int getOrder(  )
     {
         return _nOrder;
@@ -209,6 +236,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the id category
      * @return the ID category
      */
+    @JsonIgnore
     public int getIdCategory(  )
     {
         return _nIdCategory;
@@ -227,6 +255,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the beginning date
      * @return the beginning date
      */
+    @JsonIgnore
     public Date getDateBegin(  )
     {
         return _dateBegin;
@@ -245,6 +274,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the closing date
      * @return the closing date
      */
+    @JsonIgnore
     public Date getDateEnd(  )
     {
         return _dateEnd;
@@ -272,6 +302,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the workgroup key
      * @return the workgroup key
      */
+    @JsonIgnore
     public String getWorkgroup(  )
     {
         return _strWorkgroupKey;
@@ -290,6 +321,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the role
      * @return the role key
      */
+    @JsonIgnore
     public String getRole(  )
     {
         return _strRoleKey;
@@ -299,6 +331,7 @@ public class DemandType implements AdminWorkgroupResource
      * Check if the demand type is open or not
      * @return true if it is open, false otherwise
      */
+    @JsonIgnore
     public boolean isOpen(  )
     {
         boolean bIsDateBeginCorrect = false;
@@ -336,6 +369,7 @@ public class DemandType implements AdminWorkgroupResource
      * Check if the demand type is closed
      * @return true if it is closed, false otherwise
      */
+    @JsonIgnore
     public boolean isClosed(  )
     {
         return !isOpen(  );
@@ -354,6 +388,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get target
      * @return the target
      */
+    @JsonIgnore
     public TargetEnum getTarget(  )
     {
         return _target;
@@ -363,6 +398,7 @@ public class DemandType implements AdminWorkgroupResource
      * Get the url to delete the demand
      * @return the url to delete the demand
      */
+    @JsonIgnore
     public String getUrlDelete(  )
     {
         return _strUrlDelete;
@@ -385,6 +421,7 @@ public class DemandType implements AdminWorkgroupResource
      * @param locale the Locale
      * @return the xml of this Demande Type
      */
+    @JsonIgnore
     public String getXml( HttpServletRequest request, Locale locale )
     {
         StringBuffer strXml = new StringBuffer(  );
@@ -410,6 +447,7 @@ public class DemandType implements AdminWorkgroupResource
      * 		
      * @return true if the crm user id must be added to the list of _strUrlResource parameters 
      */
+    @JsonIgnore
 	public boolean isIncludeIdCrmUser() {
 		return _bIncludeIdCrmUser;
 	}
@@ -427,6 +465,7 @@ public class DemandType implements AdminWorkgroupResource
 	 * 
 	 * @return true if the demand type need authentication access
 	 */
+        @JsonIgnore
 	public boolean isNeedAuthentication() {
 		return _bNeedAuthentication;
 	}
@@ -445,6 +484,7 @@ public class DemandType implements AdminWorkgroupResource
 	 * 
 	 * @return true if the demand type need validation access
 	 */
+        @JsonIgnore
 	public boolean isNeedValidation(){
 		return _bNeedValidation;
 	}
