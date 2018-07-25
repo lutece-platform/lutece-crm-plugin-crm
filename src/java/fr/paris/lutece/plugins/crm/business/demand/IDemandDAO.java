@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * IDemandDAO
@@ -47,72 +46,99 @@ public interface IDemandDAO
 {
     /**
      * Generate a new primary key
-     * @param plugin the {@link Plugin}
+     * 
+     * @param plugin
+     *            the {@link Plugin}
      * @return a new primary key
      */
     int newPrimaryKey( Plugin plugin );
 
     /**
      * Insert a new record in the table.
-     * @param demand instance
-     * @param plugin the Plugin
+     * 
+     * @param demand
+     *            instance
+     * @param plugin
+     *            the Plugin
      * @return the newly created demand id
      */
     int insert( Demand demand, Plugin plugin );
 
     /**
-    * Update the record in the table
-    * @param demand the reference of the object
-    * @param plugin the Plugin
-    */
+     * Update the record in the table
+     * 
+     * @param demand
+     *            the reference of the object
+     * @param plugin
+     *            the Plugin
+     */
     void store( Demand demand, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nIdDemand int identifier of the demand to delete
-     * @param plugin the Plugin
+     * 
+     * @param nIdDemand
+     *            int identifier of the demand to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nIdDemand, Plugin plugin );
 
     /**
      * Load the data from the table
-     * @param nIdDemand The identifier of the demand
-     * @param plugin the Plugin
+     * 
+     * @param nIdDemand
+     *            The identifier of the demand
+     * @param plugin
+     *            the Plugin
      * @return The instance of the object
      */
     Demand load( int nIdDemand, Plugin plugin );
 
     /**
      * Find all demands
-     * @param plugin {@link Plugin}
+     * 
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link Demand}
      */
     List<Demand> selectAll( Plugin plugin );
 
     /**
      * Find by filter
-     * @param dFilter the filter
-     * @param paginationProperties the pagination properties (can be null)
-     * @param plugin {@link Plugin}
+     * 
+     * @param dFilter
+     *            the filter
+     * @param paginationProperties
+     *            the pagination properties (can be null)
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link Demand}
      */
     List<Demand> selectByFilter( DemandFilter dFilter, IPaginationProperties paginationProperties, Plugin plugin );
 
     /**
      * Count results by filter
-     * @param dFilter the filter
-     * @param plugin {@link Plugin}
+     * 
+     * @param dFilter
+     *            the filter
+     * @param plugin
+     *            {@link Plugin}
      * @return the number of result
      */
     int countByFilter( DemandFilter dFilter, Plugin plugin );
-    
+
     /**
-     * Load demand by Remote Id and id demand 
-     * @param strRemoteId the remote Id
-     * @param nIdDemandType the Id demand type
-     * @param plugin the plugin
-     * @return  The instance of the object
+     * Load demand by Remote Id and id demand
+     * 
+     * @param strRemoteId
+     *            the remote Id
+     * @param nIdDemandType
+     *            the Id demand type
+     * @param plugin
+     *            the plugin
+     * @return The instance of the object
      */
     Demand loadByRemoteKey( String strRemoteId, int nIdDemandType, Plugin plugin );
-    
+
 }

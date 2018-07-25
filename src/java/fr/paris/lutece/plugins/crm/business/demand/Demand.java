@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.crm.service.notification.NotificationService;
 
 import java.sql.Timestamp;
 
-
 /**
  *
  * Demand
@@ -56,7 +55,9 @@ public class Demand
 
     /**
      * Set the ID demand
-     * @param nIdDemand the ID demand
+     * 
+     * @param nIdDemand
+     *            the ID demand
      */
     public void setIdDemand( int nIdDemand )
     {
@@ -65,16 +66,19 @@ public class Demand
 
     /**
      * Get the ID demand
+     * 
      * @return the ID demand
      */
-    public int getIdDemand(  )
+    public int getIdDemand( )
     {
         return _nIdDemand;
     }
 
     /**
      * Set the status
-     * @param strStatusText the status
+     * 
+     * @param strStatusText
+     *            the status
      */
     public void setStatusText( String strStatusText )
     {
@@ -83,16 +87,19 @@ public class Demand
 
     /**
      * Get the status
+     * 
      * @return the status
      */
-    public String getStatusText(  )
+    public String getStatusText( )
     {
         return _strStatusText;
     }
 
     /**
      * Set the ID demand type
-     * @param nIdDemandType the ID demand type
+     * 
+     * @param nIdDemandType
+     *            the ID demand type
      */
     public void setIdDemandType( int nIdDemandType )
     {
@@ -101,16 +108,19 @@ public class Demand
 
     /**
      * Get the ID demand type
+     * 
      * @return the ID demand type
      */
-    public int getIdDemandType(  )
+    public int getIdDemandType( )
     {
         return _nIdDemandType;
     }
 
     /**
      * Set the user crm id
-     * @param nIdCRMUser the user crm id
+     * 
+     * @param nIdCRMUser
+     *            the user crm id
      */
     public void setIdCRMUser( int nIdCRMUser )
     {
@@ -119,25 +129,29 @@ public class Demand
 
     /**
      * Get the user user crm id
+     * 
      * @return the user crm id
      */
-    public int getIdCRMUser(  )
+    public int getIdCRMUser( )
     {
         return _nIdCRMUser;
     }
 
     /**
      * Returns the Date of the last Modification
+     * 
      * @return The Date of the last Modification
      */
-    public Timestamp getDateModification(  )
+    public Timestamp getDateModification( )
     {
         return _dateModification;
     }
 
     /**
-     * Sets the Date  of the last Modification
-     * @param dateModification The Date of the last Modification
+     * Sets the Date of the last Modification
+     * 
+     * @param dateModification
+     *            The Date of the last Modification
      */
     public void setDateModification( Timestamp dateModification )
     {
@@ -146,25 +160,29 @@ public class Demand
 
     /**
      * Get the number of unread notifications
+     * 
      * @return the number of unread notifications
      */
-    public int getNumberUnreadNotifications(  )
+    public int getNumberUnreadNotifications( )
     {
-        return NotificationService.getService(  ).getNumberUnreadNotifications( _nIdDemand );
+        return NotificationService.getService( ).getNumberUnreadNotifications( _nIdDemand );
     }
 
     /**
      * Get the number of notifications
+     * 
      * @return the number of notifications
      */
-    public int getNumberNotifications(  )
+    public int getNumberNotifications( )
     {
-        return NotificationService.getService(  ).getNumberNotifications( _nIdDemand );
+        return NotificationService.getService( ).getNumberNotifications( _nIdDemand );
     }
 
     /**
      * Set the data
-     * @param strData the data
+     * 
+     * @param strData
+     *            the data
      */
     public void setData( String strData )
     {
@@ -173,16 +191,19 @@ public class Demand
 
     /**
      * Get the data
+     * 
      * @return the data
      */
-    public String getData(  )
+    public String getData( )
     {
         return _strData;
     }
 
     /**
      * Set the id status CRM
-     * @param nIdStatusCRM the id status crm
+     * 
+     * @param nIdStatusCRM
+     *            the id status crm
      */
     public void setIdStatusCRM( int nIdStatusCRM )
     {
@@ -191,27 +212,30 @@ public class Demand
 
     /**
      * Get the id status crm
+     * 
      * @return the id status crm
      */
-    public int getIdStatusCRM(  )
+    public int getIdStatusCRM( )
     {
         return _nIdStatusCRM;
     }
 
-    
     /**
      * 
      * @return the remote Id
      */
-	public String getRemoteId() {
-		return _strRemoteId;
-	}
+    public String getRemoteId( )
+    {
+        return _strRemoteId;
+    }
 
-	/**
-	 * 
-	 * @param _strRemoteId the Remote Id
-	 */
-	public void setRemoteId(String _strRemoteId) {
-		this._strRemoteId = _strRemoteId;
-	}
+    /**
+     * 
+     * @param _strRemoteId
+     *            the Remote Id
+     */
+    public void setRemoteId( String _strRemoteId )
+    {
+        this._strRemoteId = _strRemoteId;
+    }
 }

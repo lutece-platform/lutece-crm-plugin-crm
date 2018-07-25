@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  *
  * NotificationHome
@@ -55,22 +54,25 @@ public final class NotificationHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private NotificationHome(  )
+    private NotificationHome( )
     {
     }
 
     /**
      * Generates a new primary key
+     * 
      * @return The new primary key
      */
-    public static int newPrimaryKey(  )
+    public static int newPrimaryKey( )
     {
         return _dao.newPrimaryKey( _plugin );
     }
 
     /**
      * Insert a new record in the table.
-     * @param notification instance of the Notification object to insert
+     * 
+     * @param notification
+     *            instance of the Notification object to insert
      * @return the key of the newly created notification
      */
     public static int create( Notification notification )
@@ -80,7 +82,9 @@ public final class NotificationHome
 
     /**
      * Update the record in the table
-     * @param notification the reference of the Notification
+     * 
+     * @param notification
+     *            the reference of the Notification
      */
     public static void update( Notification notification )
     {
@@ -89,7 +93,9 @@ public final class NotificationHome
 
     /**
      * Delete a record from the table
-     * @param nIdNotification int identifier of the notification to delete
+     * 
+     * @param nIdNotification
+     *            int identifier of the notification to delete
      */
     public static void remove( int nIdNotification )
     {
@@ -98,7 +104,9 @@ public final class NotificationHome
 
     /**
      * Delete all records from a given id demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public static void removeByIdDemand( int nIdDemand )
     {
@@ -107,7 +115,9 @@ public final class NotificationHome
 
     /**
      * Load the data from the table
-     * @param nIdNotification The identifier of the notification
+     * 
+     * @param nIdNotification
+     *            The identifier of the notification
      * @return The instance of the Notification
      */
     public static Notification findByPrimaryKey( int nIdNotification )
@@ -117,16 +127,19 @@ public final class NotificationHome
 
     /**
      * Find all notifications
+     * 
      * @return a list of {@link Notification}
      */
-    public static List<Notification> findAll(  )
+    public static List<Notification> findAll( )
     {
         return _dao.selectAll( _plugin );
     }
 
     /**
      * Find all notification by filter
-     * @param nFilter the filter
+     * 
+     * @param nFilter
+     *            the filter
      * @return a list of {@link Notification}
      */
     public static List<Notification> findByFilter( NotificationFilter nFilter )

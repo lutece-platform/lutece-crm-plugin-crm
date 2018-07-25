@@ -50,7 +50,6 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * CRMUserAttributeFilter
@@ -58,9 +57,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CRMUserFilter implements Serializable
 {
-	public static final int MUST_BE_UPDATED_TRUE=1;
-	public static final int MUST_BE_UPDATED_FALSE=0;
-	private static final long serialVersionUID = -4489731073268811381L;
+    public static final int MUST_BE_UPDATED_TRUE = 1;
+    public static final int MUST_BE_UPDATED_FALSE = 0;
+    private static final long serialVersionUID = -4489731073268811381L;
     private static final String SQL_WHERE = " WHERE ";
     private static final String SQL_AND = " AND ";
     private static final String SQL_OR = " OR ";
@@ -80,27 +79,28 @@ public class CRMUserFilter implements Serializable
     /**
      * Init.
      *
-     * @param request the request
+     * @param request
+     *            the request
      */
     public void init( HttpServletRequest request )
     {
         try
         {
-            BeanUtils.populate( this, request.getParameterMap(  ) );
+            BeanUtils.populate( this, request.getParameterMap( ) );
         }
-        catch ( IllegalAccessException e )
+        catch( IllegalAccessException e )
         {
             AppLogService.error( "Unable to fetch data from request", e );
         }
-        catch ( InvocationTargetException e )
+        catch( InvocationTargetException e )
         {
             AppLogService.error( "Unable to fetch data from request", e );
         }
 
         // LinkedHashMap to keep the FIFO behavior
-        _userInfos = new HashMap<String, String>(  );
+        _userInfos = new HashMap<String, String>( );
 
-        for ( String strAttributeKey : CRMUserAttributesService.getService(  ).getUserAttributeKeys(  ) )
+        for ( String strAttributeKey : CRMUserAttributesService.getService( ).getUserAttributeKeys( ) )
         {
             String strParamValue = request.getParameter( strAttributeKey );
 
@@ -113,7 +113,9 @@ public class CRMUserFilter implements Serializable
 
     /**
      * Set the id crm user
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      */
     public void setIdCRMUser( int nIdCRMUser )
     {
@@ -122,9 +124,10 @@ public class CRMUserFilter implements Serializable
 
     /**
      * Get the id crm user
+     * 
      * @return the id crm user
      */
-    public int getIdCRMUser(  )
+    public int getIdCRMUser( )
     {
         return _nIdCRMUser;
     }
@@ -134,14 +137,16 @@ public class CRMUserFilter implements Serializable
      *
      * @return true, if successful
      */
-    public boolean containsIdCRMUser(  )
+    public boolean containsIdCRMUser( )
     {
         return _nIdCRMUser > 0;
     }
 
     /**
      * Set the user guid
-     * @param strUserGuid the user guid
+     * 
+     * @param strUserGuid
+     *            the user guid
      */
     public void setUserGuid( String strUserGuid )
     {
@@ -150,9 +155,10 @@ public class CRMUserFilter implements Serializable
 
     /**
      * Get the user guid
+     * 
      * @return the user guid
      */
-    public String getUserGuid(  )
+    public String getUserGuid( )
     {
         return _strUserGuid;
     }
@@ -162,14 +168,16 @@ public class CRMUserFilter implements Serializable
      *
      * @return true, if successful
      */
-    public boolean containsUserGuid(  )
+    public boolean containsUserGuid( )
     {
         return StringUtils.isNotBlank( _strUserGuid );
     }
 
     /**
      * Set the user attributes
-     * @param userInfos the user attributes
+     * 
+     * @param userInfos
+     *            the user attributes
      */
     public void setUserAttributes( Map<String, String> userInfos )
     {
@@ -178,9 +186,10 @@ public class CRMUserFilter implements Serializable
 
     /**
      * Get the user attributes
+     * 
      * @return the user attributes
      */
-    public Map<String, String> getUserAttributes(  )
+    public Map<String, String> getUserAttributes( )
     {
         return _userInfos;
     }
@@ -190,14 +199,16 @@ public class CRMUserFilter implements Serializable
      *
      * @return true, if successful
      */
-    public boolean containsUserAttributes(  )
+    public boolean containsUserAttributes( )
     {
-        return ( _userInfos != null ) && !_userInfos.isEmpty(  );
+        return ( _userInfos != null ) && !_userInfos.isEmpty( );
     }
 
     /**
      * Get the user attribute value
-     * @param strUserAttributeKey the key
+     * 
+     * @param strUserAttributeKey
+     *            the key
      * @return the user attribute value
      */
     public String getUserAttributeValue( String strUserAttributeKey )
@@ -214,7 +225,9 @@ public class CRMUserFilter implements Serializable
 
     /**
      * Set true if the search is wide, false otherwise
-     * @param isWideSearch true if the search is wide, false otherwise
+     * 
+     * @param isWideSearch
+     *            true if the search is wide, false otherwise
      */
     public void setWideSearch( boolean isWideSearch )
     {
@@ -223,9 +236,10 @@ public class CRMUserFilter implements Serializable
 
     /**
      * Return true if the search is wide, false otherwise
+     * 
      * @return true if the search is wide, false otherwise
      */
-    public boolean isWideSearch(  )
+    public boolean isWideSearch( )
     {
         return _bIsWideSearch;
     }
@@ -233,13 +247,14 @@ public class CRMUserFilter implements Serializable
     /**
      * @return the nStatus
      */
-    public int getStatus(  )
+    public int getStatus( )
     {
         return _nStatus;
     }
 
     /**
-     * @param nStatus the nStatus to set
+     * @param nStatus
+     *            the nStatus to set
      */
     public void setStatus( int nStatus )
     {
@@ -249,46 +264,44 @@ public class CRMUserFilter implements Serializable
     /**
      * Contains status.
      */
-    public boolean containsStatus(  )
+    public boolean containsStatus( )
     {
         return _nStatus > -1;
     }
-    
-    
-    
+
     /**
      * 
-     * @return 
+     * @return
      */
-	public int getMustBeUpdated() {
-		return _nMustBeUpdated;
-	}
-	/**
-	 * 
-	 * @param _nMustBeUpdated
-	 */
-	public void setMustBeUpdated(int nMustBeUpdated) {
-		this._nMustBeUpdated = nMustBeUpdated;
-	}
-	
-	
-	 /**
+    public int getMustBeUpdated( )
+    {
+        return _nMustBeUpdated;
+    }
+
+    /**
+     * 
+     * @param _nMustBeUpdated
+     */
+    public void setMustBeUpdated( int nMustBeUpdated )
+    {
+        this._nMustBeUpdated = nMustBeUpdated;
+    }
+
+    /**
      * Contains id crm user.
      *
      * @return true, if successful
      */
-    public boolean containsMustBeUpdated(  )
+    public boolean containsMustBeUpdated( )
     {
         return _nMustBeUpdated > 0;
     }
-    
-    
-    
 
     /**
      * Builds the sql query.
      *
-     * @param strSQL the str sql
+     * @param strSQL
+     *            the str sql
      * @return the string
      */
     public String buildSQLQuery( String strSQL )
@@ -296,37 +309,39 @@ public class CRMUserFilter implements Serializable
         StringBuilder sbSQL = new StringBuilder( strSQL );
         int nIndex = 1;
         nIndex = buildSQLQueryForAttribute( sbSQL, nIndex );
-        nIndex = buildFilter( sbSQL, containsIdCRMUser(  ), SQL_FILTER_ID_CRM_USER, nIndex );
-        nIndex = buildFilter( sbSQL, containsUserGuid(  ), SQL_FILTER_USER_GUID, nIndex );
-        nIndex = buildFilter( sbSQL, containsStatus(  ), SQL_FILTER_STATUS_ACTIVE, nIndex );
-        buildFilter( sbSQL, containsStatus(  ), SQL_FILTER_MUST_BE_UPDATED, nIndex );
-        
-        return sbSQL.toString(  );
+        nIndex = buildFilter( sbSQL, containsIdCRMUser( ), SQL_FILTER_ID_CRM_USER, nIndex );
+        nIndex = buildFilter( sbSQL, containsUserGuid( ), SQL_FILTER_USER_GUID, nIndex );
+        nIndex = buildFilter( sbSQL, containsStatus( ), SQL_FILTER_STATUS_ACTIVE, nIndex );
+        buildFilter( sbSQL, containsStatus( ), SQL_FILTER_MUST_BE_UPDATED, nIndex );
+
+        return sbSQL.toString( );
     }
 
     /**
      * Builds the sql query for attribute.
      *
-     * @param sbSQL the sb sql
-     * @param nIndex the n index
+     * @param sbSQL
+     *            the sb sql
+     * @param nIndex
+     *            the n index
      * @return the int
      */
     public int buildSQLQueryForAttribute( StringBuilder sbSQL, int nIndex )
     {
         int nIndexTmp = nIndex;
 
-        if ( containsUserAttributes(  ) )
+        if ( containsUserAttributes( ) )
         {
-            for ( int nI = 0; nI < _userInfos.size(  ); nI++ )
+            for ( int nI = 0; nI < _userInfos.size( ); nI++ )
             {
                 sbSQL.append( " INNER JOIN crm_user_attribute AS cua" + nI );
                 sbSQL.append( " ON cu.id_crm_user = cua" + nI + ".id_crm_user" );
             }
 
-            for ( int nI = 0; nI < _userInfos.size(  ); nI++ )
+            for ( int nI = 0; nI < _userInfos.size( ); nI++ )
             {
                 // 2 interrogations marks, so nIndexTmp should add 2
-                nIndexTmp = addSQLWhereOr( isWideSearch(  ), sbSQL, nIndexTmp ) + 1;
+                nIndexTmp = addSQLWhereOr( isWideSearch( ), sbSQL, nIndexTmp ) + 1;
                 sbSQL.append( " cua" + nI + ".user_attribute_key = ? AND cua" + nI + ".user_attribute_value LIKE ? " );
             }
         }
@@ -337,52 +352,55 @@ public class CRMUserFilter implements Serializable
     /**
      * Sets the filter values.
      *
-     * @param daoUtil the new filter values
+     * @param daoUtil
+     *            the new filter values
      */
     public void setFilterValues( DAOUtil daoUtil )
     {
         int nIndex = 1;
 
-        if ( containsUserAttributes(  ) )
+        if ( containsUserAttributes( ) )
         {
-            for ( Entry<String, String> param : _userInfos.entrySet(  ) )
+            for ( Entry<String, String> param : _userInfos.entrySet( ) )
             {
-                daoUtil.setString( nIndex++, param.getKey(  ) );
-                daoUtil.setString( nIndex++, SQL_PERCENT + param.getValue(  ) + SQL_PERCENT );
+                daoUtil.setString( nIndex++, param.getKey( ) );
+                daoUtil.setString( nIndex++, SQL_PERCENT + param.getValue( ) + SQL_PERCENT );
             }
         }
 
-        if ( containsIdCRMUser(  ) )
+        if ( containsIdCRMUser( ) )
         {
-            daoUtil.setInt( nIndex++, getIdCRMUser(  ) );
+            daoUtil.setInt( nIndex++, getIdCRMUser( ) );
         }
 
-        if ( containsUserGuid(  ) )
+        if ( containsUserGuid( ) )
         {
-            daoUtil.setString( nIndex++, SQL_PERCENT + getUserGuid(  ) + SQL_PERCENT );
+            daoUtil.setString( nIndex++, SQL_PERCENT + getUserGuid( ) + SQL_PERCENT );
         }
 
-        if ( containsStatus(  ) )
+        if ( containsStatus( ) )
         {
-            daoUtil.setInt( nIndex++, getStatus(  ) );
+            daoUtil.setInt( nIndex++, getStatus( ) );
         }
-        
-        if ( containsMustBeUpdated() )
+
+        if ( containsMustBeUpdated( ) )
         {
-            daoUtil.setInt( nIndex++, getMustBeUpdated(  ) );
+            daoUtil.setInt( nIndex++, getMustBeUpdated( ) );
         }
-        
-        
-        
+
     }
 
     /**
      * Builds the filter.
      *
-     * @param sbSQL the sb sql
-     * @param bAddFilter the b add filter
-     * @param strSQL the str sql
-     * @param nIndex the n index
+     * @param sbSQL
+     *            the sb sql
+     * @param bAddFilter
+     *            the b add filter
+     * @param strSQL
+     *            the str sql
+     * @param nIndex
+     *            the n index
      * @return the int
      */
     private int buildFilter( StringBuilder sbSQL, boolean bAddFilter, String strSQL, int nIndex )
@@ -391,7 +409,7 @@ public class CRMUserFilter implements Serializable
 
         if ( bAddFilter )
         {
-            nIndexTmp = addSQLWhereOr( isWideSearch(  ), sbSQL, nIndex );
+            nIndexTmp = addSQLWhereOr( isWideSearch( ), sbSQL, nIndex );
             sbSQL.append( strSQL );
         }
 
@@ -399,15 +417,18 @@ public class CRMUserFilter implements Serializable
     }
 
     /**
-     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index.
-     * <br/>
+     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index. <br/>
      * <ul>
      * <li>if <code>nIndex</code> == 1, then we add a <b>WHERE</b></li>
      * <li>if <code>nIndex</code> != 1, then we add a <b>OR</b> or a <b>AND</b> depending of the wide search characteristic</li>
      * </ul>
-     * @param bIsWideSearch true if it is a wide search, false otherwise
-     * @param sbSQL the SQL query
-     * @param nIndex the index
+     * 
+     * @param bIsWideSearch
+     *            true if it is a wide search, false otherwise
+     * @param sbSQL
+     *            the SQL query
+     * @param nIndex
+     *            the index
      * @return the new index
      */
     private int addSQLWhereOr( boolean bIsWideSearch, StringBuilder sbSQL, int nIndex )
@@ -423,6 +444,5 @@ public class CRMUserFilter implements Serializable
 
         return nIndex + 1;
     }
-
 
 }

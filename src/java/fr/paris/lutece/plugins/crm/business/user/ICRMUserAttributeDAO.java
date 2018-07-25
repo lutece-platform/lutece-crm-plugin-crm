@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.Map;
 
-
 /**
  *
  * ICRMUserAttributeDAO
@@ -47,35 +46,49 @@ public interface ICRMUserAttributeDAO
 {
     /**
      * Insert a new record in the table.
-     * @param nIdCRMUser the id crm user
-     * @param strUserAttributeKey user attribute key
-     * @param strUserAttributeValue user attribute value
-     * @param plugin the Plugin
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
+     * @param strUserAttributeKey
+     *            user attribute key
+     * @param strUserAttributeValue
+     *            user attribute value
+     * @param plugin
+     *            the Plugin
      */
     void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nIdCRMUser int identifier of the CRMUser to delete
-     * @param plugin the Plugin
+     * 
+     * @param nIdCRMUser
+     *            int identifier of the CRMUser to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nIdCRMUser, Plugin plugin );
 
     /**
      * Load the data from the table
-     * @param nIdCRMUser The identifier of the CRMUser
-     * @param plugin the Plugin
+     * 
+     * @param nIdCRMUser
+     *            The identifier of the CRMUser
+     * @param plugin
+     *            the Plugin
      * @return The instance of the CRMUser
      */
     Map<String, String> load( int nIdCRMUser, Plugin plugin );
 
     /**
      * Count the number of instance of a given value of an attribute
-     * @param strUserAttributeValue The value of the attribute
-     * @param strUserAttributeKey The key of the attribute
-     * @param plugin The plugin
-     * @return The number of instances of attributes with the given value for
-     *         the given attribute key.
+     * 
+     * @param strUserAttributeValue
+     *            The value of the attribute
+     * @param strUserAttributeKey
+     *            The key of the attribute
+     * @param plugin
+     *            The plugin
+     * @return The number of instances of attributes with the given value for the given attribute key.
      */
     int countAttributeValueInstances( String strUserAttributeValue, String strUserAttributeKey, Plugin plugin );
 }

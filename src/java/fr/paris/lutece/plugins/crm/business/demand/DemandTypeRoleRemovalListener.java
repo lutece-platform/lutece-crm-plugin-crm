@@ -42,7 +42,6 @@ import org.apache.commons.lang.StringUtils;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  *
  * DemandTypeRoleRemovalListener
@@ -54,7 +53,9 @@ public class DemandTypeRoleRemovalListener implements RemovalListener
 
     /**
      * Check if the object can be safely removed
-     * @param strId The object id
+     * 
+     * @param strId
+     *            The object id
      * @return true if the object can be removed otherwise false
      */
     public boolean canBeRemoved( String strId )
@@ -63,12 +64,12 @@ public class DemandTypeRoleRemovalListener implements RemovalListener
 
         if ( StringUtils.isNotBlank( strId ) )
         {
-            DemandTypeFilter rtFilter = new DemandTypeFilter(  );
+            DemandTypeFilter rtFilter = new DemandTypeFilter( );
             rtFilter.setRole( strId );
 
-            List<DemandType> listDemandTypes = DemandTypeService.getService(  ).findByFilter( rtFilter );
+            List<DemandType> listDemandTypes = DemandTypeService.getService( ).findByFilter( rtFilter );
 
-            if ( ( listDemandTypes != null ) && ( listDemandTypes.size(  ) > 0 ) )
+            if ( ( listDemandTypes != null ) && ( listDemandTypes.size( ) > 0 ) )
             {
                 bCanBeRemoved = false;
             }
@@ -79,8 +80,11 @@ public class DemandTypeRoleRemovalListener implements RemovalListener
 
     /**
      * Gives a message explaining why the object cannot be removed
-     * @param strId The object id
-     * @param locale The current locale
+     * 
+     * @param strId
+     *            The object id
+     * @param locale
+     *            The current locale
      * @return The message
      */
     public String getRemovalRefusedMessage( String strId, Locale locale )

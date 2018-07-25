@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-
 /**
  *
  * CRMUserService
@@ -56,22 +55,25 @@ public class CRMUserService
     /**
      * Constructor
      */
-    protected CRMUserService(  )
+    protected CRMUserService( )
     {
     }
 
     /**
      * Get the instance of CRMUserService
+     * 
      * @return the instance of CRMUserService
      */
-    public static CRMUserService getService(  )
+    public static CRMUserService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_CRMUSERSERVICE );
     }
 
     /**
      * Set the crm user attributes service
-     * @param crmUserAttributesService the crm user attributes service
+     * 
+     * @param crmUserAttributesService
+     *            the crm user attributes service
      */
     public void setCRMUserAttributesService( CRMUserAttributesService crmUserAttributesService )
     {
@@ -80,7 +82,9 @@ public class CRMUserService
 
     /**
      * Find by primary key
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      * @return a {@link CRMUser}
      */
     public CRMUser findByPrimaryKey( int nIdCRMUser )
@@ -93,7 +97,9 @@ public class CRMUserService
 
     /**
      * Find from a given user guid
-     * @param strUserGuid the user guid
+     * 
+     * @param strUserGuid
+     *            the user guid
      * @return a {@link CRMUser}
      */
     public CRMUser findByUserGuid( String strUserGuid )
@@ -102,7 +108,7 @@ public class CRMUserService
 
         if ( user != null )
         {
-            user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser(  ) ) );
+            user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser( ) ) );
         }
 
         return user;
@@ -113,13 +119,13 @@ public class CRMUserService
      *
      * @return a {@link CRMUser}
      */
-    public List<CRMUser> findAll(  )
+    public List<CRMUser> findAll( )
     {
-        List<CRMUser> listUsers = CRMUserHome.findAll(  );
+        List<CRMUser> listUsers = CRMUserHome.findAll( );
 
         for ( CRMUser user : listUsers )
         {
-            user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser(  ) ) );
+            user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser( ) ) );
         }
 
         return listUsers;
@@ -128,7 +134,8 @@ public class CRMUserService
     /**
      * Find list ids by filter.
      *
-     * @param filter the filter
+     * @param filter
+     *            the filter
      * @return the list
      */
     public List<Integer> findListIdsByFilter( CRMUserFilter filter )
@@ -139,20 +146,21 @@ public class CRMUserService
     /**
      * Find by list ids.
      *
-     * @param listIdsCRMUser the list ids crm user
+     * @param listIdsCRMUser
+     *            the list ids crm user
      * @return the list
      */
     public List<CRMUser> findByListIds( List<Integer> listIdsCRMUser )
     {
-        List<CRMUser> listUsers = new ArrayList<CRMUser>(  );
+        List<CRMUser> listUsers = new ArrayList<CRMUser>( );
 
-        if ( ( listIdsCRMUser != null ) && !listIdsCRMUser.isEmpty(  ) )
+        if ( ( listIdsCRMUser != null ) && !listIdsCRMUser.isEmpty( ) )
         {
             listUsers = CRMUserHome.findByListIds( listIdsCRMUser );
 
             for ( CRMUser user : listUsers )
             {
-                user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser(  ) ) );
+                user.setUserAttributes( _crmUserAttributesService.getAttributes( user.getIdCRMUser( ) ) );
             }
         }
 
@@ -161,7 +169,9 @@ public class CRMUserService
 
     /**
      * Create a new {@link CRMUser}
-     * @param user the {@link CRMUser}
+     * 
+     * @param user
+     *            the {@link CRMUser}
      * @return the new primary key
      */
     public int create( CRMUser user )
@@ -172,11 +182,11 @@ public class CRMUserService
         {
             nIdCRMUser = CRMUserHome.create( user );
 
-            if ( user.getUserAttributes(  ) != null )
+            if ( user.getUserAttributes( ) != null )
             {
-                for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+                for ( Entry<String, String> userAttribute : user.getUserAttributes( ).entrySet( ) )
                 {
-                    _crmUserAttributesService.create( nIdCRMUser, userAttribute.getKey(  ), userAttribute.getValue(  ) );
+                    _crmUserAttributesService.create( nIdCRMUser, userAttribute.getKey( ), userAttribute.getValue( ) );
                 }
             }
         }
@@ -186,7 +196,9 @@ public class CRMUserService
 
     /**
      * Update a {@link CRMUser}
-     * @param user the {@link CRMUser}
+     * 
+     * @param user
+     *            the {@link CRMUser}
      */
     public void update( CRMUser user )
     {
@@ -194,15 +206,14 @@ public class CRMUserService
         {
             CRMUserHome.update( user );
             // Remove its attributes first
-            _crmUserAttributesService.remove( user.getIdCRMUser(  ) );
+            _crmUserAttributesService.remove( user.getIdCRMUser( ) );
 
-            if ( user.getUserAttributes(  ) != null )
+            if ( user.getUserAttributes( ) != null )
             {
                 // Recreate its attributes
-                for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+                for ( Entry<String, String> userAttribute : user.getUserAttributes( ).entrySet( ) )
                 {
-                    _crmUserAttributesService.create( user.getIdCRMUser(  ), userAttribute.getKey(  ),
-                        userAttribute.getValue(  ) );
+                    _crmUserAttributesService.create( user.getIdCRMUser( ), userAttribute.getKey( ), userAttribute.getValue( ) );
                 }
             }
         }
@@ -210,7 +221,9 @@ public class CRMUserService
 
     /**
      * Remove a CRMUser
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      */
     public void remove( int nIdCRMUser )
     {

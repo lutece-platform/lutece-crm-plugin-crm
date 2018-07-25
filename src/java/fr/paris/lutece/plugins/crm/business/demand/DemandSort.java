@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
-
 /**
  * Defines a sort for demands
  *
@@ -46,14 +45,17 @@ public class DemandSort
     /**
      * Constructor
      */
-    public DemandSort(  )
+    public DemandSort( )
     {
     }
 
     /**
      * Constructor
-     * @param strField the field
-     * @param asc asc or desc
+     * 
+     * @param strField
+     *            the field
+     * @param asc
+     *            asc or desc
      */
     public DemandSort( String strField, boolean asc )
     {
@@ -64,13 +66,14 @@ public class DemandSort
     /**
      * @return the strField
      */
-    public String getField(  )
+    public String getField( )
     {
         return _strField;
     }
 
     /**
-     * @param strField the strField to set
+     * @param strField
+     *            the strField to set
      */
     public void setField( String strField )
     {
@@ -80,13 +83,14 @@ public class DemandSort
     /**
      * @return the asc
      */
-    public boolean isAsc(  )
+    public boolean isAsc( )
     {
         return _asc;
     }
 
     /**
-     * @param asc the asc to set
+     * @param asc
+     *            the asc to set
      */
     public void setAsc( boolean asc )
     {

@@ -42,7 +42,6 @@ import org.apache.commons.lang.StringUtils;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  *
  * DemandTypeCategoryRemovalListener
@@ -53,10 +52,12 @@ public class DemandTypeCategoryRemovalListener implements RemovalListener
     private static final String PROPERTY_DEMAND_TYPE_CANNOT_BE_REMOVED = "crm.message.categoryCannotBeRemoved";
 
     /**
-    * Check if the object can be safely removed
-    * @param strId The object id
-    * @return true if the object can be removed otherwise false
-    */
+     * Check if the object can be safely removed
+     * 
+     * @param strId
+     *            The object id
+     * @return true if the object can be removed otherwise false
+     */
     public boolean canBeRemoved( String strId )
     {
         boolean bCanBeRemoved = true;
@@ -64,12 +65,12 @@ public class DemandTypeCategoryRemovalListener implements RemovalListener
         if ( StringUtils.isNotBlank( strId ) && StringUtils.isNumeric( strId ) )
         {
             int nIdCategory = Integer.parseInt( strId );
-            DemandTypeFilter rtFilter = new DemandTypeFilter(  );
+            DemandTypeFilter rtFilter = new DemandTypeFilter( );
             rtFilter.setIdCategory( nIdCategory );
 
-            List<DemandType> listDemandTypes = DemandTypeService.getService(  ).findByFilter( rtFilter );
+            List<DemandType> listDemandTypes = DemandTypeService.getService( ).findByFilter( rtFilter );
 
-            if ( ( listDemandTypes != null ) && ( listDemandTypes.size(  ) > 0 ) )
+            if ( ( listDemandTypes != null ) && ( listDemandTypes.size( ) > 0 ) )
             {
                 bCanBeRemoved = false;
             }
@@ -80,8 +81,11 @@ public class DemandTypeCategoryRemovalListener implements RemovalListener
 
     /**
      * Gives a message explaining why the object cannot be removed
-     * @param strId The object id
-     * @param locale The current locale
+     * 
+     * @param strId
+     *            The object id
+     * @param locale
+     *            The current locale
      * @return The message
      */
     public String getRemovalRefusedMessage( String strId, Locale locale )

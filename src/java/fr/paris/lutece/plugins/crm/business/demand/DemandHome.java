@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  *
  * DemandHome
@@ -55,13 +54,15 @@ public final class DemandHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DemandHome(  )
+    private DemandHome( )
     {
     }
 
     /**
      * Insert a new record in the table.
-     * @param demand instance of the Demand object to insert
+     * 
+     * @param demand
+     *            instance of the Demand object to insert
      * @return the newly created demand id
      */
     public static int create( Demand demand )
@@ -71,7 +72,9 @@ public final class DemandHome
 
     /**
      * Update the record in the table
-     * @param demand the reference of the Demand
+     * 
+     * @param demand
+     *            the reference of the Demand
      */
     public static void update( Demand demand )
     {
@@ -80,7 +83,9 @@ public final class DemandHome
 
     /**
      * Delete a record from the table
-     * @param nIdDemand int identifier of the demand to delete
+     * 
+     * @param nIdDemand
+     *            int identifier of the demand to delete
      */
     public static void remove( int nIdDemand )
     {
@@ -89,39 +94,44 @@ public final class DemandHome
 
     /**
      * Load the data from the table
-     * @param nIdDemand The identifier of the demand
+     * 
+     * @param nIdDemand
+     *            The identifier of the demand
      * @return The instance of the Demand
      */
     public static Demand findByPrimaryKey( int nIdDemand )
     {
         return _dao.load( nIdDemand, _plugin );
     }
-    
-    
-    
+
     /**
      * Load the data from the table
-     * @param nIdDemand The identifier of the demand
+     * 
+     * @param nIdDemand
+     *            The identifier of the demand
      * @return The instance of the Demand
      */
     public static Demand findByRemoteKey( String strRemoteId, int nIdDemandType )
     {
-    	
-    	  return _dao.loadByRemoteKey(strRemoteId, nIdDemandType, _plugin);
+
+        return _dao.loadByRemoteKey( strRemoteId, nIdDemandType, _plugin );
     }
 
     /**
      * Find all demands
+     * 
      * @return a list of {@link Demand}
      */
-    public static List<Demand> findAll(  )
+    public static List<Demand> findAll( )
     {
         return _dao.selectAll( _plugin );
     }
 
     /**
      * Find by filter
-     * @param dFilter the filter
+     * 
+     * @param dFilter
+     *            the filter
      * @return a list of {@link Demand}
      */
     public static List<Demand> findByFilter( DemandFilter dFilter )
@@ -131,8 +141,11 @@ public final class DemandHome
 
     /**
      * Find by filter with pagination properties
-     * @param dFilter the filter
-     * @param paginationProperties the pagination properties
+     * 
+     * @param dFilter
+     *            the filter
+     * @param paginationProperties
+     *            the pagination properties
      * @return a list of {@link Demand}
      */
     public static List<Demand> findByFilter( DemandFilter dFilter, IPaginationProperties paginationProperties )
@@ -142,7 +155,9 @@ public final class DemandHome
 
     /**
      * Count results by filter
-     * @param dFilter the filter
+     * 
+     * @param dFilter
+     *            the filter
      * @return the number of results
      */
     public static int countByFilter( DemandFilter dFilter )

@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
 
 import java.util.Locale;
 
-
 /**
  *
  * DemandStatusCRM
@@ -51,7 +50,9 @@ public class DemandStatusCRM
 
     /**
      * Set the id status CRM
-     * @param nIdStatusCRM the id status crm
+     * 
+     * @param nIdStatusCRM
+     *            the id status crm
      */
     public void setIdStatusCRM( int nIdStatusCRM )
     {
@@ -60,16 +61,19 @@ public class DemandStatusCRM
 
     /**
      * Get the id status CRM
+     * 
      * @return the id status CRM
      */
-    public int getIdStatusCRM(  )
+    public int getIdStatusCRM( )
     {
         return _nIdStatusCRM;
     }
 
     /**
      * Set the label key
-     * @param strLabelKey the label key
+     * 
+     * @param strLabelKey
+     *            the label key
      */
     public void setLabelKey( String strLabelKey )
     {
@@ -78,16 +82,19 @@ public class DemandStatusCRM
 
     /**
      * Get the label key
+     * 
      * @return the label key
      */
-    public String getLabelKey(  )
+    public String getLabelKey( )
     {
         return _strLabelKey;
     }
 
     /**
      * Set the locale
-     * @param locale the {@link Locale}
+     * 
+     * @param locale
+     *            the {@link Locale}
      */
     public void setLocale( Locale locale )
     {
@@ -96,18 +103,20 @@ public class DemandStatusCRM
 
     /**
      * Get the locale
+     * 
      * @return the {@link Locale}
      */
-    public Locale getLocale(  )
+    public Locale getLocale( )
     {
         return _locale;
     }
 
     /**
      * Get the label
+     * 
      * @return the label
      */
-    public String getLabel(  )
+    public String getLabel( )
     {
         return I18nService.getLocalizedString( _strLabelKey, _locale );
     }

@@ -41,7 +41,6 @@ import fr.paris.lutece.portal.service.util.RemovalListenerService;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Service to manage listeners of modifications on CRMUsers objects
  */
@@ -49,20 +48,21 @@ public class CRMUserModificationListenerService extends RemovalListenerService
 {
     private static final String BEAN_NAME = "crm.crmUserListenerService";
     private static CRMUserModificationListenerService _instance;
-    private List<IListener<CRMUser>> _listRegisteredListeners = new ArrayList<IListener<CRMUser>>(  );
+    private List<IListener<CRMUser>> _listRegisteredListeners = new ArrayList<IListener<CRMUser>>( );
 
     /**
      * Private constructor
      */
-    private CRMUserModificationListenerService(  )
+    private CRMUserModificationListenerService( )
     {
     }
 
     /**
      * Get the instance of the service
+     * 
      * @return The instance of the service
      */
-    public static CRMUserModificationListenerService getService(  )
+    public static CRMUserModificationListenerService getService( )
     {
         if ( _instance == null )
         {
@@ -74,7 +74,9 @@ public class CRMUserModificationListenerService extends RemovalListenerService
 
     /**
      * Register a new Removal listener
-     * @param listener The listener to register
+     * 
+     * @param listener
+     *            The listener to register
      */
     public void registerListener( IListener<CRMUser> listener )
     {
@@ -86,12 +88,15 @@ public class CRMUserModificationListenerService extends RemovalListenerService
 
     /**
      * Notify listeners with a CRM user.
-     * @param crmUser The user to send to listeners
-     * @param strEventName Name of the event that caused the notification
+     * 
+     * @param crmUser
+     *            The user to send to listeners
+     * @param strEventName
+     *            Name of the event that caused the notification
      */
     public void notifyListeners( CRMUser crmUser, String strEventName )
     {
-        if ( ( _listRegisteredListeners != null ) && ( _listRegisteredListeners.size(  ) > 0 ) )
+        if ( ( _listRegisteredListeners != null ) && ( _listRegisteredListeners.size( ) > 0 ) )
         {
             for ( IListener<CRMUser> listener : _listRegisteredListeners )
             {

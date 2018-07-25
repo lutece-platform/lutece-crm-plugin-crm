@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * IDemandTypeDAO
@@ -46,84 +45,114 @@ import java.util.List;
 public interface IDemandTypeDAO
 {
     /**
-    * Generates a new primary key
-    * @param plugin The Plugin
-    * @return The new primary key
-    */
+     * Generates a new primary key
+     * 
+     * @param plugin
+     *            The Plugin
+     * @return The new primary key
+     */
     int newPrimaryKey( Plugin plugin );
 
     /**
      * Insert a new record in the table.
-     * @param demandType instance
-     * @param plugin the Plugin
+     * 
+     * @param demandType
+     *            instance
+     * @param plugin
+     *            the Plugin
      * @return the key of the newly created object
      */
     int insert( DemandType demandType, Plugin plugin );
 
     /**
-    * Update the record in the table
-    * @param demandType the reference of the object
-    * @param plugin the Plugin
-    */
+     * Update the record in the table
+     * 
+     * @param demandType
+     *            the reference of the object
+     * @param plugin
+     *            the Plugin
+     */
     void store( DemandType demandType, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nIdDemand int identifier of the DemandType to delete
-     * @param plugin the Plugin
+     * 
+     * @param nIdDemand
+     *            int identifier of the DemandType to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nIdDemand, Plugin plugin );
 
     /**
      * Load the data from the table
-     * @param nIdDemand The identifier of the DemandType
-     * @param plugin the Plugin
+     * 
+     * @param nIdDemand
+     *            The identifier of the DemandType
+     * @param plugin
+     *            the Plugin
      * @return The instance of the object
      */
     DemandType load( int nIdDemand, Plugin plugin );
 
     /**
      * Find all demand types
-     * @param plugin {@link Plugin}
+     * 
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link DemandType}
      */
     List<DemandType> selectAll( Plugin plugin );
 
     /**
      * Find all demand types for the LuteceUser
-     * @param nIdCategory the ID category
-     * @param dateToday today
-     * @param plugin {@link Plugin}
+     * 
+     * @param nIdCategory
+     *            the ID category
+     * @param dateToday
+     *            today
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link DemandType}
      */
     List<DemandType> selectByIdCategoryAndDate( int nIdCategory, java.util.Date dateToday, Plugin plugin );
 
     /**
      * Find the max order
-     * @param plugin {@link Plugin}
+     * 
+     * @param plugin
+     *            {@link Plugin}
      * @return the max order
      */
     int selectMaxOrder( Plugin plugin );
 
     /**
      * Find by filter
-     * @param dtFilter the filter
-     * @param plugin {@link Plugin}
+     * 
+     * @param dtFilter
+     *            the filter
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link DemandType}
      */
     List<DemandType> selectDemandTypesByFilter( DemandTypeFilter dtFilter, Plugin plugin );
 
     /**
      * Find by order
-     * @param nOrder the order
-     * @param plugin the {@link Plugin}
+     * 
+     * @param nOrder
+     *            the order
+     * @param plugin
+     *            the {@link Plugin}
      * @return a {@link DemandType}
      */
     DemandType selectByOrder( int nOrder, Plugin plugin );
 
     /**
      * Find the demand types that have not a date end
-     * @param plugin the plugin
+     * 
+     * @param plugin
+     *            the plugin
      * @return a list of demand types
      */
     List<DemandType> selectNoDateEndDemandTypes( Plugin plugin );

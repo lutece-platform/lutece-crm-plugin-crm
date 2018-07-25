@@ -42,7 +42,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * DemandTypeDAO
@@ -59,8 +58,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation FROM crm_demand_type ";
     private static final String SQL_QUERY_SELECT_MAX_ORDER = " SELECT max( demand_type_order ) FROM crm_demand_type ";
     private static final String SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation FROM crm_demand_type WHERE demand_type_order = ? ";
-    private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation " +
-        " FROM crm_demand_type WHERE id_category = ? AND ( date_begin IS NULL OR date_begin <= ? ) AND ( date_end IS NULL OR date_end > ? ) ";
+    private static final String SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation "
+            + " FROM crm_demand_type WHERE id_category = ? AND ( date_begin IS NULL OR date_begin <= ? ) AND ( date_end IS NULL OR date_end > ? ) ";
     private static final String SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES = " SELECT id_demand_type, label, url_resource, url_info, url_contact, demand_type_order, id_category, date_begin, date_end, workgroup_key, role_key, target, url_delete, is_include_id_user, is_need_authentication, is_need_validation FROM crm_demand_type WHERE date_end IS NULL ";
 
     // FILTERS
@@ -87,16 +86,16 @@ public class DemandTypeDAO implements IDemandTypeDAO
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey = 1;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nKey = daoUtil.getInt( 1 ) + 1;
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -115,42 +114,42 @@ public class DemandTypeDAO implements IDemandTypeDAO
             int nIndex = 1;
             demandType.setIdDemandType( newPrimaryKey( plugin ) );
 
-            daoUtil.setInt( nIndex++, demandType.getIdDemandType(  ) );
-            daoUtil.setString( nIndex++, demandType.getLabel(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlResource(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlInfo(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlContact(  ) );
-            daoUtil.setInt( nIndex++, demandType.getOrder(  ) );
-            daoUtil.setInt( nIndex++, demandType.getIdCategory(  ) );
+            daoUtil.setInt( nIndex++, demandType.getIdDemandType( ) );
+            daoUtil.setString( nIndex++, demandType.getLabel( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlResource( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlInfo( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlContact( ) );
+            daoUtil.setInt( nIndex++, demandType.getOrder( ) );
+            daoUtil.setInt( nIndex++, demandType.getIdCategory( ) );
 
             Date dateBegin = null;
 
-            if ( demandType.getDateBegin(  ) != null )
+            if ( demandType.getDateBegin( ) != null )
             {
-                dateBegin = new Date( demandType.getDateBegin(  ).getTime(  ) );
+                dateBegin = new Date( demandType.getDateBegin( ).getTime( ) );
             }
 
             Date dateEnd = null;
 
-            if ( demandType.getDateEnd(  ) != null )
+            if ( demandType.getDateEnd( ) != null )
             {
-                dateEnd = new Date( demandType.getDateEnd(  ).getTime(  ) );
+                dateEnd = new Date( demandType.getDateEnd( ).getTime( ) );
             }
 
             daoUtil.setDate( nIndex++, dateBegin );
             daoUtil.setDate( nIndex++, dateEnd );
-            daoUtil.setString( nIndex++, demandType.getWorkgroup(  ) );
-            daoUtil.setString( nIndex++, demandType.getRole(  ) );
-            daoUtil.setInt( nIndex++, demandType.getTarget(  ).getId(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlDelete(  ) );
-            daoUtil.setBoolean(nIndex++, demandType.isIncludeIdCrmUser());
-            daoUtil.setBoolean(nIndex++, demandType.isNeedAuthentication());
-            daoUtil.setBoolean(nIndex++, demandType.isNeedValidation());
-            
-            daoUtil.executeUpdate(  );
-            daoUtil.free(  );
+            daoUtil.setString( nIndex++, demandType.getWorkgroup( ) );
+            daoUtil.setString( nIndex++, demandType.getRole( ) );
+            daoUtil.setInt( nIndex++, demandType.getTarget( ).getId( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlDelete( ) );
+            daoUtil.setBoolean( nIndex++, demandType.isIncludeIdCrmUser( ) );
+            daoUtil.setBoolean( nIndex++, demandType.isNeedAuthentication( ) );
+            daoUtil.setBoolean( nIndex++, demandType.isNeedValidation( ) );
 
-            nKey = demandType.getIdDemandType(  );
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
+
+            nKey = demandType.getIdDemandType( );
         }
 
         return nKey;
@@ -163,14 +162,14 @@ public class DemandTypeDAO implements IDemandTypeDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nIdDemandType );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         DemandType demandType = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            demandType = new DemandType(  );
+            demandType = new DemandType( );
             demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demandType.setLabel( daoUtil.getString( nIndex++ ) );
             demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
@@ -184,12 +183,12 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setRole( daoUtil.getString( nIndex++ ) );
             demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
-            demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
+            demandType.setIncludeIdCrmUser( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedAuthentication( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedValidation( daoUtil.getBoolean( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return demandType;
     }
@@ -205,41 +204,41 @@ public class DemandTypeDAO implements IDemandTypeDAO
 
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-            daoUtil.setString( nIndex++, demandType.getLabel(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlResource(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlInfo(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlContact(  ) );
-            daoUtil.setInt( nIndex++, demandType.getOrder(  ) );
-            daoUtil.setInt( nIndex++, demandType.getIdCategory(  ) );
+            daoUtil.setString( nIndex++, demandType.getLabel( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlResource( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlInfo( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlContact( ) );
+            daoUtil.setInt( nIndex++, demandType.getOrder( ) );
+            daoUtil.setInt( nIndex++, demandType.getIdCategory( ) );
 
             Date dateBegin = null;
 
-            if ( demandType.getDateBegin(  ) != null )
+            if ( demandType.getDateBegin( ) != null )
             {
-                dateBegin = new Date( demandType.getDateBegin(  ).getTime(  ) );
+                dateBegin = new Date( demandType.getDateBegin( ).getTime( ) );
             }
 
             Date dateEnd = null;
 
-            if ( demandType.getDateEnd(  ) != null )
+            if ( demandType.getDateEnd( ) != null )
             {
-                dateEnd = new Date( demandType.getDateEnd(  ).getTime(  ) );
+                dateEnd = new Date( demandType.getDateEnd( ).getTime( ) );
             }
 
             daoUtil.setDate( nIndex++, dateBegin );
             daoUtil.setDate( nIndex++, dateEnd );
-            daoUtil.setString( nIndex++, demandType.getWorkgroup(  ) );
-            daoUtil.setString( nIndex++, demandType.getRole(  ) );
-            daoUtil.setInt( nIndex++, demandType.getTarget(  ).getId(  ) );
-            daoUtil.setString( nIndex++, demandType.getUrlDelete(  ) );
-            daoUtil.setBoolean(nIndex++, demandType.isIncludeIdCrmUser());
-            daoUtil.setBoolean(nIndex++, demandType.isNeedAuthentication());
-            daoUtil.setBoolean(nIndex++, demandType.isNeedValidation());
-            
-            daoUtil.setInt( nIndex++, demandType.getIdDemandType(  ) );
+            daoUtil.setString( nIndex++, demandType.getWorkgroup( ) );
+            daoUtil.setString( nIndex++, demandType.getRole( ) );
+            daoUtil.setInt( nIndex++, demandType.getTarget( ).getId( ) );
+            daoUtil.setString( nIndex++, demandType.getUrlDelete( ) );
+            daoUtil.setBoolean( nIndex++, demandType.isIncludeIdCrmUser( ) );
+            daoUtil.setBoolean( nIndex++, demandType.isNeedAuthentication( ) );
+            daoUtil.setBoolean( nIndex++, demandType.isNeedValidation( ) );
 
-            daoUtil.executeUpdate(  );
-            daoUtil.free(  );
+            daoUtil.setInt( nIndex++, demandType.getIdDemandType( ) );
+
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
         }
     }
 
@@ -250,8 +249,8 @@ public class DemandTypeDAO implements IDemandTypeDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdDemandType );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -259,19 +258,19 @@ public class DemandTypeDAO implements IDemandTypeDAO
      */
     public List<DemandType> selectAll( Plugin plugin )
     {
-        List<DemandType> listDemandTypes = new ArrayList<DemandType>(  );
+        List<DemandType> listDemandTypes = new ArrayList<DemandType>( );
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
         sbSQL.append( SQL_ORDER_BY );
         sbSQL.append( SQL_FILTER_DEMAND_TYPE_ORDER );
         sbSQL.append( SQL_ASC );
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
-        daoUtil.executeQuery(  );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            DemandType demandType = new DemandType(  );
+            DemandType demandType = new DemandType( );
             demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demandType.setLabel( daoUtil.getString( nIndex++ ) );
             demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
@@ -285,14 +284,14 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setRole( daoUtil.getString( nIndex++ ) );
             demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
-            demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
-            
+            demandType.setIncludeIdCrmUser( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedAuthentication( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedValidation( daoUtil.getBoolean( nIndex++ ) );
+
             listDemandTypes.add( demandType );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listDemandTypes;
     }
@@ -302,25 +301,25 @@ public class DemandTypeDAO implements IDemandTypeDAO
      */
     public List<DemandType> selectByIdCategoryAndDate( int nIdCategory, java.util.Date dateToday, Plugin plugin )
     {
-        List<DemandType> listDemandTypes = new ArrayList<DemandType>(  );
+        List<DemandType> listDemandTypes = new ArrayList<DemandType>( );
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_BY_ID_CATEGORY_AND_DATE );
         sbSQL.append( SQL_ORDER_BY );
         sbSQL.append( SQL_FILTER_DEMAND_TYPE_ORDER );
         sbSQL.append( SQL_ASC );
 
         int nIndex = 1;
-        Date date = new Date( dateToday.getTime(  ) );
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        Date date = new Date( dateToday.getTime( ) );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
         daoUtil.setInt( nIndex++, nIdCategory );
         daoUtil.setDate( nIndex++, date );
         daoUtil.setDate( nIndex++, date );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             nIndex = 1;
 
-            DemandType demandType = new DemandType(  );
+            DemandType demandType = new DemandType( );
             demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demandType.setLabel( daoUtil.getString( nIndex++ ) );
             demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
@@ -334,14 +333,14 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setRole( daoUtil.getString( nIndex++ ) );
             demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
-            demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
-            
+            demandType.setIncludeIdCrmUser( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedAuthentication( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedValidation( daoUtil.getBoolean( nIndex++ ) );
+
             listDemandTypes.add( demandType );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listDemandTypes;
     }
@@ -353,14 +352,14 @@ public class DemandTypeDAO implements IDemandTypeDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_DEMAND_TYPE_ORDER, plugin );
         daoUtil.setInt( 1, nOrder );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         DemandType demandType = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            demandType = new DemandType(  );
+            demandType = new DemandType( );
             demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demandType.setLabel( daoUtil.getString( nIndex++ ) );
             demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
@@ -374,13 +373,13 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setRole( daoUtil.getString( nIndex++ ) );
             demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
-            demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
-            
+            demandType.setIncludeIdCrmUser( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedAuthentication( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedValidation( daoUtil.getBoolean( nIndex++ ) );
+
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return demandType;
     }
@@ -394,14 +393,14 @@ public class DemandTypeDAO implements IDemandTypeDAO
 
         int nMaxOrder = 1;
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nMaxOrder = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nMaxOrder;
     }
@@ -411,20 +410,20 @@ public class DemandTypeDAO implements IDemandTypeDAO
      */
     public List<DemandType> selectDemandTypesByFilter( DemandTypeFilter dtFilter, Plugin plugin )
     {
-        List<DemandType> listDemandTypes = new ArrayList<DemandType>(  );
+        List<DemandType> listDemandTypes = new ArrayList<DemandType>( );
         StringBuilder sbSQL = new StringBuilder( buildSQLQuery( dtFilter ) );
         sbSQL.append( SQL_ORDER_BY );
         sbSQL.append( SQL_FILTER_DEMAND_TYPE_ORDER );
         sbSQL.append( SQL_ASC );
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
         setFilterValues( dtFilter, daoUtil );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            DemandType demandType = new DemandType(  );
+            DemandType demandType = new DemandType( );
             demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demandType.setLabel( daoUtil.getString( nIndex++ ) );
             demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
@@ -438,14 +437,14 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setRole( daoUtil.getString( nIndex++ ) );
             demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
-            demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
-            
+            demandType.setIncludeIdCrmUser( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedAuthentication( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedValidation( daoUtil.getBoolean( nIndex++ ) );
+
             listDemandTypes.add( demandType );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listDemandTypes;
     }
@@ -455,15 +454,15 @@ public class DemandTypeDAO implements IDemandTypeDAO
      */
     public List<DemandType> selectNoDateEndDemandTypes( Plugin plugin )
     {
-        List<DemandType> listDemandTypes = new ArrayList<DemandType>(  );
+        List<DemandType> listDemandTypes = new ArrayList<DemandType>( );
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NO_DATE_END_DEMAND_TYPES, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            DemandType demandType = new DemandType(  );
+            DemandType demandType = new DemandType( );
             demandType.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demandType.setLabel( daoUtil.getString( nIndex++ ) );
             demandType.setUrlResource( daoUtil.getString( nIndex++ ) );
@@ -477,23 +476,23 @@ public class DemandTypeDAO implements IDemandTypeDAO
             demandType.setRole( daoUtil.getString( nIndex++ ) );
             demandType.setTarget( TargetEnum.getTarget( daoUtil.getInt( nIndex++ ) ) );
             demandType.setUrlDelete( daoUtil.getString( nIndex++ ) );
-            demandType.setIncludeIdCrmUser(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedAuthentication(daoUtil.getBoolean( nIndex++ ));
-            demandType.setNeedValidation(daoUtil.getBoolean( nIndex++ ));
-            
-            
-            
+            demandType.setIncludeIdCrmUser( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedAuthentication( daoUtil.getBoolean( nIndex++ ) );
+            demandType.setNeedValidation( daoUtil.getBoolean( nIndex++ ) );
+
             listDemandTypes.add( demandType );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listDemandTypes;
     }
 
     /**
      * Build the SQL query with filter
-     * @param dtFilter the filter
+     * 
+     * @param dtFilter
+     *            the filter
      * @return a SQL query
      */
     private String buildSQLQuery( DemandTypeFilter dtFilter )
@@ -501,79 +500,82 @@ public class DemandTypeDAO implements IDemandTypeDAO
         StringBuilder sbSQL = new StringBuilder( SQL_QUERY_SELECT_ALL );
         int nIndex = 1;
 
-        if ( dtFilter.containsLabel(  ) )
+        if ( dtFilter.containsLabel( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_LABEL );
         }
 
-        if ( dtFilter.containsUrlResource(  ) )
+        if ( dtFilter.containsUrlResource( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_URL_RESOURCE );
         }
 
-        if ( dtFilter.containsIdCategory(  ) )
+        if ( dtFilter.containsIdCategory( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_ID_CATEGORY );
         }
 
-        if ( dtFilter.containsDateBegin(  ) )
+        if ( dtFilter.containsDateBegin( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_DATE_BEGIN );
-            sbSQL.append( dtFilter.getOperatorDateBegin(  ) );
+            sbSQL.append( dtFilter.getOperatorDateBegin( ) );
             sbSQL.append( QUESTION_MARK );
         }
 
-        if ( dtFilter.containsDateEnd(  ) )
+        if ( dtFilter.containsDateEnd( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_DATE_END );
-            sbSQL.append( dtFilter.getOperatorDateEnd(  ) );
+            sbSQL.append( dtFilter.getOperatorDateEnd( ) );
             sbSQL.append( QUESTION_MARK );
         }
 
-        if ( dtFilter.containsWorkgroup(  ) )
+        if ( dtFilter.containsWorkgroup( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_WORKGROUP_KEY );
         }
 
-        if ( dtFilter.containsRole(  ) )
+        if ( dtFilter.containsRole( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_ROLE_KEY );
         }
 
-        if ( dtFilter.containsOrder(  ) )
+        if ( dtFilter.containsOrder( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_DEMAND_TYPE_ORDER );
-            sbSQL.append( dtFilter.getOperatorOrder(  ) );
+            sbSQL.append( dtFilter.getOperatorOrder( ) );
             sbSQL.append( QUESTION_MARK );
         }
 
-        if ( dtFilter.containsUrlDelete(  ) )
+        if ( dtFilter.containsUrlDelete( ) )
         {
-            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dtFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_URL_DELETE );
         }
 
-        return sbSQL.toString(  );
+        return sbSQL.toString( );
     }
 
     /**
-     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index.
-     * <br/>
+     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index. <br/>
      * <ul>
      * <li>if <code>nIndex</code> == 1, then we add a <b>WHERE</b></li>
      * <li>if <code>nIndex</code> != 1, then we add a <b>OR</b> or a <b>AND</b> depending of the wide search characteristic</li>
      * </ul>
-     * @param bIsWideSearch true if it is a wide search, false otherwise
-     * @param sbSQL the SQL query
-     * @param nIndex the index
+     * 
+     * @param bIsWideSearch
+     *            true if it is a wide search, false otherwise
+     * @param sbSQL
+     *            the SQL query
+     * @param nIndex
+     *            the index
      * @return the new index
      */
     private int addSQLWhereOr( boolean bIsWideSearch, StringBuilder sbSQL, int nIndex )
@@ -592,58 +594,61 @@ public class DemandTypeDAO implements IDemandTypeDAO
 
     /**
      * Set the filter values on the DAOUtil
-     * @param dtFilter the filter
-     * @param daoUtil the DAOUtil
+     * 
+     * @param dtFilter
+     *            the filter
+     * @param daoUtil
+     *            the DAOUtil
      */
     private void setFilterValues( DemandTypeFilter dtFilter, DAOUtil daoUtil )
     {
         int nIndex = 1;
 
-        if ( dtFilter.containsLabel(  ) )
+        if ( dtFilter.containsLabel( ) )
         {
-            daoUtil.setString( nIndex++, PERCENT + dtFilter.getLabel(  ) + PERCENT );
+            daoUtil.setString( nIndex++, PERCENT + dtFilter.getLabel( ) + PERCENT );
         }
 
-        if ( dtFilter.containsUrlResource(  ) )
+        if ( dtFilter.containsUrlResource( ) )
         {
-            daoUtil.setString( nIndex++, PERCENT + dtFilter.getUrlResource(  ) + PERCENT );
+            daoUtil.setString( nIndex++, PERCENT + dtFilter.getUrlResource( ) + PERCENT );
         }
 
-        if ( dtFilter.containsIdCategory(  ) )
+        if ( dtFilter.containsIdCategory( ) )
         {
-            daoUtil.setInt( nIndex++, dtFilter.getIdCategory(  ) );
+            daoUtil.setInt( nIndex++, dtFilter.getIdCategory( ) );
         }
 
-        if ( dtFilter.containsDateBegin(  ) )
+        if ( dtFilter.containsDateBegin( ) )
         {
-            daoUtil.setDate( nIndex++, new Date( dtFilter.getDateBegin(  ).getTime(  ) ) );
+            daoUtil.setDate( nIndex++, new Date( dtFilter.getDateBegin( ).getTime( ) ) );
         }
 
-        if ( dtFilter.containsDateEnd(  ) )
+        if ( dtFilter.containsDateEnd( ) )
         {
-            daoUtil.setDate( nIndex++, new Date( dtFilter.getDateEnd(  ).getTime(  ) ) );
+            daoUtil.setDate( nIndex++, new Date( dtFilter.getDateEnd( ).getTime( ) ) );
         }
 
-        if ( dtFilter.containsWorkgroup(  ) )
+        if ( dtFilter.containsWorkgroup( ) )
         {
             // No '%' because the workgroup key is unique
-            daoUtil.setString( nIndex++, dtFilter.getWorkgroup(  ) );
+            daoUtil.setString( nIndex++, dtFilter.getWorkgroup( ) );
         }
 
-        if ( dtFilter.containsRole(  ) )
+        if ( dtFilter.containsRole( ) )
         {
             // No '%' because the role key is unique
-            daoUtil.setString( nIndex++, dtFilter.getRole(  ) );
+            daoUtil.setString( nIndex++, dtFilter.getRole( ) );
         }
 
-        if ( dtFilter.containsOrder(  ) )
+        if ( dtFilter.containsOrder( ) )
         {
-            daoUtil.setInt( nIndex++, dtFilter.getOrder(  ) );
+            daoUtil.setInt( nIndex++, dtFilter.getOrder( ) );
         }
 
-        if ( dtFilter.containsUrlDelete(  ) )
+        if ( dtFilter.containsUrlDelete( ) )
         {
-            daoUtil.setString( nIndex++, PERCENT + dtFilter.getUrlDelete(  ) + PERCENT );
+            daoUtil.setString( nIndex++, PERCENT + dtFilter.getUrlDelete( ) + PERCENT );
         }
     }
 }

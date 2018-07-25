@@ -39,7 +39,6 @@ import fr.paris.lutece.util.date.DateUtil;
 import java.util.Date;
 import java.util.Locale;
 
-
 /**
  *
  * DemandTypeTest
@@ -67,15 +66,15 @@ public class DemandTypeTest extends LuteceTestCase
     private static final String URL_RESOURCE2 = "UrlResource2";
     private static final String WORKGROUP1 = "Workgroup1";
     private static final String WORKGROUP2 = "Workgroup2";
-    private static Locale _locale = Locale.getDefault(  );
+    private static Locale _locale = Locale.getDefault( );
 
     /**
      * Test business of class fr.paris.lutece.plugins.crm.business.demand.DemandType
      */
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        DemandType demandType = new DemandType(  );
+        DemandType demandType = new DemandType( );
         Date dateBegin = DateUtil.formatDateLongYear( DATE_BEGIN1, _locale );
         Date dateEnd = DateUtil.formatDateLongYear( DATE_END1, _locale );
         demandType.setDateBegin( dateBegin );
@@ -92,18 +91,18 @@ public class DemandTypeTest extends LuteceTestCase
         // Test create
         DemandTypeHome.create( demandType );
 
-        DemandType demandTypeStored = DemandTypeHome.findByPrimaryKey( demandType.getIdDemandType(  ) );
-        assertEquals( demandType.getIdDemandType(  ), demandTypeStored.getIdDemandType(  ) );
-        assertEquals( demandType.getDateBegin(  ), demandTypeStored.getDateBegin(  ) );
-        assertEquals( demandType.getDateEnd(  ), demandTypeStored.getDateEnd(  ) );
-        assertEquals( demandType.getIdCategory(  ), demandTypeStored.getIdCategory(  ) );
-        assertEquals( demandType.getLabel(  ), demandTypeStored.getLabel(  ) );
-        assertEquals( demandType.getOrder(  ), demandTypeStored.getOrder(  ) );
-        assertEquals( demandType.getRole(  ), demandTypeStored.getRole(  ) );
-        assertEquals( demandType.getUrlContact(  ), demandTypeStored.getUrlContact(  ) );
-        assertEquals( demandType.getUrlInfo(  ), demandTypeStored.getUrlInfo(  ) );
-        assertEquals( demandType.getUrlResource(  ), demandTypeStored.getUrlResource(  ) );
-        assertEquals( demandType.getWorkgroup(  ), demandTypeStored.getWorkgroup(  ) );
+        DemandType demandTypeStored = DemandTypeHome.findByPrimaryKey( demandType.getIdDemandType( ) );
+        assertEquals( demandType.getIdDemandType( ), demandTypeStored.getIdDemandType( ) );
+        assertEquals( demandType.getDateBegin( ), demandTypeStored.getDateBegin( ) );
+        assertEquals( demandType.getDateEnd( ), demandTypeStored.getDateEnd( ) );
+        assertEquals( demandType.getIdCategory( ), demandTypeStored.getIdCategory( ) );
+        assertEquals( demandType.getLabel( ), demandTypeStored.getLabel( ) );
+        assertEquals( demandType.getOrder( ), demandTypeStored.getOrder( ) );
+        assertEquals( demandType.getRole( ), demandTypeStored.getRole( ) );
+        assertEquals( demandType.getUrlContact( ), demandTypeStored.getUrlContact( ) );
+        assertEquals( demandType.getUrlInfo( ), demandTypeStored.getUrlInfo( ) );
+        assertEquals( demandType.getUrlResource( ), demandTypeStored.getUrlResource( ) );
+        assertEquals( demandType.getWorkgroup( ), demandTypeStored.getWorkgroup( ) );
 
         // Test update
         dateBegin = DateUtil.formatDateLongYear( DATE_BEGIN2, _locale );
@@ -119,21 +118,21 @@ public class DemandTypeTest extends LuteceTestCase
         demandType.setUrlResource( URL_RESOURCE2 );
         demandType.setWorkgroup( WORKGROUP2 );
         DemandTypeHome.update( demandType );
-        demandTypeStored = DemandTypeHome.findByPrimaryKey( demandType.getIdDemandType(  ) );
-        assertEquals( demandType.getIdDemandType(  ), demandTypeStored.getIdDemandType(  ) );
-        assertEquals( demandType.getDateBegin(  ), demandTypeStored.getDateBegin(  ) );
-        assertEquals( demandType.getDateEnd(  ), demandTypeStored.getDateEnd(  ) );
-        assertEquals( demandType.getIdCategory(  ), demandTypeStored.getIdCategory(  ) );
-        assertEquals( demandType.getLabel(  ), demandTypeStored.getLabel(  ) );
-        assertEquals( demandType.getOrder(  ), demandTypeStored.getOrder(  ) );
-        assertEquals( demandType.getRole(  ), demandTypeStored.getRole(  ) );
-        assertEquals( demandType.getUrlContact(  ), demandTypeStored.getUrlContact(  ) );
-        assertEquals( demandType.getUrlInfo(  ), demandTypeStored.getUrlInfo(  ) );
-        assertEquals( demandType.getUrlResource(  ), demandTypeStored.getUrlResource(  ) );
-        assertEquals( demandType.getWorkgroup(  ), demandTypeStored.getWorkgroup(  ) );
+        demandTypeStored = DemandTypeHome.findByPrimaryKey( demandType.getIdDemandType( ) );
+        assertEquals( demandType.getIdDemandType( ), demandTypeStored.getIdDemandType( ) );
+        assertEquals( demandType.getDateBegin( ), demandTypeStored.getDateBegin( ) );
+        assertEquals( demandType.getDateEnd( ), demandTypeStored.getDateEnd( ) );
+        assertEquals( demandType.getIdCategory( ), demandTypeStored.getIdCategory( ) );
+        assertEquals( demandType.getLabel( ), demandTypeStored.getLabel( ) );
+        assertEquals( demandType.getOrder( ), demandTypeStored.getOrder( ) );
+        assertEquals( demandType.getRole( ), demandTypeStored.getRole( ) );
+        assertEquals( demandType.getUrlContact( ), demandTypeStored.getUrlContact( ) );
+        assertEquals( demandType.getUrlInfo( ), demandTypeStored.getUrlInfo( ) );
+        assertEquals( demandType.getUrlResource( ), demandTypeStored.getUrlResource( ) );
+        assertEquals( demandType.getWorkgroup( ), demandTypeStored.getWorkgroup( ) );
 
         // Test finders
-        DemandTypeFilter dtFilter = new DemandTypeFilter(  );
+        DemandTypeFilter dtFilter = new DemandTypeFilter( );
         DemandTypeHome.findByFilter( dtFilter );
         dtFilter.setDateBegin( dateBegin );
         dtFilter.setDateEnd( dateEnd );
@@ -143,15 +142,15 @@ public class DemandTypeTest extends LuteceTestCase
         dtFilter.setRole( ROLE2 );
         dtFilter.setUrlResource( URL_RESOURCE2 );
         dtFilter.setWorkgroup( WORKGROUP2 );
-        DemandTypeHome.findAll(  );
-        DemandTypeHome.findDemandTypes(  );
-        DemandTypeHome.findMaxOrder(  );
-        DemandTypeHome.findByIdCategoryAndDate( ID_CATEGORY2, new Date(  ) );
+        DemandTypeHome.findAll( );
+        DemandTypeHome.findDemandTypes( );
+        DemandTypeHome.findMaxOrder( );
+        DemandTypeHome.findByIdCategoryAndDate( ID_CATEGORY2, new Date( ) );
         DemandTypeHome.findByOrder( ORDER2 );
 
         // Test remove
-        DemandTypeHome.remove( demandType.getIdDemandType(  ) );
-        demandTypeStored = DemandTypeHome.findByPrimaryKey( demandType.getIdDemandType(  ) );
+        DemandTypeHome.remove( demandType.getIdDemandType( ) );
+        demandTypeStored = DemandTypeHome.findByPrimaryKey( demandType.getIdDemandType( ) );
         assertNull( demandTypeStored );
     }
 }

@@ -39,7 +39,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * DemandStatusDAO
@@ -57,19 +56,19 @@ public class DemandStatusCRMDAO implements IDemandStatusCRMDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nIdStatusCRM );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         DemandStatusCRM statusCRM = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            statusCRM = new DemandStatusCRM(  );
+            statusCRM = new DemandStatusCRM( );
             statusCRM.setIdStatusCRM( nIndex++ );
             statusCRM.setLabelKey( daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return statusCRM;
     }
@@ -80,20 +79,20 @@ public class DemandStatusCRMDAO implements IDemandStatusCRMDAO
     public List<DemandStatusCRM> selectAll( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        List<DemandStatusCRM> listStatusCRM = new ArrayList<DemandStatusCRM>(  );
+        List<DemandStatusCRM> listStatusCRM = new ArrayList<DemandStatusCRM>( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            DemandStatusCRM statusCRM = new DemandStatusCRM(  );
+            DemandStatusCRM statusCRM = new DemandStatusCRM( );
             statusCRM.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
             statusCRM.setLabelKey( daoUtil.getString( nIndex++ ) );
             listStatusCRM.add( statusCRM );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listStatusCRM;
     }

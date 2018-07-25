@@ -44,7 +44,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * DemandDAO
@@ -61,7 +60,7 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification,remote_id, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand demand ";
     private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification,remote_id, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand ";
     private static final String SQL_QUERY_COUNT = " SELECT count(*) FROM ";
-    
+
     // FILTERS
     private static final String SQL_PERCENT = "%";
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -77,8 +76,6 @@ public class DemandDAO implements IDemandDAO
     private static final String SQL_FILTER_ID_STATUS_CRM = " id_status_crm = ? ";
     private static final String SQL_NB_UNREAD_NOTIFICATION = " nb_unread_notif ";
     private static final String SQL_FILTER_NOTIFICATION = " EXISTS (SELECT id_notification FROM crm_notification notif WHERE (notif.object LIKE ? OR notif.message LIKE ?) AND notif.id_demand = demand.id_demand )";
-    
-    
 
     /**
      * {@inheritDoc}
@@ -86,16 +83,16 @@ public class DemandDAO implements IDemandDAO
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey = 1;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nKey = daoUtil.getInt( 1 ) + 1;
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -113,19 +110,19 @@ public class DemandDAO implements IDemandDAO
 
             int nIndex = 1;
             demand.setIdDemand( newPrimaryKey( plugin ) );
-            daoUtil.setInt( nIndex++, demand.getIdDemand(  ) );
-            daoUtil.setInt( nIndex++, demand.getIdDemandType(  ) );
-            daoUtil.setInt( nIndex++, demand.getIdCRMUser(  ) );
-            daoUtil.setString( nIndex++, demand.getStatusText(  ) );
-            daoUtil.setInt( nIndex++, demand.getIdStatusCRM(  ) );
-            daoUtil.setString( nIndex++, demand.getData(  ) );
-            daoUtil.setTimestamp( nIndex++, demand.getDateModification(  ) );
-            daoUtil.setString( nIndex++, demand.getRemoteId() );
-            
-            daoUtil.executeUpdate(  );
-            daoUtil.free(  );
+            daoUtil.setInt( nIndex++, demand.getIdDemand( ) );
+            daoUtil.setInt( nIndex++, demand.getIdDemandType( ) );
+            daoUtil.setInt( nIndex++, demand.getIdCRMUser( ) );
+            daoUtil.setString( nIndex++, demand.getStatusText( ) );
+            daoUtil.setInt( nIndex++, demand.getIdStatusCRM( ) );
+            daoUtil.setString( nIndex++, demand.getData( ) );
+            daoUtil.setTimestamp( nIndex++, demand.getDateModification( ) );
+            daoUtil.setString( nIndex++, demand.getRemoteId( ) );
 
-            nIdDemand = demand.getIdDemand(  );
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
+
+            nIdDemand = demand.getIdDemand( );
         }
 
         return nIdDemand;
@@ -138,14 +135,14 @@ public class DemandDAO implements IDemandDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nIdDemand );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Demand demand = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            demand = new Demand(  );
+            demand = new Demand( );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
@@ -156,29 +153,29 @@ public class DemandDAO implements IDemandDAO
             demand.setRemoteId( daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return demand;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public Demand loadByRemoteKey( String strRemoteId,int nIdDemandType, Plugin plugin )
+    public Demand loadByRemoteKey( String strRemoteId, int nIdDemandType, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_REMOTE_KEY, plugin );
         daoUtil.setString( 1, strRemoteId );
         daoUtil.setInt( 2, nIdDemandType );
-        
-        daoUtil.executeQuery(  );
+
+        daoUtil.executeQuery( );
 
         Demand demand = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            demand = new Demand(  );
+            demand = new Demand( );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
@@ -189,11 +186,10 @@ public class DemandDAO implements IDemandDAO
             demand.setRemoteId( daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return demand;
     }
-
 
     /**
      * {@inheritDoc}
@@ -206,18 +202,18 @@ public class DemandDAO implements IDemandDAO
 
             DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-            daoUtil.setInt( nIndex++, demand.getIdDemandType(  ) );
-            daoUtil.setInt( nIndex++, demand.getIdCRMUser(  ) );
-            daoUtil.setString( nIndex++, demand.getStatusText(  ) );
-            daoUtil.setInt( nIndex++, demand.getIdStatusCRM(  ) );
-            daoUtil.setString( nIndex++, demand.getData(  ) );
-            daoUtil.setTimestamp( nIndex++, demand.getDateModification(  ) );
-            daoUtil.setString( nIndex++, demand.getRemoteId() );
-            
-            daoUtil.setInt( nIndex++, demand.getIdDemand(  ) );
+            daoUtil.setInt( nIndex++, demand.getIdDemandType( ) );
+            daoUtil.setInt( nIndex++, demand.getIdCRMUser( ) );
+            daoUtil.setString( nIndex++, demand.getStatusText( ) );
+            daoUtil.setInt( nIndex++, demand.getIdStatusCRM( ) );
+            daoUtil.setString( nIndex++, demand.getData( ) );
+            daoUtil.setTimestamp( nIndex++, demand.getDateModification( ) );
+            daoUtil.setString( nIndex++, demand.getRemoteId( ) );
 
-            daoUtil.executeUpdate(  );
-            daoUtil.free(  );
+            daoUtil.setInt( nIndex++, demand.getIdDemand( ) );
+
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
         }
     }
 
@@ -228,8 +224,8 @@ public class DemandDAO implements IDemandDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdDemand );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -237,14 +233,14 @@ public class DemandDAO implements IDemandDAO
      */
     public List<Demand> selectAll( Plugin plugin )
     {
-        List<Demand> listDemands = new ArrayList<Demand>(  );
+        List<Demand> listDemands = new ArrayList<Demand>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_ALL, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            Demand demand = new Demand(  );
+            Demand demand = new Demand( );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
@@ -253,11 +249,11 @@ public class DemandDAO implements IDemandDAO
             demand.setData( daoUtil.getString( nIndex++ ) );
             demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
             demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-            
+
             listDemands.add( demand );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listDemands;
     }
@@ -267,24 +263,23 @@ public class DemandDAO implements IDemandDAO
      */
     public List<Demand> selectByFilter( DemandFilter dFilter, IPaginationProperties paginationProperties, Plugin plugin )
     {
-        List<Demand> listDemands = new ArrayList<Demand>(  );
+        List<Demand> listDemands = new ArrayList<Demand>( );
         StringBuilder sbSQL = new StringBuilder( buildSQLQuery( dFilter ) );
 
         if ( paginationProperties != null )
         {
-            sbSQL.append( " LIMIT " + paginationProperties.getItemsPerPage(  ) );
-            sbSQL.append( " OFFSET " +
-                ( ( paginationProperties.getPageIndex(  ) - 1 ) * paginationProperties.getItemsPerPage(  ) ) );
+            sbSQL.append( " LIMIT " + paginationProperties.getItemsPerPage( ) );
+            sbSQL.append( " OFFSET " + ( ( paginationProperties.getPageIndex( ) - 1 ) * paginationProperties.getItemsPerPage( ) ) );
         }
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
         setFilterValues( dFilter, daoUtil );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            Demand demand = new Demand(  );
+            Demand demand = new Demand( );
             demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
             demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
             demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
@@ -293,25 +288,27 @@ public class DemandDAO implements IDemandDAO
             demand.setData( daoUtil.getString( nIndex++ ) );
             demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
             demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-            
+
             listDemands.add( demand );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return listDemands;
     }
 
     /**
      * Build the SQL query with filter
-     * @param dFilter the filter
+     * 
+     * @param dFilter
+     *            the filter
      * @return a SQL query
      */
     private String buildSQLQuery( DemandFilter dFilter )
     {
-        StringBuilder sbSQL = new StringBuilder(  );
+        StringBuilder sbSQL = new StringBuilder( );
 
-        if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
+        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
         {
             sbSQL.append( SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION );
         }
@@ -322,42 +319,42 @@ public class DemandDAO implements IDemandDAO
 
         int nIndex = 1;
 
-        if ( dFilter.containsIdCRMUser(  ) )
+        if ( dFilter.containsIdCRMUser( ) )
         {
-            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_ID_CRM_USER );
         }
 
-        if ( dFilter.containsIdDemandType(  ) )
+        if ( dFilter.containsIdDemandType( ) )
         {
-            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_ID_DEMAND_TYPE );
         }
 
-        if ( dFilter.containsDateModification(  ) )
+        if ( dFilter.containsDateModification( ) )
         {
-            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
-            sbSQL.append( SQL_FILTER_DATE_MODIFICATION);
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
+            sbSQL.append( SQL_FILTER_DATE_MODIFICATION );
         }
 
-        if ( dFilter.containsIdStatusCRM(  ) )
+        if ( dFilter.containsIdStatusCRM( ) )
         {
-            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_ID_STATUS_CRM );
         }
 
-        if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
+        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
         {
-            nIndex = addSQLWhereOr( dFilter.getIsWideSearch(  ), sbSQL, nIndex );
+            nIndex = addSQLWhereOr( dFilter.getIsWideSearch( ), sbSQL, nIndex );
             sbSQL.append( SQL_FILTER_NOTIFICATION );
         }
 
         // order by
         sbSQL.append( SQL_ORDER_BY );
 
-        List<DemandSort> listDemandSort = dFilter.getListDemandSort(  );
+        List<DemandSort> listDemandSort = dFilter.getListDemandSort( );
 
-        if ( ( listDemandSort == null ) || listDemandSort.isEmpty(  ) )
+        if ( ( listDemandSort == null ) || listDemandSort.isEmpty( ) )
         {
             // default order
             sbSQL.append( SQL_DATE_MODIFICATION_ORDER );
@@ -365,7 +362,7 @@ public class DemandDAO implements IDemandDAO
         }
         else
         {
-            int nSize = listDemandSort.size(  );
+            int nSize = listDemandSort.size( );
 
             for ( int i = 0; i < nSize; i++ )
             {
@@ -376,16 +373,17 @@ public class DemandDAO implements IDemandDAO
 
                 DemandSort demandSort = listDemandSort.get( i );
 
-                if ( CRMConstants.SORT_DATE_MODIFICATION.equals( demandSort.getField(  ) ) )
+                if ( CRMConstants.SORT_DATE_MODIFICATION.equals( demandSort.getField( ) ) )
                 {
                     sbSQL.append( SQL_DATE_MODIFICATION_ORDER );
                 }
-                else if ( CRMConstants.SORT_NB_UNREAD_NOTIFICATION.equals( demandSort.getField(  ) ) )
-                {
-                    sbSQL.append( SQL_NB_UNREAD_NOTIFICATION );
-                }
+                else
+                    if ( CRMConstants.SORT_NB_UNREAD_NOTIFICATION.equals( demandSort.getField( ) ) )
+                    {
+                        sbSQL.append( SQL_NB_UNREAD_NOTIFICATION );
+                    }
 
-                if ( demandSort.isAsc(  ) )
+                if ( demandSort.isAsc( ) )
                 {
                     sbSQL.append( SQL_ASC );
                 }
@@ -396,19 +394,22 @@ public class DemandDAO implements IDemandDAO
             }
         }
 
-        return sbSQL.toString(  );
+        return sbSQL.toString( );
     }
 
     /**
-     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index.
-     * <br/>
+     * Add a <b>WHERE</b> or a <b>OR</b> depending of the index. <br/>
      * <ul>
      * <li>if <code>nIndex</code> == 1, then we add a <b>WHERE</b></li>
      * <li>if <code>nIndex</code> != 1, then we add a <b>OR</b> or a <b>AND</b> depending of the wide search characteristic</li>
      * </ul>
-     * @param bIsWideSearch true if it is a wide search, false otherwise
-     * @param sbSQL the SQL query
-     * @param nIndex the index
+     * 
+     * @param bIsWideSearch
+     *            true if it is a wide search, false otherwise
+     * @param sbSQL
+     *            the SQL query
+     * @param nIndex
+     *            the index
      * @return the new index
      */
     private int addSQLWhereOr( boolean bIsWideSearch, StringBuilder sbSQL, int nIndex )
@@ -427,46 +428,49 @@ public class DemandDAO implements IDemandDAO
 
     /**
      * Set the filter values on the DAOUtil
-     * @param dFilter the filter
-     * @param daoUtil the DAOUtil
+     * 
+     * @param dFilter
+     *            the filter
+     * @param daoUtil
+     *            the DAOUtil
      */
     private void setFilterValues( DemandFilter dFilter, DAOUtil daoUtil )
     {
         int nIndex = 1;
 
-        if ( dFilter.containsIdCRMUser(  ) )
+        if ( dFilter.containsIdCRMUser( ) )
         {
-            daoUtil.setInt( nIndex++, dFilter.getIdCRMUser(  ) );
+            daoUtil.setInt( nIndex++, dFilter.getIdCRMUser( ) );
         }
 
-        if ( dFilter.containsIdDemandType(  ) )
+        if ( dFilter.containsIdDemandType( ) )
         {
-            daoUtil.setInt( nIndex++, dFilter.getIdDemandType(  ) );
+            daoUtil.setInt( nIndex++, dFilter.getIdDemandType( ) );
         }
-        if ( dFilter.containsDateModification(  ) )
+        if ( dFilter.containsDateModification( ) )
         {
-        	SimpleDateFormat sdfSQL = new SimpleDateFormat( "yyyy-MM-dd" );
-            String strDateModification = sdfSQL.format( dFilter.getDateModification(  ) );
-            StringBuilder strNotificationBuilder=new StringBuilder();
-            strNotificationBuilder.append(strDateModification);
-        	strNotificationBuilder.append(SQL_PERCENT);
-        	
-        	daoUtil.setString(nIndex++, strNotificationBuilder.toString( ));
-         }
-        
-        if ( dFilter.containsIdStatusCRM(  ) )
-        {
-            daoUtil.setInt( nIndex++, dFilter.getIdStatusCRM(  ) );
+            SimpleDateFormat sdfSQL = new SimpleDateFormat( "yyyy-MM-dd" );
+            String strDateModification = sdfSQL.format( dFilter.getDateModification( ) );
+            StringBuilder strNotificationBuilder = new StringBuilder( );
+            strNotificationBuilder.append( strDateModification );
+            strNotificationBuilder.append( SQL_PERCENT );
+
+            daoUtil.setString( nIndex++, strNotificationBuilder.toString( ) );
         }
-        if ( StringUtils.isNotBlank( dFilter.getNotification(  ) ) )
+
+        if ( dFilter.containsIdStatusCRM( ) )
         {
-        	StringBuilder strNotificationBuilder=new StringBuilder();
-        	strNotificationBuilder.append(SQL_PERCENT);
-        	strNotificationBuilder.append(dFilter.getNotification(  ));
-        	strNotificationBuilder.append(SQL_PERCENT);
-        	
-        	daoUtil.setString(nIndex++,strNotificationBuilder.toString());
-        	daoUtil.setString(nIndex++,strNotificationBuilder.toString());
+            daoUtil.setInt( nIndex++, dFilter.getIdStatusCRM( ) );
+        }
+        if ( StringUtils.isNotBlank( dFilter.getNotification( ) ) )
+        {
+            StringBuilder strNotificationBuilder = new StringBuilder( );
+            strNotificationBuilder.append( SQL_PERCENT );
+            strNotificationBuilder.append( dFilter.getNotification( ) );
+            strNotificationBuilder.append( SQL_PERCENT );
+
+            daoUtil.setString( nIndex++, strNotificationBuilder.toString( ) );
+            daoUtil.setString( nIndex++, strNotificationBuilder.toString( ) );
         }
     }
 
@@ -482,16 +486,16 @@ public class DemandDAO implements IDemandDAO
 
         int nTotalResult = 0;
 
-        DAOUtil daoUtil = new DAOUtil( sbSQL.toString(  ), plugin );
+        DAOUtil daoUtil = new DAOUtil( sbSQL.toString( ), plugin );
         setFilterValues( dFilter, daoUtil );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             nTotalResult = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nTotalResult;
     }

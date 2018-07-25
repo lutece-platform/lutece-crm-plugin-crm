@@ -58,7 +58,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * CategoryJspBean
@@ -77,14 +76,16 @@ public class CategoryJspBean extends PluginAdminPageJspBean
     private static final String JSP_REDIRECT_TO_MANAGE_CATEGORIES = "ManageCategories.jsp";
 
     // VARIABLES
-    private CategoryService _categoryService = CategoryService.getService(  );
+    private CategoryService _categoryService = CategoryService.getService( );
     private int _nDefaultItemsPerPage;
     private String _strCurrentPageIndex;
     private int _nItemsPerPage;
 
     /**
      * Returns the list of categories
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the categorys list
      */
     public String getManageCategories( HttpServletRequest request )
@@ -92,47 +93,49 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_MANAGE_CATEGORIES );
 
         _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
-        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE,
-                50 );
-        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
-                _nDefaultItemsPerPage );
+        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEFAULT_LIST_CATEGORY_PER_PAGE, 50 );
+        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage, _nDefaultItemsPerPage );
 
         UrlItem url = new UrlItem( JSP_MANAGE_CATEGORIES );
-        String strUrl = url.getUrl(  );
-        Collection<Category> listCategories = _categoryService.getCategoriesList(  );
-        LocalizedPaginator<Category> paginator = new LocalizedPaginator<Category>( (List<Category>) listCategories,
-                _nItemsPerPage, strUrl, CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
+        String strUrl = url.getUrl( );
+        Collection<Category> listCategories = _categoryService.getCategoriesList( );
+        LocalizedPaginator<Category> paginator = new LocalizedPaginator<Category>( (List<Category>) listCategories, _nItemsPerPage, strUrl,
+                CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         model.put( CRMConstants.MARK_NB_ITEMS_PER_PAGE, Integer.toString( _nItemsPerPage ) );
         model.put( CRMConstants.MARK_PAGINATOR, paginator );
-        model.put( CRMConstants.MARK_CATEGORIES_LIST, paginator.getPageItems(  ) );
+        model.put( CRMConstants.MARK_CATEGORIES_LIST, paginator.getPageItems( ) );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_CATEGORIES, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_CATEGORIES, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Returns the form to create a category
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the html code of the category form
      */
     public String getCreateCategory( HttpServletRequest request )
     {
         setPageTitleProperty( CRMConstants.PROPERTY_PAGE_TITLE_CREATE_CATEGORY );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_CATEGORY, getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_CATEGORY, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Process the data capture form of a new category
-     * @param request The Http Request
+     * 
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     public String doCreateCategory( HttpServletRequest request )
@@ -143,7 +146,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
 
         if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) )
         {
-            Category category = new Category(  );
+            Category category = new Category( );
             category.setName( strName );
             category.setDescription( strDescription );
 
@@ -161,7 +164,9 @@ public class CategoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Manages the removal form of a category whose identifier is in the http request
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     public String getConfirmRemoveCategory( HttpServletRequest request )
@@ -175,8 +180,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
             UrlItem url = new UrlItem( JSP_DO_REMOVE_CATEGORY );
             url.addParameter( CRMConstants.PARAMETER_CATEGORY_ID_CATEGORY, nId );
 
-            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_CATEGORY,
-                    url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_CATEGORY, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
         }
         else
         {
@@ -188,7 +192,9 @@ public class CategoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Handles the removal form of a category
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage categorys
      */
     public String doRemoveCategory( HttpServletRequest request )
@@ -200,7 +206,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         {
             int nId = Integer.parseInt( strCategoryId );
 
-            String strError = _categoryService.removeCategory( nId, getLocale(  ) );
+            String strError = _categoryService.removeCategory( nId, getLocale( ) );
 
             if ( StringUtils.isBlank( strError ) )
             {
@@ -208,9 +214,10 @@ public class CategoryJspBean extends PluginAdminPageJspBean
             }
             else
             {
-                Object[] args = { strError };
-                strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CANNOT_REMOVE_CATEGORY, args,
-                        AdminMessage.TYPE_STOP );
+                Object [ ] args = {
+                    strError
+                };
+                strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CANNOT_REMOVE_CATEGORY, args, AdminMessage.TYPE_STOP );
             }
         }
         else
@@ -223,7 +230,9 @@ public class CategoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Returns the form to update info about a category
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     public String getModifyCategory( HttpServletRequest request )
@@ -238,16 +247,16 @@ public class CategoryJspBean extends PluginAdminPageJspBean
             int nId = Integer.parseInt( strCategoryId );
             Category category = _categoryService.findByPrimaryKey( nId );
 
-            Map<String, Object> model = new HashMap<String, Object>(  );
+            Map<String, Object> model = new HashMap<String, Object>( );
             model.put( CRMConstants.MARK_CATEGORY, category );
 
-            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_CATEGORY, getLocale(  ), model );
+            HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_CATEGORY, getLocale( ), model );
 
-            strUrl = getAdminPage( template.getHtml(  ) );
+            strUrl = getAdminPage( template.getHtml( ) );
         }
         else
         {
-            throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR, request.getLocale(  ) ) );
+            throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR, request.getLocale( ) ) );
         }
 
         return strUrl;
@@ -255,7 +264,9 @@ public class CategoryJspBean extends PluginAdminPageJspBean
 
     /**
      * Process the change form of a category
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     public String doModifyCategory( HttpServletRequest request )
@@ -283,8 +294,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
                 }
                 else
                 {
-                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR,
-                            AdminMessage.TYPE_STOP );
+                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR, AdminMessage.TYPE_STOP );
                 }
             }
             else

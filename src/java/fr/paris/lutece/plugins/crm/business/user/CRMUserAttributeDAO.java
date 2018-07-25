@@ -39,7 +39,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  *
  * CRMUserAttributeDAO
@@ -56,8 +55,7 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
      * {@inheritDoc}
      */
     @Override
-    public synchronized void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue,
-        Plugin plugin )
+    public synchronized void insert( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin );
 
@@ -67,8 +65,8 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
         daoUtil.setString( nIndex++, strUserAttributeKey );
         daoUtil.setString( nIndex++, strUserAttributeValue );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -79,8 +77,8 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nIdCRMUser );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -89,18 +87,18 @@ public class CRMUserAttributeDAO implements ICRMUserAttributeDAO
     @Override
     public Map<String, String> load( int nIdCRMUser, Plugin plugin )
     {
-        Map<String, String> userAttributes = new HashMap<String, String>(  );
+        Map<String, String> userAttributes = new HashMap<String, String>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nIdCRMUser );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
             userAttributes.put( daoUtil.getString( nIndex++ ), daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return userAttributes;
     }

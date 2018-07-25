@@ -48,7 +48,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  *
  * CategoryService
@@ -56,45 +55,50 @@ import java.util.Locale;
  */
 public class CategoryService
 {
-    
-    
+
     private static final String BEAN_CRM_CATEGORYSERVICE = "crm.categoryService";
 
     /**
      * Constructor
      */
-    protected CategoryService(  )
+    protected CategoryService( )
     {
     }
 
     /**
      * Get the instance of {@link CategoryService}
+     * 
      * @return an instance of {@link CategoryService}
      */
-    public static synchronized CategoryService getService(  )
+    public static synchronized CategoryService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_CATEGORYSERVICE );
     }
 
     /**
      * Load the data of all the category objects and returns them in form of a collection
+     * 
      * @return the collection which contains the data of all the category objects
      */
-    public Collection<Category> getCategoriesList(  )
+    public Collection<Category> getCategoriesList( )
     {
-        return CategoryHome.getCategoriesList(  );
+        return CategoryHome.getCategoriesList( );
     }
 
     /**
      * Load the data of all the category objects and returns them in form of a ReferenceList
-     * @param locale {@link Locale}
-     * @param bAddAllCategory true if the must contain all category, false otherwise
-     * @param bIsDefaultChoiceTop true if the default choices are put at the top of the list, false otherwise
+     * 
+     * @param locale
+     *            {@link Locale}
+     * @param bAddAllCategory
+     *            true if the must contain all category, false otherwise
+     * @param bIsDefaultChoiceTop
+     *            true if the default choices are put at the top of the list, false otherwise
      * @return the ReferenceList which contains the data of all the category objects
      */
     public ReferenceList getCategories( Locale locale, boolean bAddAllCategory, boolean bIsDefaultChoiceTop )
     {
-        ReferenceList list = new ReferenceList(  );
+        ReferenceList list = new ReferenceList( );
 
         if ( bIsDefaultChoiceTop )
         {
@@ -105,12 +109,12 @@ public class CategoryService
                 list.addItem( CRMConstants.ALL_CATEGORY, I18nService.getLocalizedString( CRMConstants.PROPERTY_ALL_CATEGORY, locale ) );
             }
 
-            list.addAll( CategoryHome.getCategories(  ) );
+            list.addAll( CategoryHome.getCategories( ) );
         }
         else
         {
-            list = CategoryHome.getCategories(  );
-            list.addItem( CRMConstants.NO_CATEGORY, I18nService.getLocalizedString(CRMConstants.PROPERTY_NO_CATEGORY, locale ) );
+            list = CategoryHome.getCategories( );
+            list.addItem( CRMConstants.NO_CATEGORY, I18nService.getLocalizedString( CRMConstants.PROPERTY_NO_CATEGORY, locale ) );
 
             if ( bAddAllCategory )
             {
@@ -123,7 +127,9 @@ public class CategoryService
 
     /**
      * Returns an instance of a category whose identifier is specified in parameter
-     * @param nIdCategory The category primary key
+     * 
+     * @param nIdCategory
+     *            The category primary key
      * @return an instance of Category
      */
     public Category findByPrimaryKey( int nIdCategory )
@@ -133,7 +139,9 @@ public class CategoryService
 
     /**
      * Create an instance of the category class
-     * @param category The instance of the Category which contains the informations to store
+     * 
+     * @param category
+     *            The instance of the Category which contains the informations to store
      * @return The instance of category which has been created with its primary key.
      */
     public int createCategory( Category category )
@@ -149,19 +157,20 @@ public class CategoryService
     }
 
     /**
-     * Remove the category whose identifier is specified in parameter.
-     * The category is removed if and only if it is not linked to any widget.
-     * @param nIdCategory The category Id
-     * @param locale {@link Locale}
+     * Remove the category whose identifier is specified in parameter. The category is removed if and only if it is not linked to any widget.
+     * 
+     * @param nIdCategory
+     *            The category Id
+     * @param locale
+     *            {@link Locale}
      * @return true if the category is linked to a widget, false otherwise
      */
     public String removeCategory( int nIdCategory, Locale locale )
     {
         String strMessage = StringUtils.EMPTY;
-        List<String> listErrors = new ArrayList<String>(  );
+        List<String> listErrors = new ArrayList<String>( );
 
-        if ( !CategoryRemovalListenerService.getService(  )
-                                                .checkForRemoval( Integer.toString( nIdCategory ), listErrors, locale ) )
+        if ( !CategoryRemovalListenerService.getService( ).checkForRemoval( Integer.toString( nIdCategory ), listErrors, locale ) )
         {
             strMessage = AdminMessageService.getFormattedList( listErrors, locale );
         }
@@ -175,7 +184,9 @@ public class CategoryService
 
     /**
      * Update of the category which is specified in parameter
-     * @param category The instance of the Category which contains the data to store
+     * 
+     * @param category
+     *            The instance of the Category which contains the data to store
      */
     public void updateCategory( Category category )
     {
@@ -187,10 +198,11 @@ public class CategoryService
 
     /**
      * Find the first category (order by the ID category)
+     * 
      * @return a {@link Category}
      */
-    public Category findFirstCategory(  )
+    public Category findFirstCategory( )
     {
-        return CategoryHome.findFirstCategory(  );
+        return CategoryHome.findFirstCategory( );
     }
 }

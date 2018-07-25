@@ -33,26 +33,25 @@
  */
 package fr.paris.lutece.plugins.crm.util;
 
-
 /**
  *
  * OperatorEnum
  *
  */
 public enum OperatorEnum
-{EQUAL( 0, "=" ),
-    GREATER( 1, ">" ),
-    LOWER( 2, "<" ),
-    GREATER_OR_EQUAL( 3, ">=" ),
-    LOWER_OR_EQUAL( 4, "<=" );
+{
+    EQUAL( 0, "=" ), GREATER( 1, ">" ), LOWER( 2, "<" ), GREATER_OR_EQUAL( 3, ">=" ), LOWER_OR_EQUAL( 4, "<=" );
 
     private int _nId;
     private String _strOperator;
 
     /**
      * Constructor
-     * @param nId the id of the operator
-     * @param strOperator the string value of the operator
+     * 
+     * @param nId
+     *            the id of the operator
+     * @param strOperator
+     *            the string value of the operator
      */
     private OperatorEnum( int nId, String strOperator )
     {
@@ -62,18 +61,20 @@ public enum OperatorEnum
 
     /**
      * Get the id of the operator
+     * 
      * @return the id of the operator
      */
-    public int getId(  )
+    public int getId( )
     {
         return _nId;
     }
 
     /**
      * Get the String value of the operator
+     * 
      * @return the String value of the operator
      */
-    public String toString(  )
+    public String toString( )
     {
         return _strOperator;
     }

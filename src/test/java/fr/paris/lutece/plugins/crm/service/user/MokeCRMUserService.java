@@ -38,7 +38,6 @@ import fr.paris.lutece.plugins.crm.business.user.MokeCRMUser;
 
 import java.util.Map.Entry;
 
-
 /**
  *
  * MokeCRMUserService
@@ -49,10 +48,12 @@ public class MokeCRMUserService extends CRMUserService
     private static final int ID_CRM_USER1 = 1;
 
     /**
-    * Find by primary key
-    * @param nIdCRMUser the id crm user
-    * @return a {@link CRMUser}
-    */
+     * Find by primary key
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
+     * @return a {@link CRMUser}
+     */
     public CRMUser findByPrimaryKey( int nIdCRMUser )
     {
         CRMUser crmUser = new MokeCRMUser( nIdCRMUser );
@@ -63,7 +64,9 @@ public class MokeCRMUserService extends CRMUserService
 
     /**
      * Find from a given user guid
-     * @param strUserGuid the user guid
+     * 
+     * @param strUserGuid
+     *            the user guid
      * @return a {@link CRMUser}
      */
     public CRMUser findByUserGuid( String strUserGuid )
@@ -76,7 +79,9 @@ public class MokeCRMUserService extends CRMUserService
 
     /**
      * Create a new {@link CRMUser}
-     * @param user the {@link CRMUser}
+     * 
+     * @param user
+     *            the {@link CRMUser}
      * @return the new primary key
      */
     public int create( CRMUser user )
@@ -88,7 +93,9 @@ public class MokeCRMUserService extends CRMUserService
 
     /**
      * Update a {@link CRMUser}
-     * @param user the {@link CRMUser}
+     * 
+     * @param user
+     *            the {@link CRMUser}
      */
     public void update( CRMUser user )
     {
@@ -97,46 +104,51 @@ public class MokeCRMUserService extends CRMUserService
 
     /**
      * Remove a CRMUser
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      */
     public void remove( int nIdCRMUser )
     {
-        System.out.println( trace(  ) );
+        System.out.println( trace( ) );
     }
 
     /**
      * Trace
+     * 
      * @return trace
      */
-    private String trace(  )
+    private String trace( )
     {
         return trace( null );
     }
 
     /**
      * Trace
-     * @param crmUser the crm user
+     * 
+     * @param crmUser
+     *            the crm user
      * @return trace
      */
     private String trace( CRMUser crmUser )
     {
-        StringBuilder sbTrace = new StringBuilder(  );
+        StringBuilder sbTrace = new StringBuilder( );
         sbTrace.append( "\n ---------------------- CRM User Service -------------------" );
-        sbTrace.append( "\nMethod name : " + Thread.currentThread(  ).getStackTrace(  )[2].getMethodName(  ) );
+        sbTrace.append( "\nMethod name : " + Thread.currentThread( ).getStackTrace( ) [2].getMethodName( ) );
 
         if ( crmUser != null )
         {
-            sbTrace.append( "\nid_crm_user : " + crmUser.getIdCRMUser(  ) );
-            sbTrace.append( "\nuser_guid : " + crmUser.getUserGuid(  ) );
+            sbTrace.append( "\nid_crm_user : " + crmUser.getIdCRMUser( ) );
+            sbTrace.append( "\nuser_guid : " + crmUser.getUserGuid( ) );
 
-            for ( Entry<String, String> userAttribute : crmUser.getUserAttributes(  ).entrySet(  ) )
+            for ( Entry<String, String> userAttribute : crmUser.getUserAttributes( ).entrySet( ) )
             {
-                sbTrace.append( "\n" + userAttribute.getKey(  ) + " : " + userAttribute.getValue(  ) );
+                sbTrace.append( "\n" + userAttribute.getKey( ) + " : " + userAttribute.getValue( ) );
             }
         }
 
         sbTrace.append( "\n --------------------------------------------------------------------" );
 
-        return sbTrace.toString(  );
+        return sbTrace.toString( );
     }
 }

@@ -58,7 +58,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-
 /**
  *
  * DemandService
@@ -71,44 +70,51 @@ public class DemandService
     /**
      * Constructor
      */
-    protected DemandService(  )
+    protected DemandService( )
     {
     }
 
     /**
      * Get an instance of {@link DemandService}
+     * 
      * @return an instance of {@link DemandService}
      */
-    public static DemandService getService(  )
+    public static DemandService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_DEMANDSERVICE );
     }
 
     /**
      * Find a demand by its primary key
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      * @return a {@link Demand}
      */
     public Demand findByPrimaryKey( int nIdDemand )
     {
         return DemandHome.findByPrimaryKey( nIdDemand );
     }
-    
-    
+
     /**
      * Find a demand by Remote key
-     * @param  strRemoteId the remote Id
-     * @param nIdDemandType the idDemandType
+     * 
+     * @param strRemoteId
+     *            the remote Id
+     * @param nIdDemandType
+     *            the idDemandType
      * @return a {@link Demand}
      */
-    public Demand findByRemoteKey( String strRemoteId,int nIdDemandType )
+    public Demand findByRemoteKey( String strRemoteId, int nIdDemandType )
     {
         return DemandHome.findByRemoteKey( strRemoteId, nIdDemandType );
     }
 
     /**
      * Create a new demand
-     * @param demand the demand
+     * 
+     * @param demand
+     *            the demand
      * @return the newly created demand id
      */
     public int create( Demand demand )
@@ -117,7 +123,7 @@ public class DemandService
 
         if ( demand != null )
         {
-            demand.setDateModification( new Timestamp( new Date(  ).getTime(  ) ) );
+            demand.setDateModification( new Timestamp( new Date( ).getTime( ) ) );
             nIdDemand = DemandHome.create( demand );
         }
 
@@ -126,31 +132,37 @@ public class DemandService
 
     /**
      * Update a demand
-     * @param demand the demand
+     * 
+     * @param demand
+     *            the demand
      */
     public void update( Demand demand )
     {
         if ( demand != null )
         {
-            demand.setDateModification( new Timestamp( new Date(  ).getTime(  ) ) );
+            demand.setDateModification( new Timestamp( new Date( ).getTime( ) ) );
             DemandHome.update( demand );
         }
     }
 
     /**
      * Remove a demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public void remove( int nIdDemand )
     {
         // Remove all notifications associated to the demand
-        NotificationService.getService(  ).removeByIdDemand( nIdDemand );
+        NotificationService.getService( ).removeByIdDemand( nIdDemand );
         DemandHome.remove( nIdDemand );
     }
 
     /**
      * Remove a demand and its resource
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public void removeWithItsResource( int nIdDemand, boolean bByDaemon )
     {
@@ -158,39 +170,34 @@ public class DemandService
 
         if ( demand != null )
         {
-            DemandType demandType = DemandTypeService.getService(  ).findByPrimaryKey( demand.getIdDemandType(  ) );
+            DemandType demandType = DemandTypeService.getService( ).findByPrimaryKey( demand.getIdDemandType( ) );
 
             if ( demandType != null )
             {
-                if ( StringUtils.isNotBlank( demandType.getUrlDelete(  ) ) && bByDaemon )
+                if ( StringUtils.isNotBlank( demandType.getUrlDelete( ) ) && bByDaemon )
                 {
                     try
                     {
-                        DemandWebService.getService(  )
-                                        .sendRemoveDraft( demandType.getUrlDelete(  ), nIdDemand,
-                            demand.getData(  ).replace( "\"", "'" ) );
+                        DemandWebService.getService( ).sendRemoveDraft( demandType.getUrlDelete( ), nIdDemand, demand.getData( ).replace( "\"", "'" ) );
                         remove( nIdDemand );
                     }
-                    catch ( HttpAccessException e )
+                    catch( HttpAccessException e )
                     {
-                        String strError = "CRM Demand - Error connecting to '" + demandType.getUrlDelete(  ) + "' : ";
-                        AppLogService.error( strError + e.getMessage(  ), e );
+                        String strError = "CRM Demand - Error connecting to '" + demandType.getUrlDelete( ) + "' : ";
+                        AppLogService.error( strError + e.getMessage( ), e );
                     }
                 }
                 else
                 {
                     try
                     {
-                        DemandWebService.getService(  )
-                                        .sendRemoveDraft( demandType.getUrlResource(  ), nIdDemand,
-                            demand.getData(  ).replace( "\"", "'" ) );
+                        DemandWebService.getService( ).sendRemoveDraft( demandType.getUrlResource( ), nIdDemand, demand.getData( ).replace( "\"", "'" ) );
                         remove( nIdDemand );
                     }
-                    catch ( HttpAccessException e )
+                    catch( HttpAccessException e )
                     {
-                        String strError = "CRM Demand - Error connecting to '" + demandType.getUrlResource(  ) +
-                            "' : ";
-                        AppLogService.error( strError + e.getMessage(  ), e );
+                        String strError = "CRM Demand - Error connecting to '" + demandType.getUrlResource( ) + "' : ";
+                        AppLogService.error( strError + e.getMessage( ), e );
                     }
                 }
             }
@@ -199,31 +206,36 @@ public class DemandService
 
     /**
      * Remove the demands given an id demand type
-     * @param nIdDemandType the id demand type
+     * 
+     * @param nIdDemandType
+     *            the id demand type
      */
     public void removeByIdDemandType( int nIdDemandType )
     {
-        DemandFilter dFilter = new DemandFilter(  );
+        DemandFilter dFilter = new DemandFilter( );
         dFilter.setIdDemandType( nIdDemandType );
 
         for ( Demand demand : findByFilter( dFilter ) )
         {
-            removeWithItsResource( demand.getIdDemand(  ), false );
+            removeWithItsResource( demand.getIdDemand( ), false );
         }
     }
 
     /**
      * Find all demands
+     * 
      * @return a list of {@link Demand}
      */
-    public List<Demand> findAll(  )
+    public List<Demand> findAll( )
     {
-        return DemandHome.findAll(  );
+        return DemandHome.findAll( );
     }
 
     /**
      * Find by filter
-     * @param dFilter the filter
+     * 
+     * @param dFilter
+     *            the filter
      * @return a list of {@link Demand}
      */
     public List<Demand> findByFilter( DemandFilter dFilter )
@@ -233,31 +245,35 @@ public class DemandService
 
     /**
      * Find the demands given an user crm id, results can be sorted
-     * @param nIdCRMUser the user crm id
-     * @param locale {@link Locale}
-     * @param nIdStatusToSort the id status of demands that will be sorted
-     * @param listDemandSort the sorts to apply
+     * 
+     * @param nIdCRMUser
+     *            the user crm id
+     * @param locale
+     *            {@link Locale}
+     * @param nIdStatusToSort
+     *            the id status of demands that will be sorted
+     * @param listDemandSort
+     *            the sorts to apply
      * @return a map of (id_status_crm, List&lt;Demand&gt;)
      */
-    public Map<String, List<Demand>> findByIdCRMUser( int nIdCRMUser, Locale locale, int nIdStatusToSort,
-        List<DemandSort> listDemandSort )
+    public Map<String, List<Demand>> findByIdCRMUser( int nIdCRMUser, Locale locale, int nIdStatusToSort, List<DemandSort> listDemandSort )
     {
-        Map<String, List<Demand>> map = new HashMap<String, List<Demand>>(  );
+        Map<String, List<Demand>> map = new HashMap<String, List<Demand>>( );
 
-        for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  ).getAllStatusCRM( locale ) )
+        for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService( ).getAllStatusCRM( locale ) )
         {
-            DemandFilter dFilter = new DemandFilter(  );
+            DemandFilter dFilter = new DemandFilter( );
             dFilter.setIdCRMUser( nIdCRMUser );
-            dFilter.setIdStatusCRM( statusCRM.getIdStatusCRM(  ) );
+            dFilter.setIdStatusCRM( statusCRM.getIdStatusCRM( ) );
 
             // sort
-            if ( nIdStatusToSort == statusCRM.getIdStatusCRM(  ) )
+            if ( nIdStatusToSort == statusCRM.getIdStatusCRM( ) )
             {
                 dFilter.setListDemandSort( listDemandSort );
             }
 
             List<Demand> listDemands = findByFilter( dFilter );
-            map.put( Integer.toString( statusCRM.getIdStatusCRM(  ) ), listDemands );
+            map.put( Integer.toString( statusCRM.getIdStatusCRM( ) ), listDemands );
         }
 
         return map;
@@ -265,29 +281,31 @@ public class DemandService
 
     /**
      * Find by filter with map
-     * @param nIdCRMUser the user crm id
-     * @param locale {@link Locale}
+     * 
+     * @param nIdCRMUser
+     *            the user crm id
+     * @param locale
+     *            {@link Locale}
      * @return a map of (id_status_crm, List&lt;Demand&gt;)
      */
-    public Map<String, List<Demand>> findByFilterMap( DemandFilter dFilter, Locale locale,
-        PaginationFilterSortManager paginationFilterSortManager )
+    public Map<String, List<Demand>> findByFilterMap( DemandFilter dFilter, Locale locale, PaginationFilterSortManager paginationFilterSortManager )
     {
-        Map<String, List<Demand>> map = new HashMap<String, List<Demand>>(  );
+        Map<String, List<Demand>> map = new HashMap<String, List<Demand>>( );
 
-        for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService(  ).getAllStatusCRM( locale ) )
+        for ( DemandStatusCRM statusCRM : DemandStatusCRMService.getService( ).getAllStatusCRM( locale ) )
         {
-            int nIdStatus = statusCRM.getIdStatusCRM(  );
-            DemandFilter filterWithSort = new DemandFilter(  );
-            filterWithSort.setDateModification( dFilter.getDateModification(  ) );
-            filterWithSort.setIdCRMUser( dFilter.getIdCRMUser(  ) );
-            filterWithSort.setIdDemandType( dFilter.getIdDemandType(  ) );
+            int nIdStatus = statusCRM.getIdStatusCRM( );
+            DemandFilter filterWithSort = new DemandFilter( );
+            filterWithSort.setDateModification( dFilter.getDateModification( ) );
+            filterWithSort.setIdCRMUser( dFilter.getIdCRMUser( ) );
+            filterWithSort.setIdDemandType( dFilter.getIdDemandType( ) );
             filterWithSort.setIdStatusCRM( nIdStatus );
-            filterWithSort.setIsWideSearch( dFilter.getIsWideSearch(  ) );
-            filterWithSort.setNotification( dFilter.getNotification(  ) );
-            filterWithSort.setOperatorDateModification( dFilter.getOperatorDateModification(  ) );
+            filterWithSort.setIsWideSearch( dFilter.getIsWideSearch( ) );
+            filterWithSort.setNotification( dFilter.getNotification( ) );
+            filterWithSort.setOperatorDateModification( dFilter.getOperatorDateModification( ) );
 
             DemandSort sort = paginationFilterSortManager.retrieveSort( nIdStatus );
-            List<DemandSort> listDemandSort = new ArrayList<DemandSort>(  );
+            List<DemandSort> listDemandSort = new ArrayList<DemandSort>( );
 
             if ( sort != null )
             {
@@ -301,10 +319,9 @@ public class DemandService
             List<Demand> listDemands = this.findByFilterWithPagination( filterWithSort,
                     paginationFilterSortManager.retrievePaginationProperties( nIdStatus, nTotalResult ) );
 
-            IPaginator<Demand> paginator = paginationFilterSortManager.createAndStorePaginator( nIdStatus, listDemands,
-                    nTotalResult );
+            IPaginator<Demand> paginator = paginationFilterSortManager.createAndStorePaginator( nIdStatus, listDemands, nTotalResult );
 
-            map.put( Integer.toString( nIdStatus ), paginator.getPageItems(  ) );
+            map.put( Integer.toString( nIdStatus ), paginator.getPageItems( ) );
         }
 
         return map;
@@ -312,8 +329,11 @@ public class DemandService
 
     /**
      * Find by filter with pagination
-     * @param dFilter the filter
-     * @param paginationProperties the pagination properties
+     * 
+     * @param dFilter
+     *            the filter
+     * @param paginationProperties
+     *            the pagination properties
      * @return a list of {@link Demand}
      */
     public List<Demand> findByFilterWithPagination( DemandFilter dFilter, IPaginationProperties paginationProperties )
@@ -323,7 +343,9 @@ public class DemandService
 
     /**
      * Count results by filter
-     * @param dFilter the filter
+     * 
+     * @param dFilter
+     *            the filter
      * @return the number of results
      */
     public int countByFilter( DemandFilter dFilter )

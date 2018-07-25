@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
  *
  * DemandStatusCRMService
@@ -54,29 +53,32 @@ public class DemandStatusCRMService
     /**
      * Constructor
      */
-    protected DemandStatusCRMService(  )
+    protected DemandStatusCRMService( )
     {
     }
 
     /**
      * Get the instance of {@link DemandStatusCRMService}
+     * 
      * @return the instance of {@link DemandStatusCRMService}
      */
-    public static DemandStatusCRMService getService(  )
+    public static DemandStatusCRMService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_DEMANDSTATUSCRMSERVICE );
     }
 
     /**
      * Get all status CRM, then put the list in session
-     * @param locale {@link Locale}
+     * 
+     * @param locale
+     *            {@link Locale}
      * @return a list of {@link DemandStatusCRM}
      */
     public List<DemandStatusCRM> getAllStatusCRM( Locale locale )
     {
         if ( _listStatusCRM == null )
         {
-            _listStatusCRM = DemandStatusCRMHome.findAll(  );
+            _listStatusCRM = DemandStatusCRMHome.findAll( );
 
             for ( DemandStatusCRM statusCRM : _listStatusCRM )
             {
@@ -89,8 +91,11 @@ public class DemandStatusCRMService
 
     /**
      * Get the status crm given an id status
-     * @param nIdStatusCRM the id status
-     * @param locale the {@link Locale}
+     * 
+     * @param nIdStatusCRM
+     *            the id status
+     * @param locale
+     *            the {@link Locale}
      * @return a {@link DemandStatusCRM}
      */
     public DemandStatusCRM getStatusCRM( int nIdStatusCRM, Locale locale )

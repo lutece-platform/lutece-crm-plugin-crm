@@ -39,24 +39,26 @@ import fr.paris.lutece.plugins.crm.util.IListenerDemandType;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 /**
- * Listener Service for demand category deletion 
+ * Listener Service for demand category deletion
  */
-public class CRMDemandTypeRemovalListenerService {
+public class CRMDemandTypeRemovalListenerService
+{
     private static final String BEAN_NAME = "crm.crmDemandCategoryRemovalListenerService";
     private static CRMDemandTypeRemovalListenerService _instance;
-  
+
     /**
      * Private constructor
      */
-    private CRMDemandTypeRemovalListenerService(  )
+    private CRMDemandTypeRemovalListenerService( )
     {
     }
 
     /**
      * Get the instance of the service
+     * 
      * @return The instance of the service
      */
-    public static CRMDemandTypeRemovalListenerService getService(  )
+    public static CRMDemandTypeRemovalListenerService getService( )
     {
         if ( _instance == null )
         {
@@ -66,17 +68,19 @@ public class CRMDemandTypeRemovalListenerService {
         return _instance;
     }
 
-
     /**
      * Notify listeners with a demand type.
-     * @param demandType demandType to send to listeners
-     * @param strEventName Name of the event that caused the notification
+     * 
+     * @param demandType
+     *            demandType to send to listeners
+     * @param strEventName
+     *            Name of the event that caused the notification
      */
     public void notifyListeners( DemandType demandType, String strEventName )
     {
-            for ( IListenerDemandType listener : SpringContextService.getBeansOfType(IListenerDemandType.class) )
-            {
-                listener.notifyListener( demandType, strEventName );
-            }
+        for ( IListenerDemandType listener : SpringContextService.getBeansOfType( IListenerDemandType.class ) )
+        {
+            listener.notifyListener( demandType, strEventName );
         }
+    }
 }

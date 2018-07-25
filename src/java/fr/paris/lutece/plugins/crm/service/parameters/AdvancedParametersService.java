@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.crm.business.parameters.AdvancedParametersHome;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 /**
  *
  * The Class AdvancedParametersService.
@@ -45,21 +44,22 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
  */
 public class AdvancedParametersService
 {
-    //BEAN
+    // BEAN
     private static final String BEAN_CRM_ADVANCED_PARAMETERS = "crm.advancedParametersService";
 
     /**
      * Constructor
      */
-    protected AdvancedParametersService(  )
+    protected AdvancedParametersService( )
     {
     }
 
     /**
      * Get the instance of {@link DemandTypeService}
+     * 
      * @return the instance of {@link DemandTypeService}
      */
-    public static AdvancedParametersService getService(  )
+    public static AdvancedParametersService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_ADVANCED_PARAMETERS );
     }
@@ -67,7 +67,8 @@ public class AdvancedParametersService
     /**
      * Get the String strValue of a parameter.
      *
-     * @param strKey the str key
+     * @param strKey
+     *            the str key
      * @return the string strValue
      */
     public String getParameterStringValueByKey( String strKey )
@@ -78,7 +79,8 @@ public class AdvancedParametersService
     /**
      * Get the boolean strValue of a parameter.
      *
-     * @param strKey the str key
+     * @param strKey
+     *            the str key
      * @return the string strValue
      */
     public boolean isParameterValueByKey( String strKey )
@@ -89,8 +91,10 @@ public class AdvancedParametersService
     /**
      * Modify the String strValue of a parameter.
      *
-     * @param strKey the str key
-     * @param strValue the str value
+     * @param strKey
+     *            the str key
+     * @param strValue
+     *            the str value
      */
     public void modifyParameterStringValueByKey( String strKey, String strValue )
     {

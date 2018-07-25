@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * INotificationDAO
@@ -47,59 +46,81 @@ public interface INotificationDAO
 {
     /**
      * Generates a new primary key
-     * @param plugin The Plugin
+     * 
+     * @param plugin
+     *            The Plugin
      * @return The new primary key
      */
     int newPrimaryKey( Plugin plugin );
 
     /**
      * Insert a new record in the table.
-     * @param notification instance of the Notification object to insert
-     * @param plugin the Plugin
+     * 
+     * @param notification
+     *            instance of the Notification object to insert
+     * @param plugin
+     *            the Plugin
      * @return the key of the newly created notification
      */
     int insert( Notification notification, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param notification the reference of the Notification
-     * @param plugin the Plugin
+     * 
+     * @param notification
+     *            the reference of the Notification
+     * @param plugin
+     *            the Plugin
      */
     void store( Notification notification, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nIdNotification int identifier of the notification to delete
-     * @param plugin the Plugin
+     * 
+     * @param nIdNotification
+     *            int identifier of the notification to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nIdNotification, Plugin plugin );
 
     /**
      * Delete all record from a given id demand
-     * @param nIdDemand the id demand
-     * @param plugin the Plugin
+     * 
+     * @param nIdDemand
+     *            the id demand
+     * @param plugin
+     *            the Plugin
      */
     void deleteByIdDemand( int nIdDemand, Plugin plugin );
 
     /**
      * Load the data from the table
-     * @param nIdNotification The identifier of the notification
-     * @param plugin the Plugin
+     * 
+     * @param nIdNotification
+     *            The identifier of the notification
+     * @param plugin
+     *            the Plugin
      * @return The instance of the Notification
      */
     Notification load( int nIdNotification, Plugin plugin );
 
     /**
      * Find all notification
-     * @param plugin {@link Plugin}
+     * 
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link Notification}
      */
     List<Notification> selectAll( Plugin plugin );
 
     /**
      * Find by filter
-     * @param nFilter the filter
-     * @param plugin {@link Plugin}
+     * 
+     * @param nFilter
+     *            the filter
+     * @param plugin
+     *            {@link Plugin}
      * @return a list of {@link Notification}
      */
     List<Notification> selectNotificationsByFilter( NotificationFilter nFilter, Plugin plugin );

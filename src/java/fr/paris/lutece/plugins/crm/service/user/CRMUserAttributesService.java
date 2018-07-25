@@ -49,7 +49,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  *
  * CRMUserAttributesService
@@ -63,22 +62,25 @@ public final class CRMUserAttributesService implements UserAttributesService
     /**
      * Private constructor
      */
-    private CRMUserAttributesService(  )
+    private CRMUserAttributesService( )
     {
     }
 
     /**
      * Get the instance of CRMUserAttributesService
+     * 
      * @return the instance of {@link CRMUserAttributesService}
      */
-    public static CRMUserAttributesService getService(  )
+    public static CRMUserAttributesService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_CRMUSERATTRIBUTESSERVICE );
     }
 
     /**
      * Set the CRMUserService
-     * @param crmUserService the CRMUserService
+     * 
+     * @param crmUserService
+     *            the CRMUserService
      */
     public void setCRMUserService( CRMUserService crmUserService )
     {
@@ -94,9 +96,9 @@ public final class CRMUserAttributesService implements UserAttributesService
         String strAttributeValue = StringUtils.EMPTY;
         CRMUser user = _crmUserService.findByUserGuid( strUserId );
 
-        if ( ( user != null ) && ( user.getUserAttributes(  ) != null ) )
+        if ( ( user != null ) && ( user.getUserAttributes( ) != null ) )
         {
-            strAttributeValue = user.getUserAttributes(  ).get( strAttribute );
+            strAttributeValue = user.getUserAttributes( ).get( strAttribute );
 
             if ( StringUtils.isBlank( strAttributeValue ) )
             {
@@ -113,12 +115,12 @@ public final class CRMUserAttributesService implements UserAttributesService
     @Override
     public Map<String, String> getAttributes( String strUserId )
     {
-        Map<String, String> listAttributes = new HashMap<String, String>(  );
+        Map<String, String> listAttributes = new HashMap<String, String>( );
         CRMUser user = _crmUserService.findByUserGuid( strUserId );
 
         if ( user != null )
         {
-            listAttributes = user.getUserAttributes(  );
+            listAttributes = user.getUserAttributes( );
         }
 
         return listAttributes;
@@ -126,7 +128,9 @@ public final class CRMUserAttributesService implements UserAttributesService
 
     /**
      * Get the user attributes from a given id crm user
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      * @return a map of user attribute key, user attribute value
      */
     public Map<String, String> getAttributes( int nIdCRMUser )
@@ -136,7 +140,9 @@ public final class CRMUserAttributesService implements UserAttributesService
 
     /**
      * Remove the user attributes of the crm user
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      */
     public void remove( int nIdCRMUser )
     {
@@ -145,9 +151,13 @@ public final class CRMUserAttributesService implements UserAttributesService
 
     /**
      * Create a new user attribute
-     * @param nIdCRMUser the id crm user
-     * @param strUserAttributeKey the user attribute key
-     * @param strUserAttributeValue the user attribute value
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
+     * @param strUserAttributeKey
+     *            the user attribute key
+     * @param strUserAttributeValue
+     *            the user attribute value
      */
     public void create( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue )
     {
@@ -156,16 +166,17 @@ public final class CRMUserAttributesService implements UserAttributesService
 
     /**
      * Get the list of user attribute keys defined in <b>crm.properties</b>
+     * 
      * @return a list of user attribute keys
      */
-    public List<String> getUserAttributeKeys(  )
+    public List<String> getUserAttributeKeys( )
     {
-        List<String> listUserAttributeKeys = new ArrayList<String>(  );
+        List<String> listUserAttributeKeys = new ArrayList<String>( );
         String strUserAttributeKeys = AppPropertiesService.getProperty( CRMConstants.PROPERTY_CRM_USER_ATTRIBUTE_KEYS );
 
         if ( StringUtils.isNotBlank( strUserAttributeKeys ) )
         {
-            String[] userAttributeKeys = strUserAttributeKeys.split( CRMConstants.COMMA );
+            String [ ] userAttributeKeys = strUserAttributeKeys.split( CRMConstants.COMMA );
 
             if ( ( userAttributeKeys != null ) && ( userAttributeKeys.length > 0 ) )
             {
@@ -182,14 +193,15 @@ public final class CRMUserAttributesService implements UserAttributesService
     /**
      * Gets the user attribute key labels.
      *
-     * @param locale the locale
+     * @param locale
+     *            the locale
      * @return the user attribute key labels
      */
     public List<String> getUserAttributeKeyLabels( Locale locale )
     {
-        List<String> listLabels = new ArrayList<String>(  );
+        List<String> listLabels = new ArrayList<String>( );
 
-        for ( String strAttributeKey : getUserAttributeKeys(  ) )
+        for ( String strAttributeKey : getUserAttributeKeys( ) )
         {
             listLabels.add( I18nService.getLocalizedString( strAttributeKey, locale ) );
         }
@@ -198,13 +210,13 @@ public final class CRMUserAttributesService implements UserAttributesService
     }
 
     /**
-     * Check if a value of an attribute is used by a user for a given attribute
-     * key
-     * @param strUserAttributeValue The value of the attribute
-     * @param strUserAttributeKey The key of the attribute
-     * @return True if a user has an attribute matching the given key and value,
-     *         false otherwise. Also return false if the given attribute key is
-     *         null or empty.
+     * Check if a value of an attribute is used by a user for a given attribute key
+     * 
+     * @param strUserAttributeValue
+     *            The value of the attribute
+     * @param strUserAttributeKey
+     *            The key of the attribute
+     * @return True if a user has an attribute matching the given key and value, false otherwise. Also return false if the given attribute key is null or empty.
      */
     public boolean isAttributeValueInUse( String strAttributeValue, String strUserAttributeKey )
     {

@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.util.constants;
 
-
 /**
  *
  * CRMConstants
@@ -74,15 +73,15 @@ public final class CRMConstants
     public static final String PROPERTY_CRM_USER_MAX_SIZE = "crm.crmUser.maxSize";
     public static final String PROPERTY_CRM_USER_ATTRIBUTE_KEYS = "crm.userAttributes.keys";
     public static final String PROPERTY_DEMANDS_PER_PAGE = "crm.paginator.demand.itemsPerPage";
-    
-    public static final String PROPERTY_LABEL_DEMAND_TYPES_LIST = "crm.crm.labelDemandTypesList"; 
-    public static final String PROPERTY_LABEL_CRM_INFO = "crm.crm.labelInfo"; 
+
+    public static final String PROPERTY_LABEL_DEMAND_TYPES_LIST = "crm.crm.labelDemandTypesList";
+    public static final String PROPERTY_LABEL_CRM_INFO = "crm.crm.labelInfo";
     public static final String PROPERTY_LABEL_CRM_CONTACT = "crm.crm.labelContact";
     public static final String PROPERTY_LABEL_CRM_DATE_BEGIN = "crm.crm.labelDateBegin";
     public static final String PROPERTY_LABEL_CRM_DATE_END = "crm.crm.labelDateEnd";
     public static final String PROPERTY_NO_CATEGORY = "crm.crm.labelNoCategory";
     public static final String PROPERTY_ALL_CATEGORY = "crm.crm.labelAllCategory";
-    // MARKS 
+    // MARKS
     public static final String MARK_MAP_DEMAND_TYPES_LIST = "map_demand_types_list";
     public static final String MARK_MAP_DEMANDS_LIST = "map_demands_list";
     public static final String MARK_MYLUTECE_USER = "mylutece_user";
@@ -115,10 +114,10 @@ public final class CRMConstants
     public static final String MARK_MAP_DO_LOGIN = "url_dologin";
     public static final String MARK_CATEGORY_ID_CATEGORY = "category_id_category";
     public static final String MARK_BASE_URL = "base_url";
-  
+
     // MARKS XSL
-    public static final String MARK_XSL_PARAM_I18N_LABEL_DEMAND_TYPES_LIST = "i18n-label-demand-types-list"; 
-    public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_INFO = "i18n-label-crm-info"; 
+    public static final String MARK_XSL_PARAM_I18N_LABEL_DEMAND_TYPES_LIST = "i18n-label-demand-types-list";
+    public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_INFO = "i18n-label-crm-info";
     public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_CONTACT = "i18n-label-crm-contact";
     public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_BEGIN = "i18n-label-crm-date-begin";
     public static final String MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_END = "i18n-label-crm-date-end";
@@ -167,8 +166,6 @@ public final class CRMConstants
     public static final String PARAMETER_INCLUDE_ID_CRM_USER = "include_id_crm_user";
     public static final String PARAMETER_NEED_AUTHENTICATION = "need_authentication";
     public static final String PARAMETER_NEED_VALIDATION = "need_validation";
-    
-    
 
     // ACTIONS
     public static final String ACTION_MANAGE_NOTIFICATIONS = "manage_notifications";
@@ -202,22 +199,22 @@ public final class CRMConstants
     // EVENTS
     public static final String EVENT_CRM_USER_MODIFIED = "EventCRMUserModified";
     public static final String EVENT_CRM_DEMAND_TYPE_REMOVED = "EventCRMDemandTypeRemoved";
-    
-    /////////////////////////////////////////////////////////////////////////////////
+
+    // ///////////////////////////////////////////////////////////////////////////////
     // Xml Tags
     public static final String TAG_DEMANDE_TYPE_PORTLET = "crm-demand-type-portlet";
     public static final String TAG_DEMANDE_TYPE_PORTLET_CONTENT = "crm-demand-type-portlet-content";
     public static final String TAG_CATEGORY_LIST = "crm-demand-type-category-list";
-    
+
     public static final String TAG_CATEGORY = "category";
     public static final String TAG_CATEGORY_ID = "category-id";
     public static final String TAG_CATEGORY_NAME = "category-name";
     public static final String TAG_CATEGORY_DESCRIPTION = "category-description";
-	public static final String TAG_DEMAND_TYPE_LIST = "demand-type-list";
- 
-	public static final String TAG_DEMAND_TYPE = "demand-type";
-	public static final String TAG_DEMAND_TYPE_ID = "demand-type-id";
-	public static final String TAG_DEMAND_TYPE_LABEL = "demand-type-label";
+    public static final String TAG_DEMAND_TYPE_LIST = "demand-type-list";
+
+    public static final String TAG_DEMAND_TYPE = "demand-type";
+    public static final String TAG_DEMAND_TYPE_ID = "demand-type-id";
+    public static final String TAG_DEMAND_TYPE_LABEL = "demand-type-label";
     public static final String TAG_DEMAND_TYPE_URL_RESOURCE = "demand-type-url-resource";
     public static final String TAG_DEMAND_TYPE_URL_INFO = "demand-type-url-info";
     public static final String TAG_DEMAND_TYPE_URL_CONTACT = "demand-type-url-contact";
@@ -229,13 +226,11 @@ public final class CRMConstants
     public static final String TAG_DEMAND_TYPE_DATE_END = "demand-type-date-end";
     public static final String TAG_DEMAND_TYPE_NEED_AUTHENTICATION = "demand-type-need-authentication";
     public static final String TAG_DEMAND_TYPE_NEED_VALIDATION = "demand-type-need-validation";
-    
-  
 
     /**
      * Private constructor
      */
-    private CRMConstants(  )
+    private CRMConstants( )
     {
     }
 }

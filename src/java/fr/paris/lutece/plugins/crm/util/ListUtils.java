@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.util;
 
-
 /*
  * Copyright (c) 2002-2014, Mairie de Paris
  * All rights reserved.
@@ -79,7 +78,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * Utility to manipulate lists and referenceLists
  *
@@ -92,6 +90,7 @@ public class ListUtils
     /**
      *
      * Transforms a basical list to a reference list
+     * 
      * @param list
      * @param key
      * @param value
@@ -100,7 +99,7 @@ public class ListUtils
      */
     public static ReferenceList toReferenceList( List<?> list, String key, String value, String firstItem )
     {
-        ReferenceList referenceList = new ReferenceList(  );
+        ReferenceList referenceList = new ReferenceList( );
         String valeurKey;
         String valeurValue;
 
@@ -118,21 +117,21 @@ public class ListUtils
                 referenceList.addItem( valeurKey, valeurValue );
             }
         }
-        catch ( IllegalAccessException e )
+        catch( IllegalAccessException e )
         {
-            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage(  ), e );
+            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage( ), e );
         }
-        catch ( InvocationTargetException e )
+        catch( InvocationTargetException e )
         {
-            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage(  ), e );
+            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage( ), e );
         }
-        catch ( NoSuchMethodException e )
+        catch( NoSuchMethodException e )
         {
-            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage(  ), e );
+            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage( ), e );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
-            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage(  ), e );
+            LOGGER.warn( "Erreur lors de la création d'une liste pour combo : " + e.getMessage( ), e );
         }
 
         return referenceList;
@@ -140,6 +139,7 @@ public class ListUtils
 
     /**
      * Get the property list
+     * 
      * @param propertyKey
      * @return a list of property
      */
@@ -149,7 +149,7 @@ public class ListUtils
 
         if ( property != null )
         {
-            String[] items = property.split( PROPERTY_LIST_SEPARATOR );
+            String [ ] items = property.split( PROPERTY_LIST_SEPARATOR );
 
             if ( items != null )
             {

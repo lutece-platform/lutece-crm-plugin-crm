@@ -45,7 +45,6 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  *
  * CRMService
@@ -61,37 +60,43 @@ public final class CRMService
     /**
      * Private constructor
      */
-    private CRMService(  )
+    private CRMService( )
     {
     }
 
     /**
      * Get the instance of {@link CRMService}
+     * 
      * @return the instance
      */
-    public static CRMService getService(  )
+    public static CRMService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_CRMSERVICE );
     }
 
     /**
      * Register the demand
-     * @param nIdDemandType the id demand type
-     * @param strUserGuid the user guid
-     * @param strData the data
-     * @param strStatusText the status of the demand
-     * @param nIdStatusCRM the id status crm
+     * 
+     * @param nIdDemandType
+     *            the id demand type
+     * @param strUserGuid
+     *            the user guid
+     * @param strData
+     *            the data
+     * @param strStatusText
+     *            the status of the demand
+     * @param nIdStatusCRM
+     *            the id status crm
      * @return the newly created id demand
      */
-    public int registerDemand( int nIdDemandType, String strUserGuid, String strData, String strStatusText,
-        int nIdStatusCRM )
+    public int registerDemand( int nIdDemandType, String strUserGuid, String strData, String strStatusText, int nIdStatusCRM )
     {
         int nIdDemand = -1;
         CRMUser crmUser = _crmUserService.findByUserGuid( strUserGuid );
 
         if ( crmUser != null )
         {
-            nIdDemand = registerDemand( nIdDemandType, crmUser.getIdCRMUser(  ), strData, strStatusText, nIdStatusCRM );
+            nIdDemand = registerDemand( nIdDemandType, crmUser.getIdCRMUser( ), strData, strStatusText, nIdStatusCRM );
         }
 
         return nIdDemand;
@@ -99,48 +104,60 @@ public final class CRMService
 
     /**
      * Register the demand
-     * @param nIdDemandType the id demand type
-     * @param nIdCRMUser the ID CRM user
-     * @param strData the data
-     * @param strStatusText the status of the demand
-     * @param nIdStatusCRM the id status crm
+     * 
+     * @param nIdDemandType
+     *            the id demand type
+     * @param nIdCRMUser
+     *            the ID CRM user
+     * @param strData
+     *            the data
+     * @param strStatusText
+     *            the status of the demand
+     * @param nIdStatusCRM
+     *            the id status crm
      * @return the newly created id demand
      */
     public int registerDemand( int nIdDemandType, int nIdCRMUser, String strData, String strStatusText, int nIdStatusCRM )
     {
-      
-    	return registerDemand(null,nIdDemandType, nIdCRMUser, strData, strStatusText, nIdStatusCRM);
+
+        return registerDemand( null, nIdDemandType, nIdCRMUser, strData, strStatusText, nIdStatusCRM );
     }
-    
-    
+
     /**
      * Register the demand
-     * @param strRemoteId the remoteId
-     * @param nIdDemandType the id demand type
-     * @param nIdCRMUser the ID CRM user
-     * @param strData the data
-     * @param strStatusText the status of the demand
-     * @param nIdStatusCRM the id status crm
-     *  @return the newly created id demand
+     * 
+     * @param strRemoteId
+     *            the remoteId
+     * @param nIdDemandType
+     *            the id demand type
+     * @param nIdCRMUser
+     *            the ID CRM user
+     * @param strData
+     *            the data
+     * @param strStatusText
+     *            the status of the demand
+     * @param nIdStatusCRM
+     *            the id status crm
+     * @return the newly created id demand
      */
-    public int registerDemand(String strRemoteId, int nIdDemandType, int nIdCRMUser, String strData, String strStatusText, int nIdStatusCRM )
+    public int registerDemand( String strRemoteId, int nIdDemandType, int nIdCRMUser, String strData, String strStatusText, int nIdStatusCRM )
     {
         int nIdDemand = -1;
         CRMUser crmUser = _crmUserService.findByPrimaryKey( nIdCRMUser );
 
         if ( crmUser != null )
         {
-            Demand demand = new Demand(  );
+            Demand demand = new Demand( );
             demand.setIdDemandType( nIdDemandType );
             demand.setIdCRMUser( nIdCRMUser );
             demand.setData( StringUtils.isNotEmpty( strData ) ? strData : StringUtils.EMPTY );
             demand.setStatusText( StringUtils.isNotEmpty( strStatusText ) ? strStatusText : StringUtils.EMPTY );
             demand.setIdStatusCRM( nIdStatusCRM );
-            demand.setRemoteId(strRemoteId);
-            //Test if the multiple key Remote Id and Id Demand Type do not already exist 
-            if(_demandService.findByRemoteKey(strRemoteId, nIdDemandType) == null)
+            demand.setRemoteId( strRemoteId );
+            // Test if the multiple key Remote Id and Id Demand Type do not already exist
+            if ( _demandService.findByRemoteKey( strRemoteId, nIdDemandType ) == null )
             {
-            	nIdDemand = _demandService.create( demand );
+                nIdDemand = _demandService.create( demand );
             }
         }
 
@@ -149,10 +166,15 @@ public final class CRMService
 
     /**
      * Set the status of the demand
-     * @param nIdDemand the id demand
-     * @param strData the data
-     * @param strStatusText the status of the demand
-     * @param nIdStatusCRM the id status crm
+     * 
+     * @param nIdDemand
+     *            the id demand
+     * @param strData
+     *            the data
+     * @param strStatusText
+     *            the status of the demand
+     * @param nIdStatusCRM
+     *            the id status crm
      */
     public void setStatus( int nIdDemand, String strData, String strStatusText, int nIdStatusCRM )
     {
@@ -177,7 +199,9 @@ public final class CRMService
 
     /**
      * Delete a demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public void deleteDemand( int nIdDemand )
     {
@@ -186,10 +210,15 @@ public final class CRMService
 
     /**
      * Create a notification for a demand
-     * @param nIdDemand the id demand
-     * @param strObject the object of the notification
-     * @param strMessage the message of the notification
-     * @param strSender the sender
+     * 
+     * @param nIdDemand
+     *            the id demand
+     * @param strObject
+     *            the object of the notification
+     * @param strMessage
+     *            the message of the notification
+     * @param strSender
+     *            the sender
      */
     public void notify( int nIdDemand, String strObject, String strMessage, String strSender )
     {
@@ -205,7 +234,7 @@ public final class CRMService
             strNotificationSender = strSender;
         }
 
-        Notification notification = new Notification(  );
+        Notification notification = new Notification( );
         notification.setIdDemand( nIdDemand );
         notification.setObject( strObject );
         notification.setMessage( strMessage );
@@ -215,7 +244,9 @@ public final class CRMService
 
     /**
      * Set the notification service
-     * @param notificationService the notification service
+     * 
+     * @param notificationService
+     *            the notification service
      */
     public void setNotificationService( NotificationService notificationService )
     {
@@ -224,7 +255,9 @@ public final class CRMService
 
     /**
      * Set the demand service
-     * @param demandService the demand service
+     * 
+     * @param demandService
+     *            the demand service
      */
     public void setDemandService( DemandService demandService )
     {
@@ -233,7 +266,9 @@ public final class CRMService
 
     /**
      * Set the crm user service
-     * @param crmUserService the crm user service
+     * 
+     * @param crmUserService
+     *            the crm user service
      */
     public void setCRMUserService( CRMUserService crmUserService )
     {

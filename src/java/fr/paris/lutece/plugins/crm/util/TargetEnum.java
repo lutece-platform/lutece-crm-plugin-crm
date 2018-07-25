@@ -33,25 +33,25 @@
  */
 package fr.paris.lutece.plugins.crm.util;
 
-
 /**
  *
  * TargetEnum
  *
  */
 public enum TargetEnum
-{SELF( 0, "_self" ),
-    BLANK( 1, "_blank" ),
-    PARENT( 2, "_parent" ),
-    TOP( 3, "_top" );
+{
+    SELF( 0, "_self" ), BLANK( 1, "_blank" ), PARENT( 2, "_parent" ), TOP( 3, "_top" );
 
     private int _nId;
     private String _strTarget;
 
     /**
      * Constructor
-     * @param nId the id of the target
-     * @param strTarget the string value of the target
+     * 
+     * @param nId
+     *            the id of the target
+     * @param strTarget
+     *            the string value of the target
      */
     private TargetEnum( int nId, String strTarget )
     {
@@ -61,32 +61,36 @@ public enum TargetEnum
 
     /**
      * Get the id of the target
+     * 
      * @return the id of the target
      */
-    public int getId(  )
+    public int getId( )
     {
         return _nId;
     }
 
     /**
      * Get the String value of the target
+     * 
      * @return the String value of the target
      */
-    public String toString(  )
+    public String toString( )
     {
         return _strTarget;
     }
 
     /**
      * Get the target given an id
-     * @param nId the id
+     * 
+     * @param nId
+     *            the id
      * @return the target
      */
     public static TargetEnum getTarget( int nId )
     {
-        if ( ( nId >= 0 ) && ( nId < values(  ).length ) )
+        if ( ( nId >= 0 ) && ( nId < values( ).length ) )
         {
-            return values(  )[nId];
+            return values( ) [nId];
         }
 
         return SELF;

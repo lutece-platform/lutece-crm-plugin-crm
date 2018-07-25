@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crm.business.demand;
 
 import fr.paris.lutece.test.LuteceTestCase;
 
-
 /**
  *
  * DemandStatusCRMTest
@@ -48,10 +47,10 @@ public class DemandStatusCRMTest extends LuteceTestCase
     /**
      * Test business of class fr.paris.lutece.plugins.crm.business.demand.DemandStatusCRM
      */
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Test finders
         DemandStatusCRMHome.find( ID_STATUS_CRM );
-        DemandStatusCRMHome.findAll(  );
+        DemandStatusCRMHome.findAll( );
     }
 }

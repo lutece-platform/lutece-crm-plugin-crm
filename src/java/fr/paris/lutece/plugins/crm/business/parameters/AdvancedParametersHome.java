@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 /**
  * The Class AdvancedParametersHome.
  */
@@ -51,14 +50,15 @@ public final class AdvancedParametersHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private AdvancedParametersHome(  )
+    private AdvancedParametersHome( )
     {
     }
 
     /**
      * Get the String strValue of a parameter.
      *
-     * @param strKey the str key
+     * @param strKey
+     *            the str key
      * @return the string strValue
      */
     public static String getParameterStringValueByKey( String strKey )
@@ -69,8 +69,10 @@ public final class AdvancedParametersHome
     /**
      * Modify the String strValue of a parameter.
      *
-     * @param strKey the str key
-     * @param strValue the strValue
+     * @param strKey
+     *            the str key
+     * @param strValue
+     *            the strValue
      */
     public static void modifyParameterStringValueByKey( String strKey, String strValue )
     {

@@ -40,7 +40,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 
-
 /**
  *
  * MokeNotification
@@ -54,16 +53,18 @@ public class MokeNotification extends Notification
     private static final String MESSAGE = "Message";
     private static final String OBJECT = "Object";
     private static final String SENDER = "Sender";
-    private static Locale _locale = Locale.getDefault(  );
+    private static Locale _locale = Locale.getDefault( );
 
     /**
      * Constructor
-     * @param nIdNotification the id notification
+     * 
+     * @param nIdNotification
+     *            the id notification
      */
     public MokeNotification( int nIdNotification )
     {
         Date date = DateUtil.formatDateLongYear( DATE, _locale );
-        Timestamp dateCreation = new Timestamp( date.getTime(  ) );
+        Timestamp dateCreation = new Timestamp( date.getTime( ) );
 
         setIdNotification( nIdNotification );
         setIdDemand( ID_DEMAND );

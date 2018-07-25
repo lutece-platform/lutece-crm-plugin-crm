@@ -39,7 +39,6 @@ import java.sql.Timestamp;
 
 import java.util.Map;
 
-
 /**
  *
  * CRMUser
@@ -50,8 +49,8 @@ public class CRMUser
     public static final Timestamp DEFAULT_DATE_LAST_LOGIN = Timestamp.valueOf( "1980-01-01 00:00:00" );
 
     /**
-    * Status of not activated users.
-    */
+     * Status of not activated users.
+     */
     public static final int STATUS_NOT_ACTIVATED = 0;
 
     /**
@@ -77,7 +76,9 @@ public class CRMUser
 
     /**
      * Set the id crm user
-     * @param nIdCRMUser the id crm user
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
      */
     public void setIdCRMUser( int nIdCRMUser )
     {
@@ -86,16 +87,19 @@ public class CRMUser
 
     /**
      * Get the id crm user
+     * 
      * @return the id crm user
      */
-    public int getIdCRMUser(  )
+    public int getIdCRMUser( )
     {
         return _nIdCRMUser;
     }
 
     /**
      * Set the user guid
-     * @param strUserGuid the user guid
+     * 
+     * @param strUserGuid
+     *            the user guid
      */
     public void setUserGuid( String strUserGuid )
     {
@@ -104,16 +108,19 @@ public class CRMUser
 
     /**
      * Get the user guid
+     * 
      * @return the user guid
      */
-    public String getUserGuid(  )
+    public String getUserGuid( )
     {
         return _strUserGuid;
     }
 
     /**
      * Set the user attributes
-     * @param userInfos the user attributes
+     * 
+     * @param userInfos
+     *            the user attributes
      */
     public void setUserAttributes( Map<String, String> userInfos )
     {
@@ -122,16 +129,19 @@ public class CRMUser
 
     /**
      * Get the user attributes
+     * 
      * @return the user attributes
      */
-    public Map<String, String> getUserAttributes(  )
+    public Map<String, String> getUserAttributes( )
     {
         return _userInfos;
     }
 
     /**
      * Get the user attribute value
-     * @param strUserAttributeKey the key
+     * 
+     * @param strUserAttributeKey
+     *            the key
      * @return the user attribute value
      */
     public String getUserAttributeValue( String strUserAttributeKey )
@@ -148,16 +158,19 @@ public class CRMUser
 
     /**
      * Get the status of the user
+     * 
      * @return The status of the user
      */
-    public int getStatus(  )
+    public int getStatus( )
     {
         return _nStatus;
     }
 
     /**
      * Set the status of the user
-     * @param nStatus The status of the user
+     * 
+     * @param nStatus
+     *            The status of the user
      */
     public void setStatus( int nStatus )
     {
@@ -166,9 +179,10 @@ public class CRMUser
 
     /**
      * Check if the user is active
+     * 
      * @return true if it is active, false otherwise
      */
-    public boolean isActive(  )
+    public boolean isActive( )
     {
         return ( ( _nStatus >= STATUS_ACTIVATED ) && ( _nStatus < STATUS_EXPIRED ) );
     }
@@ -178,25 +192,26 @@ public class CRMUser
      *
      * @return true, if is anonymized
      */
-    public boolean isAnonymized(  )
+    public boolean isAnonymized( )
     {
         return _nStatus == STATUS_ANONYMIZED;
     }
 
     /**
      * Get the last login date of the user
-     * @return The last login date of the user. The last login date is null if
-     *         the user never logged in before.
+     * 
+     * @return The last login date of the user. The last login date is null if the user never logged in before.
      */
-    public Timestamp getDateLastLogin(  )
+    public Timestamp getDateLastLogin( )
     {
         return _dateLastLogin;
     }
 
     /**
      * Set the last login date of the user
-     * @param dateLastLogin The last login date of the user, or null if the user
-     *            never logged in.
+     * 
+     * @param dateLastLogin
+     *            The last login date of the user, or null if the user never logged in.
      */
     public void setDateLastLogin( Timestamp dateLastLogin )
     {
@@ -207,15 +222,18 @@ public class CRMUser
      * 
      * @return true if the user information must be updated
      */
-	public boolean isMustBeUpdated() {
-		return _bMustBeUpdated;
-	}
-	
-	/**
-	 * 
-	 * @param _bMustBeUpdated true if the user information must be updated
-	 */
-	public void setMustBeUpdated(boolean _bMustBeUpdated) {
-		this._bMustBeUpdated = _bMustBeUpdated;
-	}
+    public boolean isMustBeUpdated( )
+    {
+        return _bMustBeUpdated;
+    }
+
+    /**
+     * 
+     * @param _bMustBeUpdated
+     *            true if the user information must be updated
+     */
+    public void setMustBeUpdated( boolean _bMustBeUpdated )
+    {
+        this._bMustBeUpdated = _bMustBeUpdated;
+    }
 }

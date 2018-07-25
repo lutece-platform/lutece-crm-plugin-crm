@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  *
  * DemandStatusCRMHome
@@ -55,13 +54,15 @@ public final class DemandStatusCRMHome
     /**
      * Private constructor
      */
-    private DemandStatusCRMHome(  )
+    private DemandStatusCRMHome( )
     {
     }
 
     /**
      * Load a status
-     * @param nIdStatusCRM the id status
+     * 
+     * @param nIdStatusCRM
+     *            the id status
      * @return the {@link DemandeStatusCRM}
      */
     public static DemandStatusCRM find( int nIdStatusCRM )
@@ -71,9 +72,10 @@ public final class DemandStatusCRMHome
 
     /**
      * Load all satus CRM
+     * 
      * @return a list of {@link DemandStatusCRM}
      */
-    public static List<DemandStatusCRM> findAll(  )
+    public static List<DemandStatusCRM> findAll( )
     {
         return _dao.selectAll( _plugin );
     }

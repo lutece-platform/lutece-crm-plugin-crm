@@ -41,7 +41,6 @@ import fr.paris.lutece.util.ReferenceList;
 
 import java.util.List;
 
-
 /**
  *
  * DemandTypeHome
@@ -56,22 +55,25 @@ public final class DemandTypeHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DemandTypeHome(  )
+    private DemandTypeHome( )
     {
     }
 
     /**
      * Generates a new primary key
+     * 
      * @return The new primary key
      */
-    public static int newPrimaryKey(  )
+    public static int newPrimaryKey( )
     {
         return _dao.newPrimaryKey( _plugin );
     }
 
     /**
      * Insert a new record in the table.
-     * @param demandType instance of the DemandType object to insert
+     * 
+     * @param demandType
+     *            instance of the DemandType object to insert
      * @return the key of the newly created demandType
      */
     public static int create( DemandType demandType )
@@ -81,7 +83,9 @@ public final class DemandTypeHome
 
     /**
      * Update the record in the table
-     * @param demandType the reference of the demandType
+     * 
+     * @param demandType
+     *            the reference of the demandType
      */
     public static void update( DemandType demandType )
     {
@@ -90,7 +94,9 @@ public final class DemandTypeHome
 
     /**
      * Delete a record from the table
-     * @param nIdDemandType int identifier of the demandType to delete
+     * 
+     * @param nIdDemandType
+     *            int identifier of the demandType to delete
      */
     public static void remove( int nIdDemandType )
     {
@@ -99,7 +105,9 @@ public final class DemandTypeHome
 
     /**
      * Load the data from the table
-     * @param nIdDemandType The identifier of the demandType
+     * 
+     * @param nIdDemandType
+     *            The identifier of the demandType
      * @return The instance of the demandType
      */
     public static DemandType findByPrimaryKey( int nIdDemandType )
@@ -109,7 +117,9 @@ public final class DemandTypeHome
 
     /**
      * Find the demandType by its order
-     * @param nOrder the order
+     * 
+     * @param nOrder
+     *            the order
      * @return a {@link DemandType}
      */
     public static DemandType findByOrder( int nOrder )
@@ -119,17 +129,21 @@ public final class DemandTypeHome
 
     /**
      * Find all demandTypes
+     * 
      * @return a list of {@link DemandType}
      */
-    public static List<DemandType> findAll(  )
+    public static List<DemandType> findAll( )
     {
         return _dao.selectAll( _plugin );
     }
 
     /**
      * Find the list of demandTypes by id category and date
-     * @param nIdCategory the ID category
-     * @param dateToday the date of today
+     * 
+     * @param nIdCategory
+     *            the ID category
+     * @param dateToday
+     *            the date of today
      * @return a list of {@link DemandType}
      */
     public static List<DemandType> findByIdCategoryAndDate( int nIdCategory, java.util.Date dateToday )
@@ -139,15 +153,16 @@ public final class DemandTypeHome
 
     /**
      * Find all demandTypes as a {@link ReferenceList}
+     * 
      * @return a {@link ReferenceList}
      */
-    public static ReferenceList findDemandTypes(  )
+    public static ReferenceList findDemandTypes( )
     {
-        ReferenceList list = new ReferenceList(  );
+        ReferenceList list = new ReferenceList( );
 
         for ( DemandType demandType : _dao.selectAll( _plugin ) )
         {
-            list.addItem( demandType.getIdDemandType(  ), demandType.getLabel(  ) );
+            list.addItem( demandType.getIdDemandType( ), demandType.getLabel( ) );
         }
 
         return list;
@@ -155,16 +170,19 @@ public final class DemandTypeHome
 
     /**
      * Find the max order
+     * 
      * @return the max order
      */
-    public static int findMaxOrder(  )
+    public static int findMaxOrder( )
     {
         return _dao.selectMaxOrder( _plugin );
     }
 
     /**
      * Find by filter
-     * @param dtFilter the filter
+     * 
+     * @param dtFilter
+     *            the filter
      * @return a list of {@link DemandType}
      */
     public static List<DemandType> findByFilter( DemandTypeFilter dtFilter )
@@ -174,9 +192,10 @@ public final class DemandTypeHome
 
     /**
      * Find demand types that have not a date end
+     * 
      * @return a list of {@link DemandType}
      */
-    public static List<DemandType> findNoDateEndDemandTypes(  )
+    public static List<DemandType> findNoDateEndDemandTypes( )
     {
         return _dao.selectNoDateEndDemandTypes( _plugin );
     }

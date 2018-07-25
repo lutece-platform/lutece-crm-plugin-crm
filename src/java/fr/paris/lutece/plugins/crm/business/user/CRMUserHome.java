@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  *
  * CRMUserHome
@@ -55,22 +54,25 @@ public final class CRMUserHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private CRMUserHome(  )
+    private CRMUserHome( )
     {
     }
 
     /**
      * Generates a new primary key
+     * 
      * @return The new primary key
      */
-    public static int newPrimaryKey(  )
+    public static int newPrimaryKey( )
     {
         return _dao.newPrimaryKey( _plugin );
     }
 
     /**
      * Insert a new record in the table.
-     * @param user instance of the CRMUser object to insert
+     * 
+     * @param user
+     *            instance of the CRMUser object to insert
      * @return the key of the newly created notification
      */
     public static int create( CRMUser user )
@@ -80,7 +82,9 @@ public final class CRMUserHome
 
     /**
      * Update the record in the table
-     * @param user the reference of the CRMUser
+     * 
+     * @param user
+     *            the reference of the CRMUser
      */
     public static void update( CRMUser user )
     {
@@ -89,7 +93,9 @@ public final class CRMUserHome
 
     /**
      * Delete a record from the table
-     * @param nIdCRMUser int identifier of the CRMUser to delete
+     * 
+     * @param nIdCRMUser
+     *            int identifier of the CRMUser to delete
      */
     public static void remove( int nIdCRMUser )
     {
@@ -98,7 +104,9 @@ public final class CRMUserHome
 
     /**
      * Load the data from the table
-     * @param nIdCRMUser The identifier of the CRMUser
+     * 
+     * @param nIdCRMUser
+     *            The identifier of the CRMUser
      * @return The instance of the CRMUser
      */
     public static CRMUser findByPrimaryKey( int nIdCRMUser )
@@ -108,7 +116,9 @@ public final class CRMUserHome
 
     /**
      * Load the data from a given user guid
-     * @param strUserGuid The user guid
+     * 
+     * @param strUserGuid
+     *            The user guid
      * @return The instance of the CRMUser
      */
     public static CRMUser findByUserGuid( String strUserGuid )
@@ -121,7 +131,7 @@ public final class CRMUserHome
      *
      * @return The instance of the CRMUser
      */
-    public static List<CRMUser> findAll(  )
+    public static List<CRMUser> findAll( )
     {
         return _dao.selectAll( _plugin );
     }
@@ -129,7 +139,8 @@ public final class CRMUserHome
     /**
      * Find list ids crm user by filter.
      *
-     * @param filter the filter
+     * @param filter
+     *            the filter
      * @return the list
      */
     public static List<Integer> findListIdsCRMUserByFilter( CRMUserFilter filter )
@@ -140,7 +151,8 @@ public final class CRMUserHome
     /**
      * Find by list ids.
      *
-     * @param listIdsCRMUser the list ids crm user
+     * @param listIdsCRMUser
+     *            the list ids crm user
      * @return the list
      */
     public static List<CRMUser> findByListIds( List<Integer> listIdsCRMUser )

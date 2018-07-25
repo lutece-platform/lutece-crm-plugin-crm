@@ -43,7 +43,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  *
  * NotificationService
@@ -56,22 +55,25 @@ public class NotificationService
     /**
      * Constructor
      */
-    protected NotificationService(  )
+    protected NotificationService( )
     {
     }
 
     /**
      * Get the instance of {@link NotificationService}
+     * 
      * @return the instance of {@link NotificationService}
      */
-    public static NotificationService getService(  )
+    public static NotificationService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_NOTIFICATIONSERVICE );
     }
 
     /**
      * Find the notification by its primary key
-     * @param nIdNotification the id notification
+     * 
+     * @param nIdNotification
+     *            the id notification
      * @return a {@link Notification}
      */
     public Notification findByPrimaryKey( int nIdNotification )
@@ -81,7 +83,9 @@ public class NotificationService
 
     /**
      * Create a notification
-     * @param notification the notification
+     * 
+     * @param notification
+     *            the notification
      * @return the newly created notification id
      */
     public int create( Notification notification )
@@ -91,7 +95,7 @@ public class NotificationService
         if ( notification != null )
         {
             notification.setIsRead( false );
-            notification.setDateCreation( new Timestamp( new Date(  ).getTime(  ) ) );
+            notification.setDateCreation( new Timestamp( new Date( ).getTime( ) ) );
             nNewPrimaryKey = NotificationHome.create( notification );
         }
 
@@ -100,7 +104,9 @@ public class NotificationService
 
     /**
      * Update the notification
-     * @param notification the notification
+     * 
+     * @param notification
+     *            the notification
      */
     public void update( Notification notification )
     {
@@ -112,7 +118,9 @@ public class NotificationService
 
     /**
      * Remove the notification
-     * @param nIdNotification the id notification
+     * 
+     * @param nIdNotification
+     *            the id notification
      */
     public void remove( int nIdNotification )
     {
@@ -121,7 +129,9 @@ public class NotificationService
 
     /**
      * Remove the notifications from a given ID demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public void removeByIdDemand( int nIdDemand )
     {
@@ -130,16 +140,19 @@ public class NotificationService
 
     /**
      * Find all notifications
+     * 
      * @return a list of {@link Notification}
      */
-    public List<Notification> findAll(  )
+    public List<Notification> findAll( )
     {
-        return NotificationHome.findAll(  );
+        return NotificationHome.findAll( );
     }
 
     /**
      * Find notifications by a filter
-     * @param nFilter the filter
+     * 
+     * @param nFilter
+     *            the filter
      * @return a list of {@link Notification}
      */
     public List<Notification> findByFilter( NotificationFilter nFilter )
@@ -149,32 +162,36 @@ public class NotificationService
 
     /**
      * Get the number of unread notifications of a demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      * @return the number of unread notifications
      */
     public int getNumberUnreadNotifications( int nIdDemand )
     {
-        NotificationFilter nFilter = new NotificationFilter(  );
+        NotificationFilter nFilter = new NotificationFilter( );
         nFilter.setIdDemand( nIdDemand );
         nFilter.setIsRead( false );
 
         List<Notification> listNotifications = NotificationHome.findByFilter( nFilter );
 
-        return listNotifications.size(  );
+        return listNotifications.size( );
     }
 
     /**
      * Get the number of notifications of a demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      * @return the number of notifications
      */
     public int getNumberNotifications( int nIdDemand )
     {
-        NotificationFilter nFilter = new NotificationFilter(  );
+        NotificationFilter nFilter = new NotificationFilter( );
         nFilter.setIdDemand( nIdDemand );
 
         List<Notification> listNotifications = NotificationHome.findByFilter( nFilter );
 
-        return listNotifications.size(  );
+        return listNotifications.size( );
     }
 }

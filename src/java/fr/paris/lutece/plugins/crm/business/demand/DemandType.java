@@ -49,7 +49,6 @@ import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupResource;
 import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-
 /**
  *
  * DemandType
@@ -58,12 +57,12 @@ import fr.paris.lutece.util.xml.XmlUtil;
 public class DemandType implements AdminWorkgroupResource
 {
     public static final String ROLE_NONE = "none";
-    
-    @JsonProperty("id_demand_type")
+
+    @JsonProperty( "id_demand_type" )
     private int _nIdDemandType;
-    @JsonProperty("label")
+    @JsonProperty( "label" )
     private String _strLabel;
-    @JsonProperty("url")
+    @JsonProperty( "url" )
     private String _strUrlResource;
     @JsonIgnore
     private String _strUrlInfo;
@@ -95,7 +94,7 @@ public class DemandType implements AdminWorkgroupResource
     /**
      * Constructor
      */
-    public DemandType(  )
+    public DemandType( )
     {
         _nIdDemandType = 0;
         _strLabel = StringUtils.EMPTY;
@@ -108,27 +107,30 @@ public class DemandType implements AdminWorkgroupResource
         _strRoleKey = StringUtils.EMPTY;
         _target = TargetEnum.SELF;
         _strUrlDelete = StringUtils.EMPTY;
-        _bIncludeIdCrmUser=false;
-        _bNeedAuthentication=false;
-        _bNeedValidation=false;
-       
+        _bIncludeIdCrmUser = false;
+        _bNeedAuthentication = false;
+        _bNeedValidation = false;
+
     }
 
     /**
      * Get the id demand type
+     * 
      * @return the id demand type
      */
-    @JsonProperty("id_demand_type")
-    public int getIdDemandType(  )
+    @JsonProperty( "id_demand_type" )
+    public int getIdDemandType( )
     {
         return _nIdDemandType;
     }
 
     /**
      * Set the id demand type
-     * @param nIdDemandType the id deman type
+     * 
+     * @param nIdDemandType
+     *            the id deman type
      */
-    @JsonProperty("id_demand_type")
+    @JsonProperty( "id_demand_type" )
     public void setIdDemandType( int nIdDemandType )
     {
         _nIdDemandType = nIdDemandType;
@@ -136,17 +138,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the label
+     * 
      * @return the label
      */
-    @JsonProperty("label")
-    public String getLabel(  )
+    @JsonProperty( "label" )
+    public String getLabel( )
     {
         return _strLabel;
     }
 
     /**
      * Set the label
-     * @param strLabel the label
+     * 
+     * @param strLabel
+     *            the label
      */
     public void setLabel( String strLabel )
     {
@@ -155,19 +160,21 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the url of the resource
+     * 
      * @return the url of the resource
      */
-        
-    
-    @JsonProperty("url")
-    public String getUrlResource(  )
+
+    @JsonProperty( "url" )
+    public String getUrlResource( )
     {
         return _strUrlResource;
     }
 
     /**
      * Set the url of the form
-     * @param strUrlResource the url of the form
+     * 
+     * @param strUrlResource
+     *            the url of the form
      */
     public void setUrlResource( String strUrlResource )
     {
@@ -176,17 +183,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the url of the information
+     * 
      * @return the url of the information
      */
     @JsonIgnore
-    public String getUrlInfo(  )
+    public String getUrlInfo( )
     {
         return _strUrlInfo;
     }
 
     /**
      * Set the url of the information
-     * @param strUrlInfo the url of the information
+     * 
+     * @param strUrlInfo
+     *            the url of the information
      */
     public void setUrlInfo( String strUrlInfo )
     {
@@ -195,17 +205,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the url of the contact
+     * 
      * @return the url of the contact
      */
     @JsonIgnore
-    public String getUrlContact(  )
+    public String getUrlContact( )
     {
         return _strUrlContact;
     }
 
     /**
      * Set the url of the contact
-     * @param strUrlContact the url of the contact
+     * 
+     * @param strUrlContact
+     *            the url of the contact
      */
     @JsonIgnore
     public void setUrlContact( String strUrlContact )
@@ -215,17 +228,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the order
+     * 
      * @return the order
      */
     @JsonIgnore
-    public int getOrder(  )
+    public int getOrder( )
     {
         return _nOrder;
     }
 
     /**
      * Set the order
-     * @param nOrder the order
+     * 
+     * @param nOrder
+     *            the order
      */
     public void setOrder( int nOrder )
     {
@@ -234,17 +250,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the id category
+     * 
      * @return the ID category
      */
     @JsonIgnore
-    public int getIdCategory(  )
+    public int getIdCategory( )
     {
         return _nIdCategory;
     }
 
     /**
      * Set the ID category
-     * @param nIdCategory the id category
+     * 
+     * @param nIdCategory
+     *            the id category
      */
     public void setIdCategory( int nIdCategory )
     {
@@ -253,17 +272,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the beginning date
+     * 
      * @return the beginning date
      */
     @JsonIgnore
-    public Date getDateBegin(  )
+    public Date getDateBegin( )
     {
         return _dateBegin;
     }
 
     /**
      * Set the beginning date
-     * @param dateBegin the beginning date
+     * 
+     * @param dateBegin
+     *            the beginning date
      */
     public void setDateBegin( Date dateBegin )
     {
@@ -272,17 +294,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the closing date
+     * 
      * @return the closing date
      */
     @JsonIgnore
-    public Date getDateEnd(  )
+    public Date getDateEnd( )
     {
         return _dateEnd;
     }
 
     /**
      * Set the closing date
-     * @param dateEnd the closing date
+     * 
+     * @param dateEnd
+     *            the closing date
      */
     public void setDateEnd( Date dateEnd )
     {
@@ -291,7 +316,9 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Set the workgroup
-     * @param strWorkgroupKey the workgroup key
+     * 
+     * @param strWorkgroupKey
+     *            the workgroup key
      */
     public void setWorkgroup( String strWorkgroupKey )
     {
@@ -300,17 +327,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the workgroup key
+     * 
      * @return the workgroup key
      */
     @JsonIgnore
-    public String getWorkgroup(  )
+    public String getWorkgroup( )
     {
         return _strWorkgroupKey;
     }
 
     /**
      * Set the role
-     * @param strRoleKey the role key
+     * 
+     * @param strRoleKey
+     *            the role key
      */
     public void setRole( String strRoleKey )
     {
@@ -319,24 +349,26 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get the role
+     * 
      * @return the role key
      */
     @JsonIgnore
-    public String getRole(  )
+    public String getRole( )
     {
         return _strRoleKey;
     }
 
     /**
      * Check if the demand type is open or not
+     * 
      * @return true if it is open, false otherwise
      */
     @JsonIgnore
-    public boolean isOpen(  )
+    public boolean isOpen( )
     {
         boolean bIsDateBeginCorrect = false;
         boolean bIsDateEndCorrect = false;
-        Date dateToday = new Date(  );
+        Date dateToday = new Date( );
 
         if ( _dateBegin != null )
         {
@@ -367,17 +399,20 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Check if the demand type is closed
+     * 
      * @return true if it is closed, false otherwise
      */
     @JsonIgnore
-    public boolean isClosed(  )
+    public boolean isClosed( )
     {
-        return !isOpen(  );
+        return !isOpen( );
     }
 
     /**
      * Set target
-     * @param target the target
+     * 
+     * @param target
+     *            the target
      */
     public void setTarget( TargetEnum target )
     {
@@ -386,122 +421,126 @@ public class DemandType implements AdminWorkgroupResource
 
     /**
      * Get target
+     * 
      * @return the target
      */
     @JsonIgnore
-    public TargetEnum getTarget(  )
+    public TargetEnum getTarget( )
     {
         return _target;
     }
 
     /**
      * Get the url to delete the demand
+     * 
      * @return the url to delete the demand
      */
     @JsonIgnore
-    public String getUrlDelete(  )
+    public String getUrlDelete( )
     {
         return _strUrlDelete;
     }
 
     /**
      * Set the url to delete the demand
-     * @param strUrlDelete the url to delete the demand
+     * 
+     * @param strUrlDelete
+     *            the url to delete the demand
      */
     public void setUrlDelete( String strUrlDelete )
     {
         _strUrlDelete = strUrlDelete;
     }
-    
-    
+
     /**
      * Returns the xml of this Demande Type
      *
-     * @param request The HTTP Servlet request
-     * @param locale the Locale
+     * @param request
+     *            The HTTP Servlet request
+     * @param locale
+     *            the Locale
      * @return the xml of this Demande Type
      */
     @JsonIgnore
     public String getXml( HttpServletRequest request, Locale locale )
     {
-        StringBuffer strXml = new StringBuffer(  );
+        StringBuffer strXml = new StringBuffer( );
         XmlUtil.beginElement( strXml, CRMConstants.TAG_DEMAND_TYPE );
-        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_ID,_nIdDemandType );
-        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_CATEGORY,_nIdCategory );
+        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_ID, _nIdDemandType );
+        XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_CATEGORY, _nIdCategory );
         XmlUtil.addElement( strXml, CRMConstants.TAG_DEMAND_TYPE_ORDER, _nOrder );
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_LABEL,_strLabel  );
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_RESOURCE,_strUrlResource);
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_INFO,_strUrlInfo);
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_CONTACT,_strUrlContact);
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_TARGET,_target.toString());
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_DELETE,_strUrlDelete);
-        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_DATE_BEGIN, _dateBegin !=null ?DateUtil.getDateString(_dateBegin,locale):null);
-        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_DATE_END, _dateEnd !=null ?DateUtil.getDateString(_dateEnd,locale):null);
-        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_NEED_AUTHENTICATION, new Boolean(_bNeedAuthentication).toString());
-        CrmUtils.addElementHtml(strXml,CRMConstants.TAG_DEMAND_TYPE_NEED_VALIDATION, new Boolean(_bNeedValidation).toString());
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_LABEL, _strLabel );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_RESOURCE, _strUrlResource );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_INFO, _strUrlInfo );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_CONTACT, _strUrlContact );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_TARGET, _target.toString( ) );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_URL_DELETE, _strUrlDelete );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_DATE_BEGIN, _dateBegin != null ? DateUtil.getDateString( _dateBegin, locale ) : null );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_DATE_END, _dateEnd != null ? DateUtil.getDateString( _dateEnd, locale ) : null );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_NEED_AUTHENTICATION, new Boolean( _bNeedAuthentication ).toString( ) );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_DEMAND_TYPE_NEED_VALIDATION, new Boolean( _bNeedValidation ).toString( ) );
         XmlUtil.endElement( strXml, CRMConstants.TAG_DEMAND_TYPE );
-        return strXml.toString(  );
+        return strXml.toString( );
     }
 
     /**
-     * 		
-     * @return true if the crm user id must be added to the list of _strUrlResource parameters 
+     * 
+     * @return true if the crm user id must be added to the list of _strUrlResource parameters
      */
     @JsonIgnore
-	public boolean isIncludeIdCrmUser() {
-		return _bIncludeIdCrmUser;
-	}
+    public boolean isIncludeIdCrmUser( )
+    {
+        return _bIncludeIdCrmUser;
+    }
 
-	
-	/**
-	 * 
-	 * @param _bUseIdCrmUser true if the crm user id must be added to the list of _strUrlResource parameters
-	 */
-	public void setIncludeIdCrmUser(boolean _bUseIdCrmUser) {
-		this._bIncludeIdCrmUser = _bUseIdCrmUser;
-	}
+    /**
+     * 
+     * @param _bUseIdCrmUser
+     *            true if the crm user id must be added to the list of _strUrlResource parameters
+     */
+    public void setIncludeIdCrmUser( boolean _bUseIdCrmUser )
+    {
+        this._bIncludeIdCrmUser = _bUseIdCrmUser;
+    }
 
-	/**
-	 * 
-	 * @return true if the demand type need authentication access
-	 */
-        @JsonIgnore
-	public boolean isNeedAuthentication() {
-		return _bNeedAuthentication;
-	}
+    /**
+     * 
+     * @return true if the demand type need authentication access
+     */
+    @JsonIgnore
+    public boolean isNeedAuthentication( )
+    {
+        return _bNeedAuthentication;
+    }
 
-	/**
-	 * 
-	 * @param _bNeedAuthentication true if the demand type need authentication access
-	 */
-	public void setNeedAuthentication(boolean _bNeedAuthentication) {
-		this._bNeedAuthentication = _bNeedAuthentication;
-	}
-    
-    
-	
-	/**
-	 * 
-	 * @return true if the demand type need validation access
-	 */
-        @JsonIgnore
-	public boolean isNeedValidation(){
-		return _bNeedValidation;
-	}
+    /**
+     * 
+     * @param _bNeedAuthentication
+     *            true if the demand type need authentication access
+     */
+    public void setNeedAuthentication( boolean _bNeedAuthentication )
+    {
+        this._bNeedAuthentication = _bNeedAuthentication;
+    }
 
-	/**
-	 * 
-	 * @param _bNeedAuthentication true if the demand type need validation access
-	 */
-	public void setNeedValidation(boolean _bNeedValidation) {
-		this._bNeedValidation = _bNeedValidation;
-	}
-    
-    
-    
-    
-   
-    
-    
-    
+    /**
+     * 
+     * @return true if the demand type need validation access
+     */
+    @JsonIgnore
+    public boolean isNeedValidation( )
+    {
+        return _bNeedValidation;
+    }
+
+    /**
+     * 
+     * @param _bNeedAuthentication
+     *            true if the demand type need validation access
+     */
+    public void setNeedValidation( boolean _bNeedValidation )
+    {
+        this._bNeedValidation = _bNeedValidation;
+    }
+
 }

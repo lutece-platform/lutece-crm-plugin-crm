@@ -38,14 +38,12 @@ import fr.paris.lutece.portal.business.portlet.PortletHome;
 import fr.paris.lutece.portal.business.portlet.PortletTypeHome;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 /**
- * This class provides instances management methods for DemandTypePortletHome
- * objects
+ * This class provides instances management methods for DemandTypePortletHome objects
  */
 public class DemandTypePortletHome extends PortletHome
 {
-    /////////////////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////////
     // Constants
     // Static variable pointed at the DAO instance
     private static IDemandTypePortletDAO _dao = SpringContextService.getBean( "crm.demandTypePortletDAO" );
@@ -56,7 +54,7 @@ public class DemandTypePortletHome extends PortletHome
     /**
      * Constructor
      */
-    public DemandTypePortletHome(  )
+    public DemandTypePortletHome( )
     {
         if ( _singleton == null )
         {
@@ -69,11 +67,11 @@ public class DemandTypePortletHome extends PortletHome
      *
      * @return the DemandTypePortletHome instance
      */
-    public static DemandTypePortletHome getInstance(  )
+    public static DemandTypePortletHome getInstance( )
     {
         if ( _singleton == null )
         {
-            _singleton = new DemandTypePortletHome(  );
+            _singleton = new DemandTypePortletHome( );
         }
 
         return _singleton;
@@ -84,9 +82,9 @@ public class DemandTypePortletHome extends PortletHome
      *
      * @return the portlet type identifier
      */
-    public String getPortletTypeId(  )
+    public String getPortletTypeId( )
     {
-        String strCurrentClassName = this.getClass(  ).getName(  );
+        String strCurrentClassName = this.getClass( ).getName( );
         String strPortletTypeId = PortletTypeHome.getPortletTypeId( strCurrentClassName );
 
         return strPortletTypeId;
@@ -97,19 +95,20 @@ public class DemandTypePortletHome extends PortletHome
      *
      * @return the instance of the DAO singleton
      */
-    public IPortletInterfaceDAO getDAO(  )
+    public IPortletInterfaceDAO getDAO( )
     {
         return _dao;
     }
 
-   
     /**
-     * return number of portlet who are associate to the id  of demand type  category
-     * @param nIdForm the id  of demand type  category
-     * @return number of form portlet who are associate  demand type  category
+     * return number of portlet who are associate to the id of demand type category
+     * 
+     * @param nIdForm
+     *            the id of demand type category
+     * @return number of form portlet who are associate demand type category
      */
     public static int getCountPortletByIdCategory( int nIdCategory )
     {
-        return _dao.selectCountPortletByIdCategory(nIdCategory);
+        return _dao.selectCountPortletByIdCategory( nIdCategory );
     }
 }

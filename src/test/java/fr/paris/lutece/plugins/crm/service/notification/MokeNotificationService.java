@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  *
  * MokeNotificationService
@@ -56,8 +55,8 @@ public class MokeNotificationService extends NotificationService
     private static final int ID_NOTIFICATION2 = 2;
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public Notification findByPrimaryKey( int strIdNotification )
     {
         Notification notification = new MokeNotification( ID_NOTIFICATION1 );
@@ -73,11 +72,11 @@ public class MokeNotificationService extends NotificationService
     {
         notification.setIdNotification( ID_NOTIFICATION1 );
         notification.setIsRead( false );
-        notification.setDateCreation( new Timestamp( new Date(  ).getTime(  ) ) );
+        notification.setDateCreation( new Timestamp( new Date( ).getTime( ) ) );
 
         System.out.println( trace( notification ) );
 
-        return notification.getIdNotification(  );
+        return notification.getIdNotification( );
     }
 
     /**
@@ -87,7 +86,7 @@ public class MokeNotificationService extends NotificationService
     {
         if ( notification != null )
         {
-            notification.setDateCreation( new Timestamp( new Date(  ).getTime(  ) ) );
+            notification.setDateCreation( new Timestamp( new Date( ).getTime( ) ) );
         }
 
         System.out.println( trace( notification ) );
@@ -98,7 +97,7 @@ public class MokeNotificationService extends NotificationService
      */
     public void remove( int nIdNotification )
     {
-        System.out.println( trace(  ) );
+        System.out.println( trace( ) );
     }
 
     /**
@@ -106,15 +105,15 @@ public class MokeNotificationService extends NotificationService
      */
     public void removeByIdDemand( int nIdDemand )
     {
-        System.out.println( trace(  ) );
+        System.out.println( trace( ) );
     }
 
     /**
      * {@inheritDoc}
      */
-    public List<Notification> findAll(  )
+    public List<Notification> findAll( )
     {
-        List<Notification> listNotifications = new ArrayList<Notification>(  );
+        List<Notification> listNotifications = new ArrayList<Notification>( );
         listNotifications.add( new MokeNotification( ID_NOTIFICATION1 ) );
         listNotifications.add( new MokeNotification( ID_NOTIFICATION2 ) );
 
@@ -128,7 +127,7 @@ public class MokeNotificationService extends NotificationService
      */
     public List<Notification> findByFilter( NotificationFilter nFilter )
     {
-        List<Notification> listNotifications = new ArrayList<Notification>(  );
+        List<Notification> listNotifications = new ArrayList<Notification>( );
         listNotifications.add( new MokeNotification( ID_NOTIFICATION1 ) );
         listNotifications.add( new MokeNotification( ID_NOTIFICATION2 ) );
 
@@ -142,7 +141,7 @@ public class MokeNotificationService extends NotificationService
      */
     public int getNumberUnreadNotifications( int nIdDemand )
     {
-        NotificationFilter nFilter = new NotificationFilter(  );
+        NotificationFilter nFilter = new NotificationFilter( );
         nFilter.setIdDemand( nIdDemand );
         nFilter.setIsRead( false );
 
@@ -150,7 +149,7 @@ public class MokeNotificationService extends NotificationService
 
         System.out.println( trace( listNotifications ) );
 
-        return listNotifications.size(  );
+        return listNotifications.size( );
     }
 
     /**
@@ -158,33 +157,36 @@ public class MokeNotificationService extends NotificationService
      */
     public int getNumberNotifications( int nIdDemand )
     {
-        NotificationFilter nFilter = new NotificationFilter(  );
+        NotificationFilter nFilter = new NotificationFilter( );
         nFilter.setIdDemand( nIdDemand );
 
         List<Notification> listNotifications = NotificationHome.findByFilter( nFilter );
 
         System.out.println( trace( listNotifications ) );
 
-        return listNotifications.size(  );
+        return listNotifications.size( );
     }
 
     /**
      * Trace
+     * 
      * @return trace
      */
-    private String trace(  )
+    private String trace( )
     {
         return trace( null, null );
     }
 
     /**
      * Trace
-     * @param notification notification
+     * 
+     * @param notification
+     *            notification
      * @return trace
      */
     private String trace( Notification notification )
     {
-        List<Notification> listNotifications = new ArrayList<Notification>(  );
+        List<Notification> listNotifications = new ArrayList<Notification>( );
         listNotifications.add( notification );
 
         return trace( listNotifications, null );
@@ -192,7 +194,9 @@ public class MokeNotificationService extends NotificationService
 
     /**
      * Trace
-     * @param listNotifications the list of notifications
+     * 
+     * @param listNotifications
+     *            the list of notifications
      * @return trace
      */
     private String trace( List<Notification> listNotifications )
@@ -202,39 +206,41 @@ public class MokeNotificationService extends NotificationService
 
     /**
      * Trace
-     * @param listNotifications the list of notifications
+     * 
+     * @param listNotifications
+     *            the list of notifications
      * @return trace
      */
     private String trace( List<Notification> listNotifications, NotificationFilter nFilter )
     {
-        StringBuilder sbTrace = new StringBuilder(  );
+        StringBuilder sbTrace = new StringBuilder( );
         sbTrace.append( "\n ---------------------- Notification Service -------------------" );
-        sbTrace.append( "\nMethod name : " + Thread.currentThread(  ).getStackTrace(  )[2].getMethodName(  ) );
+        sbTrace.append( "\nMethod name : " + Thread.currentThread( ).getStackTrace( ) [2].getMethodName( ) );
 
-        if ( ( listNotifications != null ) && ( listNotifications.size(  ) > 0 ) )
+        if ( ( listNotifications != null ) && ( listNotifications.size( ) > 0 ) )
         {
             for ( Notification notification : listNotifications )
             {
                 sbTrace.append( "\n-- Notification --" );
-                sbTrace.append( "\nid_notification : " + notification.getIdNotification(  ) );
-                sbTrace.append( "\ndate_creation : " + notification.getDateCreation(  ) );
-                sbTrace.append( "\nid_demand : " + notification.getIdDemand(  ) );
-                sbTrace.append( "\nis_read : " + notification.isRead(  ) );
-                sbTrace.append( "\nmessage : " + notification.getMessage(  ) );
-                sbTrace.append( "\nobject : " + notification.getObject(  ) );
-                sbTrace.append( "\nsender : " + notification.getSender(  ) );
+                sbTrace.append( "\nid_notification : " + notification.getIdNotification( ) );
+                sbTrace.append( "\ndate_creation : " + notification.getDateCreation( ) );
+                sbTrace.append( "\nid_demand : " + notification.getIdDemand( ) );
+                sbTrace.append( "\nis_read : " + notification.isRead( ) );
+                sbTrace.append( "\nmessage : " + notification.getMessage( ) );
+                sbTrace.append( "\nobject : " + notification.getObject( ) );
+                sbTrace.append( "\nsender : " + notification.getSender( ) );
             }
         }
 
         if ( nFilter != null )
         {
             sbTrace.append( "\n-- Notification Filter --" );
-            sbTrace.append( "\nid_demand : " + nFilter.getIdDemand(  ) );
-            sbTrace.append( "\nis_wide_search : " + nFilter.getIsWideSearch(  ) );
+            sbTrace.append( "\nid_demand : " + nFilter.getIdDemand( ) );
+            sbTrace.append( "\nis_wide_search : " + nFilter.getIsWideSearch( ) );
         }
 
         sbTrace.append( "\n --------------------------------------------------------------------" );
 
-        return sbTrace.toString(  );
+        return sbTrace.toString( );
     }
 }

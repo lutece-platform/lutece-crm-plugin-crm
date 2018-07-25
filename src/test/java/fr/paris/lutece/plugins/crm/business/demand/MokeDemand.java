@@ -40,7 +40,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 
-
 /**
  *
  * MokeDemand
@@ -54,16 +53,18 @@ public class MokeDemand extends Demand
     private static final int ID_DEMAND_TYPE = 1;
     private static final int ID_STATUS_CRM = 0;
     private static final String STATUS_TEXT = "StatusText";
-    private static Locale _locale = Locale.getDefault(  );
+    private static Locale _locale = Locale.getDefault( );
 
     /**
      * Constructor
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public MokeDemand( int nIdDemand )
     {
         Date date = DateUtil.formatDateLongYear( DATE, _locale );
-        Timestamp dateModification = new Timestamp( date.getTime(  ) );
+        Timestamp dateModification = new Timestamp( date.getTime( ) );
         setIdDemand( nIdDemand );
         setData( DATA + nIdDemand );
         setIdCRMUser( ID_CRM_USER );

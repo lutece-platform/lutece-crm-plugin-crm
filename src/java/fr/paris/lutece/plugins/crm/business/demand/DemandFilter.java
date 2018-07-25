@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  *
  * DemandFilter
@@ -62,7 +61,7 @@ public class DemandFilter
     /**
      * Constructor
      */
-    public DemandFilter(  )
+    public DemandFilter( )
     {
         _bIsWideSearch = false;
         _nIdCRMUser = ALL_INT;
@@ -70,18 +69,19 @@ public class DemandFilter
         _nIdStatusCRM = ALL_INT;
         _operatorDateModification = OperatorEnum.EQUAL;
         _strNotification = StringUtils.EMPTY;
-        _listDemandSort = new ArrayList<DemandSort>(  );
+        _listDemandSort = new ArrayList<DemandSort>( );
     }
 
     /**
-     * Set true if the filter is applied to a wide search.
-     * <br/>
+     * Set true if the filter is applied to a wide search. <br/>
      * In other words, the SQL query will use
      * <ul>
      * <li>SQL <b>OR</b> if it is applied to a wide search</li>
      * <li>SQL <b>AND</b> if it is not applied to a wide search</li>
      * </ul>
-     * @param bIsWideSearch true if it a wide search, false otherwise
+     * 
+     * @param bIsWideSearch
+     *            true if it a wide search, false otherwise
      */
     public void setIsWideSearch( boolean bIsWideSearch )
     {
@@ -89,32 +89,35 @@ public class DemandFilter
     }
 
     /**
-     * Check if the filter is applied to a wide search or not.
-     * <br/>
+     * Check if the filter is applied to a wide search or not. <br/>
      * In other words, the SQL query will use
      * <ul>
      * <li>SQL <b>OR</b> if it is applied to a wide search</li>
      * <li>SQL <b>AND</b> if it is not applied to a wide search</li>
      * </ul>
+     * 
      * @return true if it is applied to a wide search
      */
-    public boolean getIsWideSearch(  )
+    public boolean getIsWideSearch( )
     {
         return _bIsWideSearch;
     }
 
     /**
      * Returns the User crm id
+     * 
      * @return The User crm id
      */
-    public int getIdCRMUser(  )
+    public int getIdCRMUser( )
     {
         return _nIdCRMUser;
     }
 
     /**
      * Sets the User crm id
-     * @param nIdCRMUser The user crm id
+     * 
+     * @param nIdCRMUser
+     *            The user crm id
      */
     public void setIdCRMUser( int nIdCRMUser )
     {
@@ -123,25 +126,29 @@ public class DemandFilter
 
     /**
      * Check if the filter contains the attribute UserGuid
+     * 
      * @return true if it contains, false otherwise
      */
-    public boolean containsIdCRMUser(  )
+    public boolean containsIdCRMUser( )
     {
         return _nIdCRMUser != ALL_INT;
     }
 
     /**
      * Returns the IdDemandType
+     * 
      * @return The IdDemandType
      */
-    public int getIdDemandType(  )
+    public int getIdDemandType( )
     {
         return _nIdDemandType;
     }
 
     /**
      * Sets the nIdDemandType
-     * @param nIdDemandType The nIdDemandType
+     * 
+     * @param nIdDemandType
+     *            The nIdDemandType
      */
     public void setIdDemandType( int nIdDemandType )
     {
@@ -150,16 +157,19 @@ public class DemandFilter
 
     /**
      * Check if the filter contains the attribute ID demand type
+     * 
      * @return true if it contains, false otherwise
      */
-    public boolean containsIdDemandType(  )
+    public boolean containsIdDemandType( )
     {
         return _nIdDemandType != ALL_INT;
     }
 
     /**
      * Set the Modification date
-     * @param dateModification the Modification date
+     * 
+     * @param dateModification
+     *            the Modification date
      */
     public void setDateModification( Date dateModification )
     {
@@ -168,25 +178,29 @@ public class DemandFilter
 
     /**
      * Get the Modification date
+     * 
      * @return the Modification date
      */
-    public Date getDateModification(  )
+    public Date getDateModification( )
     {
         return _dateModification;
     }
 
     /**
-    * Check if the filter contains the attribute date Modification
-    * @return true if it contains, false otherwise
-    */
-    public boolean containsDateModification(  )
+     * Check if the filter contains the attribute date Modification
+     * 
+     * @return true if it contains, false otherwise
+     */
+    public boolean containsDateModification( )
     {
         return _dateModification != null;
     }
 
     /**
      * Set the IdStatusCRM
-     * @param nIdStatusCRM the IdStatusCRM
+     * 
+     * @param nIdStatusCRM
+     *            the IdStatusCRM
      */
     public void setIdStatusCRM( int nIdStatusCRM )
     {
@@ -195,25 +209,29 @@ public class DemandFilter
 
     /**
      * Get the IdStatusCRM
+     * 
      * @return the IdStatusCRM
      */
-    public int getIdStatusCRM(  )
+    public int getIdStatusCRM( )
     {
         return _nIdStatusCRM;
     }
 
     /**
      * Check if the filter contains the attribute IdStatusCRM
+     * 
      * @return true if it contains, false otherwise
      */
-    public boolean containsIdStatusCRM(  )
+    public boolean containsIdStatusCRM( )
     {
         return _nIdStatusCRM != ALL_INT;
     }
 
     /**
      * Set the operator for the modification date
-     * @param operator the operator
+     * 
+     * @param operator
+     *            the operator
      */
     public void setOperatorDateModification( OperatorEnum operator )
     {
@@ -222,18 +240,20 @@ public class DemandFilter
 
     /**
      * Get the operator for the modification date
+     * 
      * @return the operator
      */
-    public OperatorEnum getOperatorDateModification(  )
+    public OperatorEnum getOperatorDateModification( )
     {
         return _operatorDateModification;
     }
 
     /**
      * Get the notification
+     * 
      * @return the notification
      */
-    public String getNotification(  )
+    public String getNotification( )
     {
         return _strNotification;
     }
@@ -249,13 +269,14 @@ public class DemandFilter
     /**
      * @return the listDemandSort
      */
-    public List<DemandSort> getListDemandSort(  )
+    public List<DemandSort> getListDemandSort( )
     {
         return _listDemandSort;
     }
 
     /**
-     * @param listDemandSort the listDemandSort to set
+     * @param listDemandSort
+     *            the listDemandSort to set
      */
     public void setListDemandSort( List<DemandSort> listDemandSort )
     {
@@ -264,7 +285,9 @@ public class DemandFilter
 
     /**
      * Add a sort
-     * @param demandSort the demandSort to add
+     * 
+     * @param demandSort
+     *            the demandSort to add
      */
     public void addDemandSort( DemandSort demandSort )
     {

@@ -39,7 +39,6 @@ import fr.paris.lutece.util.sql.DAOUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 /**
  *
  * This class provides Data Access methods for Category objects
@@ -62,18 +61,18 @@ public final class CategoryDAO implements ICategoryDAO
     public int newPrimaryKey( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nKey;
 
-        if ( !daoUtil.next(  ) )
+        if ( !daoUtil.next( ) )
         {
             // if the table is empty
             nKey = 1;
         }
 
         nKey = daoUtil.getInt( 1 ) + 1;
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -88,14 +87,14 @@ public final class CategoryDAO implements ICategoryDAO
 
         category.setIdCategory( newPrimaryKey( plugin ) );
 
-        daoUtil.setInt( nIndex++, category.getIdCategory(  ) );
-        daoUtil.setString( nIndex++, category.getName(  ) );
-        daoUtil.setString( nIndex++, category.getDescription(  ) );
+        daoUtil.setInt( nIndex++, category.getIdCategory( ) );
+        daoUtil.setString( nIndex++, category.getName( ) );
+        daoUtil.setString( nIndex++, category.getDescription( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
 
-        return category.getIdCategory(  );
+        return category.getIdCategory( );
     }
 
     /**
@@ -105,21 +104,21 @@ public final class CategoryDAO implements ICategoryDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.setInt( 1, nId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Category category = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            category = new Category(  );
+            category = new Category( );
 
             category.setIdCategory( daoUtil.getInt( nIndex++ ) );
             category.setName( daoUtil.getString( nIndex++ ) );
             category.setDescription( daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return category;
     }
@@ -131,8 +130,8 @@ public final class CategoryDAO implements ICategoryDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1, nCategoryId );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -143,13 +142,13 @@ public final class CategoryDAO implements ICategoryDAO
         int nIndex = 1;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
 
-        daoUtil.setInt( nIndex++, category.getIdCategory(  ) );
-        daoUtil.setString( nIndex++, category.getName(  ) );
-        daoUtil.setString( nIndex++, category.getDescription(  ) );
-        daoUtil.setInt( nIndex++, category.getIdCategory(  ) );
+        daoUtil.setInt( nIndex++, category.getIdCategory( ) );
+        daoUtil.setString( nIndex++, category.getName( ) );
+        daoUtil.setString( nIndex++, category.getDescription( ) );
+        daoUtil.setInt( nIndex++, category.getIdCategory( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -157,14 +156,14 @@ public final class CategoryDAO implements ICategoryDAO
      */
     public Collection<Category> selectCategoriesList( Plugin plugin )
     {
-        Collection<Category> categoryList = new ArrayList<Category>(  );
+        Collection<Category> categoryList = new ArrayList<Category>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            Category category = new Category(  );
+            Category category = new Category( );
 
             category.setIdCategory( daoUtil.getInt( nIndex++ ) );
             category.setName( daoUtil.getString( nIndex++ ) );
@@ -173,7 +172,7 @@ public final class CategoryDAO implements ICategoryDAO
             categoryList.add( category );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return categoryList;
     }
@@ -184,21 +183,21 @@ public final class CategoryDAO implements ICategoryDAO
     public Category selectFirstCategory( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_FIRST_CATEGORY, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         Category category = null;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             int nIndex = 1;
-            category = new Category(  );
+            category = new Category( );
 
             category.setIdCategory( daoUtil.getInt( nIndex++ ) );
             category.setName( daoUtil.getString( nIndex++ ) );
             category.setDescription( daoUtil.getString( nIndex++ ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return category;
     }

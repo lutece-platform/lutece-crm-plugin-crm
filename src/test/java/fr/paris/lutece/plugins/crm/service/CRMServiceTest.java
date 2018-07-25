@@ -38,7 +38,6 @@ import fr.paris.lutece.plugins.crm.service.notification.MokeNotificationService;
 import fr.paris.lutece.plugins.crm.service.user.MokeCRMUserService;
 import fr.paris.lutece.test.LuteceTestCase;
 
-
 /**
  *
  * CRMServiceTest
@@ -60,11 +59,11 @@ public class CRMServiceTest extends LuteceTestCase
     /**
      * Test of registerDemand method of class fr.paris.lutece.plugins.crm.service.CRMService
      */
-    public void testRegisterDemand(  )
+    public void testRegisterDemand( )
     {
         System.out.println( "registerDemand" );
 
-        CRMService service = getCRMService(  );
+        CRMService service = getCRMService( );
         int nIdDemand = service.registerDemand( ID_DEMAND_TYPE1, USER_GUID1, DATA1, STATUS_TEXT1, ID_STATUS_CRM1 );
         assertNotNull( nIdDemand );
         nIdDemand = service.registerDemand( ID_DEMAND_TYPE1, ID_CRM_USER, DATA1, STATUS_TEXT1, ID_STATUS_CRM1 );
@@ -74,46 +73,47 @@ public class CRMServiceTest extends LuteceTestCase
     /**
      * Test of setStatus method of class fr.paris.lutece.plugins.crm.service.CRMService
      */
-    public void testSetStatus(  )
+    public void testSetStatus( )
     {
         System.out.println( "setStatus" );
 
-        CRMService service = getCRMService(  );
+        CRMService service = getCRMService( );
         service.setStatus( ID_DEMAND1, DATA1, STATUS_TEXT1, ID_STATUS_CRM1 );
     }
 
     /**
      * Test of deleteDemand method of class fr.paris.lutece.plugins.crm.service.CRMService
      */
-    public void testDeleteDemand(  )
+    public void testDeleteDemand( )
     {
         System.out.println( "deleteDemand" );
 
-        CRMService service = getCRMService(  );
+        CRMService service = getCRMService( );
         service.deleteDemand( ID_DEMAND1 );
     }
 
     /**
      * Test of notify method of class fr.paris.lutece.plugins.crm.service.CRMService
      */
-    public void testNotify(  )
+    public void testNotify( )
     {
         System.out.println( "notify" );
 
-        CRMService service = getCRMService(  );
+        CRMService service = getCRMService( );
         service.notify( ID_DEMAND1, OBJECT1, MESSAGE1, SENDER1 );
     }
 
     /**
      * Get the crm service
+     * 
      * @return the crm service
      */
-    private CRMService getCRMService(  )
+    private CRMService getCRMService( )
     {
-        CRMService service = CRMService.getService(  );
-        service.setNotificationService( new MokeNotificationService(  ) );
-        service.setCRMUserService( new MokeCRMUserService(  ) );
-        service.setDemandService( new MokeDemandService(  ) );
+        CRMService service = CRMService.getService( );
+        service.setNotificationService( new MokeNotificationService( ) );
+        service.setCRMUserService( new MokeCRMUserService( ) );
+        service.setDemandService( new MokeDemandService( ) );
 
         return service;
     }

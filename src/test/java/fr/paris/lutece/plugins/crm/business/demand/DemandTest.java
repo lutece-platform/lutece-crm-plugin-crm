@@ -41,7 +41,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 
-
 /**
  *
  * DemandTest
@@ -61,17 +60,17 @@ public class DemandTest extends LuteceTestCase
     private static final int ID_STATUS_CRM2 = 1;
     private static final String STATUS_TEXT1 = "StatusText1";
     private static final String STATUS_TEXT2 = "StatusText2";
-    private static Locale _locale = Locale.getDefault(  );
+    private static Locale _locale = Locale.getDefault( );
 
     /**
      * Test business of class fr.paris.lutece.plugins.crm.business.demand.Demand
      */
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
         Date date = DateUtil.formatDateLongYear( DATE1, _locale );
-        Timestamp dateModification = new Timestamp( date.getTime(  ) );
-        Demand demand = new Demand(  );
+        Timestamp dateModification = new Timestamp( date.getTime( ) );
+        Demand demand = new Demand( );
         demand.setData( DATA1 );
         demand.setIdCRMUser( ID_CRM_USER1 );
         demand.setIdDemandType( ID_DEMAND_TYPE1 );
@@ -82,17 +81,17 @@ public class DemandTest extends LuteceTestCase
         // Test create
         DemandHome.create( demand );
 
-        Demand demandStored = DemandHome.findByPrimaryKey( demand.getIdDemand(  ) );
-        assertEquals( demand.getIdDemand(  ), demandStored.getIdDemand(  ) );
-        assertEquals( demand.getData(  ), demandStored.getData(  ) );
-        assertEquals( demand.getIdCRMUser(  ), demandStored.getIdCRMUser(  ) );
-        assertEquals( demand.getIdDemandType(  ), demandStored.getIdDemandType(  ) );
-        assertEquals( demand.getIdStatusCRM(  ), demandStored.getIdStatusCRM(  ) );
-        assertEquals( demand.getStatusText(  ), demandStored.getStatusText(  ) );
+        Demand demandStored = DemandHome.findByPrimaryKey( demand.getIdDemand( ) );
+        assertEquals( demand.getIdDemand( ), demandStored.getIdDemand( ) );
+        assertEquals( demand.getData( ), demandStored.getData( ) );
+        assertEquals( demand.getIdCRMUser( ), demandStored.getIdCRMUser( ) );
+        assertEquals( demand.getIdDemandType( ), demandStored.getIdDemandType( ) );
+        assertEquals( demand.getIdStatusCRM( ), demandStored.getIdStatusCRM( ) );
+        assertEquals( demand.getStatusText( ), demandStored.getStatusText( ) );
 
         // Test update
         date = DateUtil.formatDateLongYear( DATE2, _locale );
-        dateModification = new Timestamp( date.getTime(  ) );
+        dateModification = new Timestamp( date.getTime( ) );
         demand.setData( DATA2 );
         demand.setIdCRMUser( ID_CRM_USER2 );
         demand.setIdDemandType( ID_DEMAND_TYPE2 );
@@ -100,26 +99,26 @@ public class DemandTest extends LuteceTestCase
         demand.setStatusText( STATUS_TEXT2 );
         demand.setDateModification( dateModification );
         DemandHome.update( demand );
-        demandStored = DemandHome.findByPrimaryKey( demand.getIdDemand(  ) );
-        assertEquals( demand.getIdDemand(  ), demandStored.getIdDemand(  ) );
-        assertEquals( demand.getData(  ), demandStored.getData(  ) );
-        assertEquals( demand.getIdCRMUser(  ), demandStored.getIdCRMUser(  ) );
-        assertEquals( demand.getIdDemandType(  ), demandStored.getIdDemandType(  ) );
-        assertEquals( demand.getIdStatusCRM(  ), demandStored.getIdStatusCRM(  ) );
-        assertEquals( demand.getStatusText(  ), demandStored.getStatusText(  ) );
+        demandStored = DemandHome.findByPrimaryKey( demand.getIdDemand( ) );
+        assertEquals( demand.getIdDemand( ), demandStored.getIdDemand( ) );
+        assertEquals( demand.getData( ), demandStored.getData( ) );
+        assertEquals( demand.getIdCRMUser( ), demandStored.getIdCRMUser( ) );
+        assertEquals( demand.getIdDemandType( ), demandStored.getIdDemandType( ) );
+        assertEquals( demand.getIdStatusCRM( ), demandStored.getIdStatusCRM( ) );
+        assertEquals( demand.getStatusText( ), demandStored.getStatusText( ) );
 
         // Test finders
-        DemandFilter dFilter = new DemandFilter(  );
+        DemandFilter dFilter = new DemandFilter( );
         dFilter.setDateModification( dateModification );
         dFilter.setIdCRMUser( ID_CRM_USER2 );
         dFilter.setIdDemandType( ID_DEMAND_TYPE2 );
         dFilter.setIdStatusCRM( ID_STATUS_CRM2 );
         DemandHome.findByFilter( dFilter );
-        DemandHome.findAll(  );
+        DemandHome.findAll( );
 
         // Test remove
-        DemandHome.remove( demand.getIdDemand(  ) );
-        demandStored = DemandHome.findByPrimaryKey( demand.getIdDemand(  ) );
+        DemandHome.remove( demand.getIdDemand( ) );
+        demandStored = DemandHome.findByPrimaryKey( demand.getIdDemand( ) );
         assertNull( demandStored );
     }
 }

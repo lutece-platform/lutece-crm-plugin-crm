@@ -40,7 +40,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.Map;
 
-
 /**
  *
  * CRMUserAttributeHome
@@ -55,15 +54,19 @@ public final class CRMUserAttributeHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private CRMUserAttributeHome(  )
+    private CRMUserAttributeHome( )
     {
     }
 
     /**
      * Insert a new record in the table.
-     * @param nIdCRMUser the id crm user
-     * @param strUserAttributeKey user attribute key
-     * @param strUserAttributeValue user attribute value
+     * 
+     * @param nIdCRMUser
+     *            the id crm user
+     * @param strUserAttributeKey
+     *            user attribute key
+     * @param strUserAttributeValue
+     *            user attribute value
      */
     public static void create( int nIdCRMUser, String strUserAttributeKey, String strUserAttributeValue )
     {
@@ -72,7 +75,9 @@ public final class CRMUserAttributeHome
 
     /**
      * Delete a record from the table
-     * @param nIdCRMUser int identifier of the CRMUser to delete
+     * 
+     * @param nIdCRMUser
+     *            int identifier of the CRMUser to delete
      */
     public static void remove( int nIdCRMUser )
     {
@@ -81,7 +86,9 @@ public final class CRMUserAttributeHome
 
     /**
      * Load the data from the table
-     * @param nIdCRMUser The identifier of the CRMUser
+     * 
+     * @param nIdCRMUser
+     *            The identifier of the CRMUser
      * @return The user attributes
      */
     public static Map<String, String> findByPrimaryKey( int nIdCRMUser )
@@ -91,10 +98,12 @@ public final class CRMUserAttributeHome
 
     /**
      * Count the number of instance of a given value of an attribute
-     * @param strUserAttributeValue The value of the attribute
-     * @param strUserAttributeKey The key of the attribute
-     * @return The number of instances of attributes with the given value for
-     *         the given attribute key.
+     * 
+     * @param strUserAttributeValue
+     *            The value of the attribute
+     * @param strUserAttributeKey
+     *            The key of the attribute
+     * @return The number of instances of attributes with the given value for the given attribute key.
      */
     public static int countAttributeValueInstances( String strUserAttributeValue, String strUserAttributeKey )
     {

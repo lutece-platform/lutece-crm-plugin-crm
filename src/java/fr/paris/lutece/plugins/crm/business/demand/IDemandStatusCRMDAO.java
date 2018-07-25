@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * IDemandStatusDAO
@@ -47,15 +46,20 @@ public interface IDemandStatusCRMDAO
 {
     /**
      * Load a status CRM
-     * @param nIdStatusCRM the id status
-     * @param plugin the {@link Plugin}
+     * 
+     * @param nIdStatusCRM
+     *            the id status
+     * @param plugin
+     *            the {@link Plugin}
      * @return a {@link DemandStatusCRM}
      */
     DemandStatusCRM load( int nIdStatusCRM, Plugin plugin );
 
     /**
      * Load all status CRM
-     * @param plugin the {@link Plugin}
+     * 
+     * @param plugin
+     *            the {@link Plugin}
      * @return a list of {@link DemandStatusCRM}
      */
     List<DemandStatusCRM> selectAll( Plugin plugin );

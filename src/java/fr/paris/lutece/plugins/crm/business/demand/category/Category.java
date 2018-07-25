@@ -43,7 +43,6 @@ import fr.paris.lutece.plugins.crm.util.CrmUtils;
 import fr.paris.lutece.plugins.crm.util.constants.CRMConstants;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-
 /**
  *
  * This is the business class for the object Category
@@ -51,24 +50,26 @@ import fr.paris.lutece.util.xml.XmlUtil;
  */
 public class Category
 {
-	
-	 
+
     private int _nIdCategory;
     private String _strName;
     private String _strDescription;
 
     /**
      * Returns the IdCategory
+     * 
      * @return The IdCategory
      */
-    public int getIdCategory(  )
+    public int getIdCategory( )
     {
         return _nIdCategory;
     }
 
     /**
      * Sets the IdCategory
-     * @param nIdCategory The IdCategory
+     * 
+     * @param nIdCategory
+     *            The IdCategory
      */
     public void setIdCategory( int nIdCategory )
     {
@@ -77,16 +78,19 @@ public class Category
 
     /**
      * Returns the Name
+     * 
      * @return The Name
      */
-    public String getName(  )
+    public String getName( )
     {
         return _strName;
     }
 
     /**
      * Sets the Name
-     * @param strName The Name
+     * 
+     * @param strName
+     *            The Name
      */
     public void setName( String strName )
     {
@@ -95,62 +99,69 @@ public class Category
 
     /**
      * Returns the Description
+     * 
      * @return The Description
      */
-    public String getDescription(  )
+    public String getDescription( )
     {
         return _strDescription;
     }
 
     /**
      * Sets the Description
-     * @param strDescription The Description
+     * 
+     * @param strDescription
+     *            The Description
      */
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
     }
-    
-    
+
     /**
      * Returns the xml of this Category with demand Type associated
      *
-     * @param request The HTTP Servlet request
-     * @param locale the Locale
-     * @param listDemandType the list of demande type
+     * @param request
+     *            The HTTP Servlet request
+     * @param locale
+     *            the Locale
+     * @param listDemandType
+     *            the list of demande type
      * @return the xml of this Category
      */
-    public String getXml( HttpServletRequest request, Locale locale,List<DemandType> listDemandType )
+    public String getXml( HttpServletRequest request, Locale locale, List<DemandType> listDemandType )
     {
-        StringBuffer strXml = new StringBuffer(  );
-        XmlUtil.beginElement( strXml, CRMConstants.TAG_CATEGORY);
-        XmlUtil.addElement( strXml, CRMConstants.TAG_CATEGORY_ID,_nIdCategory  );
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_CATEGORY_NAME,_strName  );
-        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_CATEGORY_DESCRIPTION,_strDescription  );
-        if (listDemandType!=null)
+        StringBuffer strXml = new StringBuffer( );
+        XmlUtil.beginElement( strXml, CRMConstants.TAG_CATEGORY );
+        XmlUtil.addElement( strXml, CRMConstants.TAG_CATEGORY_ID, _nIdCategory );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_CATEGORY_NAME, _strName );
+        CrmUtils.addElementHtml( strXml, CRMConstants.TAG_CATEGORY_DESCRIPTION, _strDescription );
+        if ( listDemandType != null )
         {
-        	XmlUtil.beginElement(strXml, CRMConstants.TAG_DEMAND_TYPE_LIST);
-        	for(DemandType demandType:listDemandType)
-        	{
-        		strXml.append(demandType.getXml(request, locale));
-        		
-        	}
-        	XmlUtil.endElement(strXml, CRMConstants.TAG_DEMAND_TYPE_LIST);
-        }   		
-        	
-        
-        XmlUtil.endElement( strXml, CRMConstants.TAG_CATEGORY);
-        return strXml.toString(  );
+            XmlUtil.beginElement( strXml, CRMConstants.TAG_DEMAND_TYPE_LIST );
+            for ( DemandType demandType : listDemandType )
+            {
+                strXml.append( demandType.getXml( request, locale ) );
+
+            }
+            XmlUtil.endElement( strXml, CRMConstants.TAG_DEMAND_TYPE_LIST );
+        }
+
+        XmlUtil.endElement( strXml, CRMConstants.TAG_CATEGORY );
+        return strXml.toString( );
     }
+
     /**
      * Returns the xml of this Category
      *
-     * @param request The HTTP Servlet request
-     * @param locale the Locale
+     * @param request
+     *            The HTTP Servlet request
+     * @param locale
+     *            the Locale
      * @return the xml of this Category
      */
     public String getXml( HttpServletRequest request, Locale locale )
     {
-    	return getXml(request, locale, null); 
+        return getXml( request, locale, null );
     }
 }

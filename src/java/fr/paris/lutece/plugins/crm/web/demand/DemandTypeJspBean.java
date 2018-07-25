@@ -71,7 +71,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * DemandTypeJspBean
@@ -93,10 +92,10 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
     private static final String JSP_DO_PURGE_DEMAND_TYPE = "jsp/admin/plugins/crm/DoPurgeDemandType.jsp";
 
     // VARIABLES
-    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService(  );
-    private DemandTypeService _demandTypeService = DemandTypeService.getService(  );
-    private DemandService _demandService = DemandService.getService(  );
-    private CategoryService _categoryService = CategoryService.getService(  );
+    private AdvancedParametersService _advancedParametersService = AdvancedParametersService.getService( );
+    private DemandTypeService _demandTypeService = DemandTypeService.getService( );
+    private DemandService _demandService = DemandService.getService( );
+    private CategoryService _categoryService = CategoryService.getService( );
     private DemandTypeFilter _dtFilter;
     private int _nDefaultItemsPerPage;
     private String _strCurrentPageIndex;
@@ -104,7 +103,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Get interface of managing the list of demand types
-     * @param request {@link HttpServletRequest}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
      * @return the html code
      */
     public String getManageDemandTypes( HttpServletRequest request )
@@ -112,98 +113,100 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         setPageTitleProperty( CRMConstants.PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE );
 
         _strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
-        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEFAULT_LIST_DEMAND_TYPES_PER_PAGE,
-                50 );
-        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage,
-                _nDefaultItemsPerPage );
+        _nDefaultItemsPerPage = AppPropertiesService.getPropertyInt( CRMConstants.PROPERTY_DEFAULT_LIST_DEMAND_TYPES_PER_PAGE, 50 );
+        _nItemsPerPage = Paginator.getItemsPerPage( request, Paginator.PARAMETER_ITEMS_PER_PAGE, _nItemsPerPage, _nDefaultItemsPerPage );
 
         UrlItem url = getUrlManageDemandTypes( request );
         List<DemandType> listDemandTypes = getDemandTypesList( request );
 
-        LocalizedPaginator<DemandType> paginator = new LocalizedPaginator<DemandType>( listDemandTypes, _nItemsPerPage,
-                url.getUrl(  ), CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale(  ) );
+        LocalizedPaginator<DemandType> paginator = new LocalizedPaginator<DemandType>( listDemandTypes, _nItemsPerPage, url.getUrl( ),
+                CRMConstants.PARAMETER_PAGE_INDEX, _strCurrentPageIndex, getLocale( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         model.put( CRMConstants.MARK_NB_ITEMS_PER_PAGE, Integer.toString( _nItemsPerPage ) );
         model.put( CRMConstants.MARK_PAGINATOR, paginator );
-        model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, paginator.getPageItems(  ) );
+        model.put( CRMConstants.MARK_DEMAND_TYPES_LIST, paginator.getPageItems( ) );
         model.put( CRMConstants.MARK_DEMAND_TYPE_FILTER, _dtFilter );
-        model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale(  ), true, false ) );
-        model.put( CRMConstants.MARK_IS_WELL_ORDERED, _demandTypeService.isWellOrdered(  ) );
-        model.put( CRMConstants.MARK_OPERATORS_LIST, _demandTypeService.getOperatorsList(  ) );
-        model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
+        model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale( ), true, false ) );
+        model.put( CRMConstants.MARK_IS_WELL_ORDERED, _demandTypeService.isWellOrdered( ) );
+        model.put( CRMConstants.MARK_OPERATORS_LIST, _demandTypeService.getOperatorsList( ) );
+        model.put( CRMConstants.MARK_LOCALE, request.getLocale( ) );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DEMAND_TYPES, getLocale(  ), model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_DEMAND_TYPES, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Get interface of advanced parameters
-     * @param request {@link HttpServletRequest}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
      * @return the html code
      */
     public String getManageAdvancedParameters( HttpServletRequest request )
     {
         setPageTitleProperty( CRMConstants.PROPERTY_MANAGE_DEMAND_TYPES_PAGE_TITLE );
 
-        //get the actual displayDraft parameter
+        // get the actual displayDraft parameter
         Boolean bDisplayDraft = _advancedParametersService.isParameterValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT );
-        Boolean bUseIdCrmUser=_advancedParametersService.isParameterValueByKey( CRMConstants.CONSTANT_USE_ID_CRM_USER);
-        Map<String, Object> model = new HashMap<String, Object>(  );
+        Boolean bUseIdCrmUser = _advancedParametersService.isParameterValueByKey( CRMConstants.CONSTANT_USE_ID_CRM_USER );
+        Map<String, Object> model = new HashMap<String, Object>( );
 
         model.put( CRMConstants.MARK_DISPLAYDRAFT, bDisplayDraft );
         model.put( CRMConstants.MARK_USE_IDCRMUSER, bUseIdCrmUser );
 
-        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale(  ),
-                model );
+        HtmlTemplate templateList = AppTemplateService.getTemplate( TEMPLATE_MANAGE_ADVANCED_PARAMETERS, getLocale( ), model );
 
-        return getAdminPage( templateList.getHtml(  ) );
+        return getAdminPage( templateList.getHtml( ) );
     }
 
     /**
      * Returns the form to create a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the html code of the demand type form
      */
     public String getCreateDemandType( HttpServletRequest request )
     {
         setPageTitleProperty( CRMConstants.PROPERTY_CREATE_DEMAND_TYPE_PAGE_TITLE );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale(  ), false, false ) );
-        model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST,
-            AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
-        model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder(  ) );
-        model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList(  ) );
-        model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
+        Map<String, Object> model = new HashMap<String, Object>( );
+        model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale( ), false, false ) );
+        model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser( ), getLocale( ) ) );
+        model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder( ) );
+        model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList( ) );
+        model.put( CRMConstants.MARK_LOCALE, request.getLocale( ) );
 
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            model.put( CRMConstants.MARK_ROLE_REF_LIST, _demandTypeService.getRolesList(  ) );
+            model.put( CRMConstants.MARK_ROLE_REF_LIST, _demandTypeService.getRolesList( ) );
         }
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DEMAND_TYPE, getLocale(  ), model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_CREATE_DEMAND_TYPE, getLocale( ), model );
 
-        return getAdminPage( template.getHtml(  ) );
+        return getAdminPage( template.getHtml( ) );
     }
 
     /**
      * Process the data capture form of a new demand type
-     * @param request The Http Request
+     * 
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     public String doCreateDemandType( HttpServletRequest request )
     {
-        DemandType demandType = new DemandType(  );
+        DemandType demandType = new DemandType( );
         String strUrl = getDemandTypeData( request, demandType );
 
         if ( StringUtils.isBlank( strUrl ) )
         {
             // The newly created demand type is placed at the head of the list
             _demandTypeService.create( demandType );
-            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+            strUrl = getUrlManageDemandTypes( request ).getUrl( );
         }
 
         return strUrl;
@@ -211,7 +214,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Manages the removal form of a demand type whose identifier is in the http request
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     public String getConfirmRemoveDemandType( HttpServletRequest request )
@@ -225,8 +230,8 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             UrlItem url = new UrlItem( JSP_DO_REMOVE_DEMAND_TYPE );
             url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, nIdDemandType );
 
-            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND_TYPE,
-                    url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+            strUrl = AdminMessageService
+                    .getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_REMOVE_DEMAND_TYPE, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
         }
         else
         {
@@ -238,7 +243,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Handles the removal form of a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage demand types
      */
     public String doRemoveDemandType( HttpServletRequest request )
@@ -250,7 +257,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         {
             int nIdDemandType = Integer.parseInt( strIdDemandType );
             _demandTypeService.remove( nIdDemandType );
-            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+            strUrl = getUrlManageDemandTypes( request ).getUrl( );
         }
         else
         {
@@ -262,7 +269,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Returns the form to update info about a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     public String getModifyDemandType( HttpServletRequest request )
@@ -279,35 +288,31 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
             if ( demandType != null )
             {
-                Map<String, Object> model = new HashMap<String, Object>(  );
+                Map<String, Object> model = new HashMap<String, Object>( );
                 model.put( CRMConstants.MARK_DEMAND_TYPE, demandType );
-                model.put( CRMConstants.MARK_CATEGORIES_LIST,
-                    _categoryService.getCategories( getLocale(  ), false, false ) );
-                model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder(  ) );
-                model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST,
-                    AdminWorkgroupService.getUserWorkgroups( getUser(  ), getLocale(  ) ) );
-                model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList(  ) );
-                model.put( CRMConstants.MARK_LOCALE, request.getLocale(  ) );
+                model.put( CRMConstants.MARK_CATEGORIES_LIST, _categoryService.getCategories( getLocale( ), false, false ) );
+                model.put( CRMConstants.MARK_MAX_ORDER, _demandTypeService.findMaxOrder( ) );
+                model.put( CRMConstants.MARK_USER_WORKGROUP_REF_LIST, AdminWorkgroupService.getUserWorkgroups( getUser( ), getLocale( ) ) );
+                model.put( CRMConstants.MARK_TARGETS_LIST, _demandTypeService.getTargetsList( ) );
+                model.put( CRMConstants.MARK_LOCALE, request.getLocale( ) );
 
-                if ( SecurityService.isAuthenticationEnable(  ) )
+                if ( SecurityService.isAuthenticationEnable( ) )
                 {
-                    model.put( CRMConstants.MARK_ROLE_REF_LIST, _demandTypeService.getRolesList(  ) );
+                    model.put( CRMConstants.MARK_ROLE_REF_LIST, _demandTypeService.getRolesList( ) );
                 }
 
-                HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DEMAND_TYPE, getLocale(  ),
-                        model );
+                HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MODIFY_DEMAND_TYPE, getLocale( ), model );
 
-                strHtml = getAdminPage( template.getHtml(  ) );
+                strHtml = getAdminPage( template.getHtml( ) );
             }
             else
             {
-                throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR,
-                        request.getLocale(  ) ) );
+                throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR, request.getLocale( ) ) );
             }
         }
         else
         {
-            throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR, request.getLocale(  ) ) );
+            throw new AppException( I18nService.getLocalizedString( CRMConstants.MESSAGE_ERROR, request.getLocale( ) ) );
         }
 
         return strHtml;
@@ -315,7 +320,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Process the change form of a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     public String doModifyDemandType( HttpServletRequest request )
@@ -326,14 +333,14 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         if ( StringUtils.isNotBlank( strIdDemandType ) && StringUtils.isNumeric( strIdDemandType ) )
         {
             int nIdDemandType = Integer.parseInt( strIdDemandType );
-            DemandType demandType = new DemandType(  );
+            DemandType demandType = new DemandType( );
             demandType.setIdDemandType( nIdDemandType );
             strUrl = getDemandTypeData( request, demandType );
 
             if ( StringUtils.isBlank( strUrl ) )
             {
                 _demandTypeService.update( demandType );
-                strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+                strUrl = getUrlManageDemandTypes( request ).getUrl( );
             }
         }
         else
@@ -346,51 +353,53 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Process the parameter change for "display draft"
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     public String doModifyAdvancedParameters( HttpServletRequest request )
     {
         String strModifyDraftDisplay = request.getParameter( CRMConstants.PARAMETER_CHECKBOX_DRAFT_DISPLAY );
-        String strUseIdCrmUser= request.getParameter( CRMConstants.PARAMETER_CHECKBOX_USE_IDCRMUSER );
-        
-        
-        
+        String strUseIdCrmUser = request.getParameter( CRMConstants.PARAMETER_CHECKBOX_USE_IDCRMUSER );
+
         if ( StringUtils.isNotBlank( strModifyDraftDisplay ) )
         {
-            _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
-                CRMConstants.CONSTANT_TRUE );
+            _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT, CRMConstants.CONSTANT_TRUE );
         }
         else
         {
-            _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT,
-                CRMConstants.CONSTANT_FALSE );
+            _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_DISPLAYDRAFT, CRMConstants.CONSTANT_FALSE );
         }
 
         _advancedParametersService.modifyParameterStringValueByKey( CRMConstants.CONSTANT_USE_ID_CRM_USER,
-            		StringUtils.isNotBlank( strUseIdCrmUser )? CRMConstants.CONSTANT_TRUE : CRMConstants.CONSTANT_FALSE );
-      
+                StringUtils.isNotBlank( strUseIdCrmUser ) ? CRMConstants.CONSTANT_TRUE : CRMConstants.CONSTANT_FALSE );
+
         UrlItem url = new UrlItem( AppPathService.getBaseUrl( request ) + JSP_MANAGE_DEMAND_TYPES );
         url.addParameter( CRMConstants.CONSTANT_PLUGIN_NAME, CRMConstants.CONSTANT_CRM );
 
-        return url.getUrl(  );
+        return url.getUrl( );
     }
 
     /**
      * Do reorder the demand types
-     * @param request {@link HttpServletRequest}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
      * @return the jsp URL to display the form to manage demand types
      */
     public String doReorderDemandTypes( HttpServletRequest request )
     {
-        _demandTypeService.doReorderDemandTypes(  );
+        _demandTypeService.doReorderDemandTypes( );
 
-        return getUrlManageDemandTypes( request ).getUrl(  );
+        return getUrlManageDemandTypes( request ).getUrl( );
     }
 
     /**
      * Manages the purge form of a demand type whose identifier is in the http request
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     public String getConfirmPurgeDemandType( HttpServletRequest request )
@@ -404,8 +413,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             UrlItem url = new UrlItem( JSP_DO_PURGE_DEMAND_TYPE );
             url.addParameter( CRMConstants.PARAMETER_ID_DEMAND_TYPE, nIdDemandType );
 
-            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_PURGE_DEMAND_TYPE,
-                    url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+            strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_CONFIRM_PURGE_DEMAND_TYPE, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
         }
         else
         {
@@ -417,7 +425,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Handles the purge form of a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage demand types
      */
     public String doPurgeDemandType( HttpServletRequest request )
@@ -429,7 +439,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
         {
             int nIdDemandType = Integer.parseInt( strIdDemandType );
             _demandService.removeByIdDemandType( nIdDemandType );
-            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+            strUrl = getUrlManageDemandTypes( request ).getUrl( );
         }
         else
         {
@@ -441,7 +451,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Enable a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage demand types
      */
     public String doEnableDemandType( HttpServletRequest request )
@@ -460,7 +472,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 _demandTypeService.update( demandType );
             }
 
-            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+            strUrl = getUrlManageDemandTypes( request ).getUrl( );
         }
         else
         {
@@ -472,7 +484,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Disable a demand type
-     * @param request The Http request
+     * 
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage demand types
      */
     public String doDisableDemandType( HttpServletRequest request )
@@ -487,11 +501,11 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
             if ( demandType != null )
             {
-                demandType.setDateEnd( new Date(  ) );
+                demandType.setDateEnd( new Date( ) );
                 _demandTypeService.update( demandType );
             }
 
-            strUrl = getUrlManageDemandTypes( request ).getUrl(  );
+            strUrl = getUrlManageDemandTypes( request ).getUrl( );
         }
         else
         {
@@ -505,8 +519,11 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Get the data of the demand type
-     * @param request {@link HttpServletRequest}
-     * @param demandType the {@link DemandType}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
+     * @param demandType
+     *            the {@link DemandType}
      * @return an empty string if there are no errors, messages otherwise
      */
     private String getDemandTypeData( HttpServletRequest request, DemandType demandType )
@@ -527,10 +544,10 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             String strRoleKey = request.getParameter( CRMConstants.PARAMETER_ROLE_KEY );
             String strTarget = request.getParameter( CRMConstants.PARAMETER_TARGET );
             String strUrlDelete = request.getParameter( CRMConstants.PARAMETER_URL_DELETE );
-            String strIncludeIdCrmUser=request.getParameter( CRMConstants.PARAMETER_INCLUDE_ID_CRM_USER );
-            String strNeedAuthentication=request.getParameter( CRMConstants.PARAMETER_NEED_AUTHENTICATION );
-            String strNeedValidation=request.getParameter( CRMConstants.PARAMETER_NEED_VALIDATION );
-            
+            String strIncludeIdCrmUser = request.getParameter( CRMConstants.PARAMETER_INCLUDE_ID_CRM_USER );
+            String strNeedAuthentication = request.getParameter( CRMConstants.PARAMETER_NEED_AUTHENTICATION );
+            String strNeedValidation = request.getParameter( CRMConstants.PARAMETER_NEED_VALIDATION );
+
             int nOrder = 0;
 
             if ( StringUtils.isNotBlank( strOrder ) && StringUtils.isNumeric( strOrder ) )
@@ -557,39 +574,35 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
             if ( StringUtils.isNotBlank( strDateBegin ) )
             {
-                dateBegin = DateUtil.formatDateLongYear( strDateBegin, getLocale(  ) );
+                dateBegin = DateUtil.formatDateLongYear( strDateBegin, getLocale( ) );
 
                 if ( dateBegin != null )
                 {
                     if ( dateBegin.before( new Date( 0 ) ) )
                     {
-                        strUrl = AdminMessageService.getMessageUrl( request,
-                                CRMConstants.MESSAGE_INVALID_DATE_BEFORE_70, AdminMessage.TYPE_STOP );
+                        strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_INVALID_DATE_BEFORE_70, AdminMessage.TYPE_STOP );
                     }
                 }
                 else
                 {
-                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_INVALID_DATEBEGIN,
-                            AdminMessage.TYPE_STOP );
+                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_INVALID_DATEBEGIN, AdminMessage.TYPE_STOP );
                 }
             }
 
             if ( StringUtils.isBlank( strUrl ) && StringUtils.isNotBlank( strDateEnd ) )
             {
-                dateEnd = DateUtil.formatDateLongYear( strDateEnd, getLocale(  ) );
+                dateEnd = DateUtil.formatDateLongYear( strDateEnd, getLocale( ) );
 
                 if ( dateEnd != null )
                 {
                     if ( dateEnd.before( new Date( 0 ) ) )
                     {
-                        strUrl = AdminMessageService.getMessageUrl( request,
-                                CRMConstants.MESSAGE_INVALID_DATE_BEFORE_70, AdminMessage.TYPE_STOP );
+                        strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_INVALID_DATE_BEFORE_70, AdminMessage.TYPE_STOP );
                     }
                 }
                 else
                 {
-                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_INVALID_DATEEND,
-                            AdminMessage.TYPE_STOP );
+                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_INVALID_DATEEND, AdminMessage.TYPE_STOP );
                 }
             }
 
@@ -598,8 +611,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             {
                 if ( dateEnd.before( dateBegin ) )
                 {
-                    strUrl = AdminMessageService.getMessageUrl( request,
-                            CRMConstants.MESSAGE_ERROR_DATEEND_BEFORE_DATEBEGIN, AdminMessage.TYPE_STOP );
+                    strUrl = AdminMessageService.getMessageUrl( request, CRMConstants.MESSAGE_ERROR_DATEEND_BEFORE_DATEBEGIN, AdminMessage.TYPE_STOP );
                 }
             }
 
@@ -617,9 +629,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
                 demandType.setRole( StringUtils.isNotBlank( strRoleKey ) ? strRoleKey : StringUtils.EMPTY );
                 demandType.setTarget( TargetEnum.getTarget( nTarget ) );
                 demandType.setUrlDelete( StringUtils.isNotBlank( strUrlDelete ) ? strUrlDelete : StringUtils.EMPTY );
-                demandType.setIncludeIdCrmUser( strIncludeIdCrmUser != null);
-                demandType.setNeedAuthentication( strNeedAuthentication != null);
-                demandType.setNeedValidation(strNeedValidation != null);
+                demandType.setIncludeIdCrmUser( strIncludeIdCrmUser != null );
+                demandType.setNeedAuthentication( strNeedAuthentication != null );
+                demandType.setNeedValidation( strNeedValidation != null );
             }
         }
         else
@@ -632,7 +644,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Get the list of demand types
-     * @param request {@link HttpServletRequest}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
      * @return a list of {@link DemandType}
      */
     private List<DemandType> getDemandTypesList( HttpServletRequest request )
@@ -651,11 +665,11 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             // Find all demand types
             // Reinit the filter stored in the session
             _dtFilter = null;
-            listDemandTypes = _demandTypeService.findAll(  );
+            listDemandTypes = _demandTypeService.findAll( );
         }
 
         // Get only the demand types the user is authorized to ses
-        listDemandTypes = (List<DemandType>) AdminWorkgroupService.getAuthorizedCollection( listDemandTypes, getUser(  ) );
+        listDemandTypes = (List<DemandType>) AdminWorkgroupService.getAuthorizedCollection( listDemandTypes, getUser( ) );
 
         // Sort the list
         String strSortedAttributeName = request.getParameter( Parameters.SORTED_ATTRIBUTE_NAME );
@@ -678,7 +692,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Search the list of demand type
-     * @param request {@link HttpServletRequest}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
      * @return a list of {@link DemandType}
      */
     private List<DemandType> doSearchDemandTypesList( HttpServletRequest request )
@@ -687,7 +703,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
         if ( StringUtils.isNotBlank( strSearch ) || ( _dtFilter == null ) )
         {
-            _dtFilter = new DemandTypeFilter(  );
+            _dtFilter = new DemandTypeFilter( );
 
             String strLabel = request.getParameter( CRMConstants.PARAMETER_LABEL );
             String strUrlForm = request.getParameter( CRMConstants.PARAMETER_URL_RESOURCE );
@@ -716,7 +732,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
             if ( StringUtils.isNotBlank( strDateBegin ) )
             {
-                Date dateBegin = DateUtil.formatDateLongYear( strDateBegin, getLocale(  ) );
+                Date dateBegin = DateUtil.formatDateLongYear( strDateBegin, getLocale( ) );
 
                 if ( dateBegin != null )
                 {
@@ -729,7 +745,7 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
             if ( StringUtils.isNotBlank( strDateEnd ) )
             {
-                Date dateEnd = DateUtil.formatDateLongYear( strDateEnd, getLocale(  ) );
+                Date dateEnd = DateUtil.formatDateLongYear( strDateEnd, getLocale( ) );
 
                 if ( dateEnd != null )
                 {
@@ -744,9 +760,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             {
                 int nIdOperatorDateBegin = Integer.parseInt( strOperatorDateBegin );
 
-                if ( nIdOperatorDateBegin < OperatorEnum.values(  ).length )
+                if ( nIdOperatorDateBegin < OperatorEnum.values( ).length )
                 {
-                    _dtFilter.setOperatorDateBegin( OperatorEnum.values(  )[nIdOperatorDateBegin] );
+                    _dtFilter.setOperatorDateBegin( OperatorEnum.values( ) [nIdOperatorDateBegin] );
                 }
             }
 
@@ -754,9 +770,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
             {
                 int nIdOperatorDateEnd = Integer.parseInt( strOperatorDateEnd );
 
-                if ( nIdOperatorDateEnd < OperatorEnum.values(  ).length )
+                if ( nIdOperatorDateEnd < OperatorEnum.values( ).length )
                 {
-                    _dtFilter.setOperatorDateEnd( OperatorEnum.values(  )[nIdOperatorDateEnd] );
+                    _dtFilter.setOperatorDateEnd( OperatorEnum.values( ) [nIdOperatorDateEnd] );
                 }
             }
 
@@ -771,7 +787,9 @@ public class DemandTypeJspBean extends PluginAdminPageJspBean
 
     /**
      * Get the url of the interface that manages the demand types
-     * @param request {@link HttpServletRequest}
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
      * @return a {@link UrlItem}
      */
     private UrlItem getUrlManageDemandTypes( HttpServletRequest request )

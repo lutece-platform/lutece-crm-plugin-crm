@@ -35,20 +35,19 @@ package fr.paris.lutece.plugins.crm.business.portlet;
 
 import fr.paris.lutece.portal.business.portlet.IPortletInterfaceDAO;
 
-
 /**
  * IDemandTypePortletDAO
  */
 public interface IDemandTypePortletDAO extends IPortletInterfaceDAO
 {
-    
 
     /**
      * return number of Demand Type portlet who are associate to the type demand category id
-     * @param nIdCategory the  type demand category
+     * 
+     * @param nIdCategory
+     *            the type demand category
      * @return number of form portlet who are associate to the id form
      */
     int selectCountPortletByIdCategory( int nIdCategory );
 
-    
 }

@@ -44,7 +44,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * DemandWebService
@@ -57,40 +56,45 @@ public class DemandWebService
     /**
      * Constructor
      */
-    protected DemandWebService(  )
+    protected DemandWebService( )
     {
     }
 
     /**
      * Get an instance of {@link DemandWebService}
+     * 
      * @return an instance of {@link DemandWebService}
      */
-    public static DemandWebService getService(  )
+    public static DemandWebService getService( )
     {
         return SpringContextService.getBean( BEAN_CRM_DEMANDWEBSERVICE );
     }
 
     /**
      * Remove a demand and its resource
-     * @param strUrl the url of the resource
-     * @param nIdDemand the id demand
-     * @param strData the data
-     * @throws HttpAccessException exception when connexion error
+     * 
+     * @param strUrl
+     *            the url of the resource
+     * @param nIdDemand
+     *            the id demand
+     * @param strData
+     *            the data
+     * @throws HttpAccessException
+     *             exception when connexion error
      */
-    public void sendRemoveDraft( String strUrl, int nIdDemand, String strData )
-        throws HttpAccessException
+    public void sendRemoveDraft( String strUrl, int nIdDemand, String strData ) throws HttpAccessException
     {
         // List parameters to post
-        Map<String, String> params = new HashMap<String, String>(  );
+        Map<String, String> params = new HashMap<String, String>( );
         params.put( CRMConstants.PARAMETER_ACTION, CRMConstants.ACTION_DO_REMOVE_DRAFT );
         params.put( CRMConstants.PARAMETER_ID_DEMAND, Integer.toString( nIdDemand ) );
         params.put( CRMConstants.PARAMETER_DEMAND_DATA, strData );
 
         // List elements to include to the signature
-        List<String> listElements = new ArrayList<String>(  );
+        List<String> listElements = new ArrayList<String>( );
         listElements.add( Integer.toString( nIdDemand ) );
 
-        HttpAccess httpAccess = new HttpAccess(  );
-        httpAccess.doPost( strUrl, params, CRMRequestAuthenticatorService.getRequestAuthenticatorForWS(  ), listElements );
+        HttpAccess httpAccess = new HttpAccess( );
+        httpAccess.doPost( strUrl, params, CRMRequestAuthenticatorService.getRequestAuthenticatorForWS( ), listElements );
     }
 }

@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.crm.service.CRMPlugin;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.RemovalListenerService;
 
-
 /**
  *
  * CategoryRemovalListenerService
@@ -50,17 +49,17 @@ public final class CategoryRemovalListenerService
     /**
      * Private constructor
      */
-    private CategoryRemovalListenerService(  )
+    private CategoryRemovalListenerService( )
     {
     }
 
     /**
      * Returns the removal service
+     * 
      * @return The removal service
      */
-    public static RemovalListenerService getService(  )
+    public static RemovalListenerService getService( )
     {
-        return (RemovalListenerService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME,
-            BEAN_CRM_CATEGORY_REMOVAL_SERVICE );
+        return (RemovalListenerService) SpringContextService.getPluginBean( CRMPlugin.PLUGIN_NAME, BEAN_CRM_CATEGORY_REMOVAL_SERVICE );
     }
 }

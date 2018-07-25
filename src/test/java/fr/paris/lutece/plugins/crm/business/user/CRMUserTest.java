@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 /**
  *
  * CRMUserTest
@@ -62,13 +61,13 @@ public class CRMUserTest extends LuteceTestCase
     /**
      * Test business of class fr.paris.lutece.plugins.crm.business.user.CRMUser
      */
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        CRMUser user = new CRMUser(  );
+        CRMUser user = new CRMUser( );
         user.setUserGuid( USER_GUID1 );
 
-        Map<String, String> userAttributes = new HashMap<String, String>(  );
+        Map<String, String> userAttributes = new HashMap<String, String>( );
         userAttributes.put( USER_ATTRIBUTE_KEY1, USER_ATTRIBUTE_VALUE1 );
         userAttributes.put( USER_ATTRIBUTE_KEY2, USER_ATTRIBUTE_VALUE2 );
         user.setUserAttributes( userAttributes );
@@ -76,50 +75,50 @@ public class CRMUserTest extends LuteceTestCase
         // Test create
         CRMUserHome.create( user );
 
-        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        for ( Entry<String, String> userAttribute : user.getUserAttributes( ).entrySet( ) )
         {
-            CRMUserAttributeHome.create( user.getIdCRMUser(  ), userAttribute.getKey(  ), userAttribute.getValue(  ) );
+            CRMUserAttributeHome.create( user.getIdCRMUser( ), userAttribute.getKey( ), userAttribute.getValue( ) );
         }
 
-        CRMUser userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser(  ) );
-        userStored.setUserAttributes( CRMUserAttributeHome.findByPrimaryKey( user.getIdCRMUser(  ) ) );
-        assertEquals( user.getIdCRMUser(  ), userStored.getIdCRMUser(  ) );
-        assertEquals( user.getUserGuid(  ), userStored.getUserGuid(  ) );
+        CRMUser userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser( ) );
+        userStored.setUserAttributes( CRMUserAttributeHome.findByPrimaryKey( user.getIdCRMUser( ) ) );
+        assertEquals( user.getIdCRMUser( ), userStored.getIdCRMUser( ) );
+        assertEquals( user.getUserGuid( ), userStored.getUserGuid( ) );
 
-        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        for ( Entry<String, String> userAttribute : user.getUserAttributes( ).entrySet( ) )
         {
-            assertEquals( userAttribute.getValue(  ), userStored.getUserAttributeValue( userAttribute.getKey(  ) ) );
+            assertEquals( userAttribute.getValue( ), userStored.getUserAttributeValue( userAttribute.getKey( ) ) );
         }
 
         // Test update
         user.setUserGuid( USER_GUID2 );
-        userAttributes = new HashMap<String, String>(  );
+        userAttributes = new HashMap<String, String>( );
         userAttributes.put( USER_ATTRIBUTE_KEY3, USER_ATTRIBUTE_VALUE3 );
         userAttributes.put( USER_ATTRIBUTE_KEY4, USER_ATTRIBUTE_VALUE4 );
         user.setUserAttributes( userAttributes );
         CRMUserHome.update( user );
-        CRMUserAttributeHome.remove( user.getIdCRMUser(  ) );
+        CRMUserAttributeHome.remove( user.getIdCRMUser( ) );
 
-        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        for ( Entry<String, String> userAttribute : user.getUserAttributes( ).entrySet( ) )
         {
-            CRMUserAttributeHome.create( user.getIdCRMUser(  ), userAttribute.getKey(  ), userAttribute.getValue(  ) );
+            CRMUserAttributeHome.create( user.getIdCRMUser( ), userAttribute.getKey( ), userAttribute.getValue( ) );
         }
 
-        userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser(  ) );
-        userStored.setUserAttributes( CRMUserAttributeHome.findByPrimaryKey( user.getIdCRMUser(  ) ) );
-        assertEquals( user.getIdCRMUser(  ), userStored.getIdCRMUser(  ) );
-        assertEquals( user.getUserGuid(  ), userStored.getUserGuid(  ) );
+        userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser( ) );
+        userStored.setUserAttributes( CRMUserAttributeHome.findByPrimaryKey( user.getIdCRMUser( ) ) );
+        assertEquals( user.getIdCRMUser( ), userStored.getIdCRMUser( ) );
+        assertEquals( user.getUserGuid( ), userStored.getUserGuid( ) );
 
-        for ( Entry<String, String> userAttribute : user.getUserAttributes(  ).entrySet(  ) )
+        for ( Entry<String, String> userAttribute : user.getUserAttributes( ).entrySet( ) )
         {
-            assertEquals( userAttribute.getValue(  ), userStored.getUserAttributeValue( userAttribute.getKey(  ) ) );
+            assertEquals( userAttribute.getValue( ), userStored.getUserAttributeValue( userAttribute.getKey( ) ) );
         }
 
         // Test finders
         CRMUserHome.findByUserGuid( USER_GUID2 );
-        CRMUserHome.findAll(  );
+        CRMUserHome.findAll( );
 
-        CRMUserFilter filter = new CRMUserFilter(  );
+        CRMUserFilter filter = new CRMUserFilter( );
         filter.setUserGuid( USER_GUID2 );
         filter.setUserAttributes( userAttributes );
 
@@ -127,9 +126,9 @@ public class CRMUserTest extends LuteceTestCase
         CRMUserHome.findByListIds( listIdsCRMUser );
 
         // Test remove
-        CRMUserAttributeHome.remove( user.getIdCRMUser(  ) );
-        CRMUserHome.remove( user.getIdCRMUser(  ) );
-        userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser(  ) );
+        CRMUserAttributeHome.remove( user.getIdCRMUser( ) );
+        CRMUserHome.remove( user.getIdCRMUser( ) );
+        userStored = CRMUserHome.findByPrimaryKey( user.getIdCRMUser( ) );
         assertNull( userStored );
     }
 }

@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.business.demand;
 
-
 /**
  * Pagination properties
  *
@@ -48,41 +47,42 @@ public class PaginationPropertiesImpl implements IPaginationProperties
     /**
      * Creates a new PaginationPropertiesImpl.java object.
      */
-    public PaginationPropertiesImpl(  )
+    public PaginationPropertiesImpl( )
     {
-        super(  );
+        super( );
     }
 
     /**
      * Creates a new PaginationPropertiesImpl.java object.
+     * 
      * @param firstResult
      * @param pageSize
      */
     public PaginationPropertiesImpl( int firstResult, int pageSize, int itemsPerPage, int pageIndex )
     {
-        super(  );
+        super( );
         this._nFirstResult = firstResult;
         this._nPageSize = pageSize;
         this._nItemsPerPage = itemsPerPage;
         this._nPageIndex = pageIndex;
     }
 
-    public int getFirstResult(  )
+    public int getFirstResult( )
     {
         return this._nFirstResult;
     }
 
-    public int getPageSize(  )
+    public int getPageSize( )
     {
         return this._nPageSize;
     }
 
-    public int getItemsPerPage(  )
+    public int getItemsPerPage( )
     {
         return this._nItemsPerPage;
     }
 
-    public int getPageIndex(  )
+    public int getPageIndex( )
     {
         return this._nPageIndex;
     }

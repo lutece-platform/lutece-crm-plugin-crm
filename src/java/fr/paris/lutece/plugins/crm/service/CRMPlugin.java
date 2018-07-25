@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crm.service;
 import fr.paris.lutece.plugins.crm.service.demand.DemandTypeService;
 import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
 
-
 /**
  *
  * CRMPlugin
@@ -50,8 +49,8 @@ public class CRMPlugin extends PluginDefaultImplementation
      * Initialize the CRMPlugin
      */
     @Override
-    public void init(  )
+    public void init( )
     {
-        DemandTypeService.init(  );
+        DemandTypeService.init( );
     }
 }

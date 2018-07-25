@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crm.business.user;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  *
  * MokeCRMUser
@@ -55,7 +54,7 @@ public class MokeCRMUser extends CRMUser
         setIdCRMUser( nIdCRMUser );
         setUserGuid( USER_GUID + nIdCRMUser );
 
-        Map<String, String> userAttributes = new HashMap<String, String>(  );
+        Map<String, String> userAttributes = new HashMap<String, String>( );
         userAttributes.put( USER_ATTRIBUTE_KEY1, USER_ATTRIBUTE_VALUE1 );
         userAttributes.put( USER_ATTRIBUTE_KEY2, USER_ATTRIBUTE_VALUE2 );
         setUserAttributes( userAttributes );

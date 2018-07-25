@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crm.business.notification;
 
-
 /**
  *
  * NotificationFilter
@@ -51,7 +50,7 @@ public class NotificationFilter
     /**
      * Constructor
      */
-    public NotificationFilter(  )
+    public NotificationFilter( )
     {
         _bIsWideSearch = false;
         _nIdDemand = ALL_INT;
@@ -59,14 +58,15 @@ public class NotificationFilter
     }
 
     /**
-     * Set true if the filter is applied to a wide search.
-     * <br/>
+     * Set true if the filter is applied to a wide search. <br/>
      * In other words, the SQL query will use
      * <ul>
      * <li>SQL <b>OR</b> if it is applied to a wide search</li>
      * <li>SQL <b>AND</b> if it is not applied to a wide search</li>
      * </ul>
-     * @param bIsWideSearch true if it a wide search, false otherwise
+     * 
+     * @param bIsWideSearch
+     *            true if it a wide search, false otherwise
      */
     public void setIsWideSearch( boolean bIsWideSearch )
     {
@@ -74,32 +74,35 @@ public class NotificationFilter
     }
 
     /**
-     * Check if the filter is applied to a wide search or not.
-     * <br/>
+     * Check if the filter is applied to a wide search or not. <br/>
      * In other words, the SQL query will use
      * <ul>
      * <li>SQL <b>OR</b> if it is applied to a wide search</li>
      * <li>SQL <b>AND</b> if it is not applied to a wide search</li>
      * </ul>
+     * 
      * @return true if it is applied to a wide search
      */
-    public boolean getIsWideSearch(  )
+    public boolean getIsWideSearch( )
     {
         return _bIsWideSearch;
     }
 
     /**
      * Returns the IdDemand
+     * 
      * @return The IdDemand
      */
-    public int getIdDemand(  )
+    public int getIdDemand( )
     {
         return _nIdDemand;
     }
 
     /**
      * Sets the IdDemand
-     * @param strIdDemand The IdDemand
+     * 
+     * @param strIdDemand
+     *            The IdDemand
      */
     public void setIdDemand( int strIdDemand )
     {
@@ -108,16 +111,19 @@ public class NotificationFilter
 
     /**
      * Check if the filter contains the attribute ID Demand
+     * 
      * @return true if it contains, false otherwise
      */
-    public boolean containsIdDemand(  )
+    public boolean containsIdDemand( )
     {
         return _nIdDemand != ALL_INT;
     }
 
     /**
      * Set the status is_read of the notification
-     * @param bIsRead true if the notification is read, false otherwise
+     * 
+     * @param bIsRead
+     *            true if the notification is read, false otherwise
      */
     public void setIsRead( boolean bIsRead )
     {
@@ -126,18 +132,20 @@ public class NotificationFilter
 
     /**
      * Check if the notification is read
+     * 
      * @return true if it is read, false otherwise
      */
-    public boolean isRead(  )
+    public boolean isRead( )
     {
         return _nIsRead == TRUE;
     }
 
     /**
      * Check if the filter contains the attribute is_read
+     * 
      * @return true if it contains, false otherwise
      */
-    public boolean containsIsRead(  )
+    public boolean containsIsRead( )
     {
         return _nIsRead != ALL_INT;
     }

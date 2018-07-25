@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crm.business.notification;
 
 import java.sql.Timestamp;
 
-
 /**
  *
  * Notification
@@ -53,7 +52,9 @@ public class Notification
 
     /**
      * Set the id notification
-     * @param nIdNotification the id notification
+     * 
+     * @param nIdNotification
+     *            the id notification
      */
     public void setIdNotification( int nIdNotification )
     {
@@ -62,16 +63,19 @@ public class Notification
 
     /**
      * Get the id notification
+     * 
      * @return the id notification
      */
-    public int getIdNotification(  )
+    public int getIdNotification( )
     {
         return _nIdNotification;
     }
 
     /**
      * Set the id demand
-     * @param nIdDemand the id demand
+     * 
+     * @param nIdDemand
+     *            the id demand
      */
     public void setIdDemand( int nIdDemand )
     {
@@ -80,16 +84,19 @@ public class Notification
 
     /**
      * Get the id demand
+     * 
      * @return the id demand
      */
-    public int getIdDemand(  )
+    public int getIdDemand( )
     {
         return _nIdDemand;
     }
 
     /**
      * Set the object of the notification
-     * @param strObject the object
+     * 
+     * @param strObject
+     *            the object
      */
     public void setObject( String strObject )
     {
@@ -98,16 +105,19 @@ public class Notification
 
     /**
      * Get the object of the notification
+     * 
      * @return the object of the notification
      */
-    public String getObject(  )
+    public String getObject( )
     {
         return _strObject;
     }
 
     /**
      * Set the message of the notification
-     * @param strMessage the message of the notification
+     * 
+     * @param strMessage
+     *            the message of the notification
      */
     public void setMessage( String strMessage )
     {
@@ -116,16 +126,19 @@ public class Notification
 
     /**
      * Get the message of the notification
+     * 
      * @return the message
      */
-    public String getMessage(  )
+    public String getMessage( )
     {
         return _strMessage;
     }
 
     /**
      * Set the status of the notification
-     * @param bIsRead true if the notification is read, false otherwise
+     * 
+     * @param bIsRead
+     *            true if the notification is read, false otherwise
      */
     public void setIsRead( boolean bIsRead )
     {
@@ -134,16 +147,19 @@ public class Notification
 
     /**
      * Check if the notification is read or not
+     * 
      * @return true if it is read, false otherwise
      */
-    public boolean isRead(  )
+    public boolean isRead( )
     {
         return _bIsRead;
     }
 
     /**
      * Set the date creation of the notification
-     * @param dateCreation the date creation
+     * 
+     * @param dateCreation
+     *            the date creation
      */
     public void setDateCreation( Timestamp dateCreation )
     {
@@ -152,16 +168,19 @@ public class Notification
 
     /**
      * Get the date creation of the notification
+     * 
      * @return the date creation of the notification
      */
-    public Timestamp getDateCreation(  )
+    public Timestamp getDateCreation( )
     {
         return _dateCreation;
     }
 
     /**
      * Set the sender
-     * @param strSender the sender
+     * 
+     * @param strSender
+     *            the sender
      */
     public void setSender( String strSender )
     {
@@ -170,9 +189,10 @@ public class Notification
 
     /**
      * Get the sender
+     * 
      * @return the senders
      */
-    public String getSender(  )
+    public String getSender( )
     {
         return _strSender;
     }

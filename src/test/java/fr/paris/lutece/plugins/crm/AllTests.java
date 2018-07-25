@@ -44,7 +44,6 @@ import fr.paris.lutece.plugins.crm.service.CRMServiceTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-
 /**
  * This class is the main test suite for the package fr.paris.lutece.plugins.crm
  */
@@ -52,13 +51,14 @@ public final class AllTests
 {
     /**
      * A set of tests
+     * 
      * @return Test the tests
      */
-    public static Test suite(  )
+    public static Test suite( )
     {
         TestSuite suite = new TestSuite( "*** Tests Plugin CRM " );
 
-        //$JUnit-BEGIN$
+        // $JUnit-BEGIN$
         suite.addTest( new TestSuite( CategoryTest.class ) );
         suite.addTest( new TestSuite( DemandStatusCRMTest.class ) );
         suite.addTest( new TestSuite( DemandTest.class ) );
@@ -67,7 +67,7 @@ public final class AllTests
         suite.addTest( new TestSuite( CRMUserTest.class ) );
         suite.addTest( new TestSuite( CRMServiceTest.class ) );
 
-        //$JUnit-END$
+        // $JUnit-END$
         return suite;
     }
 }

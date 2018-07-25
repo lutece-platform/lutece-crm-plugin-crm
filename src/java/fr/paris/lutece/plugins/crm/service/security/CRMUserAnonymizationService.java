@@ -42,7 +42,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 /**
  *
  * CRMUserAnonymizationService
@@ -65,24 +64,23 @@ public class CRMUserAnonymizationService implements IAnonymizationService
     @Override
     public void anonymizeUser( int nIdUser, Locale locale )
     {
-        CRMUser user = CRMUserService.getService(  ).findByPrimaryKey( nIdUser );
+        CRMUser user = CRMUserService.getService( ).findByPrimaryKey( nIdUser );
 
         if ( user != null )
         {
-            String strEncryptionAlgorithme = AppPropertiesService.getProperty( PROPERTY_ANONYMIZATION_ENCRYPT_ALGO,
-                    CONSTANT_DEFAULT_ENCRYPT_ALGO );
-            user.setUserGuid( CryptoService.encrypt( user.getUserGuid(  ), strEncryptionAlgorithme ) );
+            String strEncryptionAlgorithme = AppPropertiesService.getProperty( PROPERTY_ANONYMIZATION_ENCRYPT_ALGO, CONSTANT_DEFAULT_ENCRYPT_ALGO );
+            user.setUserGuid( CryptoService.encrypt( user.getUserGuid( ), strEncryptionAlgorithme ) );
 
-            Map<String, String> userInfos = user.getUserAttributes(  );
+            Map<String, String> userInfos = user.getUserAttributes( );
 
-            for ( Entry<String, String> param : userInfos.entrySet(  ) )
+            for ( Entry<String, String> param : userInfos.entrySet( ) )
             {
-                userInfos.put( param.getKey(  ), CryptoService.encrypt( param.getValue(  ), strEncryptionAlgorithme ) );
+                userInfos.put( param.getKey( ), CryptoService.encrypt( param.getValue( ), strEncryptionAlgorithme ) );
             }
 
             user.setUserAttributes( userInfos );
             user.setStatus( CRMUser.STATUS_ANONYMIZED );
-            CRMUserService.getService(  ).update( user );
+            CRMUserService.getService( ).update( user );
         }
     }
 }

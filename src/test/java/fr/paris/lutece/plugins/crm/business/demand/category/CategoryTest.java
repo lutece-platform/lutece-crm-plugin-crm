@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crm.business.demand.category;
 
 import fr.paris.lutece.test.LuteceTestCase;
 
-
 /**
  *
  * CategoryTest
@@ -51,38 +50,38 @@ public class CategoryTest extends LuteceTestCase
     /**
      * Test business of class fr.paris.lutece.plugins.crm.business.demand.category.Category
      */
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        Category category = new Category(  );
+        Category category = new Category( );
         category.setName( NAME1 );
         category.setDescription( DESCRIPTION1 );
 
         // Test create
         CategoryHome.create( category );
 
-        Category categoryStored = CategoryHome.findByPrimaryKey( category.getIdCategory(  ) );
-        assertEquals( category.getIdCategory(  ), categoryStored.getIdCategory(  ) );
-        assertEquals( category.getName(  ), categoryStored.getName(  ) );
-        assertEquals( category.getDescription(  ), categoryStored.getDescription(  ) );
+        Category categoryStored = CategoryHome.findByPrimaryKey( category.getIdCategory( ) );
+        assertEquals( category.getIdCategory( ), categoryStored.getIdCategory( ) );
+        assertEquals( category.getName( ), categoryStored.getName( ) );
+        assertEquals( category.getDescription( ), categoryStored.getDescription( ) );
 
         // Test update
         category.setName( NAME2 );
         category.setDescription( DESCRIPTION2 );
         CategoryHome.update( category );
-        categoryStored = CategoryHome.findByPrimaryKey( category.getIdCategory(  ) );
-        assertEquals( category.getIdCategory(  ), categoryStored.getIdCategory(  ) );
-        assertEquals( category.getName(  ), categoryStored.getName(  ) );
-        assertEquals( category.getDescription(  ), categoryStored.getDescription(  ) );
+        categoryStored = CategoryHome.findByPrimaryKey( category.getIdCategory( ) );
+        assertEquals( category.getIdCategory( ), categoryStored.getIdCategory( ) );
+        assertEquals( category.getName( ), categoryStored.getName( ) );
+        assertEquals( category.getDescription( ), categoryStored.getDescription( ) );
 
         // Test finders
-        CategoryHome.findFirstCategory(  );
-        CategoryHome.getCategories(  );
-        CategoryHome.getCategoriesList(  );
+        CategoryHome.findFirstCategory( );
+        CategoryHome.getCategories( );
+        CategoryHome.getCategoriesList( );
 
         // Test remove
-        CategoryHome.remove( category.getIdCategory(  ) );
-        categoryStored = CategoryHome.findByPrimaryKey( category.getIdCategory(  ) );
+        CategoryHome.remove( category.getIdCategory( ) );
+        categoryStored = CategoryHome.findByPrimaryKey( category.getIdCategory( ) );
         assertNull( categoryStored );
     }
 }

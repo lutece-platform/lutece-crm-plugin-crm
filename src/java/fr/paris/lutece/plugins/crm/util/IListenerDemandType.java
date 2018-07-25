@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.crm.util;
 import fr.paris.lutece.plugins.crm.business.demand.DemandType;
 
 //To allow to load beans with Spring
-public interface IListenerDemandType extends IListener<DemandType> {
-    
+public interface IListenerDemandType extends IListener<DemandType>
+{
+
 }

@@ -51,85 +51,80 @@ import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-
 /**
  * This class represents business objects DemandTypePortlet
  */
 public class DemandTypePortlet extends Portlet
 {
 
-    
-    
-
-
     // Constants
     private int _nIdCategory;
-    
+
     /**
      * Sets the identifier of the portlet type to the value specified in the ArticlesListPortletHome class
      */
-    public DemandTypePortlet(  )
+    public DemandTypePortlet( )
     {
     }
 
     /**
      * Returns the Xml code of the DemandeTypePortlet portlet without XML heading
      *
-     * @param request The HTTP Servlet request
+     * @param request
+     *            The HTTP Servlet request
      * @return the Xml code of the form portlet content
      */
     public String getXml( HttpServletRequest request )
     {
-       
+
         Locale locale;
 
         if ( request != null )
         {
-            locale = request.getLocale(  );
+            locale = request.getLocale( );
         }
         else
         {
-            locale = I18nService.getDefaultLocale();
+            locale = I18nService.getDefaultLocale( );
         }
-        
-        StringBuffer strXml = new StringBuffer(  );
+
+        StringBuffer strXml = new StringBuffer( );
         XmlUtil.beginElement( strXml, CRMConstants.TAG_DEMANDE_TYPE_PORTLET );
         XmlUtil.beginElement( strXml, CRMConstants.TAG_DEMANDE_TYPE_PORTLET_CONTENT );
         XmlUtil.beginElement( strXml, CRMConstants.TAG_CATEGORY_LIST );
-        if(_nIdCategory!=CrmUtils.CONSTANT_ID_NULL)
+        if ( _nIdCategory != CrmUtils.CONSTANT_ID_NULL )
         {
-        	Category category=null;
-        	if(_nIdCategory != CrmUtils.convertStringToInt(CRMConstants.NO_CATEGORY))
-        		
-        	{
-        		category=CategoryService.getService().findByPrimaryKey(_nIdCategory);
-        	}
-        	else
-        	{
-        		category=new Category();
-        		category.setIdCategory(_nIdCategory);
-        		category.setName(" ");
-        	}
-        	
-        	
-        	List<DemandType> listDemandType=DemandTypeService.getService().findForLuteceUser(request, _nIdCategory);
-        	if(category!=null)
-        	{
-        		strXml.append(category.getXml(request, locale, listDemandType))	;
-        	}
+            Category category = null;
+            if ( _nIdCategory != CrmUtils.convertStringToInt( CRMConstants.NO_CATEGORY ) )
+
+            {
+                category = CategoryService.getService( ).findByPrimaryKey( _nIdCategory );
+            }
+            else
+            {
+                category = new Category( );
+                category.setIdCategory( _nIdCategory );
+                category.setName( " " );
+            }
+
+            List<DemandType> listDemandType = DemandTypeService.getService( ).findForLuteceUser( request, _nIdCategory );
+            if ( category != null )
+            {
+                strXml.append( category.getXml( request, locale, listDemandType ) );
+            }
         }
         else
         {
-        	Collection<Category> listCategory=CategoryService.getService().getCategoriesList();
-        	Map<String, List<DemandType>> mapCategoryDemandType= DemandTypeService.getService().findForLuteceUser(request);
-        	for(Category category:listCategory )
-        	{
-        		strXml.append(category.getXml(request, locale, mapCategoryDemandType.get(Integer.toString(category.getIdCategory()))))	;
-        	}
-        	
+            Collection<Category> listCategory = CategoryService.getService( ).getCategoriesList( );
+            Map<String, List<DemandType>> mapCategoryDemandType = DemandTypeService.getService( ).findForLuteceUser( request );
+            for ( Category category : listCategory )
+            {
+                strXml.append( category.getXml( request, locale, mapCategoryDemandType.get( Integer.toString( category.getIdCategory( ) ) ) ) );
+            }
+
         }
         XmlUtil.endElement( strXml, CRMConstants.TAG_CATEGORY_LIST );
-        XmlUtil.endElement( strXml, CRMConstants.TAG_DEMANDE_TYPE_PORTLET_CONTENT);
+        XmlUtil.endElement( strXml, CRMConstants.TAG_DEMANDE_TYPE_PORTLET_CONTENT );
         XmlUtil.endElement( strXml, CRMConstants.TAG_DEMANDE_TYPE_PORTLET );
 
         String str = addPortletTags( strXml );
@@ -137,62 +132,70 @@ public class DemandTypePortlet extends Portlet
         return str;
     }
 
-    
     /**
      * the Category id associated to the portlet
+     * 
      * @return the Category id associated to the portlet
      */
-    public int getIdCategory() {
-		return _nIdCategory;
-	}
+    public int getIdCategory( )
+    {
+        return _nIdCategory;
+    }
 
     /**
      * set the Category id associated to the portlet
-     * @param _nIdCategory set the Category id associated to the portlet
+     * 
+     * @param _nIdCategory
+     *            set the Category id associated to the portlet
      */
-	public void setIdCategory(int _nIdCategory) {
-		this._nIdCategory = _nIdCategory;
-	}
+    public void setIdCategory( int _nIdCategory )
+    {
+        this._nIdCategory = _nIdCategory;
+    }
 
-	/**
+    /**
      * Returns the Xml code of the form portlet with XML heading
      *
-     * @param request The HTTP Servlet Request
+     * @param request
+     *            The HTTP Servlet Request
      * @return the Xml code of the Articles List portlet
      */
     public String getXmlDocument( HttpServletRequest request )
     {
-        return XmlUtil.getXmlHeader(  ) + getXml( request );
+        return XmlUtil.getXmlHeader( ) + getXml( request );
     }
 
     /**
      * Updates the current instance of the form portlet object
      */
-    public void update(  )
+    public void update( )
     {
-        DemandTypePortletHome.getInstance(  ).update( this );
+        DemandTypePortletHome.getInstance( ).update( this );
     }
 
     /**
-     * Removes the current instance of the  the form portlet  object
+     * Removes the current instance of the the form portlet object
      */
-    public void remove(  )
+    public void remove( )
     {
-        DemandTypePortletHome.getInstance(  ).remove( this );
-    }
-    
-    
-    @Override
-    public Map<String, String> getXslParams() {
-    	Locale defaultLocale=I18nService.getDefaultLocale();
-    	HashMap<String, String> mapParams=new HashMap<String, String>();
-    	mapParams.put(CRMConstants.MARK_XSL_PARAM_I18N_LABEL_DEMAND_TYPES_LIST, I18nService.getLocalizedString(CRMConstants.PROPERTY_LABEL_DEMAND_TYPES_LIST, defaultLocale));
-    	mapParams.put(CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_INFO, I18nService.getLocalizedString(CRMConstants.PROPERTY_LABEL_CRM_INFO, defaultLocale));
-    	mapParams.put(CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_CONTACT, I18nService.getLocalizedString(CRMConstants.PROPERTY_LABEL_CRM_CONTACT, defaultLocale));
-    	mapParams.put(CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_BEGIN, I18nService.getLocalizedString(CRMConstants.PROPERTY_LABEL_CRM_DATE_BEGIN, defaultLocale));
-    	mapParams.put(CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_END, I18nService.getLocalizedString(CRMConstants.PROPERTY_LABEL_CRM_DATE_END, defaultLocale));
-    	return mapParams;
+        DemandTypePortletHome.getInstance( ).remove( this );
     }
 
-   
+    @Override
+    public Map<String, String> getXslParams( )
+    {
+        Locale defaultLocale = I18nService.getDefaultLocale( );
+        HashMap<String, String> mapParams = new HashMap<String, String>( );
+        mapParams.put( CRMConstants.MARK_XSL_PARAM_I18N_LABEL_DEMAND_TYPES_LIST,
+                I18nService.getLocalizedString( CRMConstants.PROPERTY_LABEL_DEMAND_TYPES_LIST, defaultLocale ) );
+        mapParams.put( CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_INFO, I18nService.getLocalizedString( CRMConstants.PROPERTY_LABEL_CRM_INFO, defaultLocale ) );
+        mapParams.put( CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_CONTACT,
+                I18nService.getLocalizedString( CRMConstants.PROPERTY_LABEL_CRM_CONTACT, defaultLocale ) );
+        mapParams.put( CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_BEGIN,
+                I18nService.getLocalizedString( CRMConstants.PROPERTY_LABEL_CRM_DATE_BEGIN, defaultLocale ) );
+        mapParams.put( CRMConstants.MARK_XSL_PARAM_I18N_LABEL_CRM_DATE_END,
+                I18nService.getLocalizedString( CRMConstants.PROPERTY_LABEL_CRM_DATE_END, defaultLocale ) );
+        return mapParams;
+    }
+
 }

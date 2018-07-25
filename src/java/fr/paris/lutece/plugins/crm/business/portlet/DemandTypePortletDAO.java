@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crm.business.portlet;
 import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.util.sql.DAOUtil;
 
-
 /**
  * This class provides Data Access methods for DemandTypePortlet objects
  */
@@ -48,8 +47,8 @@ public final class DemandTypePortletDAO implements IDemandTypePortletDAO
     private static final String SQL_QUERY_UPDATE = "UPDATE crm_demand_type_portlet SET id_portlet = ?, id_category = ? WHERE id_portlet = ? ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM crm_demand_type_portlet WHERE id_portlet= ? ";
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //Access methods to data
+    // /////////////////////////////////////////////////////////////////////////////////////
+    // Access methods to data
 
     /**
      * {@inheritDoc}
@@ -60,11 +59,11 @@ public final class DemandTypePortletDAO implements IDemandTypePortletDAO
         DemandTypePortlet p = (DemandTypePortlet) portlet;
 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT );
-        daoUtil.setInt( 1, p.getId(  ) );
-        daoUtil.setInt( 2, p.getIdCategory() );
+        daoUtil.setInt( 1, p.getId( ) );
+        daoUtil.setInt( 2, p.getIdCategory( ) );
 
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -75,8 +74,8 @@ public final class DemandTypePortletDAO implements IDemandTypePortletDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE );
         daoUtil.setInt( 1, nPortletId );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -87,17 +86,17 @@ public final class DemandTypePortletDAO implements IDemandTypePortletDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT );
         daoUtil.setInt( 1, nPortletId );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        DemandTypePortlet portlet = new DemandTypePortlet(  );
+        DemandTypePortlet portlet = new DemandTypePortlet( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             portlet.setId( daoUtil.getInt( 1 ) );
             portlet.setIdCategory( daoUtil.getInt( 2 ) );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return portlet;
     }
@@ -111,14 +110,14 @@ public final class DemandTypePortletDAO implements IDemandTypePortletDAO
         int nCountPortlet = 0;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT_PORTLET_BY_ID_CATEGORY );
         daoUtil.setInt( 1, nIdCategory );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nCountPortlet = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nCountPortlet;
     }
@@ -131,10 +130,10 @@ public final class DemandTypePortletDAO implements IDemandTypePortletDAO
     {
         DemandTypePortlet p = (DemandTypePortlet) portlet;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE );
-        daoUtil.setInt( 1, p.getId(  ) );
-        daoUtil.setInt( 2, p.getIdCategory(  ) );
-        daoUtil.setInt( 3, p.getId(  ) );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.setInt( 1, p.getId( ) );
+        daoUtil.setInt( 2, p.getIdCategory( ) );
+        daoUtil.setInt( 3, p.getId( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 }

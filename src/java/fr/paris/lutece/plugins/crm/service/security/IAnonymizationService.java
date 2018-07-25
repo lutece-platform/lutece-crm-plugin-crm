@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crm.service.security;
 
 import java.util.Locale;
 
-
 /**
  *
  * IAnonymizationService
@@ -46,8 +45,10 @@ public interface IAnonymizationService
     /**
      * Anonymize user data based on anonymize status of his fields.
      *
-     * @param nIdUser the id user
-     * @param locale The locale
+     * @param nIdUser
+     *            the id user
+     * @param locale
+     *            The locale
      */
     void anonymizeUser( int nIdUser, Locale locale );
 }

@@ -37,7 +37,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 
 import java.util.List;
 
-
 /**
  *
  * ICRMUserDAO
@@ -46,46 +45,63 @@ import java.util.List;
 public interface ICRMUserDAO
 {
     /**
-    * Generates a new primary key
-    * @param plugin The Plugin
-    * @return The new primary key
-    */
+     * Generates a new primary key
+     * 
+     * @param plugin
+     *            The Plugin
+     * @return The new primary key
+     */
     int newPrimaryKey( Plugin plugin );
 
     /**
      * Insert a new record in the table.
-     * @param user instance of the CRMUser object to insert
-     * @param plugin the Plugin
+     * 
+     * @param user
+     *            instance of the CRMUser object to insert
+     * @param plugin
+     *            the Plugin
      * @return the key of the newly created notification
      */
     int insert( CRMUser user, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param user the reference of the CRMUser
-     * @param plugin the Plugin
+     * 
+     * @param user
+     *            the reference of the CRMUser
+     * @param plugin
+     *            the Plugin
      */
     void store( CRMUser user, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nIdCRMUser int identifier of the CRMUser to delete
-     * @param plugin the Plugin
+     * 
+     * @param nIdCRMUser
+     *            int identifier of the CRMUser to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nIdCRMUser, Plugin plugin );
 
     /**
      * Load the data from the table
-     * @param nIdCRMUser The identifier of the CRMUser
-     * @param plugin the Plugin
+     * 
+     * @param nIdCRMUser
+     *            The identifier of the CRMUser
+     * @param plugin
+     *            the Plugin
      * @return The instance of the CRMUser
      */
     CRMUser load( int nIdCRMUser, Plugin plugin );
 
     /**
      * Load the data from a given user guid
-     * @param strUserGuid the user guid
-     * @param plugin the Plugin
+     * 
+     * @param strUserGuid
+     *            the user guid
+     * @param plugin
+     *            the Plugin
      * @return The instance of the CRMUser
      */
     CRMUser loadByUserGuid( String strUserGuid, Plugin plugin );
@@ -93,7 +109,8 @@ public interface ICRMUserDAO
     /**
      * Find all.
      *
-     * @param plugin the plugin
+     * @param plugin
+     *            the plugin
      * @return the list
      */
     List<CRMUser> selectAll( Plugin plugin );
@@ -101,8 +118,10 @@ public interface ICRMUserDAO
     /**
      * Find list ids crm user by filter.
      *
-     * @param filter the filter
-     * @param plugin the plugin
+     * @param filter
+     *            the filter
+     * @param plugin
+     *            the plugin
      * @return the list
      */
     List<Integer> selectListIdsCRMUserByFilter( CRMUserFilter filter, Plugin plugin );
@@ -110,8 +129,10 @@ public interface ICRMUserDAO
     /**
      * Select by list ids.
      *
-     * @param listIdsCRMUser the list ids crm user
-     * @param plugin the plugin
+     * @param listIdsCRMUser
+     *            the list ids crm user
+     * @param plugin
+     *            the plugin
      * @return the list
      */
     List<CRMUser> selectByListIds( List<Integer> listIdsCRMUser, Plugin plugin );
