@@ -39,6 +39,8 @@ CREATE TABLE crm_demand (
     PRIMARY KEY (id_demand)
 );
 
+ALTER TABLE crm_demand ADD INDEX IDX_CUSTOMER (id_crm_user ASC) ;
+
 --
 -- Structure for table crm_notification
 --
@@ -53,6 +55,8 @@ CREATE TABLE crm_notification (
 	sender VARCHAR(255) DEFAULT '' NOT NULL,
 	PRIMARY KEY (id_notification)
 );
+
+ALTER TABLE crm_notification ADD INDEX IDX_NOTIF_DEMAND_ID (id_demand ASC) ;
 
 --
 -- Structure for table crm_category
