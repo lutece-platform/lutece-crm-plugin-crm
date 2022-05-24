@@ -47,7 +47,7 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.html.IPaginator;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
 

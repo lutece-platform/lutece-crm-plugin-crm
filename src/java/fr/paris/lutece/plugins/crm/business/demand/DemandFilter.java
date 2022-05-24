@@ -35,7 +35,7 @@ package fr.paris.lutece.plugins.crm.business.demand;
 
 import fr.paris.lutece.plugins.crm.util.OperatorEnum;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
