@@ -1,5 +1,5 @@
 <#macro comboOrder max_order current_order>
-	<select name="order">
+	<select name="order" id="order" class="form-select">
 		<#list 1..max_order as order>
 			<#if order = current_order>
 				<option value="${order}" selected="selected">${order}</option>
@@ -9,149 +9,82 @@
 		</#list> 
 	</select>
 </#macro>
-
-<div class="row-fluid">
-	<div class="span12">
-		<fieldset>
-			<legend>#i18n{crm.modify_demand_type.pageTitle}</legend>
-				</div>
-</div>
-<div class="row-fluid">	
-	<div class="span7">
-		    <form class="form-horizontal" method="post" name="modify_demand_type" id="modify_demand_type" action="jsp/admin/plugins/crm/DoModifyDemandType.jsp">
-		    	<input type="hidden" name="id_demand_type" value="${demand_type.idDemandType}" />
-		        <div class="control-group">
-		            <label class="control-label" for="demand_type_label" >#i18n{crm.modify_demand_type.labelLabel} *</label>
-		            <div class="controls">
-		            	<input type="text" id="demand_type_label" name="demand_type_label" class="input-xlarge" maxlength="255" value="${demand_type.label}" />
-		            </div>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" for="url_resource" >#i18n{crm.modify_demand_type.labelUrlResource} *</label>
-		            <div class="controls">
-		            	<input type="text" id="url_resource" name="url_resource" class="input-xxlarge"  maxlength="255" value="${demand_type.urlResource}" />
-		            </div>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" for="url_info" >#i18n{crm.modify_demand_type.labelUrlInfo}</label>
-		            <div class="controls">
-		            	<input type="text" id="url_info" name="url_info" class="input-xlarge"  maxlength="255" value="${demand_type.urlInfo}" />
-		            </div>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" for="url_contact" >#i18n{crm.modify_demand_type.labelUrlContact}</label>
-		            <div class="controls">
-		            	<input type="text" id="url_contact" name="url_contact" class="input-xlarge"  maxlength="255" value="${demand_type.urlContact}" />
-		            </div>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" class="control-label" for="order" >#i18n{crm.modify_demand_type.labelOrder}</label>
-		            <div class="controls">
-		            	<@comboOrder max_order=max_order current_order=demand_type.order />
-		            </div>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" for="category_id_category" >#i18n{crm.modify_demand_type.labelCategory}</label>
-		            <div class="controls">
-		            	<@combo name="category_id_category" items=categories_list default_value=demand_type.idCategory />
-		            </div>
-		        </div>
-				<div class="control-group">
-		        	<label class="control-label" for="date_begin" >#i18n{crm.modify_demand_type.labelDateBegin}</label>
-		            <div class="controls">
-		            	<div class="input-prepend">
-			            	<span class="add-on"><i class="icon-calendar"></i></span>
-		            		<input type="text" id="date_begin" name="date_begin" class="input-small" maxlength="10" value="<#if demand_type.dateBegin??>${demand_type.dateBegin?date}</#if>" />
-	            		</div>
-		        	</div>
-		        </div>
-		        <div class="control-group">
-		        	<label class="control-label" for="date_end" >#i18n{crm.modify_demand_type.labelDateEnd}</label>
-		            <div class="controls">
-		            	<div class="input-prepend">
-			            	<span class="add-on"><i class="icon-calendar"></i></span>
-		            		<input type="text" id="date_end" name="date_end" class="input-small" maxlength="10" value="<#if demand_type.dateEnd??>${demand_type.dateEnd?date}</#if>" />
-		            	</div>
-		        	</div>
-		        </div>
-	</div>
-	<div class="span5">	
-		        <div class="control-group">
-					<label class="control-label" for="workgroup_key">#i18n{crm.modify_demand_type.labelWorkgroup} </label>
-					<div class="controls">
-						<@combo name="workgroup_key" items=user_workgroup_list default_value=demand_type.workgroup />
-					</div>
-					<p class="help-block">
-						#i18n{crm.modify_demand_type.labelWorkgroupComment}
-					</p>
-			   	</div>
-			   	<#if role_list??>
-				   	<div class="control-group">
-				    	<label class="control-label" for="role_key">#i18n{crm.create_demand_type.labelRole} </label>
-			        	<div class="controls">
-			        		<@combo name="role_key" default_value=demand_type.role items=role_list />
-						</div>
-						<p class="help-block">
-							#i18n{crm.create_demand_type.labelRoleComment}
-						</p>
-					</div>
-				</#if>
-		        
-		        <div class="control-group">
-		        	<label class="control-label" for="target">#i18n{crm.modify_demand_type.labelTarget}</label>
-		        	<div class="controls">
-		        		<@combo name="target" items=targets_list default_value=demand_type.target.id />
-		        	</div>
-		        	<p class="help-block">
-		        		#i18n{crm.modify_demand_type.labelTargetComment}
-		        	</p>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" for="url_delete" >#i18n{crm.modify_demand_type.labelUrlDelete}</label>            
-		            <div class="controls">
-		            	<input type="text" id="url_delete" name="url_delete" size="60" maxlength="255" value="<#if demand_type.urlDelete??>${demand_type.urlDelete}</#if>" />
-		            </div>
-		            <p class="help-block">
-		        		#i18n{crm.modify_demand_type.labelUrlDeleteComment}
-		        	</p>
-		        </div>
-		        <div class="control-group">
-					<label for="" class="checkbox">
-						#i18n{crm.modify_demand_type.labelIncludeIdCrmUser}
-						<input type="checkbox" <#if demand_type.includeIdCrmUser>checked="checked"</#if>   name="include_id_crm_user" />
-					</label>
-					<p class="help-block">#i18n{crm.modify_demand_type.labelIncludeIdCrmUserComment}</p>
-				</div>
-				 <div class="control-group">
-					<label for="" class="checkbox">
-						#i18n{crm.modify_demand_type.labelNeedAuthentication}
-						<input type="checkbox" <#if demand_type.needAuthentication>checked="checked"</#if>   name="need_authentication" />
-					</label>
-					<p class="help-block">#i18n{crm.modify_demand_type.labelNeedAuthenticationComment}</p>
-				</div>
-				 <div class="control-group">
-					<label for="" class="checkbox">
-						#i18n{crm.modify_demand_type.labelNeedValidation}
-						<input type="checkbox" <#if demand_type.needValidation>checked="checked"</#if>   name="need_validation" />
-					</label>
-					<p class="help-block">#i18n{crm.modify_demand_type.labelNeedValidationComment}</p>
-				</div>
-		</div>
-</div>
-<div class="row-fluid">
-	<div class="span12">
-		        <div class="form-actions">
-		            <button type="submit" value="#i18n{crm.modify_demand_type.buttonModify}" class="btn btn-primary btn-small offset1" tabindex="3" >
-		            	<i class="icon-ok icon-white"></i>&nbsp;#i18n{crm.modify_demand_type.buttonModify}
-		            </button>
-		        </div>
-		    </form>
-		</fieldset>
-    </div>
-</div>
-<br /><br />
-
-<script src="js/jquery/plugins/ui/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="js/jquery/plugins/ui/ui.datepicker-fr.js"></script>
-<@getDatePicker idField="date_begin" language=locale.language />
-<@getDatePicker idField="date_end" language=locale.language />
+<@row>
+	<@columns>
+		<@box>
+			<@boxHeader title='#i18n{crm.modify_demand_type.pageTitle}' />
+			<@boxBody>		
+				<@tform method='post' name='modify_demand_type' id='modify_demand_type' action='jsp/admin/plugins/crm/DoModifyDemandType.jsp'>
+					<@input type='hidden' name='id_demand_type' value='${demand_type.idDemandType!}' />
+					<@formGroup labelFor='demand_type_label' labelKey='#i18n{crm.modify_demand_type.labelLabel}' mandatory=true>
+						<@input type='text' name='demand_type_label' maxlength=255 value='${demand_type.label!}' />
+					</@formGroup>
+					<@formGroup labelFor='url_resource' labelKey='#i18n{crm.modify_demand_type.labelUrlResource}' mandatory=true>
+						<@input type='text' name='url_resource' maxlength=255 value='${demand_type.urlResource!}' />
+					</@formGroup>
+					<@formGroup labelFor='url_info' labelKey='#i18n{crm.modify_demand_type.labelUrlInfo}' >
+						<@input type='text' name='url_info' maxlength=255 value='${demand_type.urlInfo!}' />
+					</@formGroup>
+					<@formGroup labelFor='url_contact' labelKey='#i18n{crm.modify_demand_type.labelUrlContact}' >
+						<@input type='text' name='url_contact' maxlength=255 value='${demand_type.urlContact!}' />
+					</@formGroup>
+					<@formGroup labelFor='order' labelKey='#i18n{crm.modify_demand_type.labelOrder}' >
+						<@comboOrder max_order=max_order current_order=demand_type.order />
+					</@formGroup>
+					<@formGroup labelFor='category_id_category' labelKey='#i18n{crm.modify_demand_type.labelCategory}' >
+						<@select name="category_id_category" default_value=demand_type.idCategory?string items=categories_list />
+					</@formGroup>
+					<@formGroup labelFor='date_begin' labelKey='#i18n{crm.manage_demand_types.columnDateBegin}'>
+						<@inputGroup>
+							<#assign dtBegin><#if demand_type.dateBegin??>${demand_type.dateBegin?date}</#if></#assign>
+							<@input type='date' name='date_begin' id='date_begin' value=dtBegin format='d/m/Y' />
+							<@inputGroupItem type='text'>
+								<@icon style='calendar' />
+							</@inputGroupItem>
+						</@inputGroup>
+					</@formGroup>
+					<@formGroup labelFor='date_end' labelKey='#i18n{crm.manage_demand_types.columnDateEnd}'>
+						<@inputGroup>
+							<#assign dtEnd><#if demand_type.dateEnd??>${demand_type.dateEnd?date}</#if></#assign>
+							<@input type='date' name='date_end' id='date_end' value=dtEnd format='d/m/Y' />
+							<@inputGroupItem type='text'>
+								<@icon style='calendar' />
+							</@inputGroupItem>
+						</@inputGroup>
+					</@formGroup>
+					<@formGroup labelFor='workgroup_key' labelKey='#i18n{crm.modify_demand_type.labelWorkgroup}' helpKey='#i18n{crm.modify_demand_type.labelWorkgroupComment}'>
+						<@select name='workgroup_key' default_value=demand_type.workgroup?string  items=user_workgroup_list />
+					</@formGroup>
+					<#if role_list??>
+						<@formGroup labelFor='role_key' labelKey='#i18n{crm.modify_demand_type.labelRole}' helpKey='#i18n{crm.modify_demand_type.labelRoleComment}'>
+							<@select name='role_key' default_value=demand_type.role?string  items=role_list />
+						</@formGroup>
+					</#if>
+					<@formGroup labelFor='target' labelKey='#i18n{crm.modify_demand_type.labelTarget}' helpKey='#i18n{crm.modify_demand_type.labelTargetComment}'>
+						<@select name='target' default_value=demand_type.target.id?string  items=targets_list />
+					</@formGroup>
+					<@formGroup labelFor='url_delete' labelKey='#i18n{crm.modify_demand_type.labelUrlDelete}' helpKey='#i18n{crm.modify_demand_type.labelUrlDeleteComment}'>
+						<@inputGroup>
+							<@input type='text' name='url_delete' id='url_delete' maxlength=255 value='${demand_type.urlDelete!}' />
+							<@inputGroupItem type='text'>
+								<@icon style='link' />
+							</@inputGroupItem>
+						</@inputGroup>
+					</@formGroup>
+					<@formGroup labelKey=' '>
+						<#assign isChecked><#if demand_type.includeIdCrmUser>true<#else>false</#if></#assign>
+                    	<@checkBox orientation='switch' name='include_id_crm_user' labelKey='#i18n{crm.modify_demand_type.labelIncludeIdCrmUser}' checked=isChecked?boolean params='#i18n{crm.modify_demand_type.labelIncludeIdCrmUserComment}' />
+						<#assign isChecked><#if demand_type.needAuthentication>true<#else>false</#if></#assign>
+						<@checkBox orientation='switch' name='need_authentication' labelKey='#i18n{crm.modify_demand_type.labelNeedAuthentication}' checked=isChecked?boolean params='#i18n{crm.modify_demand_type.labelNeedAuthenticationComment}' />
+						<#assign isChecked><#if demand_type.needValidation>true<#else>false</#if></#assign>
+						<@checkBox orientation='switch' name='need_validation' labelKey='#i18n{crm.modify_demand_type.labelNeedValidation}' checked=isChecked?boolean params='#i18n{crm.modify_demand_type.labelNeedValidationComment}' />
+					</@formGroup>
+					<@formGroup>
+						<@button type='submit' name='#i18n{crm.modify_demand_type.buttonModify}' title='#i18n{crm.modify_demand_type.buttonModify}' buttonIcon='check' />
+						<@aButton href='jsp/admin/plugins/crm/ManageDemandTypes.jsp' title='#i18n{crm.modify_category.buttonCancel}' buttonIcon='close' color='default' />
+					</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>

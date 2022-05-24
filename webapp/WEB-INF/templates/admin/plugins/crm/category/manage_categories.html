@@ -1,41 +1,33 @@
-<div class="row-fluid">
-	<div class="span12">
-		<fieldset>
-			<legend class="clearfix">#i18n{crm.manage_categories.tableLabel}
-				<span class="pull-right">
-					<form class="form-inline space" method="post" action="jsp/admin/plugins/crm/CreateCategory.jsp">
-				        <button type="submit" value="#i18n{crm.manage_categories.buttonAddCategory}" class="btn btn-primary btn-small" >
-				        	<i class="icon-plus icon-white" ></i>&nbsp;#i18n{crm.manage_categories.buttonAddCategory}
-				        </button>
-				    </form>
-				</span>
-			</legend>
-	    </fieldset>
-	</div>
-	<div class="row-fluid" >
-	    <@paginationAdmin paginator=paginator combo=1 />
-	    <table class="table table-striped table-condensed" >
-	        <tr>
-				<th>#i18n{crm.manage_categories.columnName}</th>
-				<th>#i18n{crm.manage_categories.columnDescription}</th>
-				<th>#i18n{crm.manage_categories.columnActions}</th>
-	        </tr>
-	        <#list categories_list as category >
-	        <tr>
-				<td>${category.name}</td>
-				<td>${category.description}</td>
-	        <td>
-				<a class="btn btn-primary btn-small" href="jsp/admin/plugins/crm/ModifyCategory.jsp?category_id_category=${category.idCategory}" >
-	                 <i class="icon-edit icon-white" ></i>
-	            </a>
-	            <a class="btn btn-danger btn-small" href="jsp/admin/plugins/crm/RemoveCategory.jsp?category_id_category=${category.idCategory}" title="#i18n{portal.util.labelDelete}" >
-	                <i class="icon-trash icon-white" ></i>
-	            </a>
-	        </td>
-	        </tr>
-	        </#list>
-	    </table>
-	    <@paginationAdmin paginator=paginator />
-	</div>
-</div>
-<br /><br />
+<@row>
+	<@columns>
+		<@box>
+			<@boxHeader title='#i18n{crm.manage_categories.tableLabel}' skipHeader=true boxTools=true>
+				<@tform method='post' action='jsp/admin/plugins/crm/CreateCategory.jsp'>
+					<@button type='submit' name='' buttonIcon='plus me-1 mr-1' title='#i18n{crm.manage_categories.buttonAddCategory}' />
+				</@tform>
+			</@boxHeader>
+			<@boxBody class='table-responsive'>
+				<@table headBody=true>
+					<@tr>
+						<@th>#i18n{crm.manage_categories.columnName}</@th>
+						<@th>#i18n{crm.manage_categories.columnDescription}</@th>
+						<@th>#i18n{crm.manage_categories.columnActions}</@th>
+					</@tr>
+					<@tableHeadBodySeparator />
+					<#list categories_list as category >
+						<@tr>
+							<@td>${category.name}</@td>
+							<@td>${category.description}</@td>
+							<@td>
+								<@aButton href='jsp/admin/plugins/crm/ModifyCategory.jsp?category_id_category=${category.idCategory}' title='#i18n{portal.util.labelModify}' buttonIcon='edit me-1 mr-1' hideTitle=['xs'] />
+                                <@aButton href='jsp/admin/plugins/crm/RemoveCategory.jsp?category_id_category=${category.idCategory}' title='#i18n{portal.util.labelDelete}' color='danger' buttonIcon='times me-1 mr-1' hideTitle=['xs'] />
+							</@td>
+						</@tr>					
+					</#list>
+				</@table>
+				
+				<@paginationAdmin paginator=paginator combo=1 />
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>

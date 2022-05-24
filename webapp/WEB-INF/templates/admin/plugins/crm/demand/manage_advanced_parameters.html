@@ -1,24 +1,19 @@
-<div class="row-fluid">
-	<div class="span12">
-		<fieldset>
-		<legend>#i18n{crm.manage_demand_types.advancedParametersLabel}</legend>
-			<form action="jsp/admin/plugins/crm/DoModifyAdvancedParameters.jsp" name="modifyAdvancedParameters" method="post">
-			<div class="control-group">
-				<label for="advancedParametersLabel" class="checkbox">
-				#i18n{crm.manage_demand_types.displayDraftLabel}
-					<input type="checkbox" <#if bDisplayDraft!>checked="checked"</#if> name="bDisplayDraft"/>
-				</label>
-				<p class="help-block">#i18n{crm.manage_demand_types.displayDraftDescription}</p>
-			</div>
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary btn-small">
-					<i class="icon-ok icon-white"></i>&nbsp;#i18n{crm.crm.buttonModify}
-				</button>
-				<a class="btn btn-small" href="jsp/admin/plugins/crm/ManageCategories.jsp">
-					<i class="icon-remove-circle"></i>&nbsp;#i18n{crm.modify_category.buttonCancel}
-				</a>
-			</div>
-			</form>
-		</fieldset>
-	</div>
-</div>
+<@row>
+	<@columns>
+		<@box>
+			<@boxHeader title='#i18n{crm.manage_demand_types.advancedParametersLabel}' />
+			<@boxBody class='table-responsive'>
+				<@tform method='post' action='jsp/admin/plugins/crm/DoModifyAdvancedParameters.jsp'>
+				<#if bDisplayDraft!><#assign isChecked=true><#else><#assign isChecked=false></#if> 
+				<@formGroup labelKey='#i18n{crm.manage_demand_types.displayDraftLabel}' helpKey='#i18n{crm.manage_demand_types.displayDraftDescription}' hideLabel=['all'] rows=2>
+					<@checkBox labelFor='bDisplayDraft' labelKey='#i18n{crm.manage_demand_types.displayDraftLabel}' name='bDisplayDraft' checked=isChecked />
+				</@formGroup>
+				<@formGroup>
+					<@button type='submit' name='' title='#i18n{crm.crm.buttonModify}' buttonIcon='check' />
+					<@aButton href='jsp/admin/plugins/crm/ManageDemandTypes.jsp' title='#i18n{crm.modify_category.buttonCancel}' buttonIcon='close' color='default' />
+				</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>

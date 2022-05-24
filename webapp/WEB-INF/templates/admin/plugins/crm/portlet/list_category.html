@@ -1,10 +1,4 @@
-<div class="control-group">
-    <label class="control-label" for="id_form">#i18n{crm.portlet.demandType.listCategory.labelListCategory} :</label>
-    <div class="controls">
-        <#if category_id_category?exists>
-        	<@combo name="category_id_category"  items=categories_list default_value=category_id_category/>
-        <#else>
-        	<@combo name="category_id_category"  items=categories_list default_value=-1 />
-        </#if>
-    </div>   	  
-</div>
+<#if category_id_category?exists><#assign idCat=category_id_category><#else><#assign idCat=-1></#if>
+<@formGroup labelFor='category_id_category' labelKey='#i18n{crm.portlet.demandType.listCategory.labelListCategory}'>
+<@select name="category_id_category" items=categories_list default_value=idCat?string  />
+</@formGroup>

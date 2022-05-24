@@ -1,30 +1,21 @@
-<div class="row-fluid">
-	<div class="span12">
-		<fieldset>
-			<legend class="clearfix">#i18n{crm.create_category.pageTitle}</legend>
-		    <form class="form-horizontal" method="post" name="create_category" id="create_category" action="jsp/admin/plugins/crm/DoCreateCategory.jsp">
-		        <div class="control-group">
-		            <label class="control-label" for="category_name" >#i18n{crm.create_category.labelName} * :</label>
-		            <div class="controls">
-		            	<input type="text" id="category_name" name="category_name" size="60" maxlength="50" tabindex="1" />
-		            </div>
-		        </div>
-		        <div class="control-group">
-		            <label class="control-label" for="category_description" >#i18n{crm.create_category.labelDescription} * :</label>
-		            <div class="controls">
-		            	<input type="text" id="category_description" name="category_description" class="input-xlarge" size="100" maxlength="255" tabindex="2" />
-		            </div>
-		        </div>
-		        <div class="form-actions">  
-		            <button type="submit" value="#i18n{crm.create_category.buttonCreate}" class="btn btn-primary btn-small" tabindex="3" >
-		            	<i class="icon-ok icon-white"></i>&nbsp;#i18n{crm.create_category.buttonCreate}
-		            </button>
-					<a class="btn btn-small" href="jsp/admin/plugins/crm/ManageCategories.jsp">
-		            	<i class="icon-remove-circle"></i>&nbsp;#i18n{crm.modify_category.buttonCancel}
-					</a>
-		        </div>
-		    </form>
-	    </fieldset>
-    </div>
-</div>
-<br /><br />
+<@row>
+	<@columns>
+		<@box>
+			<@boxHeader title='#i18n{crm.create_category.pageTitle}' />
+			<@boxBody>		
+				<@tform method='post' name='create_category' id='create_category' action='jsp/admin/plugins/crm/DoCreateCategory.jsp'>
+					<@formGroup labelFor='category_name' labelKey='#i18n{crm.create_category.labelName}' mandatory=true>
+						<@input type='text' name='category_name' maxlength=50 />
+					</@formGroup>
+					<@formGroup labelFor='category_description' labelKey='#i18n{crm.create_category.labelDescription}' mandatory=true>
+						<@input type='text' id='category_description' name='category_description' maxlength=100 />
+					</@formGroup>
+					<@formGroup>
+						<@button type='submit' name='' title='#i18n{crm.create_category.buttonCreate}' buttonIcon='check' />
+						<@aButton href='jsp/admin/plugins/crm/ManageCategories.jsp' title='#i18n{crm.modify_category.buttonCancel}' buttonIcon='close' color='default' />
+					</@formGroup>
+				</@tform>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
