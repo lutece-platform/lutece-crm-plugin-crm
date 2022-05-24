@@ -71,9 +71,10 @@
 							<@td>
 								<strong>${demand_type.label}</strong>
 								<#assign urlTitle><#if demand_type.urlResource?length gt 35>${demand_type.urlResource?substring(0,35)}...<#else>${demand_type.urlResource}</#if></#assign>	
-								<@aButton href='${demand_type.urlResource}' title=urlTitle buttonIcon='globe me-1 mr-1' hideTitle=['xs'] />
+								
 								<@p>#i18n{crm.manage_demand_types.columnCategory}: <strong>${getCategoryName( categories_list, demand_type.idCategory)}</strong></@p>
 							</@td>
+							<@td><@aButton href='${demand_type.urlResource}' title=urlTitle buttonIcon='globe me-1 mr-1' hideTitle=['xs'] /></@td>
 							<@td><#if demand_type.dateBegin??>${demand_type.dateBegin?date}</#if></@td>
 							<@td><#if demand_type.dateEnd??>${demand_type.dateEnd?date}</#if></@td>
 							<@td>
