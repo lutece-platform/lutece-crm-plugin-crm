@@ -13,7 +13,7 @@
 			<b>#i18n{crm.view_notification.labelDateSent} : </b>${notification.dateCreation?date}
 		</p>
 		<p>
-			<b>#i18n{crm.view_notification.labelTargetResource} : </b>${demand_type.label}
+			<b>#i18n{crm.view_notification.labelTargetResource} : </b><#if demand_type?? && demand_type != "?">${demand_type.label!''}</#if>
 		</p>
 		<p>
 			${notification.message}
