@@ -146,6 +146,7 @@ public final class CRMConstants
     public static final String PARAMETER_OPERATOR_DATE_END = "operator_date_end";
     public static final String PARAMETER_CATEGORY_NAME = "category_name";
     public static final String PARAMETER_CATEGORY_DESCRIPTION = "category_description";
+    public static final String PARAMETER_CATEGORY_CODE = "category_code";
     public static final String PARAMETER_URL_RETURN = "url_return";
     public static final String PARAMETER_DEMAND_DATA = "demand_data";
     public static final String PARAMETER_EMAIL = "email";

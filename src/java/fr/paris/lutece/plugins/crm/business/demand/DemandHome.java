@@ -164,4 +164,16 @@ public final class DemandHome
     {
         return _dao.countByFilter( dFilter, _plugin );
     }
+    
+    /**
+     * Find by category code
+     * 
+     * @param categoryCode
+     *            the category Code
+     * @return a list of {@link Demand}
+     */
+    public static List<Demand> findByCategoryCode( String categoryCode )
+    {
+        return _dao.selectByCategoryCode( categoryCode, _plugin );
+    }
 }

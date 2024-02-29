@@ -10,6 +10,9 @@
 					<@formGroup labelFor='category_description' labelKey='#i18n{crm.create_category.labelDescription}' mandatory=true>
 						<@input type='text' id='category_description' name='category_description' maxlength=100 />
 					</@formGroup>
+					<@formGroup labelFor='category_code' labelKey='#i18n{crm.create_category.labelCode}' mandatory=true>
+						<@input type='text' id='category_code' name='category_code' maxlength=50 />
+					</@formGroup>
 					<@formGroup>
 						<@button type='submit' name='' title='#i18n{crm.create_category.buttonCreate}' buttonIcon='check' />
 						<@aButton href='jsp/admin/plugins/crm/ManageCategories.jsp' title='#i18n{crm.modify_category.buttonCancel}' buttonIcon='close' color='default' />

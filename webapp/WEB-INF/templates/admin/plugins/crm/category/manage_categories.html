@@ -11,6 +11,7 @@
 					<@tr>
 						<@th>#i18n{crm.manage_categories.columnName}</@th>
 						<@th>#i18n{crm.manage_categories.columnDescription}</@th>
+						<@th>#i18n{crm.manage_categories.columnCode}</@th>
 						<@th>#i18n{crm.manage_categories.columnActions}</@th>
 					</@tr>
 					<@tableHeadBodySeparator />
@@ -18,6 +19,7 @@
 						<@tr>
 							<@td>${category.name}</@td>
 							<@td>${category.description}</@td>
+							<@td>${category.code!}</@td>
 							<@td>
 								<@aButton href='jsp/admin/plugins/crm/ModifyCategory.jsp?category_id_category=${category.idCategory}' title='#i18n{portal.util.labelModify}' buttonIcon='edit me-1 mr-1' hideTitle=['xs'] />
                                 <@aButton href='jsp/admin/plugins/crm/RemoveCategory.jsp?category_id_category=${category.idCategory}' title='#i18n{portal.util.labelDelete}' color='danger' buttonIcon='times me-1 mr-1' hideTitle=['xs'] />
