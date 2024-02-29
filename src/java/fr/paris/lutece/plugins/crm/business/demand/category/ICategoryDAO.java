@@ -112,4 +112,9 @@ public interface ICategoryDAO
      * @return a {@link Category
      */
     Category selectFirstCategory( Plugin plugin );
+
+    /**
+     * {@inheritDoc }
+     */
+    Category selectByCode( String strCode, Plugin plugin );
 }

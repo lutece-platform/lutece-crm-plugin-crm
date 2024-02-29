@@ -65,6 +65,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CategoryJspBean extends PluginAdminPageJspBean
 {
+    private static final long serialVersionUID = 1L;
+    
     // TEMPLATES
     private static final String TEMPLATE_MANAGE_CATEGORIES = "/admin/plugins/crm/category/manage_categories.html";
     private static final String TEMPLATE_CREATE_CATEGORY = "/admin/plugins/crm/category/create_category.html";
@@ -143,12 +145,14 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         String strUrl = StringUtils.EMPTY;
         String strName = request.getParameter( CRMConstants.PARAMETER_CATEGORY_NAME );
         String strDescription = request.getParameter( CRMConstants.PARAMETER_CATEGORY_DESCRIPTION );
+        String strCode = request.getParameter( CRMConstants.PARAMETER_CATEGORY_CODE );
 
-        if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) )
+        if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) && StringUtils.isNotBlank( strCode ) )
         {
             Category category = new Category( );
             category.setName( strName );
             category.setDescription( strDescription );
+            category.setCode( strCode );
 
             _categoryService.createCategory( category );
 
@@ -278,8 +282,9 @@ public class CategoryJspBean extends PluginAdminPageJspBean
         {
             String strName = request.getParameter( CRMConstants.PARAMETER_CATEGORY_NAME );
             String strDescription = request.getParameter( CRMConstants.PARAMETER_CATEGORY_DESCRIPTION );
+            String strCode = request.getParameter( CRMConstants.PARAMETER_CATEGORY_CODE );
 
-            if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) )
+            if ( StringUtils.isNotBlank( strName ) && StringUtils.isNotBlank( strDescription ) && StringUtils.isNotBlank( strCode ) )
             {
                 int nId = Integer.parseInt( strCategoryId );
                 Category category = _categoryService.findByPrimaryKey( nId );
@@ -288,6 +293,7 @@ public class CategoryJspBean extends PluginAdminPageJspBean
                 {
                     category.setName( strName );
                     category.setDescription( strDescription );
+                    category.setCode( strCode );
                     _categoryService.updateCategory( category );
 
                     strUrl = JSP_REDIRECT_TO_MANAGE_CATEGORIES;

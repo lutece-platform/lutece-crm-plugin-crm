@@ -11,6 +11,9 @@
 					<@formGroup labelFor='category_description' labelKey='#i18n{crm.modify_category.labelDescription}' mandatory=true>
 						<@input type='text' id='category_description' name='category_description' value='${category.description}' maxlength=100 />
 					</@formGroup>
+					<@formGroup labelFor='category_code' labelKey='#i18n{crm.modify_category.labelCode}' mandatory=true>
+						<@input type='text' id='category_code' name='category_code' value='${category.code!}' maxlength=50 />
+					</@formGroup>
 					<@formGroup>
 						<@button type='submit' name='' title='#i18n{crm.modify_category.buttonModify}' buttonIcon='check' />
 						<@aButton href='jsp/admin/plugins/crm/ManageCategories.jsp' title='#i18n{crm.modify_category.buttonCancel}' buttonIcon='close' color='default' />

@@ -54,6 +54,7 @@ public class Category
     private int _nIdCategory;
     private String _strName;
     private String _strDescription;
+    private String _strCode;
 
     /**
      * Returns the IdCategory
@@ -116,6 +117,24 @@ public class Category
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
+    }
+    
+    /**
+     * Returns the Code
+     * @return The Code
+     */
+    public String getCode( )
+    {
+        return _strCode;
+    }
+
+    /**
+     * Sets the Code
+     * @param strCode The Code
+     */
+    public void setCode( String strCode )
+    {
+        _strCode = strCode;
     }
 
     /**

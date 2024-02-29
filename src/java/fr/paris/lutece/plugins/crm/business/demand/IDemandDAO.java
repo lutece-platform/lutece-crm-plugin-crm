@@ -141,4 +141,9 @@ public interface IDemandDAO
      */
     Demand loadByRemoteKey( String strRemoteId, int nIdDemandType, Plugin plugin );
 
+    /**
+     * {@inheritDoc}
+     */
+    List<Demand> selectByCategoryCode( String strCategoryCode, Plugin plugin );
+
 }

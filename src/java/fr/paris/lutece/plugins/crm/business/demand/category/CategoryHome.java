@@ -154,4 +154,14 @@ public final class CategoryHome
     {
         return _dao.selectFirstCategory( _plugin );
     }
+    
+    /**
+     * Find by code
+     * 
+     * @return a {@link Category}
+     */
+    public static Category findByCode( String code )
+    {
+        return _dao.selectByCode( code, _plugin );
+    }
 }

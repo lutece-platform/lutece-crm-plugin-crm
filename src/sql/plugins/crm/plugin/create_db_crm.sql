@@ -66,7 +66,9 @@ CREATE TABLE crm_category (
 	id_category INT(11) DEFAULT 0 NOT NULL,
 	name VARCHAR(50) NOT NULL DEFAULT '',
 	description VARCHAR(255) NOT NULL DEFAULT '',
-	PRIMARY KEY (id_category)
+	code VARCHAR(50) NOT NULL DEFAULT '',
+	PRIMARY KEY (id_category),
+	UNIQUE (code)
 );
 
 --

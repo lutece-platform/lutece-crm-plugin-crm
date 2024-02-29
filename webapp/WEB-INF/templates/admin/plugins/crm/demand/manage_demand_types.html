@@ -41,7 +41,7 @@
 						<#assign typeOp><#if demand_type_filter??>demand_type_filter.operatorDateEnd.id<#else>0</#if></#assign>
 						<@select name="operator_date_end" default_value="date_end" items=operators_list />
 					</@formGroup>
-					<@formGroup labelFor='date_end' labelKey='#i18n{crm.manage_demand_types.columnDateBegin}' rows=2>
+					<@formGroup labelFor='date_end' labelKey='#i18n{crm.manage_demand_types.columnDateEnd}' rows=2>
 						<#assign typeDate><#if demand_type_filter?? && demand_type_filter.dateEnd??>${demand_type_filter.dateEnd?date}</#if></#assign>
 						<@input type='date' name='date_end' id='date_end' value=typeDate format='d/m/Y' />
 					</@formGroup>
