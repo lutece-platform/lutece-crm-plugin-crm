@@ -352,16 +352,4 @@ public class DemandService
     {
         return DemandHome.countByFilter( dFilter );
     }
-    
-    /**
-     * Get demand list filtered by category code
-     * 
-     * @param categoryCode
-     *            the code of the category
-     * @return a list of {@link Demand}
-     */
-    public List<Demand> findByCategoryCode( String categoryCode )
-    {
-        return DemandHome.findByCategoryCode( categoryCode );
-    }
 }
