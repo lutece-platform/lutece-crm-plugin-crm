@@ -52,14 +52,13 @@ import java.util.List;
 public class DemandDAO implements IDemandDAO
 {
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_demand ) FROM crm_demand ";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand (id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id, category_code  ) VALUES (?,?,?,?,?,?,?,?,?) ";
-    private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id, category_code FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_BY_REMOTE_KEY = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id, category_code FROM crm_demand WHERE remote_id = ? AND id_demand_type = ? ";
-    private static final String SQL_QUERY_SELECT_BY_CATEGORY_CODE = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id, category_code FROM crm_demand WHERE category_code = ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? ,remote_id= ?, category_code = ? WHERE id_demand = ? ";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO crm_demand (id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id  ) VALUES (?,?,?,?,?,?,?,?) ";
+    private static final String SQL_QUERY_SELECT = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id FROM crm_demand WHERE id_demand = ? ";
+    private static final String SQL_QUERY_SELECT_BY_REMOTE_KEY = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification, remote_id FROM crm_demand WHERE remote_id = ? AND id_demand_type = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE crm_demand SET id_demand_type = ?, id_crm_user = ?, status_text = ?, id_status_crm = ?, data = ?, date_modification = ? ,remote_id= ? WHERE id_demand = ? ";
     private static final String SQL_QUERY_DELETE = " DELETE FROM crm_demand WHERE id_demand = ? ";
-    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification,remote_id, category_code, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand demand ";
-    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification,remote_id, category_code, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand ";
+    private static final String SQL_QUERY_SELECT_ALL = " SELECT id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification,remote_id, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand demand ";
+    private static final String SQL_QUERY_SELECT_ALL_WITH_NOTIFICATION = " SELECT demand.id_demand, id_demand_type, id_crm_user, status_text, id_status_crm, data, date_modification,remote_id, (SELECT count(*) FROM crm_notification WHERE is_read = 0 AND id_demand = demand.id_demand) AS nb_unread_notif FROM crm_demand AS demand ";
     private static final String SQL_QUERY_COUNT = " SELECT count(*) FROM ";
 
     // FILTERS
@@ -119,7 +118,6 @@ public class DemandDAO implements IDemandDAO
                 daoUtil.setString( nIndex++, demand.getData( ) );
                 daoUtil.setTimestamp( nIndex++, demand.getDateModification( ) );
                 daoUtil.setString( nIndex++, demand.getRemoteId( ) );
-                daoUtil.setString( nIndex++, demand.getCategoryCode( ) );
 
                 daoUtil.executeUpdate( );
             }
@@ -154,7 +152,6 @@ public class DemandDAO implements IDemandDAO
                 demand.setData( daoUtil.getString( nIndex++ ) );
                 demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
                 demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-                demand.setCategoryCode( daoUtil.getString( nIndex++ ) );
             }
 
             return demand;
@@ -188,46 +185,9 @@ public class DemandDAO implements IDemandDAO
                 demand.setData( daoUtil.getString( nIndex++ ) );
                 demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
                 demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-                demand.setCategoryCode( daoUtil.getString( nIndex++ ) );
             }
 
             return demand;
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Demand> selectByCategoryCode( String strCategoryCode, Plugin plugin )
-    {
-        List<Demand> listDemands = new ArrayList<Demand>( );
-        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_CATEGORY_CODE, plugin ) )
-        {
-            daoUtil.setString( 1, strCategoryCode );
-
-            daoUtil.executeQuery( );
-
-            Demand demand = null;
-
-            if ( daoUtil.next( ) )
-            {
-                int nIndex = 1;
-                demand = new Demand( );
-                demand.setIdDemand( daoUtil.getInt( nIndex++ ) );
-                demand.setIdDemandType( daoUtil.getInt( nIndex++ ) );
-                demand.setIdCRMUser( daoUtil.getInt( nIndex++ ) );
-                demand.setStatusText( daoUtil.getString( nIndex++ ) );
-                demand.setIdStatusCRM( daoUtil.getInt( nIndex++ ) );
-                demand.setData( daoUtil.getString( nIndex++ ) );
-                demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
-                demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-                demand.setCategoryCode( daoUtil.getString( nIndex++ ) );
-                
-                listDemands.add( demand );
-            }
-
-            return listDemands;
         }
     }
 
@@ -249,7 +209,6 @@ public class DemandDAO implements IDemandDAO
                 daoUtil.setString( nIndex++, demand.getData( ) );
                 daoUtil.setTimestamp( nIndex++, demand.getDateModification( ) );
                 daoUtil.setString( nIndex++, demand.getRemoteId( ) );
-                daoUtil.setString( nIndex++, demand.getCategoryCode( ) );
 
                 daoUtil.setInt( nIndex++, demand.getIdDemand( ) );
 
@@ -292,7 +251,6 @@ public class DemandDAO implements IDemandDAO
                 demand.setData( daoUtil.getString( nIndex++ ) );
                 demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
                 demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-                demand.setCategoryCode( daoUtil.getString( nIndex++ ) );
 
                 listDemands.add( demand );
             }
@@ -331,7 +289,6 @@ public class DemandDAO implements IDemandDAO
                 demand.setData( daoUtil.getString( nIndex++ ) );
                 demand.setDateModification( daoUtil.getTimestamp( nIndex++ ) );
                 demand.setRemoteId( daoUtil.getString( nIndex++ ) );
-                demand.setCategoryCode( daoUtil.getString( nIndex++ ) );
 
                 listDemands.add( demand );
             }

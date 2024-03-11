@@ -52,7 +52,6 @@ public class Demand
     private String _strData;
     private Timestamp _dateModification;
     private String _strRemoteId;
-    private String _strCategoryCode;
 
     /**
      * Set the ID demand
@@ -238,21 +237,5 @@ public class Demand
     public void setRemoteId( String _strRemoteId )
     {
         this._strRemoteId = _strRemoteId;
-    }
-    
-    /**
-     * @return the _strCategoryCode
-     */
-    public String getCategoryCode( )
-    {
-        return _strCategoryCode;
-    }
-
-    /**
-     * @param strPictogramme the _strCategoryCode to set
-     */
-    public void setCategoryCode( String strCategoryCode )
-    {
-        this._strCategoryCode = strCategoryCode;
     }
 }

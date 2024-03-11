@@ -205,4 +205,9 @@ public class CategoryService
     {
         return CategoryHome.findFirstCategory( );
     }
+    
+    public Category findByCode( String strCode )
+    {
+        return CategoryHome.findByCode( strCode );
+    }
 }
